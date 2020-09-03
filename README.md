@@ -14,8 +14,8 @@ _**Última atualização:** Agosto/2020 (Período 2020.1)_
 
 ### Tópicos do Curso
 
-0. [Introdução ao curso](slides/0-intro-curso/0-intro-curso.md): [PDF](slides/0-intro-curso/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-fundamentos-sistemas-informacao/slides/0-intro-curso/index.html)
-1. [Revisão/Tipos](slides/1-revisao-tipos/1-revisao-tipos.md): [PDF](slides/1-revisao-tipos/1-revisao-tipos.pdf) [Online](https://igormcoelho.github.io/curso-fundamentos-sistemas-informacao/slides/1-revisao-tipos/index.html)
+0. [Introdução ao curso](slides/0-intro-curso/0-intro-curso.md): [PDF](slides/0-intro-curso/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso/index.html)
+1. [Revisão/Tipos](slides/1-revisao-tipos/1-revisao-tipos.md): [PDF](slides/1-revisao-tipos/1-revisao-tipos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-revisao-tipos/index.html)
 
 
 
