@@ -469,8 +469,7 @@ Um programa começa pelo seu "ponto de entrada" (ou *entrypoint*), tipicamente u
 ```{.cpp}
 #include<iostream> // inclui arquivo externo
 int main() {
-   printf("hello world\n");
-   return 0;
+   return 0;       // 0 significa: nenhum erro
 }
 ```
 
@@ -518,6 +517,50 @@ int main() {
    // ...
 }
 ```
+
+--------
+
+## Alocação Dinâmica de Memória
+
+Programas frequentemente necessitam de alocar mais memória para uso, o que é armazenado de forma segura em um ponteiro para o tipo da memória:
+
+
+::::::::::::: {.columns}
+
+::::: {.column width=55%}
+
+```{.c}
+// Aloca um agregado P
+struct P* vp = 
+   malloc(1*sizeof(struct P));
+// inicializa campos de P
+vp->x = 10;
+vp->y = 'Y';
+// imprime x (valor 10)
+printf("%d\n", vp->x);
+// descarta a memória
+free(vp);
+```
+
+:::::
+
+::::: {.column width=45%}
+
+```{.cpp}
+// Aloca um agregado P
+auto* vp = new P{
+                  .x = 10, 
+                  .y = 'Y'
+                };
+// imprime x (valor 10)
+printf("%d\n", vp->x); 
+// descarta a memória
+delete vp;
+```
+
+:::::
+
+:::::::::::::
 
 --------
 

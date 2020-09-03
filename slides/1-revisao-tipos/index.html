@@ -1899,10 +1899,10 @@ font-size: 1em;
 <span id="cb13-9"><a href="#cb13-9"></a>G&lt;<span class="dt">float</span>&gt; g1 = {.x = <span class="fl">3.14</span>, .y  = <span class="ch">&#39;Y&#39;</span>}; </span>
 <span id="cb13-10"><a href="#cb13-10"></a>G&lt;<span class="dt">int</span>&gt;   g2 = {.x = <span class="dv">3</span>,    .y  = <span class="ch">&#39;Y&#39;</span>}; </span></code></pre></div>
 </section>
-<section id="modularização-funções-e-procedimentos-i" class="slide level2">
-<h2>Modularização: Funções e Procedimentos I</h2>
+<section id="modularização-rotinas-i" class="slide level2">
+<h2>Modularização: Rotinas I</h2>
 <p>A modularização de programas é muito importante, principalmente quando trechos de código são repetidos muitas vezes.</p>
-<p>Nesses casos, é comum criar <em>funções e procedimentos</em>, que podem por sua vez receber parâmetros.</p>
+<p>Nesses casos, é comum criar rotinas, como <em>funções e procedimentos</em>, que podem por sua vez receber parâmetros.</p>
 <p>Tomemos por exemplo a função quadrado que retorna o valor passado elevado ao quadrado.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">// função que retorna um &#39;int&#39;, com parâmetro &#39;p&#39;</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="dt">int</span> quadrado (<span class="dt">int</span> p) {</span>
@@ -1911,8 +1911,8 @@ font-size: 1em;
 <span id="cb14-5"><a href="#cb14-5"></a><span class="co">// variável do tipo &#39;int&#39;, com valor 25</span></span>
 <span id="cb14-6"><a href="#cb14-6"></a><span class="dt">int</span> x = quadrado(<span class="dv">5</span>);        </span></code></pre></div>
 </section>
-<section id="modularização-funções-e-procedimentos-ii" class="slide level2">
-<h2>Modularização: Funções e Procedimentos II</h2>
+<section id="modularização-rotinas-ii" class="slide level2">
+<h2>Modularização: Rotinas II</h2>
 <p>Quando nenhum valor é retornado (em um procedimento), utilizamos a palavra-chave <code>void</code>. Procedimentos são úteis mesmo quando nenhum valor é retornado. <strong>Exemplo</strong>: (de a até b):</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1"></a><span class="dt">void</span> imprime (<span class="dt">int</span> a , <span class="dt">int</span> b) {</span>
 <span id="cb15-2"><a href="#cb15-2"></a>   <span class="cf">for</span> (<span class="dt">int</span> i=a ; i&lt;b ; i++)</span>
@@ -1946,8 +1946,8 @@ font-size: 1em;
 <span id="cb17-10"><a href="#cb17-10"></a><span class="kw">struct</span> P p0 = {.x = <span class="dv">20</span>, .y = <span class="ch">&#39;Y&#39;</span>}; <span class="co">// cria variável &#39;p0&#39;</span></span>
 <span id="cb17-11"><a href="#cb17-11"></a>imprimir(&amp;p0, p0); <span class="co">// resulta em &#39;20 20&#39;</span></span></code></pre></div>
 </section>
-<section id="modularização-funções-e-procedimentos-iii" class="slide level2">
-<h2>Modularização: Funções e Procedimentos III</h2>
+<section id="modularização-rotinas-iii" class="slide level2">
+<h2>Modularização: Rotinas III</h2>
 <p>O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// o tipo da função &#39;quadrado&#39; é: int(*)(int) </span></span>
 <span id="cb18-2"><a href="#cb18-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
@@ -1961,8 +1961,8 @@ font-size: 1em;
 <span id="cb19-5"><a href="#cb19-5"></a><span class="co">// ...</span></span>
 <span id="cb19-6"><a href="#cb19-6"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, quad(<span class="dv">3</span>));    <span class="co">// 9</span></span></code></pre></div>
 </section>
-<section id="modularização-funções-e-procedimentos-iv" class="slide level2">
-<h2>Modularização: Funções e Procedimentos IV</h2>
+<section id="modularização-rotinas-iv" class="slide level2">
+<h2>Modularização: Rotinas IV</h2>
 <p>A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o <em>ponteiro para o agregado</em>, chamado <strong>this</strong>:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1995,9 +1995,8 @@ font-size: 1em;
 <p>Um programa começa pelo seu “ponto de entrada” (ou <em>entrypoint</em>), tipicamente uma função <code>int main()</code>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
 <span id="cb22-2"><a href="#cb22-2"></a><span class="dt">int</span> main() {</span>
-<span id="cb22-3"><a href="#cb22-3"></a>   printf(<span class="st">&quot;hello world</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb22-4"><a href="#cb22-4"></a>   <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb22-5"><a href="#cb22-5"></a>}</span></code></pre></div>
+<span id="cb22-3"><a href="#cb22-3"></a>   <span class="cf">return</span> <span class="dv">0</span>;       <span class="co">// 0 significa: nenhum erro</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>}</span></code></pre></div>
 <p>A declaração de funções pode ser feita antes da definição:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p); <span class="co">// declara a função &#39;quadrado&#39;</span></span>
 <span id="cb23-2"><a href="#cb23-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
@@ -2029,6 +2028,34 @@ font-size: 1em;
 <span id="cb24-6"><a href="#cb24-6"></a>   <span class="co">// ...</span></span>
 <span id="cb24-7"><a href="#cb24-7"></a>}</span></code></pre></div>
 </section>
+<section id="alocação-dinâmica-de-memória" class="slide level2">
+<h2>Alocação Dinâmica de Memória</h2>
+<p>Programas frequentemente necessitam de alocar mais memória para uso, o que é armazenado de forma segura em um ponteiro para o tipo da memória:</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a><span class="co">// Aloca um agregado P</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="kw">struct</span> P* vp = </span>
+<span id="cb25-3"><a href="#cb25-3"></a>   malloc(<span class="dv">1</span>*<span class="kw">sizeof</span>(<span class="kw">struct</span> P));</span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="co">// inicializa campos de P</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>vp-&gt;x = <span class="dv">10</span>;</span>
+<span id="cb25-6"><a href="#cb25-6"></a>vp-&gt;y = <span class="ch">&#39;Y&#39;</span>;</span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="co">// imprime x (valor 10)</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a>printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
+<span id="cb25-9"><a href="#cb25-9"></a><span class="co">// descarta a memória</span></span>
+<span id="cb25-10"><a href="#cb25-10"></a>free(vp);</span></code></pre></div>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">// Aloca um agregado P</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">auto</span>* vp = <span class="kw">new</span> P{</span>
+<span id="cb26-3"><a href="#cb26-3"></a>                  .x = <span class="dv">10</span>, </span>
+<span id="cb26-4"><a href="#cb26-4"></a>                  .y = <span class="ch">&#39;Y&#39;</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>                };</span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="co">// imprime x (valor 10)</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, vp-&gt;x); </span>
+<span id="cb26-8"><a href="#cb26-8"></a><span class="co">// descarta a memória</span></span>
+<span id="cb26-9"><a href="#cb26-9"></a><span class="kw">delete</span> vp;</span></code></pre></div>
+</div>
+</div>
+</section>
 <section id="continue-aprendendo" class="slide level2">
 <h2>Continue Aprendendo</h2>
 <p>Nessa revisão sobre tipos, buscamos não aprofundar em nenhuma característica “avançada” de C/C++, embora alguns conceitos possam ser novos para alguns.</p>
@@ -2038,6 +2065,7 @@ font-size: 1em;
 <li>uso frequente de <em>referências</em> (ao invés de ponteiros)</li>
 <li>uso frequente de <em>move semantics</em> (ao invés de referências)</li>
 <li>uso frequente de <em>closures</em> (ao invés de funções e lambdas)</li>
+<li>uso de <em>corrotinas</em> do C++20 (somente consideramos <em>rotinas</em> no curso), especialmente para elaboração de iteradores infinitos</li>
 <li>teste unitário de cada componente desenvolvido (recomendamos a biblioteca <a href="https://github.com/catchorg/Catch2"><code>catch2.hpp</code></a> ou <a href="https://github.com/google/googletest">Google Tests</a>, para esse fim)</li>
 </ul>
 </section>
