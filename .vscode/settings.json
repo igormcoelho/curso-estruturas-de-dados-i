@@ -1,0 +1,10 @@
+{
+    "markdown-preview-enhanced.enableExtendedTableSyntax": true,
+    "markdown-preview-enhanced.mathRenderingOption": "KaTeX",
+    "markdown-preview-enhanced.usePandocParser": true,
+    //"markdown-preview-enhanced.pandocMarkdownFlavor": "markdown-raw_tex+tex_math_single_backslash"
+    //"markdown-preview-enhanced.pandocArguments": "--standalone, --filter=pandoc-katex, --css=katex.min.css"    
+    "markdown-preview-enhanced.pandocArguments": "--standalone",
+    "markdown-preview-enhanced.enableScriptExecution": true
+    
+}
