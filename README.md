@@ -4,7 +4,7 @@ Materiais gerais de Estruturas de Dados I, bem como suas respectivas aplicaçõe
 
 ### 2020.1
 
-_Curso de **Estruturas de Dados para Sistemas de Informação** (TCC00331) do [Prof. Igor Machado Coelho](https://igormcoelho.github.io), oferecido pelo [Instituto de Computação (IC) da Universidade Federal Fluminense (UFF)](http://www.ic.uff.br)._ **versão online:** [igormcoelho.github.io/curso-fundamentos-sistemas-informacao/](https://igormcoelho.github.io/curso-estruturas-de-dados-i/)
+_Curso de **Estruturas de Dados para Sistemas de Informação** (TCC00331) do [Prof. Igor Machado Coelho](https://igormcoelho.github.io), oferecido pelo [Instituto de Computação (IC) da Universidade Federal Fluminense (UFF)](http://www.ic.uff.br)._ **versão online:** [igormcoelho.github.io/curso-estruturas-de-dados-i/](https://igormcoelho.github.io/curso-estruturas-de-dados-i/)
 
 [Código-fonte no GitHub](https://github.com/igormcoelho/curso-estruturas-de-dados-i)
 ![Estrelas](https://img.shields.io/github/stars/igormcoelho/curso-estruturas-de-dados-i)
