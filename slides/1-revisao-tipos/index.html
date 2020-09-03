@@ -1961,19 +1961,48 @@ font-size: 1em;
 <span id="cb19-5"><a href="#cb19-5"></a><span class="co">// ...</span></span>
 <span id="cb19-6"><a href="#cb19-6"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, quad(<span class="dv">3</span>));    <span class="co">// 9</span></span></code></pre></div>
 </section>
+<section id="modularização-funções-e-procedimentos-iv" class="slide level2">
+<h2>Modularização: Funções e Procedimentos IV</h2>
+<p>A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o <em>ponteiro para o agregado</em>, chamado <strong>this</strong>:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">// Em C (tipo agregado P)</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="kw">struct</span> P {</span>
+<span id="cb20-3"><a href="#cb20-3"></a>    <span class="dt">int</span> x;</span>
+<span id="cb20-4"><a href="#cb20-4"></a>};</span>
+<span id="cb20-5"><a href="#cb20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co">// imprime campo x </span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="dt">void</span> imprimex(<span class="kw">struct</span> P* this) </span>
+<span id="cb20-8"><a href="#cb20-8"></a>{</span>
+<span id="cb20-9"><a href="#cb20-9"></a>   printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, this-&gt;x);</span>
+<span id="cb20-10"><a href="#cb20-10"></a>}</span></code></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">// Em C++ (tipo agregado P)</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="kw">class</span> P</span>
+<span id="cb21-3"><a href="#cb21-3"></a>{</span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="kw">public</span>:</span>
+<span id="cb21-5"><a href="#cb21-5"></a>   <span class="dt">int</span> x;</span>
+<span id="cb21-6"><a href="#cb21-6"></a>   <span class="co">// imprime campo x </span></span>
+<span id="cb21-7"><a href="#cb21-7"></a>   <span class="dt">void</span> imprimex() {</span>
+<span id="cb21-8"><a href="#cb21-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
+<span id="cb21-9"><a href="#cb21-9"></a>   }</span>
+<span id="cb21-10"><a href="#cb21-10"></a>};</span></code></pre></div>
+</div>
+</div>
+</section>
 <section id="modularização-básica" class="slide level2">
 <h2>Modularização Básica</h2>
 <p>Um programa começa pelo seu “ponto de entrada” (ou <em>entrypoint</em>), tipicamente uma função <code>int main()</code>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="dt">int</span> main() {</span>
-<span id="cb20-3"><a href="#cb20-3"></a>   printf(<span class="st">&quot;hello world</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb20-4"><a href="#cb20-4"></a>   <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb20-5"><a href="#cb20-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb22-3"><a href="#cb22-3"></a>   printf(<span class="st">&quot;hello world</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb22-4"><a href="#cb22-4"></a>   <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb22-5"><a href="#cb22-5"></a>}</span></code></pre></div>
 <p>A declaração de funções pode ser feita antes da definição:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p); <span class="co">// declara a função &#39;quadrado&#39;</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
-<span id="cb21-3"><a href="#cb21-3"></a>   <span class="cf">return</span> p*p;       <span class="co">// implementa a função &#39;quadrado&#39;</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p); <span class="co">// declara a função &#39;quadrado&#39;</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
+<span id="cb23-3"><a href="#cb23-3"></a>   <span class="cf">return</span> p*p;       <span class="co">// implementa a função &#39;quadrado&#39;</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>}</span></code></pre></div>
 <p>Declarações vem em arquivos <code>.h</code>, enquanto as respectivas implementações em arquivo <code>.cpp</code> (ou juntas como <code>.hpp</code>).</p>
 </section>
 <section id="organização-em-arquivos" class="slide level2">
@@ -1992,13 +2021,13 @@ font-size: 1em;
 <h2>Tipos na biblioteca padrão C++</h2>
 <p>Durante o curso estudaremos várias estruturas de dados, mas sempre que possível utilize as existentes na biblioteca padrão (STL). São mais eficientes e à prova de erros.</p>
 <p>Por exemplo, é fácil definir um tipo agregado <code>Par</code>, que comporta dois elementos internos (tipo genérico). Porém, é mais vantajoso usar o existente na STL, chamado <code>std::pair</code> (o prefixo <code>std::</code> é chamado <em>namespace</em> e evita colisões de nomes):</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="dt">int</span> main() {</span>
-<span id="cb22-4"><a href="#cb22-4"></a>   <span class="bu">std::</span>pair&lt;<span class="dt">int</span>, <span class="dt">char</span>&gt; p {<span class="dv">5</span>, <span class="ch">&#39;C&#39;</span>}; <span class="co">// direct init.</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a>   printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span>, p.first, p.second); <span class="co">// 5 C</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a>   <span class="co">// ...</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="dt">int</span> main() {</span>
+<span id="cb24-4"><a href="#cb24-4"></a>   <span class="bu">std::</span>pair&lt;<span class="dt">int</span>, <span class="dt">char</span>&gt; p {<span class="dv">5</span>, <span class="ch">&#39;C&#39;</span>}; <span class="co">// direct init.</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>   printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span>, p.first, p.second); <span class="co">// 5 C</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>   <span class="co">// ...</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>}</span></code></pre></div>
 </section>
 <section id="continue-aprendendo" class="slide level2">
 <h2>Continue Aprendendo</h2>

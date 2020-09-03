@@ -413,6 +413,53 @@ int(*quad)(int) = [](int p) {
 printf("%d\n", quad(3));    // 9
 ```
 
+
+-------
+
+## Modularização: Funções e Procedimentos IV
+
+A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o *ponteiro para o agregado*, chamado **this**:
+
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```{.c}
+// Em C (tipo agregado P)
+struct P {
+    int x;
+};
+
+// imprime campo x 
+void imprimex(struct P* this) 
+{
+   printf("%d\n", this->x);
+}
+```
+
+:::::
+
+::::: {.column width=50%}
+
+```{.cpp}
+// Em C++ (tipo agregado P)
+class P
+{
+public:
+   int x;
+   // imprime campo x 
+   void imprimex() {
+      printf("%d\n", this->x);
+   }
+};
+```
+
+:::::
+
+:::::::::::::
+
+
 -------
 
 ## Modularização Básica
