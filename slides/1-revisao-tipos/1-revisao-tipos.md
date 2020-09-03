@@ -304,13 +304,13 @@ G<int>   g2 = {.x = 3,    .y  = 'Y'};
 
 -------
 
-## Modularização: Funções e Procedimentos I
+## Modularização: Rotinas I
 
 A modularização de programas é muito importante, principalmente
 quando trechos de código são repetidos muitas vezes. 
 
 Nesses casos, é
-comum criar *funções e procedimentos*, que podem por sua vez receber
+comum criar rotinas, como *funções e procedimentos*, que podem por sua vez receber
 parâmetros. 
 
 Tomemos por exemplo a função quadrado que retorna
@@ -327,7 +327,7 @@ int x = quadrado(5);
 
 -------
 
-## Modularização: Funções e Procedimentos II
+## Modularização: Rotinas II
 
 Quando nenhum valor é retornado (em um procedimento), utilizamos
 a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
@@ -391,7 +391,7 @@ imprimir(&p0, p0); // resulta em '20 20'
 
 -------
 
-## Modularização: Funções e Procedimentos III
+## Modularização: Rotinas III
 
 O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:
 
@@ -416,7 +416,7 @@ printf("%d\n", quad(3));    // 9
 
 -------
 
-## Modularização: Funções e Procedimentos IV
+## Modularização: Rotinas IV
 
 A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o *ponteiro para o agregado*, chamado **this**:
 
@@ -531,6 +531,7 @@ Para uma programação mais avançada em C++ é recomendado (tópicos não cober
 - uso frequente de *referências* (ao invés de ponteiros)
 - uso frequente de *move semantics* (ao invés de referências)
 - uso frequente de *closures* (ao invés de funções e lambdas)
+- uso de *corrotinas* do C++20 (somente consideramos *rotinas* no curso), especialmente para elaboração de iteradores infinitos
 - teste unitário de cada componente desenvolvido (recomendamos a biblioteca [`catch2.hpp`](https://github.com/catchorg/Catch2) ou [Google Tests](https://github.com/google/googletest), para esse fim)
 
 
