@@ -1773,8 +1773,8 @@ font-size: 1em;
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1"></a><span class="dt">int</span>    x1 = <span class="dv">5</span>;        <span class="co">// =&gt; 5</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="dt">int</span>    x2 = x1 + <span class="dv">8</span>;   <span class="co">// =&gt; 13</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="dt">int</span>    x3 = x2 / <span class="dv">2</span>;   <span class="co">// =&gt; 6</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="dt">float</span>  x4 = x2 / <span class="dv">2</span>;   <span class="co">// =&gt; 6.0 </span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="dt">float</span>  x5 = x2 / <span class="fl">2.0</span>; <span class="co">// =&gt; 6.5 </span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="dt">float</span>  x4 = x2 / <span class="dv">2</span>;   <span class="co">// =&gt; 6.0</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="dt">float</span>  x5 = x2 / <span class="fl">2.0</span>; <span class="co">// =&gt; 6.5</span></span>
 <span id="cb2-6"><a href="#cb2-6"></a><span class="kw">auto</span>   x6 = <span class="dv">13</span>;       <span class="co">// =&gt; 13 (C warning: Wimplicit-int)</span></span>
 <span id="cb2-7"><a href="#cb2-7"></a><span class="kw">auto</span>   x7 = x2 / <span class="dv">2</span>;   <span class="co">// =&gt; ?  (C warning: Wimplicit-int)</span></span>
 <span id="cb2-8"><a href="#cb2-8"></a><span class="kw">auto</span>   x8 = x2 / <span class="fl">2.0</span>; <span class="co">// =&gt; ?  (C warning: Wimplicit-int)</span></span></code></pre></div>
@@ -1896,8 +1896,8 @@ font-size: 1em;
 <span id="cb13-6"><a href="#cb13-6"></a>   <span class="dt">char</span> y;</span>
 <span id="cb13-7"><a href="#cb13-7"></a>};</span>
 <span id="cb13-8"><a href="#cb13-8"></a><span class="co">// declara o agregado genérico G</span></span>
-<span id="cb13-9"><a href="#cb13-9"></a>G&lt;<span class="dt">float</span>&gt; g1 = {.x = <span class="fl">3.14</span>, .y  = <span class="ch">&#39;Y&#39;</span>}; </span>
-<span id="cb13-10"><a href="#cb13-10"></a>G&lt;<span class="dt">int</span>&gt;   g2 = {.x = <span class="dv">3</span>,    .y  = <span class="ch">&#39;Y&#39;</span>}; </span></code></pre></div>
+<span id="cb13-9"><a href="#cb13-9"></a>G&lt;<span class="dt">float</span>&gt; g1 = {.x = <span class="fl">3.14</span>, .y  = <span class="ch">&#39;Y&#39;</span>};</span>
+<span id="cb13-10"><a href="#cb13-10"></a>G&lt;<span class="dt">int</span>&gt;   g2 = {.x = <span class="dv">3</span>,    .y  = <span class="ch">&#39;Y&#39;</span>};</span></code></pre></div>
 </section>
 <section id="modularização-rotinas-i" class="slide level2">
 <h2>Modularização: Rotinas I</h2>
@@ -1919,7 +1919,7 @@ font-size: 1em;
 <span id="cb15-3"><a href="#cb15-3"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span> , i ) ;</span>
 <span id="cb15-4"><a href="#cb15-4"></a>}</span></code></pre></div>
 <p>Também é possível retornar múltiplos elementos (par ou tupla), através de um <em>structured binding</em> (requer <code>#include&lt;tuple&gt;</code>):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">auto</span> duplo(<span class="dt">int</span> p) { </span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">auto</span> duplo(<span class="dt">int</span> p) {</span>
 <span id="cb16-2"><a href="#cb16-2"></a>   <span class="cf">return</span> <span class="bu">std::</span>make_tuple(p+<span class="dv">3</span>, p+<span class="dv">6</span>);</span>
 <span id="cb16-3"><a href="#cb16-3"></a>}</span>
 <span id="cb16-4"><a href="#cb16-4"></a><span class="kw">auto</span> [x1,x2] = duplo(<span class="dv">10</span>); <span class="co">// x1=13 x2=16</span></span></code></pre></div>
@@ -1949,14 +1949,14 @@ font-size: 1em;
 <section id="modularização-rotinas-iii" class="slide level2">
 <h2>Modularização: Rotinas III</h2>
 <p>O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// o tipo da função &#39;quadrado&#39; é: int(*)(int) </span></span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// o tipo da função &#39;quadrado&#39; é: int(*)(int)</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
 <span id="cb18-3"><a href="#cb18-3"></a>   <span class="cf">return</span> p*p;      </span>
 <span id="cb18-4"><a href="#cb18-4"></a>}</span></code></pre></div>
 <p>Este fato pode ser útil para receber funções como parâmetro, bem como armazenar funções anônimas (<em>lambdas</em>):</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">// armazena lambda no ponteiro de função &#39;quad&#39;</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="dt">int</span>(*quad)(<span class="dt">int</span>) = [](<span class="dt">int</span> p) { </span>
-<span id="cb19-3"><a href="#cb19-3"></a>                               <span class="cf">return</span> p*p; </span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="dt">int</span>(*quad)(<span class="dt">int</span>) = [](<span class="dt">int</span> p) {</span>
+<span id="cb19-3"><a href="#cb19-3"></a>                               <span class="cf">return</span> p*p;</span>
 <span id="cb19-4"><a href="#cb19-4"></a>                            };</span>
 <span id="cb19-5"><a href="#cb19-5"></a><span class="co">// ...</span></span>
 <span id="cb19-6"><a href="#cb19-6"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, quad(<span class="dv">3</span>));    <span class="co">// 9</span></span></code></pre></div>
@@ -1971,8 +1971,8 @@ font-size: 1em;
 <span id="cb20-3"><a href="#cb20-3"></a>    <span class="dt">int</span> x;</span>
 <span id="cb20-4"><a href="#cb20-4"></a>};</span>
 <span id="cb20-5"><a href="#cb20-5"></a></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co">// imprime campo x </span></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="dt">void</span> imprimex(<span class="kw">struct</span> P* this) </span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co">// imprime campo x</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="dt">void</span> imprimex(<span class="kw">struct</span> P* this)</span>
 <span id="cb20-8"><a href="#cb20-8"></a>{</span>
 <span id="cb20-9"><a href="#cb20-9"></a>   printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, this-&gt;x);</span>
 <span id="cb20-10"><a href="#cb20-10"></a>}</span></code></pre></div>
@@ -1982,7 +1982,7 @@ font-size: 1em;
 <span id="cb21-3"><a href="#cb21-3"></a>{</span>
 <span id="cb21-4"><a href="#cb21-4"></a><span class="kw">public</span>:</span>
 <span id="cb21-5"><a href="#cb21-5"></a>   <span class="dt">int</span> x;</span>
-<span id="cb21-6"><a href="#cb21-6"></a>   <span class="co">// imprime campo x </span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>   <span class="co">// imprime campo x</span></span>
 <span id="cb21-7"><a href="#cb21-7"></a>   <span class="dt">void</span> imprimex() {</span>
 <span id="cb21-8"><a href="#cb21-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
 <span id="cb21-9"><a href="#cb21-9"></a>   }</span>
@@ -2034,7 +2034,7 @@ font-size: 1em;
 <div class="columns">
 <div class="column" style="width:55%;">
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a><span class="co">// Aloca um agregado P</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="kw">struct</span> P* vp = </span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="kw">struct</span> P* vp =</span>
 <span id="cb25-3"><a href="#cb25-3"></a>   malloc(<span class="dv">1</span>*<span class="kw">sizeof</span>(<span class="kw">struct</span> P));</span>
 <span id="cb25-4"><a href="#cb25-4"></a><span class="co">// inicializa campos de P</span></span>
 <span id="cb25-5"><a href="#cb25-5"></a>vp-&gt;x = <span class="dv">10</span>;</span>
@@ -2046,11 +2046,11 @@ font-size: 1em;
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">// Aloca um agregado P</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a><span class="kw">auto</span>* vp = <span class="kw">new</span> P{</span>
-<span id="cb26-3"><a href="#cb26-3"></a>                  .x = <span class="dv">10</span>, </span>
+<span id="cb26-3"><a href="#cb26-3"></a>                  .x = <span class="dv">10</span>,</span>
 <span id="cb26-4"><a href="#cb26-4"></a>                  .y = <span class="ch">&#39;Y&#39;</span></span>
 <span id="cb26-5"><a href="#cb26-5"></a>                };</span>
 <span id="cb26-6"><a href="#cb26-6"></a><span class="co">// imprime x (valor 10)</span></span>
-<span id="cb26-7"><a href="#cb26-7"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, vp-&gt;x); </span>
+<span id="cb26-7"><a href="#cb26-7"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
 <span id="cb26-8"><a href="#cb26-8"></a><span class="co">// descarta a memória</span></span>
 <span id="cb26-9"><a href="#cb26-9"></a><span class="kw">delete</span> vp;</span></code></pre></div>
 </div>
@@ -2058,15 +2058,15 @@ font-size: 1em;
 </section>
 <section id="continue-aprendendo" class="slide level2">
 <h2>Continue Aprendendo</h2>
-<p>Nessa revisão sobre tipos, buscamos não aprofundar em nenhuma característica “avançada” de C/C++, embora alguns conceitos possam ser novos para alguns.</p>
-<p>Para uma programação mais avançada em C++ é recomendado (tópicos não cobertos nesse curso):</p>
+<p>Nessa revisão sobre tipos, buscamos não aprofundar em nenhuma característica “avançada” de C/C++, embora alguns conceitos possam parecer novos. Tópicos recomendados (não cobertos no curso):</p>
 <ul>
 <li>Orientação a Objetos (outras disciplinas cobrem esse tópico)</li>
 <li>uso frequente de <em>referências</em> (ao invés de ponteiros)</li>
 <li>uso frequente de <em>move semantics</em> (ao invés de referências)</li>
 <li>uso frequente de <em>closures</em> (ao invés de funções e lambdas)</li>
+<li>uso frequente de memórias auto-gerenciáveis, como <code>std::unique_ptr</code> e <code>std::shared_ptr</code> (não requer <code>delete</code>)</li>
 <li>uso de <em>corrotinas</em> do C++20 (somente consideramos <em>rotinas</em> no curso), especialmente para elaboração de iteradores infinitos</li>
-<li>teste unitário de cada componente desenvolvido (recomendamos a biblioteca <a href="https://github.com/catchorg/Catch2"><code>catch2.hpp</code></a> ou <a href="https://github.com/google/googletest">Google Tests</a>, para esse fim)</li>
+<li>teste unitário de cada componente desenvolvido (recomendamos a biblioteca <a href="https://github.com/catchorg/Catch2"><code>catch2.hpp</code></a> ou <a href="https://github.com/google/googletest">Google Tests</a>)</li>
 </ul>
 </section>
 <section id="bibliografia-recomendada" class="slide level2">

@@ -44,7 +44,7 @@ Eclipse suporta a linguagem C++ tanto para Linux (nativamente)
 quanto para Windows (com a instalação do compilador MinGW).
 
 
-Também é possível praticar diretamente em um navegador web com 
+Também é possível praticar diretamente em um navegador web com
 plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler). Neste caso,
  o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrão C++17).
 
@@ -85,8 +85,8 @@ float z = 3.7 ; // armazena o real 3.7 na variável z
 int    x1 = 5;        // => 5
 int    x2 = x1 + 8;   // => 13
 int    x3 = x2 / 2;   // => 6
-float  x4 = x2 / 2;   // => 6.0 
-float  x5 = x2 / 2.0; // => 6.5 
+float  x4 = x2 / 2;   // => 6.0
+float  x5 = x2 / 2.0; // => 6.5
 auto   x6 = 13;       // => 13 (C warning: Wimplicit-int)
 auto   x7 = x2 / 2;   // => ?  (C warning: Wimplicit-int)
 auto   x8 = x2 / 2.0; // => ?  (C warning: Wimplicit-int)
@@ -106,7 +106,7 @@ conteúdo será impresso.
 **Pergunta:** como podemos misturar um texto (também chamado de
 cadeia de caracteres ou string) com o conteúdo de variáveis?
 
-. . . 
+. . .
 
 **Resposta:** através dos padrões de formatação (%d, %f, %c, ...).
 
@@ -176,7 +176,7 @@ bem como os modificadores unsigned, signed, short e long.
 
 Os tipos compostos podem ser vetores (arrays) ou agregados (structs, ...).
 
-. . . 
+. . .
 
 ```{.cpp}
 int v[8];  // cria um vetor com 8 inteiros
@@ -238,7 +238,7 @@ auto p2 = P{.x=10, .y='Y'};
 Retomamos o exemplo da estrutura P anterior e nos perguntamos,
 como acessar as variáveis internas do agregado P?
 
-Assim como na inicialização designada, podemos utilizar 
+Assim como na inicialização designada, podemos utilizar
 o operador ponto (.) para acessar campos do agregado.
 
 Exemplo:
@@ -253,10 +253,10 @@ printf("%d %c\n", p1.x, p1.y);  // imprime '21 A'
 
 -------
 
-## Espaço de Memória 
+## Espaço de Memória
 
 Todas variáveis de um programa ocupam determinado espaço na
-memória principal do computador. **Assumiremos** que o tipo int (ou float) ocupa 4 bytes, 
+memória principal do computador. **Assumiremos** que o tipo int (ou float) ocupa 4 bytes,
 enquanto um char ocupa apenas 1 byte.
 
 No caso de vetores, o espaço ocupado na memória é multiplicado pelo
@@ -268,7 +268,7 @@ char x [1000];
 float y [5];
 ```
 
-. . . 
+. . .
 
 ```{.cpp}
 int v [256];   // = 1024 bytes = 1 kibibyte = 1 KiB
@@ -298,8 +298,8 @@ public:
    char y;
 };
 // declara o agregado genérico G
-G<float> g1 = {.x = 3.14, .y  = 'Y'}; 
-G<int>   g2 = {.x = 3,    .y  = 'Y'}; 
+G<float> g1 = {.x = 3.14, .y  = 'Y'};
+G<int>   g2 = {.x = 3,    .y  = 'Y'};
 ```
 
 -------
@@ -307,11 +307,11 @@ G<int>   g2 = {.x = 3,    .y  = 'Y'};
 ## Modularização: Rotinas I
 
 A modularização de programas é muito importante, principalmente
-quando trechos de código são repetidos muitas vezes. 
+quando trechos de código são repetidos muitas vezes.
 
 Nesses casos, é
 comum criar rotinas, como *funções e procedimentos*, que podem por sua vez receber
-parâmetros. 
+parâmetros.
 
 Tomemos por exemplo a função quadrado que retorna
 o valor passado elevado ao quadrado.
@@ -342,7 +342,7 @@ void imprime (int a , int b) {
 Também é possível retornar múltiplos elementos (par ou tupla), através de um *structured binding* (requer `#include<tuple>`):
 
 ```{.cpp}
-auto duplo(int p) { 
+auto duplo(int p) {
    return std::make_tuple(p+3, p+6);
 }
 auto [x1,x2] = duplo(10); // x1=13 x2=16
@@ -357,7 +357,7 @@ procedimento. Mas como passar tipos complexos (como estruturas e
 vetores de milhares de elementos) sem desperdiçar tempo?
 
 Nestes casos, a linguagem C oferece um tipo especial denominado
-ponteiro. 
+ponteiro.
 A sintaxe do ponteiro simplesmente inclui um asterisco (*)
 após o tipo da variável. **Exemplos:** `int* x; struct P* p1`;
 
@@ -365,7 +365,7 @@ Um ponteiro simplesmente armazena **o local** (endereço) onde determinada vari�
 está armazenada na memória (basicamente, um número).
 Então quando um ponteiro é passado
 como parâmetro, **a cópia do ponteiro** pode ser utilizada para
-encontrar na memória a estrutura desejada. 
+encontrar na memória a estrutura desejada.
 
 O tamanho do ponteiro varia de acordo com a arquitetura, mas para endereçar 64-bits, ele ocupa 8 bytes.
 
@@ -396,7 +396,7 @@ imprimir(&p0, p0); // resulta em '20 20'
 O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:
 
 ```{.cpp}
-// o tipo da função 'quadrado' é: int(*)(int) 
+// o tipo da função 'quadrado' é: int(*)(int)
 int quadrado(int p) {
    return p*p;      
 }
@@ -406,8 +406,8 @@ Este fato pode ser útil para receber funções como parâmetro, bem como armaze
 
 ```{.cpp}
 // armazena lambda no ponteiro de função 'quad'
-int(*quad)(int) = [](int p) { 
-                               return p*p; 
+int(*quad)(int) = [](int p) {
+                               return p*p;
                             };
 // ...
 printf("%d\n", quad(3));    // 9
@@ -431,8 +431,8 @@ struct P {
     int x;
 };
 
-// imprime campo x 
-void imprimex(struct P* this) 
+// imprime campo x
+void imprimex(struct P* this)
 {
    printf("%d\n", this->x);
 }
@@ -448,7 +448,7 @@ class P
 {
 public:
    int x;
-   // imprime campo x 
+   // imprime campo x
    void imprimex() {
       printf("%d\n", this->x);
    }
@@ -531,7 +531,7 @@ Programas frequentemente necessitam de alocar mais memória para uso, o que é a
 
 ```{.c}
 // Aloca um agregado P
-struct P* vp = 
+struct P* vp =
    malloc(1*sizeof(struct P));
 // inicializa campos de P
 vp->x = 10;
@@ -549,11 +549,11 @@ free(vp);
 ```{.cpp}
 // Aloca um agregado P
 auto* vp = new P{
-                  .x = 10, 
+                  .x = 10,
                   .y = 'Y'
                 };
 // imprime x (valor 10)
-printf("%d\n", vp->x); 
+printf("%d\n", vp->x);
 // descarta a memória
 delete vp;
 ```
@@ -566,16 +566,15 @@ delete vp;
 
 ## Continue Aprendendo
 
-Nessa revisão sobre tipos, buscamos não aprofundar em nenhuma característica "avançada" de C/C++, embora alguns conceitos possam ser novos para alguns.
-
-Para uma programação mais avançada em C++ é recomendado (tópicos não cobertos nesse curso):
+Nessa revisão sobre tipos, buscamos não aprofundar em nenhuma característica "avançada" de C/C++, embora alguns conceitos possam parecer novos. Tópicos recomendados (não cobertos no curso):
 
 - Orientação a Objetos (outras disciplinas cobrem esse tópico)
 - uso frequente de *referências* (ao invés de ponteiros)
 - uso frequente de *move semantics* (ao invés de referências)
 - uso frequente de *closures* (ao invés de funções e lambdas)
+- uso frequente de memórias auto-gerenciáveis, como `std::unique_ptr` e `std::shared_ptr` (não requer `delete`)
 - uso de *corrotinas* do C++20 (somente consideramos *rotinas* no curso), especialmente para elaboração de iteradores infinitos
-- teste unitário de cada componente desenvolvido (recomendamos a biblioteca [`catch2.hpp`](https://github.com/catchorg/Catch2) ou [Google Tests](https://github.com/google/googletest), para esse fim)
+- teste unitário de cada componente desenvolvido (recomendamos a biblioteca [`catch2.hpp`](https://github.com/catchorg/Catch2) ou [Google Tests](https://github.com/google/googletest))
 
 
 -------
@@ -646,4 +645,3 @@ Igor Machado Coelho
 -------
 
 ## This Slide Is Intentionally Blank (for goomit-mpx)
-
