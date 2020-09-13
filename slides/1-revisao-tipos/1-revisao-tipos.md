@@ -1,5 +1,5 @@
 ---
-author: Igor M. Coelho
+author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Revisão de Tipos e Módulos
 date: 30/08/2020
@@ -103,8 +103,7 @@ cadeia de caracteres ou string) com o conteúdo de variáveis?
 **Resposta:** através dos padrões de formatação (%d, %f, %c, ...).
 
 ```{.cpp}
-int x1 = 7;
-printf("x1 é %d", x1); // x1 é 7
+int x1 = 7;   printf("x1 é %d", x1); // x1 é 7
 float x6 = x1 / 2.0;
 printf("metade de %d é %f", x1, x6); // metade de 7 é 3.5
 char b = 'L';
@@ -255,14 +254,6 @@ No caso de vetores, o espaço ocupado na memória é multiplicado pelo
 número de elementos. Vamos calcular o espaço das variáveis:
 
 ```{.cpp}
-int v [200];
-char x [1000];
-float y [5];
-```
-
-. . .
-
-```{.cpp}
 int v [256];   // = 1024 bytes = 1 kibibyte = 1 KiB
 char x [1000]; // = 1000 bytes = 1 kilobyte = 1 kB
 float y [5];   // = 20 bytes
@@ -346,8 +337,8 @@ auto [x1,x2] = duplo(10); // x1=13 x2=16
 ## Ponteiros I
 
 Os parâmetros são sempre copiados (em C) ao serem passados para uma função ou
-procedimento. Mas como passar tipos complexos (como estruturas e
-vetores de milhares de elementos) sem desperdiçar tempo?
+procedimento. Como passar tipos complexos (estruturas e
+vetores de muitos elementos) sem perder tempo?
 
 Nestes casos, a linguagem C oferece um tipo especial denominado
 ponteiro.
@@ -447,8 +438,7 @@ Este fato pode ser útil para receber funções como parâmetro, bem como armaze
 int(*quad)(int) = [](int p) {
                                return p*p;
                             };
-// ...
-printf("%d\n", quad(3));    // 9
+printf("%d\n", quad(3)); // 9
 ```
 
 
