@@ -1829,6 +1829,8 @@ font-size: 1em;
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1"></a><span class="dt">int</span> v[<span class="dv">8</span>];  <span class="co">// cria um vetor com 8 inteiros</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>v[<span class="dv">0</span>] = <span class="dv">3</span>; <span class="co">// atribui o valor 3 à primeira posição</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a>v[<span class="dv">7</span>] = <span class="dv">5</span>; <span class="co">// atribui o valor 5 à última posição</span></span></code></pre></div>
+<pre><code>v: | 3 |   |   |   |   |   |   | 5 |
+     0   1   2   3   4   5   6   7</code></pre>
 </div>
 </section>
 <section id="tipos-agregados-i" class="slide level2">
@@ -1836,29 +1838,29 @@ font-size: 1em;
 <p>Comparação C/C++:</p>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">// Em C (tipo agregado P)</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">struct</span> P</span>
-<span id="cb8-3"><a href="#cb8-3"></a>{</span>
-<span id="cb8-4"><a href="#cb8-4"></a>    <span class="dt">int</span> x;</span>
-<span id="cb8-5"><a href="#cb8-5"></a>    <span class="dt">char</span> y;</span>
-<span id="cb8-6"><a href="#cb8-6"></a>};</span>
-<span id="cb8-7"><a href="#cb8-7"></a></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">// declara variável tipo P</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="kw">struct</span> P p1;</span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">// designated initializers</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="kw">struct</span> P p2 = {.x=<span class="dv">10</span>, .y=<span class="ch">&#39;Y&#39;</span>};</span></code></pre></div>
-</div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">// Em C++ (tipo agregado P)</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">class</span> P</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">// Em C (tipo agregado P)</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">struct</span> P</span>
 <span id="cb9-3"><a href="#cb9-3"></a>{</span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="kw">public</span>:</span>
-<span id="cb9-5"><a href="#cb9-5"></a>    <span class="dt">int</span> x;</span>
-<span id="cb9-6"><a href="#cb9-6"></a>    <span class="dt">char</span> y;</span>
-<span id="cb9-7"><a href="#cb9-7"></a>};</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="dt">int</span> x;</span>
+<span id="cb9-5"><a href="#cb9-5"></a>    <span class="dt">char</span> y;</span>
+<span id="cb9-6"><a href="#cb9-6"></a>};</span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
 <span id="cb9-8"><a href="#cb9-8"></a><span class="co">// declara variável tipo P</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a>P p1;</span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="kw">struct</span> P p1;</span>
 <span id="cb9-10"><a href="#cb9-10"></a><span class="co">// designated initializers</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="kw">auto</span> p2 = P{.x=<span class="dv">10</span>, .y=<span class="ch">&#39;Y&#39;</span>};</span></code></pre></div>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="kw">struct</span> P p2 = {.x=<span class="dv">10</span>, .y=<span class="ch">&#39;Y&#39;</span>};</span></code></pre></div>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">// Em C++ (tipo agregado P)</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">class</span> P</span>
+<span id="cb10-3"><a href="#cb10-3"></a>{</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="kw">public</span>:</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="dt">int</span> x;</span>
+<span id="cb10-6"><a href="#cb10-6"></a>    <span class="dt">char</span> y;</span>
+<span id="cb10-7"><a href="#cb10-7"></a>};</span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co">// declara variável tipo P</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>P p1;</span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">// designated initializers</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="kw">auto</span> p2 = P{.x=<span class="dv">10</span>, .y=<span class="ch">&#39;Y&#39;</span>};</span></code></pre></div>
 </div>
 </div>
 </section>
@@ -1867,60 +1869,60 @@ font-size: 1em;
 <p>Retomamos o exemplo da estrutura P anterior e nos perguntamos, como acessar as variáveis internas do agregado P?</p>
 <p>Assim como na inicialização designada, podemos utilizar o operador ponto (.) para acessar campos do agregado.</p>
 <p>Exemplo:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">auto</span> p1 = P{.y = <span class="ch">&#39;A&#39;</span>}; <span class="co">// compilador GCC8 (no mínimo)</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a>p1.x = <span class="dv">20</span>;             <span class="co">// atribui 20 à variável x de p1</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>p1.x = p1.x + <span class="dv">1</span>;       <span class="co">// incrementa a variável y de p1</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a>printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span>, p1.x, p1.y);  <span class="co">// imprime &#39;21 A&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">auto</span> p1 = P{.y = <span class="ch">&#39;A&#39;</span>}; <span class="co">// compilador GCC8 (no mínimo)</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>p1.x = <span class="dv">20</span>;             <span class="co">// atribui 20 à variável x de p1</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>p1.x = p1.x + <span class="dv">1</span>;       <span class="co">// incrementa a variável y de p1</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span>, p1.x, p1.y);  <span class="co">// imprime &#39;21 A&#39;</span></span></code></pre></div>
 </section>
 <section id="espaço-de-memória" class="slide level2">
 <h2>Espaço de Memória</h2>
 <p>Todas variáveis de um programa ocupam determinado espaço na memória principal do computador. <strong>Assumiremos</strong> que o tipo int (ou float) ocupa 4 bytes, enquanto um char ocupa apenas 1 byte.</p>
 <p>No caso de vetores, o espaço ocupado na memória é multiplicado pelo número de elementos. Vamos calcular o espaço das variáveis:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1"></a><span class="dt">int</span> v [<span class="dv">256</span>];   <span class="co">// = 1024 bytes = 1 kibibyte = 1 KiB</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="dt">char</span> x [<span class="dv">1000</span>]; <span class="co">// = 1000 bytes = 1 kilobyte = 1 kB</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="dt">float</span> y [<span class="dv">5</span>];   <span class="co">// = 20 bytes</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1"></a><span class="dt">int</span> v [<span class="dv">256</span>];   <span class="co">// = 1024 bytes = 1 kibibyte = 1 KiB</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="dt">char</span> x [<span class="dv">1000</span>]; <span class="co">// = 1000 bytes = 1 kilobyte = 1 kB</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="dt">float</span> y [<span class="dv">5</span>];   <span class="co">// = 20 bytes</span></span></code></pre></div>
 <p>Já nos agregados, assumimos o espaço ocupado como a soma de suas variáveis internas (embora na prática o tamanho possa ser ligeiramente superior, devido a alinhamentos de memória).</p>
 </section>
 <section id="tipos-genéricos" class="slide level2">
 <h2>Tipos Genéricos</h2>
 <p>C++ permite a definição de tipos genéricos, ou seja, tipos que permitem que algum <em>outro tipo</em> seja passado como parâmetro.</p>
 <p>Consideremos o agregado P que carrega um int e um char… como transformá-lo em um agregado genérico em relação à variável x?</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">template</span>&lt;<span class="kw">typename</span> T&gt;</span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">class</span> G</span>
-<span id="cb12-3"><a href="#cb12-3"></a>{</span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="kw">public</span>:</span>
-<span id="cb12-5"><a href="#cb12-5"></a>   T x;   <span class="co">// qual o tipo da variável x?</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a>   <span class="dt">char</span> y;</span>
-<span id="cb12-7"><a href="#cb12-7"></a>};</span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co">// declara o agregado genérico G</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a>G&lt;<span class="dt">float</span>&gt; g1 = {.x = <span class="fl">3.14</span>, .y  = <span class="ch">&#39;Y&#39;</span>};</span>
-<span id="cb12-10"><a href="#cb12-10"></a>G&lt;<span class="dt">int</span>&gt;   g2 = {.x = <span class="dv">3</span>,    .y  = <span class="ch">&#39;Y&#39;</span>};</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">template</span>&lt;<span class="kw">typename</span> T&gt;</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="kw">class</span> G</span>
+<span id="cb13-3"><a href="#cb13-3"></a>{</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="kw">public</span>:</span>
+<span id="cb13-5"><a href="#cb13-5"></a>   T x;   <span class="co">// qual o tipo da variável x?</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>   <span class="dt">char</span> y;</span>
+<span id="cb13-7"><a href="#cb13-7"></a>};</span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co">// declara o agregado genérico G</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a>G&lt;<span class="dt">float</span>&gt; g1 = {.x = <span class="fl">3.14</span>, .y  = <span class="ch">&#39;Y&#39;</span>};</span>
+<span id="cb13-10"><a href="#cb13-10"></a>G&lt;<span class="dt">int</span>&gt;   g2 = {.x = <span class="dv">3</span>,    .y  = <span class="ch">&#39;Y&#39;</span>};</span></code></pre></div>
 </section>
 <section id="rotinas-i" class="slide level2">
 <h2>Rotinas I</h2>
 <p>A modularização de programas é muito importante, principalmente quando trechos de código são repetidos muitas vezes.</p>
 <p>Nesses casos, é comum criar rotinas, como <em>funções e procedimentos</em>, que podem por sua vez receber parâmetros.</p>
 <p>Tomemos por exemplo a função quadrado que retorna o valor passado elevado ao quadrado.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">// função que retorna um &#39;int&#39;, com parâmetro &#39;p&#39;</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="dt">int</span> quadrado (<span class="dt">int</span> p) {</span>
-<span id="cb13-3"><a href="#cb13-3"></a>   <span class="cf">return</span> p*p;</span>
-<span id="cb13-4"><a href="#cb13-4"></a>}</span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="co">// variável do tipo &#39;int&#39;, com valor 25</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="dt">int</span> x = quadrado(<span class="dv">5</span>);        </span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">// função que retorna um &#39;int&#39;, com parâmetro &#39;p&#39;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="dt">int</span> quadrado (<span class="dt">int</span> p) {</span>
+<span id="cb14-3"><a href="#cb14-3"></a>   <span class="cf">return</span> p*p;</span>
+<span id="cb14-4"><a href="#cb14-4"></a>}</span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">// variável do tipo &#39;int&#39;, com valor 25</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="dt">int</span> x = quadrado(<span class="dv">5</span>);        </span></code></pre></div>
 </section>
 <section id="rotinas-ii" class="slide level2">
 <h2>Rotinas II</h2>
 <p>Quando nenhum valor é retornado (em um procedimento), utilizamos a palavra-chave <code>void</code>. Procedimentos são úteis mesmo quando nenhum valor é retornado. <strong>Exemplo</strong>: (de a até b):</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1"></a><span class="dt">void</span> imprime (<span class="dt">int</span> a , <span class="dt">int</span> b) {</span>
-<span id="cb14-2"><a href="#cb14-2"></a>   <span class="cf">for</span> (<span class="dt">int</span> i=a ; i&lt;b ; i++)</span>
-<span id="cb14-3"><a href="#cb14-3"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span> , i ) ;</span>
-<span id="cb14-4"><a href="#cb14-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1"></a><span class="dt">void</span> imprime (<span class="dt">int</span> a , <span class="dt">int</span> b) {</span>
+<span id="cb15-2"><a href="#cb15-2"></a>   <span class="cf">for</span> (<span class="dt">int</span> i=a ; i&lt;b ; i++)</span>
+<span id="cb15-3"><a href="#cb15-3"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span> , i ) ;</span>
+<span id="cb15-4"><a href="#cb15-4"></a>}</span></code></pre></div>
 <p>Também é possível retornar múltiplos elementos (par ou tupla), através de um <em>structured binding</em> (requer <code>#include&lt;tuple&gt;</code>):</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">auto</span> duplo(<span class="dt">int</span> p) {</span>
-<span id="cb15-2"><a href="#cb15-2"></a>   <span class="cf">return</span> <span class="bu">std::</span>make_tuple(p+<span class="dv">3</span>, p+<span class="dv">6</span>);</span>
-<span id="cb15-3"><a href="#cb15-3"></a>}</span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="kw">auto</span> [x1,x2] = duplo(<span class="dv">10</span>); <span class="co">// x1=13 x2=16</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">auto</span> duplo(<span class="dt">int</span> p) {</span>
+<span id="cb16-2"><a href="#cb16-2"></a>   <span class="cf">return</span> <span class="bu">std::</span>make_tuple(p+<span class="dv">3</span>, p+<span class="dv">6</span>);</span>
+<span id="cb16-3"><a href="#cb16-3"></a>}</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="kw">auto</span> [x1,x2] = duplo(<span class="dv">10</span>); <span class="co">// x1=13 x2=16</span></span></code></pre></div>
 </section>
 <section id="ponteiros-i" class="slide level2">
 <h2>Ponteiros I</h2>
@@ -1932,86 +1934,86 @@ font-size: 1em;
 <section id="ponteiros-ii" class="slide level2">
 <h2>Ponteiros II</h2>
 <p>Em ponteiros para agregados, o operador de acesso (.) é substituído por uma seta (-&gt;). O operador <code>&amp;</code> toma o endereço da variável:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">struct</span> P {</span>
-<span id="cb16-2"><a href="#cb16-2"></a>   <span class="dt">int</span> x;</span>
-<span id="cb16-3"><a href="#cb16-3"></a>   <span class="dt">char</span> y;</span>
-<span id="cb16-4"><a href="#cb16-4"></a>};</span>
-<span id="cb16-5"><a href="#cb16-5"></a></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="dt">void</span> imprimir(<span class="kw">struct</span> P* p1, <span class="kw">struct</span> P p2) {</span>
-<span id="cb16-7"><a href="#cb16-7"></a>   printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%d\n</span><span class="st">&quot;</span>, p1-&gt;x, p2.x);</span>
-<span id="cb16-8"><a href="#cb16-8"></a>}</span>
-<span id="cb16-9"><a href="#cb16-9"></a><span class="co">// ...</span></span>
-<span id="cb16-10"><a href="#cb16-10"></a><span class="kw">struct</span> P p0 = {.x = <span class="dv">20</span>, .y = <span class="ch">&#39;Y&#39;</span>}; <span class="co">// cria variável &#39;p0&#39;</span></span>
-<span id="cb16-11"><a href="#cb16-11"></a>imprimir(&amp;p0, p0); <span class="co">// resulta em &#39;20 20&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">struct</span> P {</span>
+<span id="cb17-2"><a href="#cb17-2"></a>   <span class="dt">int</span> x;</span>
+<span id="cb17-3"><a href="#cb17-3"></a>   <span class="dt">char</span> y;</span>
+<span id="cb17-4"><a href="#cb17-4"></a>};</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="dt">void</span> imprimir(<span class="kw">struct</span> P* p1, <span class="kw">struct</span> P p2) {</span>
+<span id="cb17-7"><a href="#cb17-7"></a>   printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%d\n</span><span class="st">&quot;</span>, p1-&gt;x, p2.x);</span>
+<span id="cb17-8"><a href="#cb17-8"></a>}</span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="co">// ...</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="kw">struct</span> P p0 = {.x = <span class="dv">20</span>, .y = <span class="ch">&#39;Y&#39;</span>}; <span class="co">// cria variável &#39;p0&#39;</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>imprimir(&amp;p0, p0); <span class="co">// resulta em &#39;20 20&#39;</span></span></code></pre></div>
 </section>
 <section id="alocação-dinâmica-de-memória" class="slide level2">
 <h2>Alocação Dinâmica de Memória</h2>
 <p>Programas frequentemente necessitam de alocar mais memória para uso, o que é armazenado de forma segura em um ponteiro para o tipo da memória:</p>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">// Aloca (C) o agregado P</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">struct</span> P* vp =</span>
-<span id="cb17-3"><a href="#cb17-3"></a>   malloc(<span class="dv">1</span>*<span class="kw">sizeof</span>(<span class="kw">struct</span> P));</span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co">// inicializa campos de P</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>vp-&gt;x = <span class="dv">10</span>;</span>
-<span id="cb17-6"><a href="#cb17-6"></a>vp-&gt;y = <span class="ch">&#39;Y&#39;</span>;</span>
-<span id="cb17-7"><a href="#cb17-7"></a><span class="co">// imprime x (valor 10)</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="co">// descarta a memória</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a>free(vp);</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// Aloca (C) o agregado P</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">struct</span> P* vp =</span>
+<span id="cb18-3"><a href="#cb18-3"></a>   malloc(<span class="dv">1</span>*<span class="kw">sizeof</span>(<span class="kw">struct</span> P));</span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="co">// inicializa campos de P</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>vp-&gt;x = <span class="dv">10</span>;</span>
+<span id="cb18-6"><a href="#cb18-6"></a>vp-&gt;y = <span class="ch">&#39;Y&#39;</span>;</span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co">// imprime x (valor 10)</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="co">// descarta a memória</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a>free(vp);</span></code></pre></div>
 </div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// Aloca (C++) o agregado P</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">auto</span>* vp = <span class="kw">new</span> P{</span>
-<span id="cb18-3"><a href="#cb18-3"></a>                  .x = <span class="dv">10</span>,</span>
-<span id="cb18-4"><a href="#cb18-4"></a>                  .y = <span class="ch">&#39;Y&#39;</span></span>
-<span id="cb18-5"><a href="#cb18-5"></a>                };</span>
-<span id="cb18-6"><a href="#cb18-6"></a><span class="co">// imprime x (valor 10)</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="co">// descarta a memória</span></span>
-<span id="cb18-9"><a href="#cb18-9"></a><span class="kw">delete</span> vp;</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">// Aloca (C++) o agregado P</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="kw">auto</span>* vp = <span class="kw">new</span> P{</span>
+<span id="cb19-3"><a href="#cb19-3"></a>                  .x = <span class="dv">10</span>,</span>
+<span id="cb19-4"><a href="#cb19-4"></a>                  .y = <span class="ch">&#39;Y&#39;</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>                };</span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="co">// imprime x (valor 10)</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="co">// descarta a memória</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a><span class="kw">delete</span> vp;</span></code></pre></div>
 </div>
 </div>
 </section>
 <section id="rotinas-iii" class="slide level2">
 <h2>Rotinas III</h2>
 <p>O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">// o tipo da função &#39;quadrado&#39; é: int(*)(int)</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
-<span id="cb19-3"><a href="#cb19-3"></a>   <span class="cf">return</span> p*p;      </span>
-<span id="cb19-4"><a href="#cb19-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">// o tipo da função &#39;quadrado&#39; é: int(*)(int)</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
+<span id="cb20-3"><a href="#cb20-3"></a>   <span class="cf">return</span> p*p;      </span>
+<span id="cb20-4"><a href="#cb20-4"></a>}</span></code></pre></div>
 <p>Este fato pode ser útil para receber funções como parâmetro, bem como armazenar funções anônimas (<em>lambdas</em>):</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">// armazena lambda no ponteiro de função &#39;quad&#39;</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="dt">int</span>(*quad)(<span class="dt">int</span>) = [](<span class="dt">int</span> p) {</span>
-<span id="cb20-3"><a href="#cb20-3"></a>                               <span class="cf">return</span> p*p;</span>
-<span id="cb20-4"><a href="#cb20-4"></a>                            };</span>
-<span id="cb20-5"><a href="#cb20-5"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, quad(<span class="dv">3</span>)); <span class="co">// 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">// armazena lambda no ponteiro de função &#39;quad&#39;</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="dt">int</span>(*quad)(<span class="dt">int</span>) = [](<span class="dt">int</span> p) {</span>
+<span id="cb21-3"><a href="#cb21-3"></a>                               <span class="cf">return</span> p*p;</span>
+<span id="cb21-4"><a href="#cb21-4"></a>                            };</span>
+<span id="cb21-5"><a href="#cb21-5"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, quad(<span class="dv">3</span>)); <span class="co">// 9</span></span></code></pre></div>
 </section>
 <section id="rotinas-iv" class="slide level2">
 <h2>Rotinas IV</h2>
 <p>A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o <em>ponteiro para o agregado</em>, chamado <strong>this</strong>:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">// Em C (tipo agregado Z)</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="kw">struct</span> Z {</span>
-<span id="cb21-3"><a href="#cb21-3"></a>    <span class="dt">int</span> x;</span>
-<span id="cb21-4"><a href="#cb21-4"></a>};</span>
-<span id="cb21-5"><a href="#cb21-5"></a></span>
-<span id="cb21-6"><a href="#cb21-6"></a><span class="co">// imprime campo x</span></span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="dt">void</span> imprimex(<span class="kw">struct</span> Z* this)</span>
-<span id="cb21-8"><a href="#cb21-8"></a>{</span>
-<span id="cb21-9"><a href="#cb21-9"></a>   printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, this-&gt;x);</span>
-<span id="cb21-10"><a href="#cb21-10"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">// Em C (tipo agregado Z)</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="kw">struct</span> Z {</span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="dt">int</span> x;</span>
+<span id="cb22-4"><a href="#cb22-4"></a>};</span>
+<span id="cb22-5"><a href="#cb22-5"></a></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="co">// imprime campo x</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="dt">void</span> imprimex(<span class="kw">struct</span> Z* this)</span>
+<span id="cb22-8"><a href="#cb22-8"></a>{</span>
+<span id="cb22-9"><a href="#cb22-9"></a>   printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, this-&gt;x);</span>
+<span id="cb22-10"><a href="#cb22-10"></a>}</span></code></pre></div>
 </div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="kw">class</span> Z</span>
-<span id="cb22-3"><a href="#cb22-3"></a>{</span>
-<span id="cb22-4"><a href="#cb22-4"></a><span class="kw">public</span>:</span>
-<span id="cb22-5"><a href="#cb22-5"></a>   <span class="dt">int</span> x;</span>
-<span id="cb22-6"><a href="#cb22-6"></a>   <span class="co">// imprime campo x</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a>   <span class="dt">void</span> imprimex() {</span>
-<span id="cb22-8"><a href="#cb22-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
-<span id="cb22-9"><a href="#cb22-9"></a>   }</span>
-<span id="cb22-10"><a href="#cb22-10"></a>};</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">class</span> Z</span>
+<span id="cb23-3"><a href="#cb23-3"></a>{</span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="kw">public</span>:</span>
+<span id="cb23-5"><a href="#cb23-5"></a>   <span class="dt">int</span> x;</span>
+<span id="cb23-6"><a href="#cb23-6"></a>   <span class="co">// imprime campo x</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a>   <span class="dt">void</span> imprimex() {</span>
+<span id="cb23-8"><a href="#cb23-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
+<span id="cb23-9"><a href="#cb23-9"></a>   }</span>
+<span id="cb23-10"><a href="#cb23-10"></a>};</span></code></pre></div>
 </div>
 </div>
 </section>
@@ -2019,20 +2021,20 @@ font-size: 1em;
 <h2>Conceitos I</h2>
 <p>C++17 com flag GCC <em>-fconcepts</em> (oficialmente sem flags no C++20) traz a possibilidade de definir conceitos (ou <em>concepts</em>). Esse recurso permite <em>definições genéricas</em> sobre algum tipo (inclusive tipos agregados com funções internas).</p>
 <p>Por exemplo, podemos criar um <em>conceito</em> <code>TemImprimeX</code>, que exige que o agregado possua um método <code>imprimex()</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">template</span>&lt;<span class="kw">typename</span> Agregado&gt;</span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">concept</span> <span class="dt">bool</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>TemImprimeX = <span class="kw">requires</span>(Agregado a) {</span>
-<span id="cb23-4"><a href="#cb23-4"></a>   {</span>
-<span id="cb23-5"><a href="#cb23-5"></a>      a.imprimex()</span>
-<span id="cb23-6"><a href="#cb23-6"></a>   }</span>
-<span id="cb23-7"><a href="#cb23-7"></a>};</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">template</span>&lt;<span class="kw">typename</span> Agregado&gt;</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">concept</span> <span class="dt">bool</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>TemImprimeX = <span class="kw">requires</span>(Agregado a) {</span>
+<span id="cb24-4"><a href="#cb24-4"></a>   {</span>
+<span id="cb24-5"><a href="#cb24-5"></a>      a.imprimex()</span>
+<span id="cb24-6"><a href="#cb24-6"></a>   }</span>
+<span id="cb24-7"><a href="#cb24-7"></a>};</span></code></pre></div>
 </section>
 <section id="conceitos-ii" class="slide level2">
 <h2>Conceitos II</h2>
 <p>Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">auto</span>        a1 = Z{.x = <span class="dv">1</span>}; <span class="co">// tipo automático</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>TemImprimeX a2 = Z{.x = <span class="dv">2</span>}; <span class="co">// tipo conceitual</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>Z           a3 = Z{.x = <span class="dv">3</span>}; <span class="co">// tipo explícito </span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">auto</span>        a1 = Z{.x = <span class="dv">1</span>}; <span class="co">// tipo automático</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>TemImprimeX a2 = Z{.x = <span class="dv">2</span>}; <span class="co">// tipo conceitual</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>Z           a3 = Z{.x = <span class="dv">3</span>}; <span class="co">// tipo explícito </span></span></code></pre></div>
 <p><strong>Importante:</strong> a noção de <em>conceitos</em> é fundamental para a compreensão de <em>tipos abstratos</em>, central no curso de estruturas de dados.</p>
 </section>
 <section id="tipos" class="slide level2">
@@ -2052,15 +2054,15 @@ font-size: 1em;
 <section id="modularização-básica" class="slide level2">
 <h2>Modularização Básica</h2>
 <p>Um programa começa pelo seu “ponto de entrada” (ou <em>entrypoint</em>), tipicamente uma função <code>int main()</code>:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="dt">int</span> main() {</span>
-<span id="cb25-3"><a href="#cb25-3"></a>   <span class="cf">return</span> <span class="dv">0</span>;       <span class="co">// 0 significa: nenhum erro</span></span>
-<span id="cb25-4"><a href="#cb25-4"></a>}</span></code></pre></div>
-<p>A declaração de funções pode ser feita antes da definição:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p); <span class="co">// declara a função &#39;quadrado&#39;</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
-<span id="cb26-3"><a href="#cb26-3"></a>   <span class="cf">return</span> p*p;       <span class="co">// implementa a função &#39;quadrado&#39;</span></span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb26-3"><a href="#cb26-3"></a>   <span class="cf">return</span> <span class="dv">0</span>;       <span class="co">// 0 significa: nenhum erro</span></span>
 <span id="cb26-4"><a href="#cb26-4"></a>}</span></code></pre></div>
+<p>A declaração de funções pode ser feita antes da definição:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p); <span class="co">// declara a função &#39;quadrado&#39;</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
+<span id="cb27-3"><a href="#cb27-3"></a>   <span class="cf">return</span> p*p;       <span class="co">// implementa a função &#39;quadrado&#39;</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>}</span></code></pre></div>
 <p>Declarações vem em arquivos <code>.h</code>, enquanto as respectivas implementações em arquivo <code>.cpp</code> (ou juntas como <code>.hpp</code>).</p>
 </section>
 <section id="executando-o-main.cpp" class="slide level2">
@@ -2074,9 +2076,9 @@ font-size: 1em;
 <h2>Organização em Arquivos I</h2>
 <p>Modularização mínima: 4 arquivos.</p>
 <ul>
-<li>um ponto de entrada (entrypoint) - geralmente <code>main.cpp</code> na pasta <code>src/</code></li>
-<li>um (ou mais) arquivo(s) com demais módulos, também na pasta <code>src/</code></li>
-<li>um (ou mais) arquivo(s) com seus testes - geralmente <code>main.test.cpp</code> na pasta <code>tests/</code></li>
+<li>um ponto de entrada (entrypoint) - geralmente <code>main.cpp</code> (dica: colocar na pasta <code>src/</code>)</li>
+<li>um (ou mais) arquivo(s) com demais módulos (dica: colocar na pasta <code>src/</code>)</li>
+<li>um (ou mais) arquivo(s) com seus testes - geralmente <code>teste.cpp</code> (dica: colocar na pasta <code>tests/</code>)</li>
 <li>um arquivo (na raiz) com informações de construção - geralmente <code>makefile</code> do GNU (com regras <code>all:</code> e <code>test:</code>)</li>
 </ul>
 </section>
@@ -2089,62 +2091,62 @@ font-size: 1em;
 <h2>Tipos na biblioteca padrão C++</h2>
 <p>Durante o curso estudaremos várias estruturas de dados, mas sempre que possível utilize as existentes na biblioteca padrão (STL). São “mais eficientes” e “à prova de erros”.</p>
 <p>Por exemplo, é fácil definir um tipo agregado <code>Par</code>, que comporta dois elementos internos (tipo genérico). Porém, é mais vantajoso usar o existente na STL, chamado <code>std::pair</code> (o prefixo <code>std::</code> é chamado <em>namespace</em> e evita colisões de nomes):</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="dt">int</span> main() {</span>
-<span id="cb27-4"><a href="#cb27-4"></a>   <span class="bu">std::</span>pair&lt;<span class="dt">int</span>, <span class="dt">char</span>&gt; p {<span class="dv">5</span>, <span class="ch">&#39;C&#39;</span>}; <span class="co">// direct init.</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>   printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span>, p.first, p.second); <span class="co">// 5 C</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a>   <span class="co">// ...</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="dt">int</span> main() {</span>
+<span id="cb28-4"><a href="#cb28-4"></a>   <span class="bu">std::</span>pair&lt;<span class="dt">int</span>, <span class="dt">char</span>&gt; p {<span class="dv">5</span>, <span class="ch">&#39;C&#39;</span>}; <span class="co">// direct init.</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a>   printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span>, p.first, p.second); <span class="co">// 5 C</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a>   <span class="co">// ...</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>}</span></code></pre></div>
 </section>
 <section id="relembrando-agregado-z" class="slide level2">
 <h2>Relembrando (agregado Z)</h2>
-<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="kw">class</span> Z</span>
-<span id="cb28-3"><a href="#cb28-3"></a>{</span>
-<span id="cb28-4"><a href="#cb28-4"></a><span class="kw">public</span>:</span>
-<span id="cb28-5"><a href="#cb28-5"></a>   <span class="dt">int</span> x;</span>
-<span id="cb28-6"><a href="#cb28-6"></a>   <span class="co">// imprime campo x</span></span>
-<span id="cb28-7"><a href="#cb28-7"></a>   <span class="dt">void</span> imprimex() {</span>
-<span id="cb28-8"><a href="#cb28-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
-<span id="cb28-9"><a href="#cb28-9"></a>   }</span>
-<span id="cb28-10"><a href="#cb28-10"></a>};</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">class</span> Z</span>
+<span id="cb29-3"><a href="#cb29-3"></a>{</span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="kw">public</span>:</span>
+<span id="cb29-5"><a href="#cb29-5"></a>   <span class="dt">int</span> x;</span>
+<span id="cb29-6"><a href="#cb29-6"></a>   <span class="co">// imprime campo x</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>   <span class="dt">void</span> imprimex() {</span>
+<span id="cb29-8"><a href="#cb29-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
+<span id="cb29-9"><a href="#cb29-9"></a>   }</span>
+<span id="cb29-10"><a href="#cb29-10"></a>};</span></code></pre></div>
 </section>
 <section id="relembrando-conceito-temimprimex" class="slide level2">
 <h2>Relembrando (conceito TemImprimeX)</h2>
-<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">template</span>&lt;<span class="kw">typename</span> Agregado&gt;</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">concept</span> <span class="dt">bool</span></span>
-<span id="cb29-3"><a href="#cb29-3"></a>TemImprimeX = <span class="kw">requires</span>(Agregado a) {</span>
-<span id="cb29-4"><a href="#cb29-4"></a>   {</span>
-<span id="cb29-5"><a href="#cb29-5"></a>      a.imprimex()</span>
-<span id="cb29-6"><a href="#cb29-6"></a>   }</span>
-<span id="cb29-7"><a href="#cb29-7"></a>};</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw">template</span>&lt;<span class="kw">typename</span> Agregado&gt;</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="kw">concept</span> <span class="dt">bool</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>TemImprimeX = <span class="kw">requires</span>(Agregado a) {</span>
+<span id="cb30-4"><a href="#cb30-4"></a>   {</span>
+<span id="cb30-5"><a href="#cb30-5"></a>      a.imprimex()</span>
+<span id="cb30-6"><a href="#cb30-6"></a>   }</span>
+<span id="cb30-7"><a href="#cb30-7"></a>};</span></code></pre></div>
 </section>
 <section id="verificações-com-assert" class="slide level2">
 <h2>Verificações com <code>assert</code></h2>
 <p>Durante o desenvolvimento, é útil verificar partes do código com testes simples e necessários para a corretude do mesmo (em tempo real). Para isso, podemos utilizar o <code>assert()</code>. Exemplo:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1"></a><span class="dt">int</span> x = <span class="dv">10</span>;</span>
-<span id="cb30-2"><a href="#cb30-2"></a>x++;</span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="ot">assert</span>(x == <span class="dv">11</span>); <span class="co">// x deveria ser 11</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1"></a><span class="dt">int</span> x = <span class="dv">10</span>;</span>
+<span id="cb31-2"><a href="#cb31-2"></a>x++;</span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="ot">assert</span>(x == <span class="dv">11</span>); <span class="co">// x deveria ser 11</span></span></code></pre></div>
 <p>Da mesma forma, podemos verificar tipos, especialmente <em>conceitos</em>, em tempo de compilação:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1"></a><span class="co">// verifica se tipo agregado Z tem método imprimex()</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">static_assert</span>(TemImprimeX&lt;Z&gt;); </span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1"></a><span class="co">// verifica se tipo agregado Z tem método imprimex()</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="kw">static_assert</span>(TemImprimeX&lt;Z&gt;); </span></code></pre></div>
 </section>
 <section id="testes-com-a-biblioteca-catch2" class="slide level2">
 <h2>Testes com a biblioteca Catch2</h2>
 <p>Uma forma prática de testar um código modularizado com <code>main.cpp</code> separado do <code>resto.hpp</code>, é utilizando a biblioteca <a href="https://github.com/catchorg/Catch2">Catch2</a>.</p>
 <p>Basta criar um arquivo de teste, por exemplo, <code>teste.cpp</code>:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1"></a><span class="pp">#include </span><span class="im">&quot;resto.hpp&quot;</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="pp">#define CATCH_CONFIG_MAIN </span><span class="co">// catch2 main()</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a><span class="pp">#include </span><span class="im">&quot;catch.hpp&quot;</span></span>
-<span id="cb32-5"><a href="#cb32-5"></a></span>
-<span id="cb32-6"><a href="#cb32-6"></a>TEST_CASE(<span class="st">&quot;Testa inicializacao do agregado Z&quot;</span>) </span>
-<span id="cb32-7"><a href="#cb32-7"></a>{</span>
-<span id="cb32-8"><a href="#cb32-8"></a>   <span class="kw">auto</span> z1 = Z{.x = <span class="dv">10</span>};</span>
-<span id="cb32-9"><a href="#cb32-9"></a>   <span class="co">// verifica se, de fato, z1.x vale 10</span></span>
-<span id="cb32-10"><a href="#cb32-10"></a>   REQUIRE(z1.x == <span class="dv">10</span>);</span>
-<span id="cb32-11"><a href="#cb32-11"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1"></a><span class="pp">#include </span><span class="im">&quot;resto.hpp&quot;</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="pp">#define CATCH_CONFIG_MAIN </span><span class="co">// catch2 main()</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a><span class="pp">#include </span><span class="im">&quot;catch.hpp&quot;</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a></span>
+<span id="cb33-6"><a href="#cb33-6"></a>TEST_CASE(<span class="st">&quot;Testa inicializacao do agregado Z&quot;</span>) </span>
+<span id="cb33-7"><a href="#cb33-7"></a>{</span>
+<span id="cb33-8"><a href="#cb33-8"></a>   <span class="kw">auto</span> z1 = Z{.x = <span class="dv">10</span>};</span>
+<span id="cb33-9"><a href="#cb33-9"></a>   <span class="co">// verifica se, de fato, z1.x vale 10</span></span>
+<span id="cb33-10"><a href="#cb33-10"></a>   REQUIRE(z1.x == <span class="dv">10</span>);</span>
+<span id="cb33-11"><a href="#cb33-11"></a>}</span></code></pre></div>
 </section>
 <section id="baixando-o-catch2-e-executando" class="slide level2">
 <h2>Baixando o Catch2 e executando</h2>
@@ -2202,6 +2204,7 @@ All tests passed (1 assertion in 1 test case)</code></pre>
 <li>atom</li>
 <li>revealjs</li>
 <li>groomit-mpx (screen drawing tool)</li>
+<li>xournal (screen drawing tool)</li>
 <li>…</li>
 </ul>
 </section>
@@ -2222,7 +2225,7 @@ All tests passed (1 assertion in 1 test case)</code></pre>
 <ul>
 <li>https://igormcoelho.github.io/ilectures-pandoc/</li>
 </ul>
-<p>Exceto expressamente mencionado (e com as devidas ressalvas ao material cedido pelo prof. Fornazin), a licença será Creative Commons.</p>
+<p>Exceto expressamente mencionado (com as devidas ressalvas ao material cedido por colegas), a licença será Creative Commons.</p>
 <p><strong>Licença:</strong> CC-BY 4.0 2020</p>
 <p>Igor Machado Coelho</p>
 </section>

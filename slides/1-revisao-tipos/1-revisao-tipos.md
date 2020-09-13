@@ -175,6 +175,10 @@ v[0] = 3; // atribui o valor 3 à primeira posição
 v[7] = 5; // atribui o valor 5 à última posição
 ```
 
+```
+v: | 3 |   |   |   |   |   |   | 5 |
+     0   1   2   3   4   5   6   7
+```
 
 -------
 
