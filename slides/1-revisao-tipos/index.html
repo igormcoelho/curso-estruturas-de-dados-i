@@ -1733,29 +1733,33 @@ font-size: 1em;
 
 <section id="title-slide">
   <h1 class="title">Estruturas de Dados I</h1>
+  <p class="subtitle">Revisão de Tipos e Módulos</p>
   <p class="author">Igor M. Coelho</p>
   <p class="date">30/08/2020</p>
 </section>
 
 <section>
-<section id="revisãotipos" class="title-slide slide level1">
-<h1>Revisão/Tipos</h1>
+<section id="revisão-de-tipos-e-módulos" class="title-slide slide level1">
+<h1>Revisão de Tipos e Módulos</h1>
 
 </section>
-<section id="linguagem-adotada" class="slide level2">
-<h2>Linguagem Adotada</h2>
-<p>O conteúdo do curso será focado na análise de algoritmos, então as técnicas apresentadas independem da linguagem de programação adotada (valendo inclusive para pseudocódigo).</p>
-<p>Porém, para fornecer um conteúdo dinâmico que pode ser testado e experimentado pelos alunos em uma das linguagens mais utilizadas atualmente no mundo, adotaremos as linguagens C/C++ (ambas serão aceitas).</p>
-<p>A linguagem C++ é uma extensão da linguagem C, adicionando dois principais recursos interessantes: orientação a objetos e pro- gramação genérica. <em>Não entraremos com profundidade em nenhum destes dois assuntos, mas não se preocupe! Eles serão aprofunda- dos em disciplinas futuras.</em> Somente recursos básicos das linguagens C/C++ serão utilizados neste curso (e iremos revisá-los em breve!).</p>
+<section id="pré-requisitos" class="slide level2">
+<h2>Pré-Requisitos</h2>
+<p>São requisitos para essa aula o conhecimento de:</p>
+<ul>
+<li>Introdução/Fundamentos de Programação (em alguma linguagem de programação)</li>
+<li>Interesse em aprender C/C++</li>
+<li>Familiaridade com uso e instalação de compiladores/IDEs ou uso de ferramentas de programação online</li>
+</ul>
 </section>
 <section id="ambiente-de-programação" class="slide level2">
 <h2>Ambiente de Programação</h2>
-<p>De forma a praticar o conteúdo do curso, podem ser utilizadas diversas ferramentas para Linux (preferencialmente) ou Windows. A IDE Eclipse suporta a linguagem C++ tanto para Linux (nativamente) quanto para Windows (com a instalação do compilador MinGW).</p>
+<p>Exemplos serão dados com base no sistema GNU/Linux e compiladores GCC, mas existem ferramentas equivalentes para Windows e demais sistemas operacionais. A IDE Visual Studio Code suporta a linguagem C++ tanto para Linux (nativamente) quanto para Windows (com a instalação do compilador MinGW).</p>
 <p>Também é possível praticar diretamente em um navegador web com plataformas online: <a href="https://www.onlinegdb.com/online_c++_compiler">onlinegdb.com/online_c++_compiler</a>. Neste caso, o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrão C++17).</p>
 </section></section>
 <section>
-<section id="conceitos-básicos-de-cc" class="title-slide slide level1">
-<h1>Conceitos Básicos de C/C++</h1>
+<section id="tipos-em-cc" class="title-slide slide level1">
+<h1>Tipos em C/C++</h1>
 
 </section>
 <section id="conceitos-de-cc" class="slide level2">
@@ -2037,6 +2041,10 @@ font-size: 1em;
 <span id="cb25-2"><a href="#cb25-2"></a>TemImprimeX a2 = Z{.x = <span class="dv">2</span>}; <span class="co">// tipo conceitual</span></span>
 <span id="cb25-3"><a href="#cb25-3"></a>Z           a3 = Z{.x = <span class="dv">3</span>}; <span class="co">// tipo explícito </span></span></code></pre></div>
 <p><strong>Importante:</strong> a noção de <em>conceitos</em> é fundamental para a compreensão de <em>tipos abstratos</em>, central no curso de estruturas de dados.</p>
+</section>
+<section id="tipos" class="slide level2">
+<h2>Tipos</h2>
+<p>Fim do tópicos de tipos.</p>
 </section></section>
 <section>
 <section id="modularização-e-testes" class="title-slide slide level1">
@@ -2086,7 +2094,7 @@ font-size: 1em;
 </section>
 <section id="tipos-na-biblioteca-padrão-c" class="slide level2">
 <h2>Tipos na biblioteca padrão C++</h2>
-<p>Durante o curso estudaremos várias estruturas de dados, mas sempre que possível utilize as existentes na biblioteca padrão (STL). São mais eficientes e à prova de erros.</p>
+<p>Durante o curso estudaremos várias estruturas de dados, mas sempre que possível utilize as existentes na biblioteca padrão (STL). São “mais eficientes” e “à prova de erros”.</p>
 <p>Por exemplo, é fácil definir um tipo agregado <code>Par</code>, que comporta dois elementos internos (tipo genérico). Porém, é mais vantajoso usar o existente na STL, chamado <code>std::pair</code> (o prefixo <code>std::</code> é chamado <em>namespace</em> e evita colisões de nomes):</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
 <span id="cb28-2"><a href="#cb28-2"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>

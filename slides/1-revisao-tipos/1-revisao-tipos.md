@@ -1,6 +1,7 @@
 ---
 author: Igor M. Coelho
 title: Estruturas de Dados I
+subtitle: Revisão de Tipos e Módulos
 date: 30/08/2020
 transition: linear
 fontsize: 10
@@ -13,34 +14,25 @@ header-includes:
 
 
 
-# Revisão/Tipos
+# Revisão de Tipos e Módulos
 
 ------
 
-## Linguagem Adotada
+## Pré-Requisitos
 
-O conteúdo do curso será focado na análise de algoritmos, então
-as técnicas apresentadas independem da linguagem de programação
-adotada (valendo inclusive para pseudocódigo).
+São requisitos para essa aula o conhecimento de:
 
-Porém, para fornecer um conteúdo dinâmico que pode ser testado e
-experimentado pelos alunos em uma das linguagens mais utilizadas
-atualmente no mundo, adotaremos as linguagens C/C++ (ambas
-serão aceitas).
+- Introdução/Fundamentos de Programação (em alguma linguagem de programação)
+- Interesse em aprender C/C++
+- Familiaridade com uso e instalação de compiladores/IDEs ou uso de ferramentas de programação online
 
-A linguagem C++ é uma extensão da linguagem C, adicionando
-dois principais recursos interessantes: orientação a objetos e pro-
-gramação genérica. *Não entraremos com profundidade em nenhum
-destes dois assuntos, mas não se preocupe! Eles serão aprofunda-
-dos em disciplinas futuras.* Somente recursos básicos das linguagens
-C/C++ serão utilizados neste curso (e iremos revisá-los em breve!).
 
 ------
 
 ## Ambiente de Programação
 
-De forma a praticar o conteúdo do curso, podem ser utilizadas diversas ferramentas para Linux (preferencialmente) ou Windows. A IDE
-Eclipse suporta a linguagem C++ tanto para Linux (nativamente)
+Exemplos serão dados com base no sistema GNU/Linux e compiladores GCC, mas existem ferramentas equivalentes para Windows e demais sistemas operacionais. A IDE
+Visual Studio Code suporta a linguagem C++ tanto para Linux (nativamente)
 quanto para Windows (com a instalação do compilador MinGW).
 
 
@@ -49,7 +41,7 @@ plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.co
  o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrão C++17).
 
 
-# Conceitos Básicos de C/C++
+# Tipos em C/C++
 
 ------
 
@@ -539,6 +531,12 @@ Z           a3 = Z{.x = 3}; // tipo explícito
 
 **Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
 
+-------
+
+## Tipos
+
+Fim do tópicos de tipos.
+
 
 # Modularização e Testes
 
@@ -611,7 +609,7 @@ Também é informativo um arquivo extra na raiz com explicações sobre o códig
 ## Tipos na biblioteca padrão C++
 
 Durante o curso estudaremos várias estruturas de dados, mas sempre que possível utilize as existentes na biblioteca padrão (STL).
-São mais eficientes e à prova de erros.
+São "mais eficientes" e "à prova de erros".
 
 Por exemplo, é fácil definir um tipo agregado `Par`, que comporta dois elementos internos (tipo genérico). Porém, é mais vantajoso usar o existente na STL, chamado `std::pair` (o prefixo `std::` é chamado *namespace* e evita colisões de nomes):
 

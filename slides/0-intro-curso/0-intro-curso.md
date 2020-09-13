@@ -211,6 +211,27 @@ Grupos deverão ser definidos no máximo até a data da prova (V). Haverá quatr
 
 **É necessário agendar previamente a apresentação! Façam o quanto antes!**
 
+-------
+
+
+## Linguagem Adotada
+
+O conteúdo do curso será focado na análise de algoritmos, então
+as técnicas apresentadas independem da linguagem de programação
+adotada (valendo inclusive para pseudocódigo).
+
+Porém, para fornecer um conteúdo dinâmico que pode ser testado e
+experimentado pelos alunos em uma das linguagens mais utilizadas
+atualmente no mundo, adotaremos as linguagens C/C++ (ambas
+serão aceitas).
+
+A linguagem C++ é uma extensão da linguagem C, adicionando
+dois principais recursos interessantes: orientação a objetos e pro-
+gramação genérica. *Não entraremos com profundidade em nenhum
+destes dois assuntos, mas não se preocupe! Eles serão aprofunda-
+dos em disciplinas futuras.* Somente recursos básicos das linguagens
+C/C++ serão utilizados neste curso (e iremos revisá-los em breve!).
+
 
 -------
 
