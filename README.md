@@ -2,7 +2,7 @@
 
 Materiais gerais de Estruturas de Dados I, bem como suas respectivas aplicações em períodos recentes.
 
-### 2020.1
+## Oferta 2020.1 - EDSI - TCC00331
 
 _Curso de **Estruturas de Dados para Sistemas de Informação** (TCC00331) do [Prof. Igor Machado Coelho](https://igormcoelho.github.io), oferecido pelo [Instituto de Computação (IC) da Universidade Federal Fluminense (UFF)](http://www.ic.uff.br)._ **versão online:** [igormcoelho.github.io/curso-estruturas-de-dados-i/](https://igormcoelho.github.io/curso-estruturas-de-dados-i/)
 
@@ -10,21 +10,23 @@ _Curso de **Estruturas de Dados para Sistemas de Informação** (TCC00331) do [P
 ![Estrelas](https://img.shields.io/github/stars/igormcoelho/curso-estruturas-de-dados-i)
 ![Licença](https://img.shields.io/github/license/igormcoelho/curso-estruturas-de-dados-i)
 
-_**Última atualização:** Agosto/2020 (Período 2020.1)_
+_**Última atualização:** Setembro/2020 (Período 2020.1)_
 
 ### Tópicos do Curso
 
 0. [Introdução ao curso](slides/0-intro-curso/0-intro-curso.md): [PDF](slides/0-intro-curso/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso/index.html)
 1. [Revisão/Tipos](slides/1-revisao-tipos/1-revisao-tipos.md): [PDF](slides/1-revisao-tipos/1-revisao-tipos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-revisao-tipos/index.html)
+   - Vídeos YouTube: [Parte 1](https://youtu.be/byZLHu4kTb0) [Parte 2](https://youtu.be/2Bo7MYFCJ0o)
+   - Observação: a Parte 2 contém algumas falhas no áudio, que pretendo corrigir no futuro. Como é uma etapa extra (prática), não compromete o conteúdo em si da aula.
 
 
 
 Calendário 2020 (atualizado):
-   - [Atualizado](./files/uff-2020-1-2-calendarios.pdf)
+   - [Atualizado 2020.1](./files/uff-2020-1-2-calendarios.pdf)
 
 ...
 
-### Como esses slides foram feitos?
+## Como esses slides foram feitos?
 
 Estes slides foram feitos em `markdown` e `pandoc` (super fácil!) de acordo com o tutorial [ilectures-pandoc](https://github.com/igormcoelho/ilectures-pandoc).
 

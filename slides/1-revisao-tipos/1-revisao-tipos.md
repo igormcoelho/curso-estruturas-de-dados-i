@@ -581,9 +581,9 @@ Quando utilizando o GCC e um *entrypoint* no arquivo `main.cpp`:
 
 Modularização mínima: 4 arquivos.
 
-- um ponto de entrada (entrypoint) - geralmente `main.cpp` na pasta `src/`
-- um (ou mais) arquivo(s) com demais módulos, também na pasta `src/`
-- um (ou mais) arquivo(s) com seus testes - geralmente `main.test.cpp` na pasta `tests/`
+- um ponto de entrada (entrypoint) - geralmente `main.cpp` (dica: colocar na pasta `src/`)
+- um (ou mais) arquivo(s) com demais módulos (dica: colocar na pasta `src/`)
+- um (ou mais) arquivo(s) com seus testes - geralmente `teste.cpp` (dica: colocar na pasta `tests/`)
 - um arquivo (na raiz) com informações de construção - geralmente `makefile` do GNU (com regras `all:` e `test:`)
 
 ------
@@ -611,6 +611,37 @@ int main() {
    printf("%d %c\n", p.first, p.second); // 5 C
    // ...
 }
+```
+
+--------
+
+## Relembrando (agregado Z)
+
+```{.cpp}
+// Em C++ (tipo agregado Z)
+class Z
+{
+public:
+   int x;
+   // imprime campo x
+   void imprimex() {
+      printf("%d\n", this->x);
+   }
+};
+```
+
+-------
+
+## Relembrando (conceito TemImprimeX)
+
+```{.cpp}
+template<typename Agregado>
+concept bool
+TemImprimeX = requires(Agregado a) {
+   {
+      a.imprimex()
+   }
+};
 ```
 
 --------
@@ -729,6 +760,7 @@ Esse material de curso só é possível graças aos inúmeros projetos de códig
 - atom
 - revealjs
 - groomit-mpx (screen drawing tool)
+- xournal (screen drawing tool)
 - ...
 
 -----
@@ -751,7 +783,7 @@ Esses slides foram escritos utilizando pandoc, segundo o tutorial ilectures:
 
 - https://igormcoelho.github.io/ilectures-pandoc/
 
-Exceto expressamente mencionado (e com as devidas ressalvas ao material cedido pelo prof. Fornazin), a licença será Creative Commons.
+Exceto expressamente mencionado (com as devidas ressalvas ao material cedido por colegas), a licença será Creative Commons.
 
 **Licença:** CC-BY 4.0 2020
 

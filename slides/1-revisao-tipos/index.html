@@ -2097,31 +2097,54 @@ font-size: 1em;
 <span id="cb27-6"><a href="#cb27-6"></a>   <span class="co">// ...</span></span>
 <span id="cb27-7"><a href="#cb27-7"></a>}</span></code></pre></div>
 </section>
+<section id="relembrando-agregado-z" class="slide level2">
+<h2>Relembrando (agregado Z)</h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="kw">class</span> Z</span>
+<span id="cb28-3"><a href="#cb28-3"></a>{</span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="kw">public</span>:</span>
+<span id="cb28-5"><a href="#cb28-5"></a>   <span class="dt">int</span> x;</span>
+<span id="cb28-6"><a href="#cb28-6"></a>   <span class="co">// imprime campo x</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>   <span class="dt">void</span> imprimex() {</span>
+<span id="cb28-8"><a href="#cb28-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
+<span id="cb28-9"><a href="#cb28-9"></a>   }</span>
+<span id="cb28-10"><a href="#cb28-10"></a>};</span></code></pre></div>
+</section>
+<section id="relembrando-conceito-temimprimex" class="slide level2">
+<h2>Relembrando (conceito TemImprimeX)</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">template</span>&lt;<span class="kw">typename</span> Agregado&gt;</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">concept</span> <span class="dt">bool</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>TemImprimeX = <span class="kw">requires</span>(Agregado a) {</span>
+<span id="cb29-4"><a href="#cb29-4"></a>   {</span>
+<span id="cb29-5"><a href="#cb29-5"></a>      a.imprimex()</span>
+<span id="cb29-6"><a href="#cb29-6"></a>   }</span>
+<span id="cb29-7"><a href="#cb29-7"></a>};</span></code></pre></div>
+</section>
 <section id="verificações-com-assert" class="slide level2">
 <h2>Verificações com <code>assert</code></h2>
 <p>Durante o desenvolvimento, é útil verificar partes do código com testes simples e necessários para a corretude do mesmo (em tempo real). Para isso, podemos utilizar o <code>assert()</code>. Exemplo:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1"></a><span class="dt">int</span> x = <span class="dv">10</span>;</span>
-<span id="cb28-2"><a href="#cb28-2"></a>x++;</span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="ot">assert</span>(x == <span class="dv">11</span>); <span class="co">// x deveria ser 11</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1"></a><span class="dt">int</span> x = <span class="dv">10</span>;</span>
+<span id="cb30-2"><a href="#cb30-2"></a>x++;</span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="ot">assert</span>(x == <span class="dv">11</span>); <span class="co">// x deveria ser 11</span></span></code></pre></div>
 <p>Da mesma forma, podemos verificar tipos, especialmente <em>conceitos</em>, em tempo de compilação:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1"></a><span class="co">// verifica se tipo agregado Z tem método imprimex()</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">static_assert</span>(TemImprimeX&lt;Z&gt;); </span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1"></a><span class="co">// verifica se tipo agregado Z tem método imprimex()</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">static_assert</span>(TemImprimeX&lt;Z&gt;); </span></code></pre></div>
 </section>
 <section id="testes-com-a-biblioteca-catch2" class="slide level2">
 <h2>Testes com a biblioteca Catch2</h2>
 <p>Uma forma prática de testar um código modularizado com <code>main.cpp</code> separado do <code>resto.hpp</code>, é utilizando a biblioteca <a href="https://github.com/catchorg/Catch2">Catch2</a>.</p>
 <p>Basta criar um arquivo de teste, por exemplo, <code>teste.cpp</code>:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1"></a><span class="pp">#include </span><span class="im">&quot;resto.hpp&quot;</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="pp">#define CATCH_CONFIG_MAIN </span><span class="co">// catch2 main()</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a><span class="pp">#include </span><span class="im">&quot;catch.hpp&quot;</span></span>
-<span id="cb30-5"><a href="#cb30-5"></a></span>
-<span id="cb30-6"><a href="#cb30-6"></a>TEST_CASE(<span class="st">&quot;Testa inicializacao do agregado Z&quot;</span>) </span>
-<span id="cb30-7"><a href="#cb30-7"></a>{</span>
-<span id="cb30-8"><a href="#cb30-8"></a>   <span class="kw">auto</span> z1 = Z{.x = <span class="dv">10</span>};</span>
-<span id="cb30-9"><a href="#cb30-9"></a>   <span class="co">// verifica se, de fato, z1.x vale 10</span></span>
-<span id="cb30-10"><a href="#cb30-10"></a>   REQUIRE(z1.x == <span class="dv">10</span>);</span>
-<span id="cb30-11"><a href="#cb30-11"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1"></a><span class="pp">#include </span><span class="im">&quot;resto.hpp&quot;</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="pp">#define CATCH_CONFIG_MAIN </span><span class="co">// catch2 main()</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="pp">#include </span><span class="im">&quot;catch.hpp&quot;</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a>TEST_CASE(<span class="st">&quot;Testa inicializacao do agregado Z&quot;</span>) </span>
+<span id="cb32-7"><a href="#cb32-7"></a>{</span>
+<span id="cb32-8"><a href="#cb32-8"></a>   <span class="kw">auto</span> z1 = Z{.x = <span class="dv">10</span>};</span>
+<span id="cb32-9"><a href="#cb32-9"></a>   <span class="co">// verifica se, de fato, z1.x vale 10</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a>   REQUIRE(z1.x == <span class="dv">10</span>);</span>
+<span id="cb32-11"><a href="#cb32-11"></a>}</span></code></pre></div>
 </section>
 <section id="baixando-o-catch2-e-executando" class="slide level2">
 <h2>Baixando o Catch2 e executando</h2>
