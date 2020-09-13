@@ -26,6 +26,15 @@ Calendário 2020 (atualizado):
 
 ...
 
+
+## Sobre gravações
+
+Gravações disponibilizadas no YouTube e Classroom foram feitas com OBS (obrigado pelas dicas Mateus Nazário). Algumas dicas:
+
+- https://medium.com/@igormcoelho/dicas-para-obs-no-linux-para-google-meet-8ac102972183
+
+Utilizei o Okular para marcação do PDF (obrigado Matheus Nohra Haddad pelas dicas).
+
 ## Como esses slides foram feitos?
 
 Estes slides foram feitos em `markdown` e `pandoc` (super fácil!) de acordo com o tutorial [ilectures-pandoc](https://github.com/igormcoelho/ilectures-pandoc).
