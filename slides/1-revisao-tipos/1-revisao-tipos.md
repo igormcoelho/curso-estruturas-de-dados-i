@@ -576,6 +576,19 @@ Declarações vem em arquivos `.h`, enquanto as respectivas implementações em 
 
 --------
 
+## Executando o `main.cpp`
+
+Quando utilizando o GCC e um *entrypoint* no arquivo `main.cpp`:
+
+
+***Para compilar:*** `g++ -fconcepts -O3 main.cpp -o appMain`
+
+***Para executar código:*** `./appMain`
+
+**Importante:** consideramos um sistema GNU/Linux, mas caso seja Windows pode-se usar o compilador C/C++ [MinGW](https://osdn.net/projects/mingw/releases) e executar o aplicativo gerado com uma extensão `.exe` (padrão executável Windows).
+
+--------
+
 ## Organização em Arquivos I
 
 Modularização mínima: 4 arquivos.

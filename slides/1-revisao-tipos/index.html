@@ -2062,6 +2062,13 @@ font-size: 1em;
 <span id="cb27-4"><a href="#cb27-4"></a>}</span></code></pre></div>
 <p>Declarações vem em arquivos <code>.h</code>, enquanto as respectivas implementações em arquivo <code>.cpp</code> (ou juntas como <code>.hpp</code>).</p>
 </section>
+<section id="executando-o-main.cpp" class="slide level2">
+<h2>Executando o <code>main.cpp</code></h2>
+<p>Quando utilizando o GCC e um <em>entrypoint</em> no arquivo <code>main.cpp</code>:</p>
+<p><strong><em>Para compilar:</em></strong> <code>g++ -fconcepts -O3 main.cpp -o appMain</code></p>
+<p><strong><em>Para executar código:</em></strong> <code>./appMain</code></p>
+<p><strong>Importante:</strong> consideramos um sistema GNU/Linux, mas caso seja Windows pode-se usar o compilador C/C++ <a href="https://osdn.net/projects/mingw/releases">MinGW</a> e executar o aplicativo gerado com uma extensão <code>.exe</code> (padrão executável Windows).</p>
+</section>
 <section id="organização-em-arquivos-i" class="slide level2">
 <h2>Organização em Arquivos I</h2>
 <p>Modularização mínima: 4 arquivos.</p>
