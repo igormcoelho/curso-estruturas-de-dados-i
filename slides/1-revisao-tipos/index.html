@@ -1899,8 +1899,8 @@ font-size: 1em;
 <span id="cb13-9"><a href="#cb13-9"></a>G&lt;<span class="dt">float</span>&gt; g1 = {.x = <span class="fl">3.14</span>, .y  = <span class="ch">&#39;Y&#39;</span>};</span>
 <span id="cb13-10"><a href="#cb13-10"></a>G&lt;<span class="dt">int</span>&gt;   g2 = {.x = <span class="dv">3</span>,    .y  = <span class="ch">&#39;Y&#39;</span>};</span></code></pre></div>
 </section>
-<section id="modularização-rotinas-i" class="slide level2">
-<h2>Modularização: Rotinas I</h2>
+<section id="rotinas-i" class="slide level2">
+<h2>Rotinas I</h2>
 <p>A modularização de programas é muito importante, principalmente quando trechos de código são repetidos muitas vezes.</p>
 <p>Nesses casos, é comum criar rotinas, como <em>funções e procedimentos</em>, que podem por sua vez receber parâmetros.</p>
 <p>Tomemos por exemplo a função quadrado que retorna o valor passado elevado ao quadrado.</p>
@@ -1911,8 +1911,8 @@ font-size: 1em;
 <span id="cb14-5"><a href="#cb14-5"></a><span class="co">// variável do tipo &#39;int&#39;, com valor 25</span></span>
 <span id="cb14-6"><a href="#cb14-6"></a><span class="dt">int</span> x = quadrado(<span class="dv">5</span>);        </span></code></pre></div>
 </section>
-<section id="modularização-rotinas-ii" class="slide level2">
-<h2>Modularização: Rotinas II</h2>
+<section id="rotinas-ii" class="slide level2">
+<h2>Rotinas II</h2>
 <p>Quando nenhum valor é retornado (em um procedimento), utilizamos a palavra-chave <code>void</code>. Procedimentos são úteis mesmo quando nenhum valor é retornado. <strong>Exemplo</strong>: (de a até b):</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1"></a><span class="dt">void</span> imprime (<span class="dt">int</span> a , <span class="dt">int</span> b) {</span>
 <span id="cb15-2"><a href="#cb15-2"></a>   <span class="cf">for</span> (<span class="dt">int</span> i=a ; i&lt;b ; i++)</span>
@@ -1946,66 +1946,124 @@ font-size: 1em;
 <span id="cb17-10"><a href="#cb17-10"></a><span class="kw">struct</span> P p0 = {.x = <span class="dv">20</span>, .y = <span class="ch">&#39;Y&#39;</span>}; <span class="co">// cria variável &#39;p0&#39;</span></span>
 <span id="cb17-11"><a href="#cb17-11"></a>imprimir(&amp;p0, p0); <span class="co">// resulta em &#39;20 20&#39;</span></span></code></pre></div>
 </section>
-<section id="modularização-rotinas-iii" class="slide level2">
-<h2>Modularização: Rotinas III</h2>
-<p>O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// o tipo da função &#39;quadrado&#39; é: int(*)(int)</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
-<span id="cb18-3"><a href="#cb18-3"></a>   <span class="cf">return</span> p*p;      </span>
-<span id="cb18-4"><a href="#cb18-4"></a>}</span></code></pre></div>
-<p>Este fato pode ser útil para receber funções como parâmetro, bem como armazenar funções anônimas (<em>lambdas</em>):</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">// armazena lambda no ponteiro de função &#39;quad&#39;</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="dt">int</span>(*quad)(<span class="dt">int</span>) = [](<span class="dt">int</span> p) {</span>
-<span id="cb19-3"><a href="#cb19-3"></a>                               <span class="cf">return</span> p*p;</span>
-<span id="cb19-4"><a href="#cb19-4"></a>                            };</span>
-<span id="cb19-5"><a href="#cb19-5"></a><span class="co">// ...</span></span>
-<span id="cb19-6"><a href="#cb19-6"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, quad(<span class="dv">3</span>));    <span class="co">// 9</span></span></code></pre></div>
+<section id="alocação-dinâmica-de-memória" class="slide level2">
+<h2>Alocação Dinâmica de Memória</h2>
+<p>Programas frequentemente necessitam de alocar mais memória para uso, o que é armazenado de forma segura em um ponteiro para o tipo da memória:</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// Aloca (C) o agregado P</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">struct</span> P* vp =</span>
+<span id="cb18-3"><a href="#cb18-3"></a>   malloc(<span class="dv">1</span>*<span class="kw">sizeof</span>(<span class="kw">struct</span> P));</span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="co">// inicializa campos de P</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>vp-&gt;x = <span class="dv">10</span>;</span>
+<span id="cb18-6"><a href="#cb18-6"></a>vp-&gt;y = <span class="ch">&#39;Y&#39;</span>;</span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co">// imprime x (valor 10)</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="co">// descarta a memória</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a>free(vp);</span></code></pre></div>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">// Aloca (C++) o agregado P</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="kw">auto</span>* vp = <span class="kw">new</span> P{</span>
+<span id="cb19-3"><a href="#cb19-3"></a>                  .x = <span class="dv">10</span>,</span>
+<span id="cb19-4"><a href="#cb19-4"></a>                  .y = <span class="ch">&#39;Y&#39;</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>                };</span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="co">// imprime x (valor 10)</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="co">// descarta a memória</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a><span class="kw">delete</span> vp;</span></code></pre></div>
+</div>
+</div>
 </section>
-<section id="modularização-rotinas-iv" class="slide level2">
-<h2>Modularização: Rotinas IV</h2>
+<section id="rotinas-iii" class="slide level2">
+<h2>Rotinas III</h2>
+<p>O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">// o tipo da função &#39;quadrado&#39; é: int(*)(int)</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
+<span id="cb20-3"><a href="#cb20-3"></a>   <span class="cf">return</span> p*p;      </span>
+<span id="cb20-4"><a href="#cb20-4"></a>}</span></code></pre></div>
+<p>Este fato pode ser útil para receber funções como parâmetro, bem como armazenar funções anônimas (<em>lambdas</em>):</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">// armazena lambda no ponteiro de função &#39;quad&#39;</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="dt">int</span>(*quad)(<span class="dt">int</span>) = [](<span class="dt">int</span> p) {</span>
+<span id="cb21-3"><a href="#cb21-3"></a>                               <span class="cf">return</span> p*p;</span>
+<span id="cb21-4"><a href="#cb21-4"></a>                            };</span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co">// ...</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, quad(<span class="dv">3</span>));    <span class="co">// 9</span></span></code></pre></div>
+</section>
+<section id="rotinas-iv" class="slide level2">
+<h2>Rotinas IV</h2>
 <p>A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o <em>ponteiro para o agregado</em>, chamado <strong>this</strong>:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">// Em C (tipo agregado P)</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="kw">struct</span> P {</span>
-<span id="cb20-3"><a href="#cb20-3"></a>    <span class="dt">int</span> x;</span>
-<span id="cb20-4"><a href="#cb20-4"></a>};</span>
-<span id="cb20-5"><a href="#cb20-5"></a></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co">// imprime campo x</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="dt">void</span> imprimex(<span class="kw">struct</span> P* this)</span>
-<span id="cb20-8"><a href="#cb20-8"></a>{</span>
-<span id="cb20-9"><a href="#cb20-9"></a>   printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, this-&gt;x);</span>
-<span id="cb20-10"><a href="#cb20-10"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">// Em C (tipo agregado Z)</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="kw">struct</span> Z {</span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="dt">int</span> x;</span>
+<span id="cb22-4"><a href="#cb22-4"></a>};</span>
+<span id="cb22-5"><a href="#cb22-5"></a></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="co">// imprime campo x</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="dt">void</span> imprimex(<span class="kw">struct</span> Z* this)</span>
+<span id="cb22-8"><a href="#cb22-8"></a>{</span>
+<span id="cb22-9"><a href="#cb22-9"></a>   printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, this-&gt;x);</span>
+<span id="cb22-10"><a href="#cb22-10"></a>}</span></code></pre></div>
 </div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">// Em C++ (tipo agregado P)</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="kw">class</span> P</span>
-<span id="cb21-3"><a href="#cb21-3"></a>{</span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="kw">public</span>:</span>
-<span id="cb21-5"><a href="#cb21-5"></a>   <span class="dt">int</span> x;</span>
-<span id="cb21-6"><a href="#cb21-6"></a>   <span class="co">// imprime campo x</span></span>
-<span id="cb21-7"><a href="#cb21-7"></a>   <span class="dt">void</span> imprimex() {</span>
-<span id="cb21-8"><a href="#cb21-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
-<span id="cb21-9"><a href="#cb21-9"></a>   }</span>
-<span id="cb21-10"><a href="#cb21-10"></a>};</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">class</span> Z</span>
+<span id="cb23-3"><a href="#cb23-3"></a>{</span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="kw">public</span>:</span>
+<span id="cb23-5"><a href="#cb23-5"></a>   <span class="dt">int</span> x;</span>
+<span id="cb23-6"><a href="#cb23-6"></a>   <span class="co">// imprime campo x</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a>   <span class="dt">void</span> imprimex() {</span>
+<span id="cb23-8"><a href="#cb23-8"></a>      printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, <span class="kw">this</span>-&gt;x);</span>
+<span id="cb23-9"><a href="#cb23-9"></a>   }</span>
+<span id="cb23-10"><a href="#cb23-10"></a>};</span></code></pre></div>
 </div>
 </div>
+</section>
+<section id="conceitos-i" class="slide level2">
+<h2>Conceitos I</h2>
+<p>C++17 com flag GCC <em>-fconcepts</em> (oficialmente sem flags no C++20) traz a possibilidade de definir conceitos (ou <em>concepts</em>). Esse recurso permite <em>definições genéricas</em> sobre algum tipo (inclusive tipos agregados com funções internas).</p>
+<p>Por exemplo, podemos criar um <em>conceito</em> <code>TemImprimeX</code>, que exige que o agregado possua um método <code>imprimex()</code>:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">template</span>&lt;<span class="kw">typename</span> Agregado&gt;</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">concept</span> <span class="dt">bool</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>TemImprimeX = <span class="kw">requires</span>(Agregado a) {</span>
+<span id="cb24-4"><a href="#cb24-4"></a>   {</span>
+<span id="cb24-5"><a href="#cb24-5"></a>      a.imprimex()</span>
+<span id="cb24-6"><a href="#cb24-6"></a>   }</span>
+<span id="cb24-7"><a href="#cb24-7"></a>};</span></code></pre></div>
+</section>
+<section id="conceitos-ii" class="slide level2">
+<h2>Conceitos II</h2>
+<p>Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">auto</span>        a1 = Z{.x = <span class="dv">1</span>}; <span class="co">// tipo automático</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>TemImprimeX a2 = Z{.x = <span class="dv">2</span>}; <span class="co">// tipo conceitual</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>Z           a3 = Z{.x = <span class="dv">3</span>}; <span class="co">// tipo explícito </span></span></code></pre></div>
+<p><strong>Importante:</strong> a noção de <em>conceitos</em> é fundamental para a compreensão de <em>tipos abstratos</em>, central no curso de estruturas de dados.</p>
+</section></section>
+<section>
+<section id="modularização-e-testes" class="title-slide slide level1">
+<h1>Modularização e Testes</h1>
+
+</section>
+<section id="motivação-modularização-e-testes" class="slide level2">
+<h2>Motivação: Modularização e Testes</h2>
+<p>Qualquer programa complexo necessita de divisão em partes, ou módulos, para maior controle e verificação da corretude das operações.</p>
+<p>Nesse curso, vamos utilizar um padrão mínimo de modularização, para que seja possível efetuar testes no código (de forma sistemática).</p>
 </section>
 <section id="modularização-básica" class="slide level2">
 <h2>Modularização Básica</h2>
 <p>Um programa começa pelo seu “ponto de entrada” (ou <em>entrypoint</em>), tipicamente uma função <code>int main()</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="dt">int</span> main() {</span>
-<span id="cb22-3"><a href="#cb22-3"></a>   <span class="cf">return</span> <span class="dv">0</span>;       <span class="co">// 0 significa: nenhum erro</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb26-3"><a href="#cb26-3"></a>   <span class="cf">return</span> <span class="dv">0</span>;       <span class="co">// 0 significa: nenhum erro</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>}</span></code></pre></div>
 <p>A declaração de funções pode ser feita antes da definição:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p); <span class="co">// declara a função &#39;quadrado&#39;</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
-<span id="cb23-3"><a href="#cb23-3"></a>   <span class="cf">return</span> p*p;       <span class="co">// implementa a função &#39;quadrado&#39;</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p); <span class="co">// declara a função &#39;quadrado&#39;</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="dt">int</span> quadrado(<span class="dt">int</span> p) {</span>
+<span id="cb27-3"><a href="#cb27-3"></a>   <span class="cf">return</span> p*p;       <span class="co">// implementa a função &#39;quadrado&#39;</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>}</span></code></pre></div>
 <p>Declarações vem em arquivos <code>.h</code>, enquanto as respectivas implementações em arquivo <code>.cpp</code> (ou juntas como <code>.hpp</code>).</p>
 </section>
-<section id="organização-em-arquivos" class="slide level2">
-<h2>Organização em Arquivos</h2>
+<section id="organização-em-arquivos-i" class="slide level2">
+<h2>Organização em Arquivos I</h2>
 <p>Modularização mínima: 4 arquivos.</p>
 <ul>
 <li>um ponto de entrada (entrypoint) - geralmente <code>main.cpp</code> na pasta <code>src/</code></li>
@@ -2013,48 +2071,60 @@ font-size: 1em;
 <li>um (ou mais) arquivo(s) com seus testes - geralmente <code>main.test.cpp</code> na pasta <code>tests/</code></li>
 <li>um arquivo (na raiz) com informações de construção - geralmente <code>makefile</code> do GNU (com regras <code>all:</code> e <code>test:</code>)</li>
 </ul>
-<p>Também é informativo um arquivo extra na raiz com explicações sobre o código (geralmente <code>README.md</code> na linguagem markdown)</p>
+</section>
+<section id="organização-em-arquivos-ii" class="slide level2">
+<h2>Organização em Arquivos II</h2>
+<p>Também é informativo um arquivo extra na raiz com explicações sobre o código (tipicamente <code>README.md</code> na linguagem markdown)</p>
 <p><strong>Importante:</strong> o arquivo do <em>entrypoint</em> deverá conter exclusivamente a função <code>int main()</code> (e seus respectivos <code>#include</code>), para viabilizar testes de código.</p>
 </section>
 <section id="tipos-na-biblioteca-padrão-c" class="slide level2">
 <h2>Tipos na biblioteca padrão C++</h2>
 <p>Durante o curso estudaremos várias estruturas de dados, mas sempre que possível utilize as existentes na biblioteca padrão (STL). São mais eficientes e à prova de erros.</p>
 <p>Por exemplo, é fácil definir um tipo agregado <code>Par</code>, que comporta dois elementos internos (tipo genérico). Porém, é mais vantajoso usar o existente na STL, chamado <code>std::pair</code> (o prefixo <code>std::</code> é chamado <em>namespace</em> e evita colisões de nomes):</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="dt">int</span> main() {</span>
-<span id="cb24-4"><a href="#cb24-4"></a>   <span class="bu">std::</span>pair&lt;<span class="dt">int</span>, <span class="dt">char</span>&gt; p {<span class="dv">5</span>, <span class="ch">&#39;C&#39;</span>}; <span class="co">// direct init.</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a>   printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span>, p.first, p.second); <span class="co">// 5 C</span></span>
-<span id="cb24-6"><a href="#cb24-6"></a>   <span class="co">// ...</span></span>
-<span id="cb24-7"><a href="#cb24-7"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="dt">int</span> main() {</span>
+<span id="cb28-4"><a href="#cb28-4"></a>   <span class="bu">std::</span>pair&lt;<span class="dt">int</span>, <span class="dt">char</span>&gt; p {<span class="dv">5</span>, <span class="ch">&#39;C&#39;</span>}; <span class="co">// direct init.</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a>   printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span>, p.first, p.second); <span class="co">// 5 C</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a>   <span class="co">// ...</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>}</span></code></pre></div>
 </section>
-<section id="alocação-dinâmica-de-memória" class="slide level2">
-<h2>Alocação Dinâmica de Memória</h2>
-<p>Programas frequentemente necessitam de alocar mais memória para uso, o que é armazenado de forma segura em um ponteiro para o tipo da memória:</p>
-<div class="columns">
-<div class="column" style="width:55%;">
-<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a><span class="co">// Aloca um agregado P</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="kw">struct</span> P* vp =</span>
-<span id="cb25-3"><a href="#cb25-3"></a>   malloc(<span class="dv">1</span>*<span class="kw">sizeof</span>(<span class="kw">struct</span> P));</span>
-<span id="cb25-4"><a href="#cb25-4"></a><span class="co">// inicializa campos de P</span></span>
-<span id="cb25-5"><a href="#cb25-5"></a>vp-&gt;x = <span class="dv">10</span>;</span>
-<span id="cb25-6"><a href="#cb25-6"></a>vp-&gt;y = <span class="ch">&#39;Y&#39;</span>;</span>
-<span id="cb25-7"><a href="#cb25-7"></a><span class="co">// imprime x (valor 10)</span></span>
-<span id="cb25-8"><a href="#cb25-8"></a>printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
-<span id="cb25-9"><a href="#cb25-9"></a><span class="co">// descarta a memória</span></span>
-<span id="cb25-10"><a href="#cb25-10"></a>free(vp);</span></code></pre></div>
-</div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">// Aloca um agregado P</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">auto</span>* vp = <span class="kw">new</span> P{</span>
-<span id="cb26-3"><a href="#cb26-3"></a>                  .x = <span class="dv">10</span>,</span>
-<span id="cb26-4"><a href="#cb26-4"></a>                  .y = <span class="ch">&#39;Y&#39;</span></span>
-<span id="cb26-5"><a href="#cb26-5"></a>                };</span>
-<span id="cb26-6"><a href="#cb26-6"></a><span class="co">// imprime x (valor 10)</span></span>
-<span id="cb26-7"><a href="#cb26-7"></a>printf(<span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span>, vp-&gt;x);</span>
-<span id="cb26-8"><a href="#cb26-8"></a><span class="co">// descarta a memória</span></span>
-<span id="cb26-9"><a href="#cb26-9"></a><span class="kw">delete</span> vp;</span></code></pre></div>
-</div>
-</div>
+<section id="verificações-com-assert" class="slide level2">
+<h2>Verificações com <code>assert</code></h2>
+<p>Durante o desenvolvimento, é útil verificar partes do código com testes simples e necessários para a corretude do mesmo (em tempo real). Para isso, podemos utilizar o <code>assert()</code>. Exemplo:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1"></a><span class="dt">int</span> x = <span class="dv">10</span>;</span>
+<span id="cb29-2"><a href="#cb29-2"></a>x++;</span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="ot">assert</span>(x == <span class="dv">11</span>); <span class="co">// x deveria ser 11</span></span></code></pre></div>
+<p>Da mesma forma, podemos verificar tipos, especialmente <em>conceitos</em>, em tempo de compilação:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">// verifica se tipo agregado Z tem método imprimex()</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="kw">static_assert</span>(TemImprimeX&lt;Z&gt;); </span></code></pre></div>
+</section>
+<section id="testes-com-a-biblioteca-catch2" class="slide level2">
+<h2>Testes com a biblioteca Catch2</h2>
+<p>Uma forma prática de testar um código modularizado com <code>main.cpp</code> separado do <code>resto.hpp</code>, é utilizando a biblioteca <a href="https://github.com/catchorg/Catch2">Catch2</a>.</p>
+<p>Basta criar um arquivo de teste, por exemplo, <code>teste.cpp</code>:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1"></a><span class="pp">#include </span><span class="im">&quot;resto.hpp&quot;</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="pp">#define CATCH_CONFIG_MAIN </span><span class="co">// catch2 main()</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="pp">#include </span><span class="im">&quot;catch.hpp&quot;</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a></span>
+<span id="cb31-6"><a href="#cb31-6"></a>TEST_CASE(<span class="st">&quot;Testa inicializacao do agregado Z&quot;</span>) </span>
+<span id="cb31-7"><a href="#cb31-7"></a>{</span>
+<span id="cb31-8"><a href="#cb31-8"></a>   <span class="kw">auto</span> z1 = Z{.x = <span class="dv">10</span>};</span>
+<span id="cb31-9"><a href="#cb31-9"></a>   <span class="co">// verifica se, de fato, z1.x vale 10</span></span>
+<span id="cb31-10"><a href="#cb31-10"></a>   REQUIRE(z1.x == <span class="dv">10</span>);</span>
+<span id="cb31-11"><a href="#cb31-11"></a>}</span></code></pre></div>
+</section>
+<section id="baixando-o-catch2-e-executando" class="slide level2">
+<h2>Baixando o Catch2 e executando</h2>
+<p>Para baixar o arquivo <code>catch2.hpp</code>, basta acessar o site do projeto: <a href="https://github.com/catchorg/Catch2">github.com/catchorg/Catch2</a>. Link direto (Agosto 2020):</p>
+<p><em>github.com/catchorg/Catch2/releases/download/v2.13.1/catch.hpp</em></p>
+<p><strong><em>Para compilar:</em></strong> <code>g++ -fconcepts teste.cpp -o appTestes</code></p>
+<p><strong><em>Para executar testes:</em></strong> <code>./appTestes -d yes</code></p>
+<pre><code>0.000 s: Testa inicializacao do agregado Z
+===============================================
+All tests passed (1 assertion in 1 test case)</code></pre>
+<p><strong>Importante:</strong> Recomenda-se a opção <code>-fsanitize=address</code> e <code>-g3</code> para evitar bugs durante o desenvolvimento usando GCC.</p>
 </section>
 <section id="continue-aprendendo" class="slide level2">
 <h2>Continue Aprendendo</h2>
@@ -2066,7 +2136,7 @@ font-size: 1em;
 <li>uso frequente de <em>closures</em> (ao invés de funções e lambdas)</li>
 <li>uso frequente de memórias auto-gerenciáveis, como <code>std::unique_ptr</code> e <code>std::shared_ptr</code> (não requer <code>delete</code>)</li>
 <li>uso de <em>corrotinas</em> do C++20 (somente consideramos <em>rotinas</em> no curso), especialmente para elaboração de iteradores infinitos</li>
-<li>teste unitário de cada componente desenvolvido (recomendamos a biblioteca <a href="https://github.com/catchorg/Catch2"><code>catch2.hpp</code></a> ou <a href="https://github.com/google/googletest">Google Tests</a>)</li>
+<li>teste de microbenchmarks (recomendamos a biblioteca <a href="https://github.com/google/benchmark">Google Benchmark</a>)</li>
 </ul>
 </section>
 <section id="bibliografia-recomendada" class="slide level2">

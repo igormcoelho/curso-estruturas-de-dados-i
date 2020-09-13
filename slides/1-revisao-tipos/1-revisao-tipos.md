@@ -302,9 +302,10 @@ G<float> g1 = {.x = 3.14, .y  = 'Y'};
 G<int>   g2 = {.x = 3,    .y  = 'Y'};
 ```
 
+
 -------
 
-## Modularização: Rotinas I
+## Rotinas I
 
 A modularização de programas é muito importante, principalmente
 quando trechos de código são repetidos muitas vezes.
@@ -327,7 +328,7 @@ int x = quadrado(5);
 
 -------
 
-## Modularização: Rotinas II
+## Rotinas II
 
 Quando nenhum valor é retornado (em um procedimento), utilizamos
 a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
@@ -391,7 +392,52 @@ imprimir(&p0, p0); // resulta em '20 20'
 
 -------
 
-## Modularização: Rotinas III
+## Alocação Dinâmica de Memória
+
+Programas frequentemente necessitam de alocar mais memória para uso, o que é armazenado de forma segura em um ponteiro para o tipo da memória:
+
+
+::::::::::::: {.columns}
+
+::::: {.column width=55%}
+
+```{.c}
+// Aloca (C) o agregado P
+struct P* vp =
+   malloc(1*sizeof(struct P));
+// inicializa campos de P
+vp->x = 10;
+vp->y = 'Y';
+// imprime x (valor 10)
+printf("%d\n", vp->x);
+// descarta a memória
+free(vp);
+```
+
+:::::
+
+::::: {.column width=45%}
+
+```{.cpp}
+// Aloca (C++) o agregado P
+auto* vp = new P{
+                  .x = 10,
+                  .y = 'Y'
+                };
+// imprime x (valor 10)
+printf("%d\n", vp->x);
+// descarta a memória
+delete vp;
+```
+
+:::::
+
+:::::::::::::
+
+
+--------
+
+## Rotinas III
 
 O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:
 
@@ -414,9 +460,11 @@ printf("%d\n", quad(3));    // 9
 ```
 
 
+
+
 -------
 
-## Modularização: Rotinas IV
+## Rotinas IV
 
 A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o *ponteiro para o agregado*, chamado **this**:
 
@@ -426,13 +474,13 @@ A linguagem C++ permite a inclusão de funções e variáveis dentro de agregado
 ::::: {.column width=50%}
 
 ```{.c}
-// Em C (tipo agregado P)
-struct P {
+// Em C (tipo agregado Z)
+struct Z {
     int x;
 };
 
 // imprime campo x
-void imprimex(struct P* this)
+void imprimex(struct Z* this)
 {
    printf("%d\n", this->x);
 }
@@ -443,8 +491,8 @@ void imprimex(struct P* this)
 ::::: {.column width=50%}
 
 ```{.cpp}
-// Em C++ (tipo agregado P)
-class P
+// Em C++ (tipo agregado Z)
+class Z
 {
 public:
    int x;
@@ -459,6 +507,48 @@ public:
 
 :::::::::::::
 
+--------
+
+## Conceitos I
+
+C++17 com flag GCC *-fconcepts* (oficialmente sem flags no C++20) traz a possibilidade de definir conceitos (ou *concepts*). Esse recurso permite *definições genéricas* sobre algum tipo (inclusive tipos agregados com funções internas).
+
+Por exemplo, podemos criar um *conceito* `TemImprimeX`, que exige que o agregado possua um método `imprimex()`:
+
+```{.cpp}
+template<typename Agregado>
+concept bool
+TemImprimeX = requires(Agregado a) {
+   {
+      a.imprimex()
+   }
+};
+```
+
+-------
+
+## Conceitos II
+
+Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:
+
+```{.cpp}
+auto        a1 = Z{.x = 1}; // tipo automático
+TemImprimeX a2 = Z{.x = 2}; // tipo conceitual
+Z           a3 = Z{.x = 3}; // tipo explícito 
+```
+
+**Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
+
+
+# Modularização e Testes
+
+-------
+
+## Motivação: Modularização e Testes
+
+Qualquer programa complexo necessita de divisão em partes, ou módulos, para maior controle e verificação da corretude das operações.
+
+Nesse curso, vamos utilizar um padrão mínimo de modularização, para que seja possível efetuar testes no código (de forma sistemática).
 
 -------
 
@@ -486,7 +576,7 @@ Declarações vem em arquivos `.h`, enquanto as respectivas implementações em 
 
 --------
 
-## Organização em Arquivos
+## Organização em Arquivos I
 
 Modularização mínima: 4 arquivos.
 
@@ -495,7 +585,11 @@ Modularização mínima: 4 arquivos.
 - um (ou mais) arquivo(s) com seus testes - geralmente `main.test.cpp` na pasta `tests/`
 - um arquivo (na raiz) com informações de construção - geralmente `makefile` do GNU (com regras `all:` e `test:`)
 
-Também é informativo um arquivo extra na raiz com explicações sobre o código (geralmente `README.md` na linguagem markdown)
+------
+
+## Organização em Arquivos II 
+
+Também é informativo um arquivo extra na raiz com explicações sobre o código (tipicamente `README.md` na linguagem markdown)
 
 **Importante:** o arquivo do *entrypoint* deverá conter exclusivamente a função `int main()` (e seus respectivos `#include`), para viabilizar testes de código.
 
@@ -520,47 +614,67 @@ int main() {
 
 --------
 
-## Alocação Dinâmica de Memória
+## Verificações com `assert`
 
-Programas frequentemente necessitam de alocar mais memória para uso, o que é armazenado de forma segura em um ponteiro para o tipo da memória:
-
-
-::::::::::::: {.columns}
-
-::::: {.column width=55%}
-
-```{.c}
-// Aloca um agregado P
-struct P* vp =
-   malloc(1*sizeof(struct P));
-// inicializa campos de P
-vp->x = 10;
-vp->y = 'Y';
-// imprime x (valor 10)
-printf("%d\n", vp->x);
-// descarta a memória
-free(vp);
-```
-
-:::::
-
-::::: {.column width=45%}
+Durante o desenvolvimento, é útil verificar partes do código com testes simples e necessários para a corretude do mesmo (em tempo real).
+Para isso, podemos utilizar o `assert()`. Exemplo:
 
 ```{.cpp}
-// Aloca um agregado P
-auto* vp = new P{
-                  .x = 10,
-                  .y = 'Y'
-                };
-// imprime x (valor 10)
-printf("%d\n", vp->x);
-// descarta a memória
-delete vp;
+int x = 10;
+x++;
+assert(x == 11); // x deveria ser 11
 ```
 
-:::::
+Da mesma forma, podemos verificar tipos, especialmente *conceitos*, em tempo de compilação:
 
-:::::::::::::
+```{.cpp}
+// verifica se tipo agregado Z tem método imprimex()
+static_assert(TemImprimeX<Z>); 
+```
+
+
+--------
+
+## Testes com a biblioteca Catch2
+
+Uma forma prática de testar um código modularizado com `main.cpp` separado do `resto.hpp`, é utilizando a biblioteca [Catch2](https://github.com/catchorg/Catch2).
+
+Basta criar um arquivo de teste, por exemplo, `teste.cpp`:
+
+```{.cpp}
+#include "resto.hpp"
+
+#define CATCH_CONFIG_MAIN // catch2 main()
+#include "catch.hpp"
+
+TEST_CASE("Testa inicializacao do agregado Z") 
+{
+   auto z1 = Z{.x = 10};
+   // verifica se, de fato, z1.x vale 10
+   REQUIRE(z1.x == 10);
+}
+```
+
+--------
+
+## Baixando o Catch2 e executando
+
+Para baixar o arquivo `catch2.hpp`, basta acessar o site do projeto: [github.com/catchorg/Catch2](https://github.com/catchorg/Catch2).
+Link direto (Agosto 2020):
+
+*github.com/catchorg/Catch2/releases/download/v2.13.1/catch.hpp*
+
+***Para compilar:*** `g++ -fconcepts teste.cpp -o appTestes`
+
+***Para executar testes:*** `./appTestes -d yes`
+
+```
+0.000 s: Testa inicializacao do agregado Z
+===============================================
+All tests passed (1 assertion in 1 test case)
+```
+
+**Importante:** Recomenda-se a opção `-fsanitize=address` e `-g3` para evitar bugs durante o desenvolvimento usando GCC.
 
 --------
 
@@ -574,7 +688,7 @@ Nessa revisão sobre tipos, buscamos não aprofundar em nenhuma característica 
 - uso frequente de *closures* (ao invés de funções e lambdas)
 - uso frequente de memórias auto-gerenciáveis, como `std::unique_ptr` e `std::shared_ptr` (não requer `delete`)
 - uso de *corrotinas* do C++20 (somente consideramos *rotinas* no curso), especialmente para elaboração de iteradores infinitos
-- teste unitário de cada componente desenvolvido (recomendamos a biblioteca [`catch2.hpp`](https://github.com/catchorg/Catch2) ou [Google Tests](https://github.com/google/googletest))
+- teste de microbenchmarks (recomendamos a biblioteca [Google Benchmark](https://github.com/google/benchmark))
 
 
 -------
