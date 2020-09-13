@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Revisão de Tipos e Módulos
-date: 30/08/2020
+date: 13/09/2020
 transition: linear
 fontsize: 10
 header-includes:

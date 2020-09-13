@@ -1,5 +1,21 @@
 % nothing here
+
 \useoutertheme{infolines}
+
+% https://tex.stackexchange.com/questions/56860/how-to-modify-outer-theme-infolines-to-include-the-title-and-section-in-the-head
+\setbeamertemplate{headline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right,rightskip=1em]{section in head/foot}%
+    \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left,leftskip=1em]{subsection in head/foot}%
+    \usebeamerfont{section in head/foot}\insertsectionhead\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
 \usepackage{xcolor}
 
 %\usepackage[3D]{movie15}
