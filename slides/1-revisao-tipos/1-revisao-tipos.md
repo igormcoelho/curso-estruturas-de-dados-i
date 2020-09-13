@@ -176,8 +176,8 @@ v[7] = 5; // atribui o valor 5 à última posição
 ```
 
 ```
-v: | 3 |   |   |   |   |   |   | 5 |
-     0   1   2   3   4   5   6   7
+          v: | 3 |   |   |   |   |   |   | 5 |
+               0   1   2   3   4   5   6   7
 ```
 
 -------
@@ -242,8 +242,13 @@ Exemplo:
 auto p1 = P{.y = 'A'}; // compilador GCC8 (no mínimo)
 
 p1.x = 20;             // atribui 20 à variável x de p1
-p1.x = p1.x + 1;       // incrementa a variável y de p1
+p1.x = p1.x + 1;       // incrementa a variável x de p1
 printf("%d %c\n", p1.x, p1.y);  // imprime '21 A'
+```
+
+```
+             p1:  |      21       | 'A' |
+                        p1.x        p1.y
 ```
 
 -------
