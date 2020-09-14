@@ -108,9 +108,9 @@ Vide: *INSTRUÇÃO DE SERVIÇO PROGRAD Nº 15/2020, DE 25 DE AGOSTO DE 2020*
 
 ## Horários Síncronos
 
-Horários do curso: segunda e quarta 20h-22h.
+Horários do curso: segunda e quarta 18h-20h.
 
-Horários síncronos*: segundas 20h-22h (quartas sempre serão assíncronos)
+Horários síncronos*: segundas 18h-20h (quartas sempre serão assíncronos)
 
 (*) Algumas exceções estão previstas e algumas aulas poderão ser alteradas (caso seja necessário), mas esta é a regra geral.
 
