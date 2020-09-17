@@ -531,6 +531,14 @@ int main() {
 }
 ```
 
+--------
+
+## Definindo um TAD para `std::stack`
+
+***Desafio:*** escreva um *conceito* (utilizando o recurso `concept bool`) para o `std::stack` da STL, considerando operações `push`, `pop` e `top`.
+
+***Dica:*** Utilize o *conceito* `PilhaTAD` apresentado no curso, e faça os devidos ajustes. Verifique se o `std::stack` passa no teste utilizando `static_assert`.
+
 
 # Análise de Complexidade
 
