@@ -2074,6 +2074,13 @@ font-size: 1em;
 <span id="cb29-10"><a href="#cb29-10"></a>   printf(<span class="st">&quot;</span><span class="sc">%c\n</span><span class="st">&quot;</span>, p.top());  <span class="co">// imprime A</span></span>
 <span id="cb29-11"><a href="#cb29-11"></a>   <span class="cf">return</span> <span class="dv">0</span>;</span>
 <span id="cb29-12"><a href="#cb29-12"></a>}</span></code></pre></div>
+</section>
+<section id="definindo-um-tad-para-stdstack" class="slide level2">
+<h2>Definindo um TAD para <code>std::stack</code></h2>
+<p><strong><em>Desafio:</em></strong> escreva um <em>conceito</em> (utilizando o recurso C++ <code>concept bool</code>) para o <code>std::stack</code> da STL, considerando operações <code>push</code>, <code>pop</code> e <code>top</code>.</p>
+<p><strong><em>Dica:</em></strong> Utilize o <em>conceito</em> <code>PilhaTAD</code> apresentado no curso, e faça os devidos ajustes. Verifique se <code>std::stack</code> passa no teste com <code>static_assert</code>.</p>
+<p><em>Você pode compilar o código proposto (começando pelo slide anterior em um arquivo chamado <code>main_pilha.cpp</code>) através do comando:</em></p>
+<p><code>g++ -fconcepts main_pilha.cpp -o appPilha</code></p>
 </section></section>
 <section>
 <section id="análise-de-complexidade" class="title-slide slide level1">
