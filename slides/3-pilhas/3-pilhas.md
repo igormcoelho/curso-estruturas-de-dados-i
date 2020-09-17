@@ -337,42 +337,7 @@ static_assert(PilhaTAD<PilhaEnc1, char>);
 
 -------
 
-## Exemplo de uso: `PilhaEnc1 p; p.cria();`
-
-**p.N: 0  $\quad$  p.inicio: 0  $\quad$  $topo \leftarrow \epsilon$**
-
-```
-|     |     |     |     |     |     |     |     |     |     |    
-   0     4    ...   100   104   108   112   116   ...   8GiB
-```
-
-*Agora, empilhamos `A` e `B`, depois desempilhamos uma vez.*
-
-
-**p.N: 1  $\quad$  p.inicio: 112 $\quad$  $topo \leftarrow A$**
-
-```
-|     |     |     |     |     |     |  A  |  0  |     |     |    
-   0     4    ...   100   104   108   112   116   ...   8GiB
-```
-
-**p.N: 2  $\quad$  p.inicio: 100 $\quad$  $topo \leftarrow B \leftarrow A$**
-
-```
-|     |     |     |  B  | 112 |     |  A  |  0  |     |     |    
-   0     4    ...   100   104   108   112   116   ...   8GiB
-```
-
-**p.N: 1  $\quad$  p.inicio: 112 $\quad$  $topo \leftarrow A$**
-
-```
-|     |     |     |     |     |     |  A  |  0  |     |     |    
-   0     4    ...   100   104   108   112   116   ...   8GiB
-```
-
--------
-
-## Implementação: Cria e Libera
+## Implementação: Cria
 
 ```{.cpp}
 class PilhaSeq1 {
@@ -381,21 +346,208 @@ void cria() {
    this->N = 0;      // zero elementos na pilha
    this->inicio = 0; // endereço zero de memória
 }
-
-void libera() {
-   while (this->N > 0) {
-      NoPilha1* p = this->inicio->prox;
-      delete inicio;
-      inicio = p;
-      this->N--;     // N = N - 1
-   }
-}
 ...
 }
 ```
 ---------
 
+## Exemplo de uso
 
+Variável local do tipo Pilha Encadeada:
+
+```{.cpp}
+PilhaEnc1 p; 
+p.cria();
+```
+
+### Visualização da memória
+
+**p.N: 0  $\quad$  p.inicio: 0  $\quad$  $topo \leftarrow \epsilon$**
+
+```
+|     |     |     |     |     |     |     |     |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+---------
+
+## Implementação: Empilha 
+
+```{.cpp}
+void empilha(char v) {
+  auto* no = new NoPilha1{.dado = v, .prox = this->inicio};
+  this->inicio = no;
+  this->N++;              // N = N + 1
+}
+```
+### Na memória: `p.empilha('A'); p.empilha('B');`
+
+**p.N: 0  $\quad$  p.inicio: 0  $\quad$  $topo \leftarrow \epsilon$**
+
+```
+|     |     |     |     |     |     |     |     |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+**p.N: 1  $\quad$  p.inicio: 112 $\quad$  $topo \leftarrow A$**
+
+```
+|     |     |     |     |     |     |  A  |  0  |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+**p.N: 2  $\quad$  p.inicio: 100 $\quad$  $topo \leftarrow B \leftarrow A$**
+
+```
+|     |     |     |  B  | 112 |     |  A  |  0  |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+
+---------
+
+## Implementação: Desempilha
+
+:::::::::{.columns}
+
+:::::{.column width=65%}
+
+```{.cpp}
+char desempilha() {
+   NoPilha1* p = this->inicio->prox;
+   char r = this->inicio->dado;
+   delete this->inicio;
+   this->inicio = p;
+   this->N--;           //N=N-1
+   return r;
+}
+```
+
+:::::
+
+:::::{.column  width=35%}
+
+```{.cpp}
+class NoPilha1 
+{
+public:
+   char dado;
+   NoPilha1* prox;
+};
+```
+
+:::::
+
+:::::::::
+
+### Na memória: `p.desempilha();`
+
+**p.N: 2  $\quad$  p.inicio: 100 $\quad$  $topo \leftarrow B \leftarrow A$**
+
+```
+|     |     |     |  B  | 112 |     |  A  |  0  |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+**p.N: 1  $\quad$  p.inicio: 112 $\quad$  $topo \leftarrow A$**
+
+```
+|     |     |     |     |     |     |  A  |  0  |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+
+
+-------
+
+## Implementação: Libera
+
+```{.cpp}
+void libera() {
+   while (this->N > 0) {
+      NoPilha1* p = this->inicio->prox;
+      delete this->inicio;   this->inicio = p;    this->N--; 
+   }
+}
+```
+
+### Na memória: `p.libera();`
+
+**p.N: 2  $\quad$  p.inicio: 100 $\quad$  $topo \leftarrow B \leftarrow A$**
+
+```
+|     |     |     |  B  | 112 |     |  A  |  0  |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+**p.N: 1  $\quad$  p.inicio: 112 $\quad$  $topo \leftarrow A$**
+
+```
+|     |     |     |     |     |     |  A  |  0  |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+**p.N: 0  $\quad$  p.inicio: 0 $\quad$  $topo \leftarrow \epsilon$**
+
+```
+|     |     |     |     |     |     |     |     |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+--------
+
+## Análise Preliminar: Pilha Encadeada
+
+A Pilha Encadeada é flexível em relação ao espaço de memória, permitindo maior ou menor utilização.
+
+Como desvantagem tende a ter acessos de memória ligeiramente mais lentos, devido ao espalhamento dos elementos por toda a memória do computador (perdendo as vantagens de acesso rápido na *memória cache*, por exemplo).
+
+Também é considerada como desvantagem o gasto de espaço extra com ponteiros em cada elemento, o que não acontece na Pilha Sequencial.
+
+
+# Pilhas na Biblioteca Padrão
+
+--------
+
+## Uso da `std::stack`
+
+Em C/C++, é possível utilizar implementações *prontas* do TAD Pilha.
+A vantagem é a grande eficiência computacional e amplo conjunto de testes, evitando erros de implementação.
+
+Na STL, basta fazer `#include<stack>` e usar métodos `push`, `pop` e `top`.
+
+```{.cpp}
+#include<iostream>           // inclui printf
+#include<stack>              // inclui pilha genérica
+
+int main() {
+   std::stack<char> p;       // pilha de char
+   p.push('A');
+   p.push('B');
+   printf("%c\n", p.top());  // imprime B
+   p.pop();
+   printf("%c\n", p.top());  // imprime A
+   return 0;
+}
+```
+
+
+# Análise de Complexidade
+
+--------
+
+## Pilha: Revisão Geral
+
+- Para que serve uma pilha?
+- Quais são os 3 métodos de uma pilha?
+- Qual é a complexidade de cada método em uma Pilha
+Sequencial?
+- Qual é a complexidade de cada método em uma Pilha
+Encadeada?
+- Quais as vantagens e desvantagens de cada implementação de
+pilha?
+
+---------
 
 
 ## Bibliografia Recomendada
