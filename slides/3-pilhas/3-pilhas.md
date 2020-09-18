@@ -340,7 +340,7 @@ static_assert(PilhaTAD<PilhaEnc1, char>);
 ## Implementação: Cria
 
 ```{.cpp}
-class PilhaSeq1 {
+class PilhaEnc1 {
 ...
 void cria() {
    this->N = 0;      // zero elementos na pilha
