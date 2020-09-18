@@ -32,6 +32,7 @@ _**Última atualização:** Setembro/2020 (Período 2020.1)_
    - Observação: a Parte 2 contém algumas falhas no áudio, que pretendo corrigir no futuro. Como é uma etapa extra (prática), não compromete o conteúdo em si da aula.
 1. [Pilhas](slides/3-pilhas/3-pilhas.md): [PDF](slides/3-pilhas/3-pilhas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/3-pilhas/index.html)
    - Exemplo de pilha na STL: [main_pilha.cpp](./material/3-pilhas/main_pilha.cpp)
+   - Vídeos YouTube: [Pilhas e Implementações](https://youtu.be/2J1EdzSZ1NQ) - Análise de Complexidade *(nas próximas semanas)*
 1. Filas
 
 
