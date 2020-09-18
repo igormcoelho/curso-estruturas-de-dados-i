@@ -3,7 +3,7 @@ author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Pilhas
 date: 16/09/2020
-transition: linear
+transition: cube
 fontsize: 10
 header-includes:
 - <link rel="stylesheet" type="text/css" href="general.css">
@@ -543,6 +543,12 @@ int main() {
 
 `g++ -fconcepts main_pilha.cpp -o appPilha`
 
+-------
+
+## Fim implementações
+
+Fim parte de implementações.
+
 
 # Análise de Complexidade
 
@@ -565,9 +571,16 @@ pilha?
 ## Bibliografia Recomendada
 
 
-Além da bibliografia do curso, recomendamos (para esse tópico):
+Além da bibliografia do curso, recomendamos para esse tópico:
 
-- Livro "Introdução a estruturas de dados" de W. Celes e J. L. Rangel
+- Szwarcfiter, J.L; Markenzon, L. Estruturas de Dados e seus Algoritmos. Rio de Janeiro, LTC, 1994.
+Bibliografia Adicional:
+- Cerqueira, R.; Celes, W.; Rangel, J.L. Introdução a estruturas de dados: com técnicas de programação em C. Editora, 2004.
+- Cormen, T.H.; Leiserson, C.E.; Rivest, R.L.; Stein Algoritmos: Teoria e Prática. Ed. Campus, 2002.
+- Cormen, T.H.; Leiserson, C.E.; Rivest, R.L.; Stein, C. Introduction to Algorithms, 3rd ed.. The MIT Press, 2009.
+- Preiss, B.R. Estruturas de Dados e Algoritmos Ed. Campus, 2000;
+- Knuth, D.E. The Art of Computer Programming - Vols I e III. 2nd Edition. Addison Wesley, 1973.
+- Graham, R.L., Knuth, D.E., Patashnik, O. Matemática Concreta. Segunda Edição, Rio de Janeiro, LTC, 1995.
 - Livro "The C++ Programming Language" de Bjarne Stroustrup
 - Dicas e normas C++: https://github.com/isocpp/CppCoreGuidelines
 
