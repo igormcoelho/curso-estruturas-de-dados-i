@@ -35,7 +35,7 @@ _**Última atualização:** Setembro/2020 (Período 2020.1)_
    - Vídeos YouTube: [Pilhas e Implementações](https://youtu.be/2J1EdzSZ1NQ) - Análise de Complexidade *(nas próximas semanas)*
 1. [Filas](slides/4-filas/4-filas.md): [PDF](slides/4-filas/4-filas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-filas/index.html)
    - Exemplo de fila na STL: [main_fila.cpp](./material/4-filas/main_fila.cpp)
-   - Vídeos YouTube: [Filas e Implementações](https://youtu.be/SUGkC66t4tM) - Análise de Complexidade *(nas próximas semanas)*
+   - Vídeos YouTube: [Filas e Implementações](https://youtu.be/pZ36rzfSxYs) - Análise de Complexidade *(nas próximas semanas)*
    
 
 
