@@ -1788,7 +1788,7 @@ font-size: 1em;
 </section>
 <section id="implementações" class="slide level2">
 <h2>Implementações</h2>
-<p>De forma geral, uma fila pode ser implementada utilizando uma lista linear (assim como a pilha). Porém, tem acesso de direção restrita em ambas extremidades dessa lista: <em>de um lado entra, do outro lado sai</em> (um tipo restrito de <em>deque</em>).</p>
+<p>De forma geral, uma fila pode ser implementada utilizando uma lista linear (assim como uma pilha). Porém, tem acesso de direção restrita em ambas extremidades dessa lista: <em>de um lado entra, do outro lado sai</em> (um tipo restrito de <em>deque</em>).</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo><mi mathvariant="normal">∣</mi><mtext>  </mtext><mn>3</mn><mtext>  </mtext><mi mathvariant="normal">∣</mi><mtext>  </mtext><mn>2</mn><mtext>  </mtext><mi mathvariant="normal">∣</mi><mtext>  </mtext><mn>1</mn><mtext>  </mtext><mi mathvariant="normal">∣</mi><mo>→</mo></mrow><annotation encoding="application/x-tex"> \rightarrow | \; 3 \; | \; 2 \; | \; 1 \; | \rightarrow </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span></span></span></span></p>
 <p>Para o TAD Fila, estudaremos duas formas distintas de implementação: Sequencial e Encadeada.</p>
 </section>
@@ -1814,7 +1814,7 @@ font-size: 1em;
 </section>
 <section id="filas-sequenciais-1" class="slide level2">
 <h2>Filas Sequenciais</h2>
-<p>As Pilhas Sequenciais utilizam um array para armazenar os dados. Assim, os dados sempre estarão em um <em>espaço contíguo</em> de memória.</p>
+<p>As Filas Sequenciais utilizam um array para armazenar os dados. Assim, os dados sempre estarão em um <em>espaço contíguo</em> de memória.</p>
 </section>
 <section id="implementação-filaseq1" class="slide level2">
 <h2>Implementação FilaSeq1</h2>
@@ -1855,8 +1855,8 @@ font-size: 1em;
 </section>
 <section id="implementação-filaseq1---parte-12" class="slide level2">
 <h2>Implementação FilaSeq1 - Parte 1/2</h2>
-<p>A operação <code>cria</code> inicializa a pilha para uso, e a função <code>libera</code> desaloca os recursos dinâmicos.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">class</span> PilhaSeq1 {</span>
+<p>A operação <code>cria</code> inicializa a fila para uso, e a função <code>libera</code> desaloca os recursos dinâmicos.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">class</span> FilaSeq1 {</span>
 <span id="cb4-2"><a href="#cb4-2"></a>...</span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="dt">void</span> cria() {</span>
 <span id="cb4-4"><a href="#cb4-4"></a>   <span class="kw">this</span>-&gt;N = <span class="dv">0</span>;</span>
@@ -1912,7 +1912,7 @@ font-size: 1em;
 </section>
 <section id="implementação-filaseq2-cria-e-libera" class="slide level2">
 <h2>Implementação FilaSeq2: cria() e libera()</h2>
-<p>A operação <code>cria</code> inicializa a pilha para uso, e a função <code>libera</code> desaloca os recursos dinâmicos.</p>
+<p>A operação <code>cria</code> inicializa a fila para uso, e a função <code>libera</code> desaloca os recursos dinâmicos.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">class</span> FilaSeq2 {</span>
 <span id="cb7-2"><a href="#cb7-2"></a>...</span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="dt">void</span> cria() {</span>
@@ -2027,7 +2027,7 @@ p.fim:    | 1 |                    0   1   2   3   4   </code></pre>
 </section>
 <section id="implementação" class="slide level2">
 <h2>Implementação</h2>
-<p>Consideraremos uma pilha encadeada, utilizando um agregado <code>NoFila1</code> para conectar cada elemento da pilha:</p>
+<p>Consideraremos uma fila encadeada, utilizando um agregado <code>NoFila1</code> para conectar cada elemento da fila:</p>
 <div class="columns">
 <div class="column" style="width:33%;">
 <div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">class</span> NoFila1 </span>
@@ -2059,7 +2059,7 @@ p.fim:    | 1 |                    0   1   2   3   4   </code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">class</span> FilaEnc1 {</span>
 <span id="cb23-2"><a href="#cb23-2"></a>...</span>
 <span id="cb23-3"><a href="#cb23-3"></a><span class="dt">void</span> cria() {</span>
-<span id="cb23-4"><a href="#cb23-4"></a>   <span class="kw">this</span>-&gt;N = <span class="dv">0</span>;       <span class="co">// zero elementos na pilha</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>   <span class="kw">this</span>-&gt;N = <span class="dv">0</span>;       <span class="co">// zero elementos na fila</span></span>
 <span id="cb23-5"><a href="#cb23-5"></a>   <span class="kw">this</span>-&gt;inicio = <span class="dv">0</span>;  <span class="co">// endereço zero de memória</span></span>
 <span id="cb23-6"><a href="#cb23-6"></a>   <span class="kw">this</span>-&gt;fim = <span class="dv">0</span>;     <span class="co">// endereço zero de memória</span></span>
 <span id="cb23-7"><a href="#cb23-7"></a>}</span>

@@ -74,7 +74,7 @@ Seu comportamento é descrito como FIFO (first-in first-out), ou seja, o *primei
 
 ## Implementações
 
-De forma geral, uma fila pode ser implementada utilizando uma lista linear (assim como a pilha).
+De forma geral, uma fila pode ser implementada utilizando uma lista linear (assim como uma pilha).
 Porém, tem acesso de direção restrita em ambas extremidades dessa lista: *de um lado entra, do outro lado sai* (um tipo restrito de *deque*).
 
 $$ \rightarrow | \; 3 \; | \; 2 \; | \; 1 \; | \rightarrow $$
@@ -112,7 +112,7 @@ FilaTAD = requires(Agregado a, Tipo t)
 
 ## Filas Sequenciais
 
-As Pilhas Sequenciais utilizam um array para armazenar os dados. 
+As Filas Sequenciais utilizam um array para armazenar os dados. 
 Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 
 
@@ -168,10 +168,10 @@ int main () {
 
 ## Implementação FilaSeq1 - Parte 1/2
 
-A operação `cria` inicializa a pilha para uso, e a função `libera` desaloca os recursos dinâmicos.
+A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
 ```{.cpp}
-class PilhaSeq1 {
+class FilaSeq1 {
 ...
 void cria() {
    this->N = 0;
@@ -243,7 +243,7 @@ static_assert(FilaTAD<FilaSeq2, char>);
 
 ## Implementação FilaSeq2: cria() e libera()
 
-A operação `cria` inicializa a pilha para uso, e a função `libera` desaloca os recursos dinâmicos.
+A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
 ```{.cpp}
 class FilaSeq2 {
@@ -431,7 +431,7 @@ A desvantagem é o consumo extra de espaço com ponteiros.
 
 ## Implementação
 
-Consideraremos uma pilha encadeada, utilizando um agregado `NoFila1` para conectar cada elemento da pilha:
+Consideraremos uma fila encadeada, utilizando um agregado `NoFila1` para conectar cada elemento da fila:
 
 ::::::::::{.columns}
 
@@ -480,7 +480,7 @@ static_assert(FilaTAD<FilaEnc1, char>);
 class FilaEnc1 {
 ...
 void cria() {
-   this->N = 0;       // zero elementos na pilha
+   this->N = 0;       // zero elementos na fila
    this->inicio = 0;  // endereço zero de memória
    this->fim = 0;     // endereço zero de memória
 }
