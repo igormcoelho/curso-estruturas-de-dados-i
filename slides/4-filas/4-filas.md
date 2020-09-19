@@ -20,7 +20,7 @@ header-includes:
 
 ## Pré-Requisitos
 
-São requisitos para essa aula o conhecimento de:
+São requisitos para essa aula:
 
 - Introdução/Fundamentos de Programação (em alguma linguagem de programação)
 - Interesse em aprender C/C++
@@ -64,8 +64,8 @@ Uma Fila é uma estrutura de dados linear (assim como estruturas de lista),
 consistindo de 3 operações básicas: 
 
 - frente (*front*)
-- enfileira (*enqueue*)
-- desenfileira (*dequeue*)
+- enfileira (*enqueue* ou *push*)
+- desenfileira (*dequeue* ou *pop*)
 
 
 Seu comportamento é descrito como FIFO (first-in first-out), ou seja, o *primeiro* elemento a entrar na fila será o *primeiro* a sair.
