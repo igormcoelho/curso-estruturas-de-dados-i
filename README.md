@@ -68,6 +68,11 @@ Uma demonstração foi colocada no site do ilectures: [https://github.com/igormc
 Pandoc + LaTeX
 
 `python3 -m pip install pandoc-source-exec`
+`python3 -m pip install pandoc-latex-color`
+
+[pandoc 2.10.1](https://github.com/jgm/pandoc/releases/tag/2.10.1)
+
+
 
 ### Licença CC-BY 4.0
 
