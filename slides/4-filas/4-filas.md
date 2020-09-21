@@ -13,7 +13,6 @@ header-includes:
 
 
 
-
 # Filas
 
 ------
@@ -50,7 +49,7 @@ Na *fila do banco*, por exemplo:
 
 ## Filas na computação
 
-Filas são estruturas fundamentais na própria computação. 
+Filas são estruturas fundamentais na própria computação.
 
 Por exemplo, quando se envia pacotes de dados a roteadores, tipicamente é respeitada a ordem de chegada das mensagens.
 
@@ -61,7 +60,7 @@ Também são úteis na implementações de mecanismos de busca, como busca em la
 ## Operações de uma Fila
 
 Uma Fila é uma estrutura de dados linear (assim como estruturas de lista),
-consistindo de 3 operações básicas: 
+consistindo de 3 operações básicas:
 
 - frente (*front*)
 - enfileira (*enqueue* ou *push*)
@@ -112,7 +111,7 @@ FilaTAD = requires(Agregado a, Tipo t)
 
 ## Filas Sequenciais
 
-As Filas Sequenciais utilizam um array para armazenar os dados. 
+As Filas Sequenciais utilizam um array para armazenar os dados.
 Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 
 
@@ -161,7 +160,7 @@ int main () {
    p.libera();
    return 0;
 }
-``` 
+```
 ***Verifique as impressões em tela:*** *A A B C D*
 
 ---------
@@ -355,7 +354,7 @@ void enfileira(char dado) {
 
 char desenfileira() {
    char r = this->elementos[inicio];
-   inicio = (inicio + 1) % MAXN; // estratégia circular 
+   inicio = (inicio + 1) % MAXN; // estratégia circular
    N--;
    return r;
 }
@@ -404,10 +403,10 @@ p.fim:    | 1 |                    0   1   2   3   4
 
 A Fila Sequencial tem a vantagem de ser bastante simples de implementar, ocupando um espaço constante (na memória) para todas operações.
 
-Porém, existe a limitação física de `MAXN` posições imposta pela alocação estática, 
+Porém, existe a limitação física de `MAXN` posições imposta pela alocação estática,
 não permitindo que a fila ultrapasse esse limite.
 
-***Desafio:*** implemente uma Fila Sequencial utilizando alocação dinâmica para o vetor `elementos`. 
+***Desafio:*** implemente uma Fila Sequencial utilizando alocação dinâmica para o vetor `elementos`.
 Assim, quando não houver espaço
 para novos elementos, aloque mais espaço na memória (copiando elementos existentes para o novo vetor).
 
@@ -438,7 +437,7 @@ Consideraremos uma fila encadeada, utilizando um agregado `NoFila1` para conecta
 :::::{.column width=33%}
 
 ```{.cpp}
-class NoFila1 
+class NoFila1
 {
 public:
    char dado;
@@ -499,7 +498,7 @@ void libera() {
 Variável local do tipo Fila Encadeada:
 
 ```{.cpp}
-FilaEnc1 p; 
+FilaEnc1 p;
 p.cria();
 ```
 
@@ -514,7 +513,7 @@ p.cria();
 
 ---------
 
-## Implementação: Enfileira 
+## Implementação: Enfileira
 
 ```{.cpp}
 void enfileira(char v) {

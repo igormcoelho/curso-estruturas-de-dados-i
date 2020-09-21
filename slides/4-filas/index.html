@@ -663,7 +663,7 @@ p.fim:    | 3 |                    0   1   2   3   4   </code></pre>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a><span class="dt">char</span> desenfileira() {</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a>   <span class="dt">char</span> r = <span class="kw">this</span>-&gt;elementos[inicio];</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a>   inicio = (inicio + <span class="dv">1</span>) % MAXN; <span class="co">// estratégia circular </span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a>   inicio = (inicio + <span class="dv">1</span>) % MAXN; <span class="co">// estratégia circular</span></span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true"></a>   N--;</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true"></a>   <span class="cf">return</span> r;</span>
 <span id="cb15-14"><a href="#cb15-14" aria-hidden="true"></a>}</span></code></pre></div>
@@ -706,7 +706,7 @@ p.fim:    | 1 |                    0   1   2   3   4   </code></pre>
 <p>Consideraremos uma fila encadeada, utilizando um agregado <code>NoFila1</code> para conectar cada elemento da fila:</p>
 <div class="columns">
 <div class="column" style="width:33%;">
-<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="kw">class</span> NoFila1 </span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="kw">class</span> NoFila1</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a>{</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a><span class="kw">public</span>:</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a>   <span class="dt">char</span> dado;</span>
@@ -750,7 +750,7 @@ p.fim:    | 1 |                    0   1   2   3   4   </code></pre>
 <section id="exemplo-de-uso" class="slide level2">
 <h2>Exemplo de uso</h2>
 <p>Variável local do tipo Fila Encadeada:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>FilaEnc1 p; </span>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>FilaEnc1 p;</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a>p.cria();</span></code></pre></div>
 <h3 id="visualização-da-memória">Visualização da memória</h3>
 <p><strong>p.N: 0 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="1em"></mspace></mrow><annotation encoding="application/x-tex">\quad</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace" style="margin-right:1em;"></span></span></span></span> p.inicio: 0 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="1em"></mspace></mrow><annotation encoding="application/x-tex">\quad</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace" style="margin-right:1em;"></span></span></span></span> p.fim: 0 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="1em"></mspace></mrow><annotation encoding="application/x-tex">\quad</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace" style="margin-right:1em;"></span></span></span></span> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi><mo>←</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">frente \leftarrow \epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">ϵ</span></span></span></span></strong></p>
