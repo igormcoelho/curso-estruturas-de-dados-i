@@ -358,11 +358,11 @@ Dado um nó $V$ na posição $i$ da árvore sequencial $T$, em que posição est
 Fim parte de implementações.
 
 
-# Percursos em Árvores
+# Operações em Árvores
 
 -------
 
-## Percursos em Árvores
+## Operações em Árvores
 
 
 # Árvores de Busca
