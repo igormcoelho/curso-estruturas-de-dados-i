@@ -27,7 +27,7 @@ São requisitos para essa aula:
 - Noções de tipos de dados
 - Noções de listas e encadeamento
 
-*Agradecimentos especiais ao prof. Fabiano Oliveira do IME/UERJ, cujo conteúdo didático forma a base desses slides*
+*Agradecimentos especiais ao prof. Fabiano Oliveira e prof. Fábio Protti, cujos conteúdos didáticos formam a base desses slides*
 
 # Tipo Abstrato: Árvore
 
@@ -362,15 +362,127 @@ Fim parte de implementações.
 
 -------
 
-## Operações em Árvores
+## Percursos em Árvores
 
+Como "imprimir" uma árvore?
 
-# Árvores de Busca
+Estruturas lineares tem uma intuição mais direta para o conceito de impressão, mas para estruturas arbóreas isso já não é tão direto.
+Além da impressão, muitas vezes é desejável efetuar outras operações ou *visitas* em nós de uma árvore.
+
+Operações de *Percursos em Árvore* (do inglês, *tree traversals*) apresentam uma solução para isso:
+
+- Percurso de pré-ordem (do inglês, *preorder*)
+- Percurso de pós-ordem (do inglês, *postorder*)
+- Percurso em-ordem ou ordem simétrica (do inglês, *inorder*)
 
 -------
 
-## Árvores de Busca
+## Percursos: definições e aplicações
 
+No percurso de *pré-ordem*, o nó é visitado primeiro, depois os filhos esquerdos, e finalmente, são visitados os filhos direitos.
+
+- **Aplicação:** impressão da ordem de visita (pilha de execução) para algoritmos recursivos em árvore.
+
+No percurso de *pós-ordem*, os filhos esquerdos são visitados primeiro, depois os filhos direitos, e finalmente o nó é visitado.
+
+- **Aplicação:** calcular altura de um nó (note que a altura de um nó depende da altura de seus filhos).
+
+No percurso *em-ordem*, os filhos esquerdos são visitados primeiro, depois o nó é visitado, e finalmente os filhos direitos são visitados.
+
+- **Aplicação:** impressão "visual" da árvore como caracteres na tela (desafio!). Visita ordenada em árvores com propriedades de busca e mapas (próxima aula).
+
+
+-------
+
+## Percurso Pré-ordem
+
+```{.cpp}
+void preordem(auto* no) {
+   if(no) {
+      printf("%c\n", no->chave); // operação ou "visita"
+      preordem(no->esq);
+      preordem(no->dir);   
+   }
+}
+```
+![Percurso de Pré-ordem: A B D G C E H I F](2020-10-05-12-38-13.png){width=50%}
+
+
+-------
+
+## Pratique: Pré-ordem
+
+Apresente o percurso de pré-ordem para as árvores abaixo:
+
+![Execício de Pré-ordem](2020-10-05-12-17-24.png){width=70%}
+
+. . . 
+
+**Solução:** 1. ABCDFGE 2. ABCD 3. ABCD 4. ABDECFG 
+
+-------
+
+## Percurso Pré-ordem
+
+```{.cpp}
+void posordem(auto* no) {
+   if(no) {
+      posordem(no->esq);
+      posordem(no->dir);   
+      printf("%c\n", no->chave); // operação ou "visita"
+   }
+}
+```
+
+![Percurso de Pós-ordem: G D B H I E F C A](2020-10-05-12-38-13.png){width=50%}
+
+
+-------
+
+## Pratique: Pós-ordem
+
+Apresente o percurso de pós-ordem para as árvores abaixo:
+
+![Execício de Pós-ordem](2020-10-05-12-17-24.png){width=70%}
+
+. . . 
+
+**Solução:** 1. BFGDECA 2. DCBA 3. DCBA 4.DEBFGCA
+
+
+-------
+
+## Percurso Em-ordem (ordem simétrica)
+
+```{.cpp}
+void emordem(auto* no) {
+   if(no) {
+      emordem(no->esq);
+      printf("%c\n", no->chave); // operação ou "visita"
+      emordem(no->dir);   
+   }
+}
+```
+
+![Percurso de ordem simétrica: DGBAHEICF](2020-10-05-12-38-13.png){width=50%}
+
+
+-------
+
+## Pratique: Em-ordem
+
+Apresente o percurso de ordem simétrica para as árvores abaixo:
+
+![Execício de Ordem Simétrica](2020-10-05-12-17-24.png){width=70%}
+
+. . . 
+
+**Solução:** 1. BAFDGCE 2. DCBA 3. ABCD 4. DBEAFCG
+
+
+## Fim percursos
+
+Fim parte de percursos.
 
 ---------
 

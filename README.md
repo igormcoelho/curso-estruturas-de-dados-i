@@ -8,7 +8,8 @@ Lista completa de módulos no repositório:
 - Listas
 - Pilhas
 - Filas
-- Árvores / Árvores de Busca
+- Árvores
+- Árvores de Busca e Mapas
 - Filas de Prioridade
 - Grafos
 
