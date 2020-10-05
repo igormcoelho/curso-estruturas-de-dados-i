@@ -38,8 +38,9 @@ _**Última atualização:** Setembro/2020 (Período 2020.1)_
    - Exemplo de fila na STL: [main_fila.cpp](./material/4-filas/main_fila.cpp)
    - Vídeos YouTube: [Filas e Implementações](https://youtu.be/pZ36rzfSxYs) - Análise de Complexidade *(nas próximas semanas)*
 1. [Árvores](slides/5-arvores/5-arvores.md): [PDF](slides/5-arvores/5-arvores.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/5-arvores/index.html)
-   - Vídeos YouTube: [Árvores](https://youtu.be/Yd6Wda879Q4) - Operações em Árvores e Árvores de Busca *(nas próximas semanas)*
-
+   - Vídeos YouTube: [Árvores Parte 1/2](https://youtu.be/Yd6Wda879Q4) 
+1. [Dicionários e Árvores de Busca](slides/6-dicionarios/6-dicionarios.md): [PDF](slides/6-dicionarios/6-dicionarios.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios/index.html)
+   - Vídeos YouTube: [Dicionários e Árvores de Busca Parte 1/2](https://youtu.be/Y_jx6sMQyf8) 
 
 
 Calendário 2020 (atualizado):
