@@ -41,6 +41,8 @@ _**Última atualização:** Setembro/2020 (Período 2020.1)_
    - Vídeos YouTube: [Árvores Parte 1/2](https://youtu.be/Yd6Wda879Q4) 
 1. [Dicionários e Árvores de Busca](slides/6-dicionarios/6-dicionarios.md): [PDF](slides/6-dicionarios/6-dicionarios.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios/index.html)
    - Vídeos YouTube: [Dicionários e Árvores de Busca Parte 1/2](https://youtu.be/Y_jx6sMQyf8) 
+   - Material Fábio Protti: [Arvores de Busca 1](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-1.pdf)
+   - Material Fábio Protti: [Arvores de Busca 2](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-2.pdf)
 
 
 Calendário 2020 (atualizado):
