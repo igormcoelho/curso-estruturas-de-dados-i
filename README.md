@@ -43,6 +43,9 @@ _**Última atualização:** Setembro/2020 (Período 2020.1)_
    - Vídeos YouTube: [Dicionários e Árvores de Busca Parte 1/2](https://youtu.be/Y_jx6sMQyf8) 
    - Material Fábio Protti: [Arvores de Busca 1](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-1.pdf)
    - Material Fábio Protti: [Arvores de Busca 2](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-2.pdf)
+1. [Filas de Prioridade](slides/7-filas-prioridade/7-filas-prioridade.md): [PDF](slides/7-filas-prioridade/7-filas-prioridade.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/7-filas-prioridade/index.html)
+   - Vídeos YouTube: [Filas de Prioridade Parte 1/2](https://youtu.be/SA-RgtmLWkM) 
+
 
 
 Calendário 2020 (atualizado):
