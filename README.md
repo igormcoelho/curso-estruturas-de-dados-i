@@ -23,7 +23,12 @@ _Curso de **Estruturas de Dados para Sistemas de Informação** (TCC00331) do [P
 ![Estrelas](https://img.shields.io/github/stars/igormcoelho/curso-estruturas-de-dados-i)
 ![Licença](https://img.shields.io/github/license/igormcoelho/curso-estruturas-de-dados-i)
 
-_**Última atualização:** Setembro/2020 (Período 2020.1)_
+_**Última atualização:** Outubro/2020 (Período 2020.1)_
+
+
+**Últimas Notícias:**
+
+- http://uff.br/?q=nota-gt-cepex-esclarecimentos-atividades-academicas-emergenciais
 
 ### Tópicos do Curso
 
