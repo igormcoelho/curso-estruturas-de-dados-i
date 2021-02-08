@@ -52,9 +52,9 @@ _**Última atualização:** Fevereiro/2021 (Período 2020.2)_
 
 **Últimas Notícias:**
 
-- ...
+- Mais informações no Google Classroom
 
-### Tópicos do Curso
+### Tópicos do Curso EDSI 2020.2
 
 1. [Introdução ao curso](slides/0-intro-curso-uff-si-2020-2/0-intro-curso.md): [PDF](slides/0-intro-curso-uff-si-2020-2/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso-uff-si-2020-1/index.html)
 1. Revisão/Tipos (veja módulos acima)
@@ -86,7 +86,7 @@ _**Última atualização:** Outubro/2020 (Período 2020.1)_
 
 - http://uff.br/?q=nota-gt-cepex-esclarecimentos-atividades-academicas-emergenciais
 
-### Tópicos do Curso
+### Tópicos do Curso EDSI 2020.1
 
 1. [Introdução ao curso](slides/0-intro-curso-uff-si-2020-1/0-intro-curso.md): [PDF](slides/0-intro-curso-uff-si-2020-1/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso-uff-si-2020-1/index.html)
 1. Revisão/Tipos (veja módulos acima)

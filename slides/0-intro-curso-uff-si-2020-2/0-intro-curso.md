@@ -1,7 +1,7 @@
 ---
 author: Igor M. Coelho
 title: Estruturas de Dados I
-date: 30/08/2020
+date: 01/02/2021
 transition: linear
 fontsize: 10
 header-includes:
@@ -23,7 +23,7 @@ Bem-vind@s ao curso de *Estruturas de Dados para Sistemas de Informação*
 
 Curso:
 
-- Estruturas de Dados para Sistemas de Informação - `TCC00331` - C.H. 64
+- Estruturas de Dados para Sistemas de Informação - `TCC00331` - C.H. 64 (32 teórica + 32 prática)
 - Site: https://igormcoelho.github.io/curso-estruturas-de-dados-i
 
 Links úteis:
@@ -45,7 +45,7 @@ Links úteis:
 
 ![Prof. Igor M. Coelho](./img/igor-lattes.jpeg "Prof. Igor Machado Coelho"){width=50%}
 
-e-mail (com prefixo no assunto 'EDSI-2020.1'):
+e-mail (com prefixo no assunto '[EDSI-2020.2]'):
 
 imcoelho at ic.uff.br (emergência)
 
@@ -89,13 +89,13 @@ Sempre que tiverem uma dúvida ou curiosidade, perguntem! Toda pergunta é valio
 --------
 
 
-## Período 2020.1 com aulas remotas
+## Período 2020.2 com aulas remotas
 
-Atividades com aulas remotas em 2020.1
+Atividades com aulas remotas em 2020.2
 
-- Período: 14/09/2020 (segunda-feira) - 15/12/2020 (terça-feira)
+- Período: 01/02/2021 (segunda-feira) - 10/05/2021 (segunda-feira)
 
-- Lançamento de notas: 14/12/2020 (último encontro)
+- Lançamento de notas: 03/05/2021 (último encontro)
 
 Teremos aulas síncronas em horários regulares e outras diversas atividades assíncronas complementares (vídeos, textos, trabalhos, ...) para suprir toda a carga horária.
 
@@ -116,7 +116,7 @@ Horários síncronos*: segundas 18h-20h (quartas sempre serão assíncronos)
 
 ---------
 
-## Ementa
+## Ementa da Disciplina
 
 1. PILHAS
 2. FILAS
@@ -140,31 +140,33 @@ N1 = (A + P)/2
 
 De acordo com as normas regulares da UFF, a nota mínima N1 para aprovação é 6.
 
-Caso contrário, será necessário fazer a VS.
-
-N2 = (N1 + VS)/2
+**IMPORTANTE:** no modelo de avaliação continuada com avaliações assíncronas, **não haverá VS**.
 
 --------
 
 ## Cronograma (I)
 
-- Período: 14/09/2020 - 15/12/2020
+- Período: 01/02/2021 - 10/05/2021
 
 Tipo = Sinc./Asinc.
 
 | Data       | Atividade                       | Tipo    |
 | :---       |   :----                         | :---    |
-| 14/09/2020 |  Revisão & Tipos            |  Sinc.  | 
-| 16/09/2020 |  Leitura & Debates              |  Asinc. |
-| 21/09/2020 |  Pilhas & Filas                 |  Sinc.  |
-| 23/09/2020 |  Leitura & Debates              |  Asinc. |
-| 28/09/2020 |  Árvores  I                     |  Sinc.  |
-| 30/09/2020 |  Leitura & Debates              |  Asinc. |
-| 05/10/2020 |  Árvores II                     |  Sinc.  |
-| 07/10/2020 |  Leitura & Debates              |  Asinc. |
-| 12/10/2020 |  Filas de Prioridades           |  Sinc.  |
-| 14/10/2020 |  Leitura & Debates              |  Asinc. |
-| 19/10/2020 |  Revisão Geral                  |  Sinc.  |
+| 01/02/2021 |  Revisão C/C++ & Tipos          |  Asinc. | 
+| 03/02/2021 |  Revisão C/C++ & Tipos          |  Asinc. |
+| 08/02/2021 |  Introdução                     |  Sinc.  | 
+| 10/02/2021 |  Revisão C/C++ & Tipos          |  Asinc. |
+| 15/02/2021 |  -                              |  -      | 
+| 17/02/2021 |  -                              |  -      |
+| 22/02/2021 |  Pilhas & Filas                 |  Sinc.  |
+| 24/02/2021 |  Leitura & Debates              |  Asinc. |
+| 01/03/2021 |  Árvores  I                     |  Sinc.  |
+| 03/03/2021 |  Leitura & Debates              |  Asinc. |
+| 08/03/2021 |  Árvores II                     |  Sinc.  |
+| 10/03/2021 |  Leitura & Debates              |  Asinc. |
+| 15/03/2021 |  Filas de Prioridades           |  Sinc.  |
+| 17/03/2021 |  Leitura & Debates              |  Asinc. |
+| 22/03/2021 |  Revisão Geral                  |  Sinc.  |
 
 ------
 
@@ -172,19 +174,17 @@ Tipo = Sinc./Asinc.
 
 | Data       | Atividade                       | Tipo    |
 | :---       |   :----                         | :---    |
-| 21/10/2020 |  Prova (V)                      |  *Asinc. |
-| 26/10/2020 |  Grafos e Hash (conceitos)      |  Sinc.  |
-| 28/10/2020 |  Leitura & Debates              |  Asinc. |
-| 02/11/2020 |  Debates *                      |  *Asinc. |
-| 04/11/2020 |  Debates *                      |  Asinc. |
-| 09/11/2020 |  Apresentação (P)               |  Sinc.  |
-| 11/11/2020 |  Debates (P)                    |  Asinc. |
-| 16/11/2020 |  Apresentação (P)               |  Sinc.  |
-| 18/11/2020 |  Debates (P)                    |  Asinc. |
-| 23/11/2020 |  Apresentação (P)               |  Sinc.  |
-| 24/11/2020 |  Debates (P)                    |  Asinc. |
-| 30/11/2020 |  Apresentação (P)               |  Sinc.  |
-| 02/12/2020 |  Debates (P)                    |  Asinc. |
+| 24/03/2021 |  Prova (V)                      |  *Asinc. |
+| 29/03/2021 |  Debates *                      |  Asinc.  |
+| 31/03/2021 |  Debates *                      |  Asinc. |
+| 05/04/2021 |  Apresentação (P)               |  *Asinc. |
+| 07/04/2021 |  Debates (P)                    |  Asinc. |
+| 12/04/2020 |  Apresentação (P)               |  Sinc.  |
+| 14/04/2021 |  Debates (P)                    |  Asinc. |
+| 19/04/2021 |  Apresentação (P)               |  Sinc.  |
+| 21/04/2021 |   -                             |  -      |
+| 26/04/2021 |  Apresentação (P)               |  Sinc.  |
+| 28/04/2021 |  *Segunda Chamada               |  *Asinc. |
 
 -------
 
@@ -192,10 +192,9 @@ Tipo = Sinc./Asinc.
 
 | Data       | Atividade                       | Tipo   |
 | :---       |   :----                         | :---   |
-| 07/12/2020 |  Segunda Chamada                |  *Asinc. |
-| 09/12/2020 |  -                              |  Asinc. |
-| 14/12/2020 |  VS                            |  *Asinc. |
-| 15/12/2020 |  Lançamento Notas              |  *Asinc. |
+| 03/05/2021 |  Lançamento Notas               |  *Asinc. |
+| 05/05/2021 |  -                              |  Asinc. |
+| 10/05/2021 |  Fim Semestre                   |  *Asinc. |
 
 -------
 
