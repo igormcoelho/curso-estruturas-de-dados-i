@@ -3,6 +3,7 @@
 Materiais gerais de Estruturas de Dados I, bem como suas respectivas aplicações em períodos recentes.
 
 Lista completa de módulos no repositório:
+
 - Revisão/Tipos
 - Análise de Complexidade
 - Listas
@@ -13,26 +14,8 @@ Lista completa de módulos no repositório:
 - Filas de Prioridade
 - Grafos
 
-***Observação:*** **alguns módulos só são oferecidos para cursos específicos.*
+Materiais PDF-HTML:
 
-## Oferta 2020.1 - EDSI - TCC00331
-
-_Curso de **Estruturas de Dados para Sistemas de Informação** (TCC00331) do [Prof. Igor Machado Coelho](https://igormcoelho.github.io), oferecido pelo [Instituto de Computação (IC) da Universidade Federal Fluminense (UFF)](http://www.ic.uff.br)._ **versão online:** [igormcoelho.github.io/curso-estruturas-de-dados-i/](https://igormcoelho.github.io/curso-estruturas-de-dados-i/)
-
-[Código-fonte no GitHub](https://github.com/igormcoelho/curso-estruturas-de-dados-i)
-![Estrelas](https://img.shields.io/github/stars/igormcoelho/curso-estruturas-de-dados-i)
-![Licença](https://img.shields.io/github/license/igormcoelho/curso-estruturas-de-dados-i)
-
-_**Última atualização:** Outubro/2020 (Período 2020.1)_
-
-
-**Últimas Notícias:**
-
-- http://uff.br/?q=nota-gt-cepex-esclarecimentos-atividades-academicas-emergenciais
-
-### Tópicos do Curso
-
-1. [Introdução ao curso](slides/0-intro-curso/0-intro-curso.md): [PDF](slides/0-intro-curso/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso/index.html)
 1. [Revisão/Tipos](slides/1-revisao-tipos/1-revisao-tipos.md): [PDF](slides/1-revisao-tipos/1-revisao-tipos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-revisao-tipos/index.html)
    - Vídeos YouTube: [Parte 1](https://youtu.be/byZLHu4kTb0) [Parte 2](https://youtu.be/2Bo7MYFCJ0o)
    - Observação: a Parte 2 contém algumas falhas no áudio, que pretendo corrigir no futuro. Como é uma etapa extra (prática), não compromete o conteúdo em si da aula.
@@ -52,11 +35,72 @@ _**Última atualização:** Outubro/2020 (Período 2020.1)_
    - Vídeos YouTube: [Filas de Prioridade Parte 1/2](https://youtu.be/SA-RgtmLWkM) 
 
 
+***Observação:*** **alguns módulos só são oferecidos para cursos específicos.*
+
+------
+
+## Oferta 2020.2 - EDSI - TCC00331
+
+_Curso de **Estruturas de Dados para Sistemas de Informação** (TCC00331) do [Prof. Igor Machado Coelho](https://igormcoelho.github.io), oferecido pelo [Instituto de Computação (IC) da Universidade Federal Fluminense (UFF)](http://www.ic.uff.br)._ **versão online:** [igormcoelho.github.io/curso-estruturas-de-dados-i/](https://igormcoelho.github.io/curso-estruturas-de-dados-i/)
+
+[Código-fonte no GitHub](https://github.com/igormcoelho/curso-estruturas-de-dados-i)
+![Estrelas](https://img.shields.io/github/stars/igormcoelho/curso-estruturas-de-dados-i)
+![Licença](https://img.shields.io/github/license/igormcoelho/curso-estruturas-de-dados-i)
+
+_**Última atualização:** Fevereiro/2021 (Período 2020.2)_
+
+
+**Últimas Notícias:**
+
+- ...
+
+### Tópicos do Curso
+
+1. [Introdução ao curso](slides/0-intro-curso-uff-si-2020-2/0-intro-curso.md): [PDF](slides/0-intro-curso-uff-si-2020-2/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso-uff-si-2020-1/index.html)
+1. Revisão/Tipos (veja módulos acima)
+1. Pilhas (veja módulos acima)
+1. Filas (veja módulos acima)
+1. Árvores (veja módulos acima)
+1. Dicionários e Árvores de Busca (veja módulos acima)
+1. Filas de Prioridade (veja módulos acima)
+
+
+Calendário 2020.2 (atualizado):
+   - [Atualizado 2020.2](./files/uff-2020-1-2-calendarios.pdf)
+
+-------
+
+
+## Oferta 2020.1 - EDSI - TCC00331
+
+_Curso de **Estruturas de Dados para Sistemas de Informação** (TCC00331) do [Prof. Igor Machado Coelho](https://igormcoelho.github.io), oferecido pelo [Instituto de Computação (IC) da Universidade Federal Fluminense (UFF)](http://www.ic.uff.br)._ **versão online:** [igormcoelho.github.io/curso-estruturas-de-dados-i/](https://igormcoelho.github.io/curso-estruturas-de-dados-i/)
+
+[Código-fonte no GitHub](https://github.com/igormcoelho/curso-estruturas-de-dados-i)
+![Estrelas](https://img.shields.io/github/stars/igormcoelho/curso-estruturas-de-dados-i)
+![Licença](https://img.shields.io/github/license/igormcoelho/curso-estruturas-de-dados-i)
+
+_**Última atualização:** Outubro/2020 (Período 2020.1)_
+
+
+**Últimas Notícias:**
+
+- http://uff.br/?q=nota-gt-cepex-esclarecimentos-atividades-academicas-emergenciais
+
+### Tópicos do Curso
+
+1. [Introdução ao curso](slides/0-intro-curso-uff-si-2020-1/0-intro-curso.md): [PDF](slides/0-intro-curso-uff-si-2020-1/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso-uff-si-2020-1/index.html)
+1. Revisão/Tipos (veja módulos acima)
+1. Pilhas (veja módulos acima)
+1. Filas (veja módulos acima)
+1. Árvores (veja módulos acima)
+1. Dicionários e Árvores de Busca (veja módulos acima)
+1. Filas de Prioridade (veja módulos acima)
+
 
 Calendário 2020 (atualizado):
    - [Atualizado 2020.1](./files/uff-2020-1-2-calendarios.pdf)
 
-...
+-------
 
 
 ## Sobre gravações
