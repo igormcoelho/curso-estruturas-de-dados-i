@@ -160,6 +160,11 @@ Tipo = Sinc./Asinc.
 | 17/02/2021 |  -                              |  -      |
 | 22/02/2021 |  Pilhas & Filas                 |  Sinc.  |
 | 24/02/2021 |  Leitura & Debates              |  Asinc. |
+
+-------
+
+## Cronograma (II)
+
 | 01/03/2021 |  Árvores  I                     |  Sinc.  |
 | 03/03/2021 |  Leitura & Debates              |  Asinc. |
 | 08/03/2021 |  Árvores II                     |  Sinc.  |
@@ -167,14 +172,14 @@ Tipo = Sinc./Asinc.
 | 15/03/2021 |  Filas de Prioridades           |  Sinc.  |
 | 17/03/2021 |  Leitura & Debates              |  Asinc. |
 | 22/03/2021 |  Revisão Geral                  |  Sinc.  |
+| 24/03/2021 |  Prova (V)                      |  *Asinc. |
 
 ------
 
-## Cronograma (II)
+## Cronograma (III)
 
 | Data       | Atividade                       | Tipo    |
 | :---       |   :----                         | :---    |
-| 24/03/2021 |  Prova (V)                      |  *Asinc. |
 | 29/03/2021 |  Debates *                      |  Asinc.  |
 | 31/03/2021 |  Debates *                      |  Asinc. |
 | 05/04/2021 |  Apresentação (P)               |  *Asinc. |
@@ -188,7 +193,7 @@ Tipo = Sinc./Asinc.
 
 -------
 
-## Cronograma (III)
+## Cronograma (IV)
 
 | Data       | Atividade                       | Tipo   |
 | :---       |   :----                         | :---   |
