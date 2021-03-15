@@ -1,0 +1,52 @@
+% nothing here
+
+\usepackage{xcolor}
+
+%\usepackage[3D]{movie15}
+\usepackage{hyperref}
+\usepackage[UKenglish]{babel}
+
+\usepackage{media9}[2015/11/02]
+
+\newcommand{\columnsbegin}{\begin{columns}}
+\newcommand{\columnsend}{\end{columns}}
+
+\newcommand{\col}[1]{\column{#1\textwidth}}
+
+%\usepackage[nameinlink]{cleveref} % nameInLink used on pandoc-crossref too (see cref option too)
+
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+
+
+
+
+%write file with 7 predefined 3D views
+\usepackage{filecontents}
+\begin{filecontents*}{3Dviews.txt}
+VIEW=Front
+  ROO=27
+END
+VIEW=Back
+  ROO=27
+  C2C=0 1 0
+END
+VIEW=Left
+  ROO=27
+  C2C=-1 0 0
+END
+VIEW=Right
+  ROO=27
+  C2C=1 0 0
+END
+VIEW=Top
+  ROO=27
+  C2C=0 0 1
+END
+VIEW=Bottom
+  ROO=27
+  C2C=0 0 -1
+END
+VIEW=Fish Eye at Centre
+  AAC=130
+END
+\end{filecontents*}
