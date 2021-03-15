@@ -42,7 +42,7 @@ Materiais PDF-HTML:
 ## Cursos recentes
 
 - Estrutura de Dados e Algoritmos (PGC EDA)
-   * [Pós-Graduação 2021.1](./uff-edsi-2020-2) (mar./2021-jun./2021)
+   * [Pós-Graduação 2021.1](./uff-pgc-eda-2021-1) (mar./2021-jun./2021)
    * Instituto de Computação (IC) - Universidade Federal Fluminense (UFF)
 
 - Estruturas de Dados para Sistemas de Informação - TCC00331
