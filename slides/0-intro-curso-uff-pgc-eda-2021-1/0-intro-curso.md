@@ -118,25 +118,19 @@ Horários síncronos*: segundas 16h-18h (quartas sempre serão assíncronos)
 
 ## Ementa da Disciplina
 
-1. PILHAS
-2. FILAS
-3. FILAS COM PRIORIDADES
-4. ÁRVORES (BINÁRIA, BINÁRIA DE BUSCA, BALANCEADAS)
-5. GRAFOS
-(REPRESENTAÇÃO, BUSCA LARGURA E PROFUNDIDADE, CAMINHOS)
-6. TABELA DE DISPERSÃO
+0. VERIFICAR!
 
 --------
 
 ## Avaliação
 
-Haverá atividades avaliativas assícronas (A), como listas de exercícios e resumos de textos/vídeos (R). Haverá apenas uma VS com conteúdo escrito (VS). Além disso, haverá atividades com prova (V) e apresentação (P) (*com formação opcional de grupos por tema de interesse*).
+Haverá atividades avaliativas assícronas (A), como listas de exercícios e resumos de textos/vídeos (R). Haverá apenas uma VS com conteúdo escrito (VS). Além disso, haverá atividades com prova (V) e apresentação + texto (P) (*com formação opcional de grupos por tema de interesse*).
 
 A nota N do curso será:
 
-A = (30%R + 70%V)/2
+A = 40%R + 60%V
 
-N1 = A + P
+N1 = (A + P)/2
 
 De acordo com as normas regulares da UFF, a nota mínima N1 para aprovação é 6.
 
