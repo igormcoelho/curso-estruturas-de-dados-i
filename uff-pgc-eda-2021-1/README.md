@@ -16,7 +16,7 @@ _**Última atualização:** Março/2021 (Período PGC 2021.1)_
 
 ### Tópicos do Curso PGC EDA 2021.1
 
-1. [Introdução ao curso](slides/0-intro-curso-uff-si-2020-1/0-intro-curso.md): [PDF](slides/0-intro-curso-uff-si-2020-1/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso-uff-si-2020-1/index.html)
+1. [Introdução ao curso](../slides/0-intro-curso-uff-pgc-eda-2021-1/0-intro-curso.md): [PDF](../slides/0-intro-curso-uff-pgc-eda-2021-1/0-intro-curso.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/0-intro-curso-uff-pgc-eda-2021-1/index.html)
 1. Revisão/Tipos (veja módulos base)
 1. Pilhas (veja módulos base)
 1. Filas (veja módulos base)

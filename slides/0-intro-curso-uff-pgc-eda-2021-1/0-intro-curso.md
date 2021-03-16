@@ -1,14 +1,13 @@
 ---
 author: Igor M. Coelho
-title: Estruturas de Dados I
-date: 01/02/2021
+title: Estrutura de Dados e Algoritmos
+date: 15/03/2021
 transition: linear
 fontsize: 10
 header-includes:
 - <link rel="stylesheet" type="text/css" href="general.css">
 - <link rel="stylesheet" type="text/css" href="reveal-beamer.css">
 ---
-
 
 
 
