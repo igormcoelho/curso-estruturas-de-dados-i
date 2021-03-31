@@ -51,25 +51,25 @@ constexpr int MAX_N = 5;
 class SacoVetor1
 {
 public:
-   using tipo = char;
-   using it_tipo = IteradorVetor1;
+   typedef char Tipo;
+   typedef IteradorVetor1 ItTipo;
    //
-   char elementos[MAX_N]; // elementos
+   Tipo elementos[MAX_N]; // elementos
    int N;                 // num. de elementos na lista
    void cria();           // inicializa agregado
    void libera();         // finaliza agregado
-   void adiciona(char dado);
-   IteradorVetor1 itera();
-   IteradorVetor1 busca(char dado);
-   void remove(IteradorVetor1 it);
+   void adiciona(Tipo dado);
+   ItTipo itera();
+   ItTipo busca(Tipo dado);
+   void remove(ItTipo it);
 
    // range-based loop
-   IteradorVetor1 begin()
+   ItTipo begin()
    {
       return itera();
    }
    // sentinela marcador de fim
-   IteradorVetor1 end()
+   ItTipo end()
    {
       return IteradorVetor1{.elemento = elementos + N};
    }

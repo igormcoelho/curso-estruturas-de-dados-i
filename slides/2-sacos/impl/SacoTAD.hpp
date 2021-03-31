@@ -25,8 +25,8 @@ concept
     bool
 #endif
         SacoTAD = requires(Agregado a,
-                           typename Agregado::tipo t,
-                           typename Agregado::it_tipo it)
+                           typename Agregado::Tipo t,
+                           typename Agregado::ItTipo it)
 {
    // requer operação 'adiciona' sobre tipo 't'
    {a.adiciona(t)};

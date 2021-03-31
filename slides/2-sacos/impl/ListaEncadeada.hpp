@@ -56,25 +56,25 @@ static_assert(IteradorTAD<IteradorNoEnc1>);
 class ListaEnc1
 {
 public:
-   using tipo = char;
-   using it_tipo = IteradorNoEnc1;
+   typedef char Tipo;
+   typedef IteradorNoEnc1 ItTipo;
    //
    NoEnc1 *inicio; // inicio da lista
    int N;          // num. de elementos na lista
    void cria();    // inicializa agregado
    void libera();  // finaliza agregado
-   void adiciona(char dado);
-   IteradorNoEnc1 itera();
-   IteradorNoEnc1 busca(char dado);
-   void remove(IteradorNoEnc1 it);
+   void adiciona(Tipo dado);
+   ItTipo itera();
+   ItTipo busca(char dado);
+   void remove(ItTipo it);
 
    // range-based loop
-   IteradorNoEnc1 begin()
+   ItTipo begin()
    {
       return itera();
    }
    //
-   IteradorNoEnc1 end()
+   ItTipo end()
    {
       return IteradorNoEnc1{.no = 0};
    }
