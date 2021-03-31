@@ -20,7 +20,7 @@ Materiais PDF-HTML:
    - Vídeos YouTube: [Parte 1](https://youtu.be/byZLHu4kTb0) [Parte 2](https://youtu.be/2Bo7MYFCJ0o)
    - Observação: a Parte 2 contém algumas falhas no áudio, que pretendo corrigir no futuro. Como é uma etapa extra (prática), não compromete o conteúdo em si da aula.
 1. [Sacos e Listas](slides/2-sacos/2-sacos.md): [PDF](slides/2-sacos/2-sacos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos/index.html)
-   - Exemplo de implementação: [main.cpp](./slides/2-sacos/impl/main.cpp) [ListaEncadeada.hpp](./slides/2-sacos/impl/ListaEncadeada.hpp) [SacoTAD.hpp](./slides/2-sacos/impl/SacoTAD.hpp) [SacoVetor.hpp](./slides/2-sacos/impl/SacoVetor.hpp)
+   - Exemplo de implementação: [main.cpp](./slides/2-sacos/impl/main.cpp) [ListaEncadeada.hpp](./slides/2-sacos/impl/ListaEncadeada.hpp) [SacoTAD.hpp](./slides/2-sacos/impl/SacoTAD.hpp) [SacoVetor.hpp](./slides/2-sacos/impl/SacoVetor.hpp) [makefile (GNU c++17)](./slides/2-sacos/impl/makefile)
    
 1. [Pilhas](slides/3-pilhas/3-pilhas.md): [PDF](slides/3-pilhas/3-pilhas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/3-pilhas/index.html)
    - Exemplo de pilha na STL: [main_pilha.cpp](./material/3-pilhas/main_pilha.cpp)
