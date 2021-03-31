@@ -1,6 +1,6 @@
 ## Estruturas de Dados I
 
-Materiais gerais de Estruturas de Dados I, bem como suas respectivas aplicações em períodos recentes.
+Materiais gerais de Estruturas de Dados I do [Prof. Igor Machado Coelho](https://igormcoelho.github.io), bem como suas respectivas aplicações em períodos recentes.
 
 Lista completa de módulos no repositório:
 
