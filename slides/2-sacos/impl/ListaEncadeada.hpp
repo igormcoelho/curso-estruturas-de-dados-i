@@ -65,7 +65,7 @@ public:
    void libera();  // finaliza agregado
    void adiciona(Tipo dado);
    ItTipo itera();
-   ItTipo busca(char dado);
+   ItTipo busca(Tipo dado);
    void remove(ItTipo it);
 
    // range-based loop
@@ -132,7 +132,7 @@ void ListaEnc1::remove(IteradorNoEnc1 it)
 
 IteradorNoEnc1 buscarec(IteradorNoEnc1 it, char dado)
 {
-   if (it.atual() == dado)
+   if(it.terminou() || it.atual() == dado)
       return it;
    else
    {

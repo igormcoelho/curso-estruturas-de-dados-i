@@ -101,14 +101,14 @@ IteradorVetor1 SacoVetor1::itera()
 
 IteradorVetor1 SacoVetor1::busca(char dado)
 {
-   auto it = this->itera();
-   while (!it.terminou())
-   {
-      if (it.atual() == dado)
-         return it;
-      it.proximo();
-   }
-   return it;
+   for (int i = 0; i < N; i++)
+      if (elementos[i] == dado)
+         return IteradorVetor1{
+             .elemento = this->elementos + i,
+             .sentinela = this->elementos + N};
+   return IteradorVetor1{
+       .elemento = this->elementos + N,
+       .sentinela = this->elementos + N};
 }
 
 void SacoVetor1::remove(IteradorVetor1 it)

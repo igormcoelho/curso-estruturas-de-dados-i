@@ -15,6 +15,7 @@ int main()
    s.adiciona('a');
    printf("%d\n", s.busca('a').terminou()); // 0
    printf("%d\n", s.busca('d').terminou()); // 1
+   printf("%d\n", buscarec(s.itera(), 'd').terminou()); // 1
    printf("N=%d\n", s.N);                   // N=4
    for (auto it = s.itera(); !it.terminou(); it.proximo())
       printf("%c\n", it.atual()); // a b a c
