@@ -25,6 +25,6 @@ _**Última atualização:** Março/2021 (Período PGC 2021.1)_
 1. Filas de Prioridade (veja módulos base)
 
 
-Calendário 2020 (atualizado):
-   - [Atualizado 2020.1](./files/uff-2020-1-2-calendarios.pdf)
+Calendário 2021.1 (atualizado):
+   - [http://www.ic.uff.br/index.php/pt/pos-graduacao/calendario](http://www.ic.uff.br/index.php/pt/pos-graduacao/calendario)
 

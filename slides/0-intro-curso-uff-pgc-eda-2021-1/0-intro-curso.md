@@ -117,7 +117,9 @@ Horários síncronos*: segundas 16h-18h (quartas sempre serão assíncronos)
 
 ## Ementa da Disciplina
 
-0. VERIFICAR!
+[Ementa 2017](http://www.ic.uff.br/images/documentos/pos_graduacao/regras_e_procedimentos/regulamentos/Ement%C3%A1rio_Reforma_2017_atualizado_pelo_Colegiado_em_24-06-20.pdf)
+
+*Introdução: recursividade, complexidade de algoritmos. Listas Lineares: introdução, listas lineares em alocação sequencial,  pilhas  e  filas,  aplicação,  listas  lineares  em  alocação  encadeada,  alocação  de tamanho   variável, implementações. Árvores:   introdução, árvores   binárias   (representação,   busca,   inserção, percurso), árvores  balanceadas  (árvores  AVL, árvores  graduadas  e  rubro-negras, árvores  B),  implementações. Listas de  Propriedades: introdução; implementação; alteração de  propriedades, inserção, remoção e construção de uma lista de prioridades, aplicação.*
 
 --------
 
@@ -234,23 +236,11 @@ C/C++ serão utilizados neste curso (e iremos revisá-los em breve!).
 
 ## Bibliografia Recomendada
 
-::::::::::::: {.columns}
+**Bibliografia básica:**
 
-::::: {.column width=40%}
+- J.L.Szwarcfiter e L. Markezon, Estrutura de Dados e seus Algoritmos, Editora LTC, 1994
 
-![Livro Referência](./img/livro.jpg "Algoritmos Cormen"){width=50%}
-
-:::::
-
-::::: {.column width=60%}
-
-Buscaremos suprir o conteúdo especialmente através de materiais com licença livre (slides, apostilas, vídeos, textos, ...). Como livro texto, recomendamos o livro: *"Algoritmos - Cormen, Rivest"*.
-Veja Classroom para mais materiais.
-
-:::::
-
-
-::::::::::::: 
+- T.H. Cormen, C.E. Leiserson e R. Rivert, Introduction to Algorithms, McGraw-Hill, 1991
 
 
 # Agradecimentos
