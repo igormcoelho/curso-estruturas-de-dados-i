@@ -2,6 +2,8 @@
 
 Materiais gerais de Estruturas de Dados I do [Prof. Igor Machado Coelho](https://igormcoelho.github.io), bem como suas respectivas aplicações em períodos recentes.
 
+![last-commit](https://img.shields.io/github/last-commit/igormcoelho/curso-estruturas-de-dados-i)
+
 Lista completa de módulos no repositório:
 
 - Revisão/Tipos
