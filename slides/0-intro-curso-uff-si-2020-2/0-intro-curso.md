@@ -130,11 +130,11 @@ Horários síncronos*: segundas 18h-20h (quartas sempre serão assíncronos)
 
 ## Avaliação
 
-Haverá atividades avaliativas assícronas (A), como listas de exercícios e resumos de textos/vídeos (R). Haverá apenas uma VS com conteúdo escrito (VS). Além disso, haverá atividades com prova (V) e apresentação (P) (*com formação opcional de grupos por tema de interesse*).
+Haverá atividades avaliativas assícronas (A), como listas de exercícios e resumos de textos/vídeos (R). Além disso, haverá atividades com prova (V) e apresentação (P) (*com formação opcional de grupos por tema de interesse*).
 
 A nota N do curso será:
 
-A = (30%R + 70%V)/2
+A = 30%R + 70%V
 
 N1 = (A + P)/2
 
