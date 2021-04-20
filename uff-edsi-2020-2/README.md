@@ -23,6 +23,81 @@ _**Última atualização:** Fevereiro/2021 (Período 2020.2)_
 1. Dicionários e Árvores de Busca (veja módulos base)
 1. Filas de Prioridade (veja módulos base)
 
+Veja módulos base em: [igormcoelho.github.io/curso-estruturas-de-dados-i/](https://igormcoelho.github.io/curso-estruturas-de-dados-i/).
+
+Para demais materiais, veja no **Google Classroom** da turma.
+
+### Avaliação
+
+Haverá atividades avaliativas assícronas (A), como listas de exercícios e resumos de textos/vídeos (R). Além disso, haverá atividades com prova (V) e apresentação (P) (*com formação opcional de grupos por tema de interesse*).
+
+A nota N do curso será:
+
+A = 30%R + 70%V
+
+N1 = (A + P)/2
+
+De acordo com as normas regulares da UFF, a nota mínima N1 para aprovação é 6.
+
+**IMPORTANTE:** no modelo de avaliação continuada com avaliações assíncronas, **não haverá VS**.
+
+####  Apresentação (P)
+
+O trabalho consiste em implementar e apresentar um tópico (subtópico da parte de grafos, hashes e outros tópicos classificados como "extra"). Deverá ser feito com no mínimo 3 membros (casos excepcionais serão analisados apenas caso não seja possível formar grupos).
+
+A formação de grupos será pela plataforma, durante debates cada aluno irá indicar uma empresa de interesse (em um primeiro momento). Assim, serão agregados naturalmente grupos (por ordem cronológica de criação de grupos completos) com no máximo duas repetições por tema.
+
+Grupos deverão ser definidos no máximo até a data da prova (V). Haverá quatro dias possíveis para apresentação, mais um debate assíncrono das apresentações do dia.
+
+**É necessário agendar previamente a apresentação! Façam o quanto antes!**
+
+#### Reposição
+
+A atividade de reposição consiste em relatório detalhado do conteúdo do curso, bem como da parte do trabalho.
+
+- No caso de perda atividade de apresentação P, em caso de impossibilidade por motivo de força maior, será permitido, **além da entrega do material básicos (slides/código)**:
+   * Entrega de relatório detalhado no padrão SBC (word ou LaTeX PDF) - (para substituir apresentação síncrona)
+
+### Cronograma Previsto
+
+- Período: 01/02/2021 - 10/05/2021
+
+Tipo = Sinc./Asinc.
+
+| Data       | Atividade                       | Tipo    |
+| :---       |   :----                         | :---    |
+| 01/02/2021 |  Revisão C/C++ & Tipos          |  Asinc. | 
+| 03/02/2021 |  Revisão C/C++ & Tipos          |  Asinc. |
+| 08/02/2021 |  Introdução                     |  Sinc.  | 
+| 10/02/2021 |  Revisão C/C++ & Tipos          |  Asinc. |
+| 15/02/2021 |  -                              |  -      | 
+| 17/02/2021 |  -                              |  -      |
+| 22/02/2021 |  Pilhas & Filas                 |  Sinc.  |
+| 24/02/2021 |  Leitura & Debates              |  Asinc. |
+| 01/03/2021 |  Árvores  I                     |  Sinc.  |
+| 03/03/2021 |  Leitura & Debates              |  Asinc. |
+| 08/03/2021 |  Árvores II                     |  Sinc.  |
+| 10/03/2021 |  Leitura & Debates              |  Asinc. |
+| 15/03/2021 |  Filas de Prioridades           |  Sinc.  |
+| 17/03/2021 |  Leitura & Debates              |  Asinc. |
+| 22/03/2021 |  Revisão Geral                  |  Sinc.  |
+| 24/03/2021 |  Prova (V)                      |  *Asinc. |
+| 29/03/2021 |  Debates *                      |  Asinc.  |
+| 31/03/2021 |  Debates *                      |  Asinc. |
+| 05/04/2021 |  Apresentação (P)               |  *Asinc. |
+| 07/04/2021 |  Debates (P)                    |  Asinc. |
+| 12/04/2020 |  Apresentação (P)               |  Sinc.  |
+| 14/04/2021 |  Debates (P)                    |  Asinc. |
+| 19/04/2021 |  Apresentação (P)               |  Sinc.  |
+| 21/04/2021 |   -                             |  -      |
+| 26/04/2021 |  Apresentação (P)               |  Sinc.  |
+| 28/04/2021 |  *Segunda Chamada VR               |  *Asinc. |
+| 03/05/2021 |  Lançamento Notas               |  *Asinc. |
+| 05/05/2021 |  -                              |  Asinc. |
+| 10/05/2021 |  Fim Semestre                   |  *Asinc. |
+
+
+### Documentos Gerais
 
 Calendário 2020.2 (atualizado):
    - [Atualizado 2020.2](./files/uff-2020-1-2-calendarios.pdf)
