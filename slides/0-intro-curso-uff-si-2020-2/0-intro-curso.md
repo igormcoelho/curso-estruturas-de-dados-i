@@ -165,6 +165,8 @@ Tipo = Sinc./Asinc.
 
 ## Cronograma (II)
 
+| Data       | Atividade                       | Tipo    |
+| :---       |   :----                         | :---    |
 | 01/03/2021 |  Árvores  I                     |  Sinc.  |
 | 03/03/2021 |  Leitura & Debates              |  Asinc. |
 | 08/03/2021 |  Árvores II                     |  Sinc.  |
@@ -189,7 +191,7 @@ Tipo = Sinc./Asinc.
 | 19/04/2021 |  Apresentação (P)               |  Sinc.  |
 | 21/04/2021 |   -                             |  -      |
 | 26/04/2021 |  Apresentação (P)               |  Sinc.  |
-| 28/04/2021 |  *Segunda Chamada               |  *Asinc. |
+| 28/04/2021 |  *Segunda Chamada VR               |  *Asinc. |
 
 -------
 
@@ -205,15 +207,22 @@ Tipo = Sinc./Asinc.
 
 ##  Apresentação (P)
 
-O trabalho consiste em implementar e apresentar um tópico (subtópico da parte de grafos, hashes e outros tópicos classificados como "extra"). Deverá ser feito em formato artigo com no mínimo 3 membros (casos excepcionais serão analisados apenas caso não seja possível formar grupos).
+O trabalho consiste em implementar e apresentar um tópico (subtópico da parte de grafos, hashes e outros tópicos classificados como "extra"). Deverá ser feito com no mínimo 3 membros (casos excepcionais serão analisados apenas caso não seja possível formar grupos).
 
 A formação de grupos será pela plataforma, durante debates cada aluno irá indicar uma empresa de interesse (em um primeiro momento). Assim, serão agregados naturalmente grupos (por ordem cronológica de criação de grupos completos) com no máximo duas repetições por tema.
-
-O formato de entrega será em artigo no padrão SBC (word ou LaTeX PDF) - máx 5 páginas - e apresentação síncrona.
 
 Grupos deverão ser definidos no máximo até a data da prova (V). Haverá quatro dias possíveis para apresentação, mais um debate assíncrono das apresentações do dia.
 
 **É necessário agendar previamente a apresentação! Façam o quanto antes!**
+
+-------
+
+## Reposição
+
+A atividade de reposição consiste em relatório detalhado do conteúdo do curso, bem como da parte do trabalho.
+
+- No caso de perda atividade de apresentação P, em caso de impossibilidade por motivo de força maior, será permitido, **além da entrega do material básicos (slides/código)**:
+   * Entrega de relatório detalhado no padrão SBC (word ou LaTeX PDF) - (para substituir apresentação síncrona)
 
 -------
 
