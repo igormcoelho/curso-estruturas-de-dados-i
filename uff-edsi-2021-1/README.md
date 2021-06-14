@@ -13,7 +13,7 @@ _**Última atualização:** Fevereiro/2021 (Período 2020.2)_
 
 - Mais informações no Google Classroom
 
-### Tópicos do Curso EDSI 2020.2
+### Tópicos do Curso EDSI 2021.1
 
 1. Revisão/Tipos (veja módulos base)
 1. Pilhas (veja módulos base)
