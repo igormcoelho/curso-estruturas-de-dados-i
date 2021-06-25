@@ -1,5 +1,5 @@
 
-<link href="http://github.com/yrgoldteeth/darkdowncss/raw/master/darkdown.css" rel="stylesheet"></link> 
+<link href="http://github.com/yrgoldteeth/darkdowncss/raw/master/darkdown.css" rel="stylesheet"></link>
 
 ## UFF PGC 2021.1 - Pós-Graduação em Computação
 
@@ -27,6 +27,46 @@ _**Última atualização:** Março/2021 (Período PGC 2021.1)_
 1. Filas de Prioridade (veja módulos base)
 
 
+### Avaliação
+
+A = 40%R + 60%V
+
+P = 60%Apr + 40%Rel
+
+N = 50%A + 50%P
+
+
+Estudo de Caso: Apresentação
+0,5_P_0,6_Apr_0,3
+de 100
+
+Prova PGC-EDA 2021-1
+0,5_A_0,6_Prova_0,3
+de 100
+
+Lista 2 - Árvores
+0,5_A_0,1_A3_0,05
+de 100
+
+
+Lista 1 - Pilhas e Filas
+0,5_A_0,1_A4_0,05
+de 100
+
+Estudo de Caso: Trabalho de Implementação e Apresentação
+0,5_P_0,4_Rel_0,2
+de 100
+
+Aula de Filas (06/04)
+0,5_A_0,1_A2_0,05
+de 100
+
+GitHub Classroom: Atividade 2 - Revisão C/C++
+0,5_A_0,1_A1_0,05
+de 100
+
+
+### Calendário
+
 Calendário 2021.1 (atualizado):
    - [http://www.ic.uff.br/index.php/pt/pos-graduacao/calendario](http://www.ic.uff.br/index.php/pt/pos-graduacao/calendario)
-
