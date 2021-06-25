@@ -35,35 +35,12 @@ P = 60%Apr + 40%Rel
 
 N = 50%A + 50%P
 
+Onde R=Relatórios/Listas, V=Prova, P=Atividade de Apresentação, Apr=Apresentação, Rel=Relatório de Apresentação.
 
-Estudo de Caso: Apresentação
-0,5_P_0,6_Apr_0,3
-de 100
+Ou seja, 50% de atividades assíncronas (A) e 50% apresentação (P):
 
-Prova PGC-EDA 2021-1
-0,5_A_0,6_Prova_0,3
-de 100
+N = (30% Prova + 5% Lista1 + 5% Lista2 + 5% Filas + 5% C/C++ GitHub) + (30% Apresentação + 20% Relatório Apresentação)
 
-Lista 2 - Árvores
-0,5_A_0,1_A3_0,05
-de 100
-
-
-Lista 1 - Pilhas e Filas
-0,5_A_0,1_A4_0,05
-de 100
-
-Estudo de Caso: Trabalho de Implementação e Apresentação
-0,5_P_0,4_Rel_0,2
-de 100
-
-Aula de Filas (06/04)
-0,5_A_0,1_A2_0,05
-de 100
-
-GitHub Classroom: Atividade 2 - Revisão C/C++
-0,5_A_0,1_A1_0,05
-de 100
 
 
 ### Calendário
