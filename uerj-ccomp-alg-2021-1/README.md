@@ -39,7 +39,7 @@ https://sucupira.capes.gov.br/sucupira/public/consultas/coleta/disciplina/viewDi
 
 ### Ementa (2019+):
 
-Conceito de estruturas de dados e algoritmos. Pesquisa, ordenação e inserção em estruturas de dados básicas. Técnicas de construção de algoritmos: Recursão, Backtracking, Programação Dinâmica e Método Guloso, Algoritmos não-determinísticos. Correção, otimização e análise da complexidade e exatidão. Teoria da complexidade: medidas de complexidade, complexidade do algoritmo no pior caso, complexidade do algoritmo no caso médio, complexidade mínima do problema. Teoria da intratabilidade de Problemas: classes P, NP e NP-Difícil. Teorema da Satisfabilidade, Método da redução, Problemas Pseudo-Polinomiais. Problemas NP-Completos. Algoritmos aproximativos.
+~Conceito de estruturas de dados e algoritmos. Pesquisa, ordenação e inserção em estruturas de dados básicas. Técnicas de construção de algoritmos: Recursão, Backtracking, Programação Dinâmica e Método Guloso, Algoritmos não-determinísticos. Correção, otimização e análise da complexidade e exatidão. Teoria da complexidade: medidas de complexidade, complexidade do algoritmo no pior caso, complexidade do algoritmo no caso médio, complexidade mínima do problema. Teoria da intratabilidade de Problemas: classes P, NP e NP-Difícil. Teorema da Satisfabilidade, Método da redução, Problemas Pseudo-Polinomiais. Problemas NP-Completos. Algoritmos aproximativos.~
 
 
 ### Bibliografia (2019+):
