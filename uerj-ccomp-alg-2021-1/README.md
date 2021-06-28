@@ -26,6 +26,17 @@ _**Última atualização:** Junho/2021 (Período PPG-CComp 2021.1)_
 1. Dicionários e Árvores de Busca (veja módulos base)
 1. Filas de Prioridade (veja módulos base)
 
+### Ementa
+
+Conceito de estruturas de dados e algoritmos. Introdução a medidas de complexidade de algoritmos: pior caso, melhor caso e caso médio. Análise assintótica. Recursão. Listas Lineares: alocações sequencial e encadeada. Pilhas. Filas. Árvores. Árvores Binárias de Busca. Árvores Balanceadas. Listas de Prioridade. Tabelas de Dispersão. Algoritmos de Ordenação.
+
+https://sucupira.capes.gov.br/sucupira/public/consultas/coleta/disciplina/viewDisciplina.xhtml?popup=true&id_disciplina=70949
+
+### Bibliografia
+
+- "Estruturas de Dados e Seus Algoritmos", J.L.Szwarcfiter, L. Markenzon, LTC, 3 a ed. 2010.
+- “Introduction to Algorithms” ,T. H. Cormen, C. E. Leiserson ,R. L. Rivest e C. Stein, MIT Press e McGraw-Hill, 3rd ed. 2009.
+
 
 ### Avaliação
 
@@ -38,6 +49,8 @@ N = 50%A + 50%P
 Onde R=Relatórios/Listas, V=Prova, P=Atividade de Apresentação, Apr=Apresentação, Rel=Relatório de Apresentação.
 
 Ou seja, 50% de atividades assíncronas (A) e 50% apresentação (P).
+
+
 
 
 ### Calendário
