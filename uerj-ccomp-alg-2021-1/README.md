@@ -26,20 +26,20 @@ _**Última atualização:** Junho/2021 (Período PPG-CComp 2021.1)_
 1. Dicionários e Árvores de Busca (veja módulos base)
 1. Filas de Prioridade (veja módulos base)
 
-### Ementa
+### Ementa (2012-2019)
 
 Conceito de estruturas de dados e algoritmos. Introdução a medidas de complexidade de algoritmos: pior caso, melhor caso e caso médio. Análise assintótica. Recursão. Listas Lineares: alocações sequencial e encadeada. Pilhas. Filas. Árvores. Árvores Binárias de Busca. Árvores Balanceadas. Listas de Prioridade. Tabelas de Dispersão. Algoritmos de Ordenação.
 
 https://sucupira.capes.gov.br/sucupira/public/consultas/coleta/disciplina/viewDisciplina.xhtml?popup=true&id_disciplina=70949
 
-### Bibliografia
+### Bibliografia (2012-2019)
 
 - "Estruturas de Dados e Seus Algoritmos", J.L.Szwarcfiter, L. Markenzon, LTC, 3 a ed. 2010.
 - “Introduction to Algorithms” ,T. H. Cormen, C. E. Leiserson ,R. L. Rivest e C. Stein, MIT Press e McGraw-Hill, 3rd ed. 2009.
 
 ### Ementa (2019+):
 
-~Conceito de estruturas de dados e algoritmos. Pesquisa, ordenação e inserção em estruturas de dados básicas. Técnicas de construção de algoritmos: Recursão, Backtracking, Programação Dinâmica e Método Guloso, Algoritmos não-determinísticos. Correção, otimização e análise da complexidade e exatidão. Teoria da complexidade: medidas de complexidade, complexidade do algoritmo no pior caso, complexidade do algoritmo no caso médio, complexidade mínima do problema. Teoria da intratabilidade de Problemas: classes P, NP e NP-Difícil. Teorema da Satisfabilidade, Método da redução, Problemas Pseudo-Polinomiais. Problemas NP-Completos. Algoritmos aproximativos.~
+~~Conceito de estruturas de dados e algoritmos. Pesquisa, ordenação e inserção em estruturas de dados básicas. Técnicas de construção de algoritmos: Recursão, Backtracking, Programação Dinâmica e Método Guloso, Algoritmos não-determinísticos. Correção, otimização e análise da complexidade e exatidão. Teoria da complexidade: medidas de complexidade, complexidade do algoritmo no pior caso, complexidade do algoritmo no caso médio, complexidade mínima do problema. Teoria da intratabilidade de Problemas: classes P, NP e NP-Difícil. Teorema da Satisfabilidade, Método da redução, Problemas Pseudo-Polinomiais. Problemas NP-Completos. Algoritmos aproximativos.~~
 
 
 ### Bibliografia (2019+):
