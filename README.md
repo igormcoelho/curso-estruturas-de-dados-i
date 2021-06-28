@@ -46,6 +46,9 @@ Materiais PDF-HTML:
 
 ## Cursos recentes
 
+- Algoritmos - PPG-CComp-UERJ
+   * [Pós-Graduação 2021.1 PPG-CComp](./uerj-ccomp-alg-2021-1) (jun./2021-...)
+   * Instituto de Matemática e Estatística (IME) - Universidade do Estado do Rio de Janeiro (UERJ)
 - Estruturas de Dados para Sistemas de Informação - TCC00331
    * [Graduação 2021.1](./uff-edsi-2021-1) (jun./2021-set./2021)
    * Instituto de Computação (IC) - Universidade Federal Fluminense (UFF)
