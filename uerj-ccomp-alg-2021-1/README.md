@@ -37,6 +37,18 @@ https://sucupira.capes.gov.br/sucupira/public/consultas/coleta/disciplina/viewDi
 - "Estruturas de Dados e Seus Algoritmos", J.L.Szwarcfiter, L. Markenzon, LTC, 3 a ed. 2010.
 - “Introduction to Algorithms” ,T. H. Cormen, C. E. Leiserson ,R. L. Rivest e C. Stein, MIT Press e McGraw-Hill, 3rd ed. 2009.
 
+### Ementa (2019+):
+
+Conceito de estruturas de dados e algoritmos. Pesquisa, ordenação e inserção em estruturas de dados básicas. Técnicas de construção de algoritmos: Recursão, Backtracking, Programação Dinâmica e Método Guloso, Algoritmos não-determinísticos. Correção, otimização e análise da complexidade e exatidão. Teoria da complexidade: medidas de complexidade, complexidade do algoritmo no pior caso, complexidade do algoritmo no caso médio, complexidade mínima do problema. Teoria da intratabilidade de Problemas: classes P, NP e NP-Difícil. Teorema da Satisfabilidade, Método da redução, Problemas Pseudo-Polinomiais. Problemas NP-Completos. Algoritmos aproximativos.
+
+
+### Bibliografia (2019+):
+
+1. "Introduction to Algorithms", T.H. Cormen, C.E. Leiserson, R.L. Rivest., C. Stein, The MIT Press and McGraw-Hill, 2001.
+2. "Computational Complexity", C.H. Papadimitriou, Addison Wesley, 1994.
+3. "A note on counting independent terms in asymptotic expressions of computational complexity". F. de S. Oliveira, V. C. Barbosa. Optimization Letters, v. 11, p. 1757-1765, 2017.
+4. "Teoria Computacional de Grafos". J.L. Szwarcfiter. Editora Campus, ISBN13:9788535288841, 352 pp, ed. 1, 2018.
+
 
 ### Avaliação
 
