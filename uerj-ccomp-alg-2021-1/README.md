@@ -67,4 +67,8 @@ Ou seja, 50% de atividades assíncronas (A) e 50% apresentação (P).
 
 ### Calendário
 
-- ...
+- 2021/1
+    * Início das aulas: 28/06/2021
+    * Término das aulas: 18/09/2021
+
+
