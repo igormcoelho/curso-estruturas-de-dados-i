@@ -287,6 +287,121 @@ Como *corrigir* a árvore? **Solução:** trocas sucessivas *descendo* até uma 
 
 ---------
 
+## Heapify / Constroi
+
+A construção de um heap através de um vetor é chamada de *heapify*.
+É possível efetuar a construção de forma iterativa, através dos métodos *sobe* ou *desce*.
+
+Como vimos anteriormente, o método *sobe* custa, no máximo, o nível do nó, enquanto o método *desce* custa, no máximo, a altura do nó.
+
+![](./img/heapify-constroi-final.png){width=85%}
+
+Veja as alturas dos nós (N=23): vermelho(5), azul(4), roxo(3), amarelo(2), verde(1). Metade dos nós (12) tem altura 1.
+
+-----------
+
+## Heapify com *sobe*
+
+A construção do heap ($N=31$) com o método *sobe* opera sequencialmente a partir dos nós $1,2,3,4...$, e a raiz não efetua nenhuma troca.
+Cada elemento folha ($\approx N/2$) irá incorrer em $O(h=\lceil lg\;N \rceil)$ trocas, no pior caso, tendo assim complexidade $O(N\;lg\;N)$.
+
+![](./img/heapify-constroi-sobe.png){width=85%}
+
+```
+nós: | 0 | 1 | 2 | 3 | 4 | ... ->
+```
+
+-----------
+
+## Método Heapify com *sobe*
+
+
+
+-----------
+
+## Heapify com *desce*
+
+A construção do heap ($N=31$) com o método *desce* toma vantagem de que as folhas ($\approx N/2$) tem altura 1, portanto não necessitando de troca alguma. O método opera sequencialmente em ordem decrescente a partir do nó $\lfloor N/2 \rfloor -1=14$  como $14,13,12,11,10,...$. Note que um único elemento (a raiz) irá incorrer em $O(h=\lceil lg\;N \rceil)$ trocas, sendo a complexidade $O(N\;lg\;N)$ superestimada neste caso.
+
+![](./img/heapify-constroi-desce.png){width=85%}
+
+```
+nós: | 0 | 1 | ... <- | 10 | 11 | 12 | 13 | 14 | ...
+```
+
+-----------
+
+## Método Heapify com *desce*
+
+
+-----------
+
+## Análise do Método Heapify com *desce*
+
+Consideramos uma árvore com $N$ nós e $h=\lceil lg\;N\rceil$ níveis. No nível 1, um único nó (a raiz) efetua $h-1$ trocas, no pior caso. Por outro lado, existem $2^{h-1}$ folhas que não fazem nenhuma troca.
+
+De forma geral, no nível $i$, cada um dos $2^{i-1}$ nós efetuam $h-i$ trocas, no pior caso, totalizando $\sum_{i=1}^{h-1}\left(2^{i-1} (h-i)\right)$ trocas. 
+
+![](./img/heapify-constroi-contagem.png){width=100%}
+
+-----------
+
+## Análise do Método Heapify com *desce*
+
+Temos que $\sum_{i=1}^{h-1}\left(2^{i-1} (h-i)\right) = 2^h - (h-1)$, dado que $\sum_{i=0}^m 2^i = 2^{m+1}-1$. Desmembramos em cada linha $i$ abaixo as $h-i$ ocorrências de $2^{i-1}$, de $i=1$ até $h-1$. Efetuamos então uma soma por colunas.
+
+\footnotesize
+$$
+\begin{matrix}
+    \\
+i=1: \\
+i=2: \\
+i=3: \\
+i=4: \\
+i:   \\
+i=h-2: \\
+i=h-1: \\
+      \\
+      \\
+      \\
+\end{matrix}
+\overbrace{
+\begin{matrix}
+   &  1  & + &  1  & + \cdots + & 1 & + & 1 & + & 1 & + & 1 & \\
++  &  2  & + &  2  & + \cdots + & 2 & + & 2 & + & 2 \\
++  &  4  & + &  4  & + \cdots + & 4 & + & 4 \\
++  &  8  & + &  8  & + \cdots + & 8 \\
++  &  \cdots  & + & \cdots & +  \cdots \\
++  &  2^{h-3} & + & 2^{h-3}\\
++  &  2^{h-2} & + \\
+=  & \sum_{i=0}^{h-2}2^i & + & \sum_{i=0}^{h-3}2^i & + \cdots + & \sum_{i=0}^{3}2^i & + & \sum_{i=0}^{2}2^i & + & \sum_{i=0}^{1}2^i & + & \sum_{i=0}^{0}2^i   \\
+\end{matrix}
+}^{H-1}
+$$
+
+$$
+\begin{matrix}
+=&  (2^{h-1}-1) + (2^{h-2}-1) &+ \cdots +& (2^3-1)  +  (2^2-1) + (2^1-1)\\
+=&  2^{h-1} + 2^{h-2} &+ \cdots +& 2^3  +  2^2  +  2^1  - (h-1)\\
+=& \sum_{i=1}^{h-1} 2^i - (h-1) &=&  2^h  - (h-1) \qed
+\end{matrix}
+$$
+
+-----------
+
+## Análise do Método Heapify com *desce*
+
+Temos então que o total de trocas do heapify é $2^h -(h-1)$, e considerando uma altura $h=\lceil lg\;N \rceil=O(lg\;N)$,
+temos:
+
+$$ 2^{O(lg\;N)} - (O(lg\;N) - 1) = O(N)$$
+
+Na prática, para $N=31$ e, portanto, $h=5$, temos:
+$8\times 1 +4\times 2+ 2\times 3 + 1 \times 4 = 26$ trocas.
+
+Veja código em `materais`.
+
+----------
 
 ## Bibliografia Recomendada
 

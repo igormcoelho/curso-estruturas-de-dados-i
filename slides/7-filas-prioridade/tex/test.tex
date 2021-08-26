@@ -1,0 +1,31 @@
+\documentclass{article}
+    % General document formatting
+    \usepackage[margin=0.7in]{geometry}
+    \usepackage[parfill]{parskip}
+    \usepackage[utf8]{inputenc}
+    
+    % Related to math
+    \usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+    \setcounter{MaxMatrixCols}{20}
+    
+\begin{document}
+
+
+$$
+    \overbrace{
+        \begin{matrix}
+             & 1 & + & 1 & + & \cdots & + & 1 & + & 1 & + & 1 & + & 1 \\
+            %+  &  2  & + &  2  & + & \cdots & + & 2 & + & 2 & + & 2 & & \\
+            %+  &  4  & + &  4  & + & \cdots & + & 4 & + & 4  & &  & &\\
+            %+  &  8  & + &  8  & + & \cdots & + & 8  & &  & &  & &\\
+            %+  &  \cdots  & + &  \cdots & + & \cdots &  & &  & &  & &  & \\
+            %+  &  2^{h-3} & + & 2^{h-3} & & & & & & & & & &\\
+            %+  &  2^{h-2} & = & & & & & & & & & & &\\
+            %   &  (2^{h-1}-1) & + & (2^{h-2}-1) & + & \cdots & + & (2^4-1) & + & (2^3-1) & + & (2^2-1) & + & (2^1-1)
+        \end{matrix}
+    }^{H-1}
+$$
+
+\end{document}
+
