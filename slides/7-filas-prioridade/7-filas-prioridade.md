@@ -401,6 +401,8 @@ $8\times 1 +4\times 2+ 2\times 3 + 1 \times 4 = 26$ trocas.
 
 Veja código em `materais`.
 
+Agradecimentos ao Prof. Fabiano Oliveira, pelo embasamento dessa prova.
+
 ----------
 
 ## Bibliografia Recomendada
