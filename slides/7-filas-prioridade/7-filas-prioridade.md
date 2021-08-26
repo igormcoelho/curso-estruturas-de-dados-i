@@ -383,7 +383,7 @@ $$
 \begin{matrix}
 =&  (2^{h-1}-1) + (2^{h-2}-1) &+ \cdots +& (2^3-1)  +  (2^2-1) + (2^1-1)\\
 =&  2^{h-1} + 2^{h-2} &+ \cdots +& 2^3  +  2^2  +  2^1  - (h-1)\\
-=& \sum_{i=1}^{h-1} 2^i - (h-1) &=&  2^h  - (h+1) \qed
+=& \sum_{i=0}^{h-1} 2^i - h &=&  2^h  - (h+1) \qed
 \end{matrix}
 $$
 
@@ -391,15 +391,15 @@ $$
 
 ## Análise do Método Heapify com *desce*
 
-Temos então que o total de trocas do heapify é $2^h -(h-1)$, e considerando uma altura $h=\lceil lg\;N \rceil=O(lg\;N)$,
+Temos então que o total de trocas do heapify é $2^h -(h+1)$, e considerando uma altura $h=\lceil lg\;N \rceil=O(lg\;N)$,
 temos:
 
-$$ 2^{O(lg\;N)} - (O(lg\;N) - 1) = O(N)$$
+$$ 2^{O(lg\;N)} - (O(lg\;N) + 1) = O(N)$$
 
 Na prática, para $N=31$ e, portanto, $h=5$, temos:
 $8\times 1 +4\times 2+ 2\times 3 + 1 \times 4 = 26$ trocas.
 
-Veja código em `materais`.
+Veja código em `materiais`.
 
 Agradecimentos ao Prof. Fabiano Oliveira, pelo embasamento dessa prova.
 
