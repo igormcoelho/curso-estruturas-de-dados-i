@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Filas de Prioridade
-date: 14/10/2020
+date: 14/10/2020 - rev. 26/08/2021
 transition: cube
 fontsize: 10
 header-includes:
@@ -348,7 +348,7 @@ De forma geral, no nível $i$, cada um dos $2^{i-1}$ nós efetuam $h-i$ trocas, 
 
 ## Análise do Método Heapify com *desce*
 
-Temos que $\sum_{i=1}^{h-1}\left(2^{i-1} (h-i)\right) = 2^h - (h-1)$, dado que $\sum_{i=0}^m 2^i = 2^{m+1}-1$. Desmembramos em cada linha $i$ abaixo as $h-i$ ocorrências de $2^{i-1}$, de $i=1$ até $h-1$. Efetuamos então uma soma por colunas.
+Temos que $\sum_{i=1}^{h-1}\left(2^{i-1} (h-i)\right) = 2^h - (h+1)$, dado que $\sum_{i=0}^m 2^i = 2^{m+1}-1$. Desmembramos em cada linha $i$ abaixo as $h-i$ ocorrências de $2^{i-1}$, de $i=1$ até $h-1$. Efetuamos então uma soma por colunas.
 
 \footnotesize
 $$
@@ -383,7 +383,7 @@ $$
 \begin{matrix}
 =&  (2^{h-1}-1) + (2^{h-2}-1) &+ \cdots +& (2^3-1)  +  (2^2-1) + (2^1-1)\\
 =&  2^{h-1} + 2^{h-2} &+ \cdots +& 2^3  +  2^2  +  2^1  - (h-1)\\
-=& \sum_{i=1}^{h-1} 2^i - (h-1) &=&  2^h  - (h-1) \qed
+=& \sum_{i=1}^{h-1} 2^i - (h-1) &=&  2^h  - (h+1) \qed
 \end{matrix}
 $$
 
