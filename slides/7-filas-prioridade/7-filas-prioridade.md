@@ -363,7 +363,6 @@ i=h-2: \\
 i=h-1: \\
       \\
       \\
-      \\
 \end{matrix}
 \overbrace{
 \begin{matrix}
