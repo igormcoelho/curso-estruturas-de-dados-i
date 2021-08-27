@@ -4,12 +4,14 @@ title: Estruturas de Dados I
 subtitle: Filas de Prioridade
 date: 14/10/2020 - rev. 26/08/2021
 transition: cube
+output:
+  slide_level: 2
+#lang: pt
 fontsize: 10
 header-includes:
 - <link rel="stylesheet" type="text/css" href="general.css">
 - <link rel="stylesheet" type="text/css" href="reveal-beamer.css">
 ---
-
 
 
 
@@ -72,7 +74,7 @@ Outra operação comum no TAD, embora considerada uma *operação interna*, é a
 
 ## Implementações
 
-A implementação do TAD Fila de Prioridade geralmente se dá através de uma *árvores de prioridade* denominada *heap*. O heap (ou *min heap*) é uma *árvore binária completa* com a seguinte propriedade:
+A implementação do TAD Fila de Prioridade geralmente se dá através de uma implementação de *árvores de prioridade* denominada *heap* binário. O heap (ou *min heap*) é uma *árvore binária completa* com a seguinte propriedade:
 
 - se $x$ é pai de $y$, então $x \leq y$
 
@@ -99,8 +101,31 @@ FilaPrioridadeTAD = requires(Agregado a, Tipo t)
 ```
 Note que o tipo genérico pode ser estendido para comportar um elemento interno, além da chave numérica.
 
+-------
 
-# Implementação *heap*
+## Utilização da Fila de Prioridade
+
+Antes de completar as funções, utilizaremos o `FilaPrioridadeTAD`:
+
+```{.cpp}
+int main () {
+   FilaPrioridadeTAD h = // ... inicializa tipo
+   // h.cria();
+   h.insere(20);
+   h.insere(10);
+   h.insere(30);
+   printf("%c\n", h.frente());      
+   printf("%c\n", h.remove());  
+   h.insere(25);
+   while(p.N > 0)
+      printf("%c\n", h.remove());
+   // h.libera();
+   return 0;
+}
+```
+***Verifique as impressões em tela:*** *10 10 20 25 30*
+
+# Operações em um *heap*
 
 --------
 
@@ -117,77 +142,11 @@ Representação por níveis (*árvore completa*):
 
 Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 
--------
-
-## Implementação Heap1
-
-
-Consideraremos uma fila sequencial com, no máximo, `MAXN` elementos do tipo caractere.
-
-```{.cpp}
-constexpr int MAX_N = 50; // capacidade máxima da fila
-class Heap1
-{
-public:
-  int elementos [MAXN];      // elementos na fila
-  int N;                     // num. de elementos na fila
-  void cria () { ... }       // inicializa agregado
-  void libera () { ... }     // finaliza agregado
-  int frente () { ... }
-  void insere (int chave){ ... }
-  int remove () { ... }
-};
-// verifica se agregado Heap1 satisfaz conceito FilaPrioridadeTAD
-static_assert(FilaPrioridadeTAD<Heap1, int>);
-```
-
--------
-
-## Utilização do Heap
-
-Antes de completar as funções pendentes, utilizaremos a `Heap1`:
-
-```{.cpp}
-int main () {
-   Heap1 h;
-   h.cria();
-   h.insere(20);
-   h.insere(10);
-   h.insere(30);
-   printf("%c\n", h.frente());      
-   printf("%c\n", h.remove());  
-   h.insere(25);
-   while(p.N > 0)
-      printf("%c\n", h.remove());
-   h.libera();
-   return 0;
-}
-```
-***Verifique as impressões em tela:*** *10 10 20 25 30*
 
 ---------
 
-## Implementação Heap1 - cria/libera
 
-A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
-
-```{.cpp}
-class Heap1 {
-...
-void cria() {
-   this->N = 0;
-}
-
-void libera() {
-   // nenhum recurso dinâmico para desalocar
-}
-...
-}
-```
----------
-
-
-## Algoritmo Heap1 *frente* 
+## Algoritmo FilaPrioridadeTAD *frente* 
 
 A operação `frente` retorna o elemento mais prioritário do heap.
 Felizmente, ele sempre será a raiz da árvore!
@@ -203,7 +162,7 @@ Representação por níveis (*árvore completa*):
 
 ---------
 
-## Algoritmo Heap1 *insere* - Parte 1/2
+## Algoritmo FilaPrioridadeTAD *insere* - Parte 1/2
 
 A operação `insere` em adiciona um novo elemento de acordo com sua prioridade.
 Como manter a corretude das propriedades do heap?
@@ -219,7 +178,7 @@ Representação por níveis (*árvore completa*):
 
 -------
 
-## Algoritmo Heap1 *insere* - Parte 2/2
+## Algoritmo FilaPrioridadeTAD *insere* - Parte 2/2
 
 Para manter a corretude das propriedades do heap, em especial, de uma *árvore completa*, adicionamos o elemento na *última posição do vetor*.
 
@@ -243,7 +202,7 @@ Como *corrigir* a árvore? **Solução:** trocas sucessivas *subindo* até a rai
 -------
 
 
-## Algoritmo Heap1 *remove* - Parte 1/2
+## Algoritmo FilaPrioridadeTAD *remove* - Parte 1/2
 
 A operação `remove` em adiciona um novo elemento de acordo com sua prioridade.
 Como manter a corretude das propriedades do heap?
@@ -259,7 +218,7 @@ Representação por níveis (*árvore completa*):
 
 -------
 
-## Algoritmo Heap1 *remove* - Parte 2/2
+## Algoritmo FilaPrioridadeTAD *remove* - Parte 2/2
 
 Para manter a corretude das propriedades do heap, em especial, de uma *árvore completa*, trocamos o *primeiro* com o *último* elemento do vetor.
 
@@ -281,8 +240,319 @@ Como *corrigir* a árvore? **Solução:** trocas sucessivas *descendo* até uma 
 | *7 | 10 | *8 | 11 | 19 | 35 | *44 | 14 | 12 | 22 | 30 | x |
 ```
 
-# Implementação Heap em C++
+# Implementação Heap em C/C++
 
+**Aula:** Fila de Prioridade - Parte II
+
+Prof. Igor Machado Coelho
+
+https://github.com/igormcoelho/curso-estruturas-de-dados-i
+
+Revisão 26/08/2021
+
+## Implementação Heap1
+
+Consideraremos uma fila sequencial com, no máximo, `MAXN` elementos do tipo caractere.
+
+```{.cpp}
+constexpr int MAX_N = 50; // capacidade máxima da fila
+class Heap1
+{
+public:
+  int elementos [MAX_N];      // elementos na fila
+  int N;                     // num. de elementos na fila
+  void cria () { ... }       // inicializa agregado
+  void libera () { ... }     // finaliza agregado
+  int frente () { ... }
+  void insere (int chave){ ... }
+  int remove () { ... }
+};
+// verifica se agregado Heap1 satisfaz conceito FilaPrioridadeTAD
+static_assert(FilaPrioridadeTAD<Heap1, int>);
+```
+
+---------
+
+## Implementação Heap1 - cria/libera
+
+A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
+
+```{.cpp}
+class Heap1 {
+...
+void cria() {
+   this->N = 0;
+}
+
+void libera() {
+   // nenhum recurso dinâmico para desalocar
+}
+...
+}
+```
+
+
+---------
+
+## Implementação Heap1 - frente
+
+A operação `frente` retorna a raiz do heap, ou seja, o primeiro elemento. Este é sempre o mais prioritário.
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```{.cpp}
+class Heap1 {
+...
+int frente() {
+   return this->elementos[0];
+}
+...
+}
+```
+
+:::::
+
+::::: {.column width=50%}
+
+![](2020-10-14-16-39-35.png){width=100%}
+
+
+::::: 
+
+:::::::::::::
+
+Representação por níveis (*árvore completa*):
+```
+| 3* | 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 44 |
+```
+
+---------
+
+## Implementação Heap1 - `pai` e `filho`
+
+Métodos auxiliares `pai` e `filho`.
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```{.cpp}
+class Heap1 {
+...
+int pai(int pos) {
+  return (pos - 1) / 2;
+}
+
+int filho1(int pos) {
+  return (2 * pos) + 1;
+}
+
+int filho2(int pos) {
+  return filho1(pos) + 1;
+}
+...
+}
+```
+
+:::::
+
+::::: {.column width=50%}
+
+![](2020-10-14-16-39-35.png){width=100%}
+
+\small
+
+Representação por níveis:
+```
+| 3 | 10 | 7 | 11 | 19 | 35 | ...
+  0   1    2   3    4    5
+```
+
+::::: 
+
+:::::::::::::
+
+
+-----
+
+## Implementação Heap1 - sobe
+
+A operação `sobe` compara sistematicamente um nó com seu pai, efetuando trocas enquanto a prioridade estiver incorreta. Custo: proporcional ao nível.
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```{.cpp}
+class Heap1 {
+...
+void sobe(int pos) {
+  int p = pai(pos);
+  while (pos > 0) {
+    // compara filho com pai
+    if (elementos[pos] >= 
+                 elementos[p]);
+      break;
+    troca(p, pos, elementos);
+    pos = p;     // repete
+    p = pai(pos);
+  }
+}
+...
+}
+```
+
+:::::
+
+::::: {.column width=50%}
+
+![](2020-10-14-16-39-35.png){width=100%}
+
+\small
+
+Representação por níveis:
+```
+| 3 | 10 | 7 | 11 | 19 | 35 | ...
+  | 8 | 14 | 12 | 22 | 30 | 44 |
+```
+
+::::: 
+
+:::::::::::::
+
+
+---------
+
+## Implementação Heap1 - insere
+
+O método `insere` coloca o novo elemento no final do heap e invoca a operação `sobe`. Custo: altura da árvore.
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```{.cpp}
+class Heap1 {
+...
+void insere(int pos) {
+  elementos[N] = pos;
+  N++;
+  sobe(N-1);
+}
+...
+}
+```
+
+:::::
+
+::::: {.column width=50%}
+
+![](2020-10-14-16-39-35.png){width=100%}
+
+\small
+
+Representação por níveis:
+```
+| 3 | 10 | 7 | 11 | 19 | 35 | ...
+  | 8 | 14 | 12 | 22 | 30 | 44 |
+```
+
+::::: 
+
+:::::::::::::
+
+
+-----
+
+## Implementação Heap1 - desce
+
+A operação `desce` compara um nó com seus filhos, trocando enquanto a prioridade for incorreta. Custo: proporcional ao nível.
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```{.cpp}
+class Heap1 {
+...
+void desce(int pos) {
+  int f = filho1(pos);
+  while (f < N) {
+    // existe segundo filho?
+    if ((f < N-1) && 
+(elementos[f+1]<elementos[f]))
+      f = f + 1;
+    if (elementos[f] >= 
+           elementos[pos]) break;
+    troca(f, pos, elementos);
+    pos = f;  f = filho1(pos);
+  }
+}
+...
+}
+```
+
+:::::
+
+::::: {.column width=50%}
+
+![](2020-10-14-16-39-35.png){width=100%}
+
+\small
+
+Representação por níveis:
+```
+| 3 | 10 | 7 | 11 | 19 | 35 | ...
+  | 8 | 14 | 12 | 22 | 30 | 44 |
+```
+
+::::: 
+
+:::::::::::::
+
+
+---------
+
+## Implementação Heap1 - remove
+
+O método `remove` troca o primeiro com último elemento e invoca a operação `desce`. Custo: altura da árvore.
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```{.cpp}
+class Heap1 {
+...
+int remove() {
+  troca(0, N-1, elementos);
+  N--;
+  desce(0);
+  return elementos[N];
+}
+...
+}
+```
+
+:::::
+
+::::: {.column width=50%}
+
+![](2020-10-14-16-39-35.png){width=100%}
+
+\small
+
+Representação por níveis:
+```
+| 3 | 10 | 7 | 11 | 19 | 35 | ...
+  | 8 | 14 | 12 | 22 | 30 | 44 |
+```
+
+::::: 
+
+:::::::::::::
 
 
 ---------
@@ -315,7 +585,19 @@ nós: | 0 | 1 | 2 | 3 | 4 | ... ->
 
 ## Método Heapify com *sobe*
 
-
+```{.cpp}
+class Heap1 {
+...
+void constroi_sobe(int v[], int N) {
+  for (int i = 1; i < N; i++)
+     this->elementos[i] = v[i];
+  this->N = N;
+  for (int i = 1; i < N; i++)
+    sobe(i);
+}
+...
+}
+```
 
 -----------
 
@@ -333,6 +615,19 @@ nós: | 0 | 1 | ... <- | 10 | 11 | 12 | 13 | 14 | ...
 
 ## Método Heapify com *desce*
 
+```{.cpp}
+class Heap1 {
+...
+void constroi_desce(int v[], int N) {
+  for (int i = 1; i < N; i++)
+     this->elementos[i] = v[i];
+  this->N = N;
+  for (int i = N / 2 - 1; i >= 0; i--)
+    desce(i);
+}
+...
+}
+```
 
 -----------
 

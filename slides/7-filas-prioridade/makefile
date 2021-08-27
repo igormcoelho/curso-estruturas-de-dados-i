@@ -8,7 +8,7 @@ all: deps
 		--katex --css katex.min.css \
 	$(MDFILE) -o $(OUTHTML) --slide-level 2 # --toc
 	#
-	#
+	# -V lang=nl 
 	# -F pandoc-crossref
 	# --filter pandoc-latex-color --filter pandoc-source-exec
 	/usr/bin/pandoc --toc -s --self-contained -V theme:Warsaw -t beamer \
@@ -26,6 +26,6 @@ env:
 	conda activate
 
 deps:
-	wget -nc https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css
-	wget -nc https://github.com/hakimel/reveal.js/archive/master.tar.gz
+	# wget -nc https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css
+	# wget -nc https://github.com/hakimel/reveal.js/archive/master.tar.gz
 	# tar -xzvf master.tar.gz && mv reveal.js-master reveal.js
