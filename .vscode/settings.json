@@ -10,7 +10,8 @@
     //"markdown-preview-enhanced.enableScriptExecution": true,
     "editor.formatOnSave": true,
     "files.associations": {
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "ostream": "cpp"
     },
     "markdown-preview-enhanced.mathRenderingOption": "MathJax",
 }
