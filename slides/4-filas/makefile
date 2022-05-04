@@ -4,13 +4,13 @@ OUTPDF=4-filas.pdf
 
 all: deps
 	/usr/bin/pandoc -s --self-contained -V theme=beige -s -t revealjs \
-        --filter pandoc-source-exec --filter pandoc-katex --css katex.min.css \
+     --css katex.min.css \
 	$(MDFILE) -o $(OUTHTML) --slide-level 2 # --toc
 	#
 	#
 	# -F pandoc-crossref
 	/usr/bin/pandoc --toc -s --self-contained -V theme:Warsaw -t beamer \
-	    --filter pandoc-latex-color --filter pandoc-source-exec  -H header.tex \
+	  -H header.tex \
 			$(MDFILE) -o $(OUTPDF) --slide-level 2
 
 #--filter pandoc-source-exec

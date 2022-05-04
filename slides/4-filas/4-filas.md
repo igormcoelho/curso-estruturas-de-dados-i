@@ -119,8 +119,8 @@ Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 
 ## Implementação FilaSeq1
 
-
 Consideraremos uma fila sequencial com, no máximo, `MAXN` elementos do tipo caractere.
+
 
 ```{.cpp}
 constexpr int MAXN = 100'000; // capacidade máxima da fila
@@ -192,7 +192,7 @@ A operação `desenfileira` remove e retorna o elemento na *frente* da fila.
 ```{.cpp}
 // implementação 'FilaSeq1'
 
-void frente(char dado) {
+char frente() {
    return this->elementos[0];   // primeiro sempre 'frente'
 }
 void enfileira(char dado) {
@@ -269,7 +269,7 @@ Utilizamos o índice `inicio` para localizar o começo da fila.
 class FilaSeq2 {
 ...
 
-void frente(char dado) {
+char frente() {
    return this->elementos[inicio];   
 }
 
