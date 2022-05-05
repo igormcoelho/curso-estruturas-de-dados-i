@@ -93,7 +93,7 @@ formas distintas de implementação: Sequencial e Encadeada.
 
 O *conceito* de pilha somente requer suas três operações básicas. Como consideramos uma *pilha genérica* (pilha de inteiro, char, etc), definimos um *conceito genérico* chamado `PilhaTAD`:
 
-```{.cpp}
+```.cpp
 template<typename Agregado, typename Tipo>
 concept bool
 PilhaTAD = requires(Agregado a, Tipo t)
@@ -124,7 +124,7 @@ Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 
 Consideraremos uma pilha sequencial com, no máximo, `MAXN` elementos do tipo caractere.
 
-```{.cpp}
+```.cpp
 constexpr int MAXN = 100'000; // capacidade máxima da pilha
 class PilhaSeq1
 {
@@ -147,7 +147,7 @@ static_assert(PilhaTAD<PilhaSeq1, char>);
 
 Antes de completar as funções pendentes, utilizaremos a `PilhaSeq1`:
 
-```{.cpp}
+```.cpp
 int main () {
    PilhaSeq1 p;
    p.cria();
@@ -171,7 +171,7 @@ int main () {
 
 A operação `cria` inicializa a pilha para uso, e a função `libera` desaloca os recursos dinâmicos.
 
-```{.cpp}
+```.cpp
 class PilhaSeq1 {
 ...
 void cria() {
@@ -191,7 +191,7 @@ void libera() {
 A operação `empilha` em uma pilha sequencial adiciona um novo elemento ao topo da pilha.
 A operação `desempilha` em uma pilha sequencial remove e retorna o último elemento da pilha.
 
-```{.cpp}
+```.cpp
 class PilhaSeq1 {
 ...
 void empilha(char dado) {
@@ -213,7 +213,7 @@ char desempilha() {
 
 A operação de topo em uma pilha sequencial retorna o último elemento empilhado.
 
-```{.cpp}
+```.cpp
 class PilhaSeq1 {
 ...
 char topo() {
@@ -301,7 +301,7 @@ Consideraremos uma pilha encadeada, utilizando um agregado `NoPilha1` para conec
 
 :::::{.column width=33%}
 
-```{.cpp}
+```.cpp
 class NoPilha1 
 {
 public:
@@ -314,7 +314,7 @@ public:
 
 :::::{.column  width=67%}
 
-```{.cpp}
+```.cpp
 class PilhaEnc1
 {
 public:
@@ -339,7 +339,7 @@ static_assert(PilhaTAD<PilhaEnc1, char>);
 
 ## Implementação: Cria
 
-```{.cpp}
+```.cpp
 class PilhaEnc1 {
 ...
 void cria() {
@@ -355,7 +355,7 @@ void cria() {
 
 Variável local do tipo Pilha Encadeada:
 
-```{.cpp}
+```.cpp
 PilhaEnc1 p; 
 p.cria();
 ```
@@ -373,7 +373,7 @@ p.cria();
 
 ## Implementação: Empilha 
 
-```{.cpp}
+```.cpp
 void empilha(char v) {
   auto* no = new NoPilha1{.dado = v, .prox = this->inicio};
   this->inicio = no;
@@ -412,7 +412,7 @@ void empilha(char v) {
 
 :::::{.column width=65%}
 
-```{.cpp}
+```.cpp
 char desempilha() {
    NoPilha1* p = this->inicio->prox;
    char r = this->inicio->dado;
@@ -427,7 +427,7 @@ char desempilha() {
 
 :::::{.column  width=35%}
 
-```{.cpp}
+```.cpp
 class NoPilha1 
 {
 public:
@@ -462,7 +462,7 @@ public:
 
 ## Implementação: Libera
 
-```{.cpp}
+```.cpp
 void libera() {
    while (this->N > 0) {
       NoPilha1* p = this->inicio->prox;
@@ -516,7 +516,7 @@ A vantagem é a grande eficiência computacional e amplo conjunto de testes, evi
 
 Na STL, basta fazer `#include<stack>` e usar métodos `push`, `pop` e `top`.
 
-```{.cpp}
+```.cpp
 #include<iostream>           // inclui printf
 #include<stack>              // inclui pilha genérica
 

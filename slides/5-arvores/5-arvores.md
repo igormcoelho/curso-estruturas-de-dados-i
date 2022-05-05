@@ -196,7 +196,7 @@ A razão é que existem diversos tipos específicos de árvores, que apresentam 
 Consideramos uma implementação de árvore $m$-ária, com alocação encadeada de nós (alocação interna sequencial para filhos).
 
 
-```{.cpp}
+```.cpp
 constexpr int M = 3;     // aridade M=3 (ternária)
 class NoEnc1
 {
@@ -226,7 +226,7 @@ public:
 Consideramos uma implementação de árvore $m$-ária, com alocação encadeada de nós.
 
 
-```{.cpp}
+```.cpp
 constexpr int M = 3;     // aridade M=3 (ternária)
 class NoEnc2
 {
@@ -260,7 +260,7 @@ Consideramos uma implementação de árvore $m$-ária, com alocação encadeada 
 Note que podemos reescrever os ponteiros de `NoEnc2` com os termos `esq` e `dir` (nó esquerdo e nó direito).
 
 
-```{.cpp}
+```.cpp
 class NoEnc3
 {
 public:
@@ -309,7 +309,7 @@ Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 
 Consideraremos uma árvore sequencial com, no máximo, `MAX_N` elementos do tipo caractere.
 
-```{.cpp}
+```.cpp
 constexpr int MAX_N = 50; // capacidade máxima da árvore
 class ArvoreSeq1
 {
@@ -396,7 +396,7 @@ No percurso *em-ordem*, os filhos esquerdos são visitados primeiro, depois o n�
 
 ## Percurso Pré-ordem
 
-```{.cpp}
+```.cpp
 void preordem(auto* no) {
    if(no) {
       printf("%c\n", no->chave); // operação ou "visita"
@@ -424,7 +424,7 @@ Apresente o percurso de pré-ordem para as árvores abaixo:
 
 ## Percurso Pré-ordem
 
-```{.cpp}
+```.cpp
 void posordem(auto* no) {
    if(no) {
       posordem(no->esq);
@@ -454,7 +454,7 @@ Apresente o percurso de pós-ordem para as árvores abaixo:
 
 ## Percurso Em-ordem (ordem simétrica)
 
-```{.cpp}
+```.cpp
 void emordem(auto* no) {
    if(no) {
       emordem(no->esq);

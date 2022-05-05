@@ -90,7 +90,7 @@ Apresentaremos inicialmente a implementação do TAD Saco através de Listas Enc
 
 O *conceito* de saco somente requer suas operações básicas. Como consideramos um *saco genérica* (saco de inteiro, char, etc), definimos um *conceito genérico* chamado `SacoTAD`:
 
-```{.cpp}
+```.cpp
 template <typename Agregado>
 concept bool
 SacoTAD = requires(Agregado a, typename Agregado::Tipo t,
@@ -112,7 +112,7 @@ SacoTAD = requires(Agregado a, typename Agregado::Tipo t,
 
 Antes de completar as funções pendentes, utilizaremos um `SacoTAD`:
 
-```{.cpp}
+```.cpp
 int main () {
    SacoTAD s = ...; // alguma implementação
    s.cria();
@@ -149,7 +149,7 @@ $$ [inicio \rightarrow] [ a | \rightarrow ] \;\; [ b |  \rightarrow ] \;\; [ a |
 Consideraremos uma lista encadeada de caracteres. 
 Para tal, definimos um agregado que contenha elementos, e outro que represente um iterador.
 
-```{.cpp}
+```.cpp
 class NoEnc1
 {
 public:
@@ -158,7 +158,7 @@ public:
 };
 ```
 
-```{.cpp}
+```.cpp
 class IteradorNoEnc1
 {
 public:
@@ -173,7 +173,7 @@ public:
 
 ## Implementação (II)
 
-```{.cpp}
+```.cpp
 class ListaEnc1
 {
 public:
@@ -199,7 +199,7 @@ static_assert(SacoTAD<ListaEnc1>);
 
 Antes de completar as funções pendentes, utilizaremos a `ListaEnc1`:
 
-```{.cpp}
+```.cpp
 int main () {
    ListaEnc1 l;
    l.cria();
@@ -224,7 +224,7 @@ int main () {
 
 A operação `cria` inicializa a estrutura para uso, e a função `libera` desaloca os recursos dinâmicos.
 
-```{.cpp}
+```.cpp
 class ListaEnc1 {
 ...
 void cria() {
@@ -248,7 +248,7 @@ void libera() {
 
 A operação `adiciona` em uma lista encadeada adiciona um novo elemento na "cabeça" da lista (no início).
 
-```{.cpp}
+```.cpp
 class ListaEnc1 {
 ...
 void adiciona(char dado) {
@@ -265,7 +265,7 @@ void adiciona(char dado) {
 
 Podemos definir um tipo abstrato para o iterador, denominado `IteradorTAD`.
 
-```{.cpp}
+```.cpp
 template <typename Agregado>
 concept bool
 #endif
@@ -286,7 +286,7 @@ concept bool
 
 As operações do iterador utilizam um marcador/sentinela onde o ponteiro atual vale zero quando não existe mais um próximo.
 
-```{.cpp}
+```.cpp
 class IteradorNoEnc1 {
    NoEnc1* no;
    char atual() {
@@ -310,7 +310,7 @@ static_assert(IteradorTAD<IteradorNoEnc1>);
 
 A operação itera em uma lista encadeada retorna o iterador da lista, posicionado no começo.
 
-```{.cpp}
+```.cpp
 class ListaEnc1 {
 ...
 IteradorNoEnc1 itera() {
@@ -327,7 +327,7 @@ IteradorNoEnc1 itera() {
 
 A operação busca em uma lista encadeada utiliza o iterador da lista, posicionado no começo, para encontrar o elemento, retornando o iterador atualizado na posição correspondente.
 
-```{.cpp}
+```.cpp
 class ListaEnc1 {
 ...
 IteradorNoEnc1 busca(char dado) {
@@ -352,7 +352,7 @@ IteradorNoEnc1 busca(char dado) {
 
 A busca pode ser feita de forma recursiva também:
 
-```{.cpp}
+```.cpp
 IteradorNoEnc1 buscarec(IteradorNoEnc1 it, char dado)
 {
    if(it.terminou() || it.atual() == dado)
@@ -371,7 +371,7 @@ IteradorNoEnc1 buscarec(IteradorNoEnc1 it, char dado)
 
 A remoção de um elemento ocorre a partir de um iterador.
 
-```{.cpp}
+```.cpp
 class ListaEnc1 {
 ...
 void remove(IteradorNoEnc1 it)
@@ -394,7 +394,7 @@ void remove(IteradorNoEnc1 it)
 A implementação de listas encadeadas tipicamente permite acesso bidirecional, com um ponteiro `anterior` além de um `proximo`.
 Este tipo de lista é chamado de *Lista Duplamente Encadeada*.
 
-```{.cpp}
+```.cpp
 class NoDuploEnc1
 {
 public:
@@ -414,7 +414,7 @@ public:
 
 É possível transformar a implementação da `ListaEnc1` para uso em *for* do tipo *range*, em C++. Exemplo:
 
-```{.cpp}
+```.cpp
 
 int main() {
    SacoTAD s = ListaEnc1();
@@ -439,7 +439,7 @@ int main() {
 Por padrão, a linguagem C++ exige os métodos `begin()` e `end()` para inicio e fim do processo de iteração, no agregado `ListaEnc1`.
 Por outro lado, os métodos `terminou()`, `proximo()` e `atual()` são substituídos pelos operadores `==`, `++` e `*`, no agregado `IteradorNoEnc1`.
 
-```{.cpp}
+```.cpp
 class ListaEnc1
 {
 ...
@@ -461,7 +461,7 @@ class ListaEnc1
 
 **Tópico Avançado**: os métodos `terminou()`, `proximo()` e `atual()` são substituídos pelos operadores `==`, `++` e `*`, no agregado `IteradorNoEnc1`.
 
-```{.cpp}
+```.cpp
 class IteradorNoEnc1
 {
 public:
@@ -503,7 +503,7 @@ $$  0 \; 1 \; 2 \; 3 $$
 
 Consideraremos um vetor de caracteres pré-alocado com capacidade `MAX_N`. 
 
-```{.cpp}
+```.cpp
 constexpr int MAX_N = 10000;
 class SacoVetor1 {
 public:
@@ -528,7 +528,7 @@ public:
 
 Antes de completar as funções pendentes, utilizaremos a `SacoVetor1`:
 
-```{.cpp}
+```.cpp
 int main () {
    SacoTAD s = SacoVetor1();
    s.cria();
@@ -552,7 +552,7 @@ int main () {
 
 A operação `cria` inicializa a estrutura para uso, e a função `libera` não desaloca nada.
 
-```{.cpp}
+```.cpp
 class SacoVetor1 {
 ...
 void cria() {
@@ -571,7 +571,7 @@ void libera() {
 
 A operação `adiciona` no final do vetor.
 
-```{.cpp}
+```.cpp
 class SacoVetor1 {
 ...
 void adiciona(char dado) {
@@ -587,7 +587,7 @@ void adiciona(char dado) {
 ## Implementação do Iterador
 
 Precisamos ainda de uma definição de iterador.
-```{.cpp}
+```.cpp
 class IteradorVetor1
 {
 public:
@@ -609,7 +609,7 @@ static_assert(SacoTAD<SacoVetor1>);
 
 A operação itera adiciona a posição atual (vetor decai a um ponteiro), bem como uma posição sentinela final.
 
-```{.cpp}
+```.cpp
 class SacoVetor1 {
 ...
 IteradorVetor1 itera() {
@@ -628,7 +628,7 @@ IteradorVetor1 itera() {
 
 A operação busca em um vetor faz um percurso direto (alternativa sem utilizar o iterador).
 
-```{.cpp}
+```.cpp
 class SacoVetor1 {
 ...
 IteradorVetor1 busca(char dado) {
@@ -651,7 +651,7 @@ IteradorVetor1 busca(char dado) {
 
 A busca pode ser feita de forma recursiva também (utilizando o iterador):
 
-```{.cpp}
+```.cpp
 IteradorVetor1 buscarec(IteradorVetor1 it, char dado)
 {
    if(it.terminou() || it.atual() == dado)
@@ -670,7 +670,7 @@ IteradorVetor1 buscarec(IteradorVetor1 it, char dado)
 
 A remoção de um elemento exige realocação/cópia dos elementos posteriores.
 
-```{.cpp}
+```.cpp
 class SacoVetor1 {
 ...
 void remove(IteradorVetor1 it)
