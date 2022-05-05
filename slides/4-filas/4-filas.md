@@ -89,7 +89,7 @@ formas distintas de implementação: Sequencial e Encadeada.
 
 O *conceito* de fila somente requer suas três operações básicas. Como consideramos uma *fila genérica* (fila de inteiro, char, etc), definimos um *conceito genérico* chamado `FilaTAD`:
 
-```{.cpp}
+```.cpp
 template<typename Agregado, typename Tipo>
 concept bool
 FilaTAD = requires(Agregado a, Tipo t)
@@ -122,7 +122,7 @@ Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 Consideraremos uma fila sequencial com, no máximo, `MAXN` elementos do tipo caractere.
 
 
-```{.cpp}
+```.cpp
 constexpr int MAXN = 100'000; // capacidade máxima da fila
 class FilaSeq1
 {
@@ -145,7 +145,7 @@ static_assert(FilaTAD<FilaSeq1, char>);
 
 Antes de completar as funções pendentes, utilizaremos a `FilaSeq1`:
 
-```{.cpp}
+```.cpp
 int main () {
    FilaSeq1 p;
    p.cria();
@@ -169,7 +169,7 @@ int main () {
 
 A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
-```{.cpp}
+```.cpp
 class FilaSeq1 {
 ...
 void cria() {
@@ -189,7 +189,7 @@ void libera() {
 A operação `enfileira` em adiciona um novo elemento ao *fundo* da fila.
 A operação `desenfileira` remove e retorna o elemento na *frente* da fila.
 
-```{.cpp}
+```.cpp
 // implementação 'FilaSeq1'
 
 char frente() {
@@ -218,7 +218,7 @@ Seria possível evitar tal efeito?
 
 ## Implementação FilaSeq2
 
-```{.cpp}
+```.cpp
 constexpr int MAXN = 100'000; // capacidade máxima da fila
 class FilaSeq2
 {
@@ -244,7 +244,7 @@ static_assert(FilaTAD<FilaSeq2, char>);
 
 A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
-```{.cpp}
+```.cpp
 class FilaSeq2 {
 ...
 void cria() {
@@ -265,7 +265,7 @@ void libera() {
 
 Utilizamos o índice `inicio` para localizar o começo da fila.
 
-```{.cpp}
+```.cpp
 class FilaSeq2 {
 ...
 
@@ -284,7 +284,7 @@ char frente() {
 A operação `enfileira` em adiciona um novo elemento ao *fundo* da fila.
 A operação `desenfileira` remove e retorna o elemento na *frente* da fila.
 
-```{.cpp}
+```.cpp
 // implementação 'FilaSeq2'
 
 void enfileira(char dado) {
@@ -343,7 +343,7 @@ p.fim:    | 3 |                    0   1   2   3   4
 
 Consideramos uma *estratégia circular* na capacidade da fila:
 
-```{.cpp}
+```.cpp
 // implementação 'FilaSeq3'
 
 void enfileira(char dado) {
@@ -436,7 +436,7 @@ Consideraremos uma fila encadeada, utilizando um agregado `NoFila1` para conecta
 
 :::::{.column width=33%}
 
-```{.cpp}
+```.cpp
 class NoFila1
 {
 public:
@@ -449,7 +449,7 @@ public:
 
 :::::{.column  width=67%}
 
-```{.cpp}
+```.cpp
 class FilaEnc1
 {
 public:
@@ -475,7 +475,7 @@ static_assert(FilaTAD<FilaEnc1, char>);
 
 ## Implementação: Cria e Libera
 
-```{.cpp}
+```.cpp
 class FilaEnc1 {
 ...
 void cria() {
@@ -497,7 +497,7 @@ void libera() {
 
 Variável local do tipo Fila Encadeada:
 
-```{.cpp}
+```.cpp
 FilaEnc1 p;
 p.cria();
 ```
@@ -515,7 +515,7 @@ p.cria();
 
 ## Implementação: Enfileira
 
-```{.cpp}
+```.cpp
 void enfileira(char v) {
    NoFila1* no = new NoFila1{.dado = v, .prox = 0};
    if(N == 0) {  inicio = fim = no;               }
@@ -551,7 +551,7 @@ void enfileira(char v) {
 
 ## Implementação: Desenfileira
 
-```{.cpp}
+```.cpp
 char desenfileira() {
     NoFila1* p = inicio;   // ponteiro da frente
     inicio = inicio->prox; // avança fila
@@ -603,7 +603,7 @@ A vantagem é a grande eficiência computacional e amplo conjunto de testes, evi
 
 Na STL, basta fazer `#include<queue>` e usar métodos `push`, `pop` e `front`.
 
-```{.cpp}
+```.cpp
 #include<iostream>            // inclui printf
 #include<queue>               // inclui fila genérica
 
