@@ -60,7 +60,7 @@ A linguagem C/C++ é **fortemente tipada**, portando o programador
 deve dizer explicitamente qual o tipo de dado deseja armazenar em
 cada variável.
 
-```{.cpp}
+```.cpp
 int x = 5; // armazena o inteiro 5 na variável x
 char y = 'A'; // armazena o caractere 'A' na variável y
 float z = 3.7 ; // armazena o real 3.7 na variável z
@@ -73,7 +73,7 @@ float z = 3.7 ; // armazena o real 3.7 na variável z
 
 **Pergunta/Resposta**: Cuidado com tipos. Quais são os valores armazenados nas variáveis abaixo (C++)?
 
-```{.cpp}
+```.cpp
 int    x1 = 5;        // => 5
 int    x2 = x1 + 8;   // => 13
 int    x3 = x2 / 2;   // => 6
@@ -102,7 +102,7 @@ cadeia de caracteres ou string) com o conteúdo de variáveis?
 
 **Resposta:** através dos padrões de formatação (%d, %f, %c, ...).
 
-```{.cpp}
+```.cpp
 int x1 = 7;   printf("x1 é %d", x1); // x1 é 7
 float x6 = x1 / 2.0;
 printf("metade de %d é %f", x1, x6); // metade de 7 é 3.5
@@ -117,7 +117,7 @@ printf("Olá mundo! \n"); // Olá mundo! (quebra de linha)
 
 Condicionais podem ser feitos através dos comandos if ou if else.
 
-```{.cpp}
+```.cpp
 int x = 12;
 if ( x > 10)
    printf("x maior de 10\n");
@@ -134,7 +134,7 @@ de continuação e incremento.
 
 ::::: {.column width=55%}
 
-```{.cpp}
+```.cpp
 for (int i=0; i < 10 ; i++) {
    printf("i : %d\n" , i);
 }
@@ -144,7 +144,7 @@ for (int i=0; i < 10 ; i++) {
 
 ::::: {.column width=45%}
 
-```{.cpp}
+```.cpp
 int j=0;
 while (j < 10) {
    printf("j : %d\n", j);
@@ -169,7 +169,7 @@ Os tipos compostos podem ser vetores (arrays) ou agregados (structs, ...).
 
 . . .
 
-```{.cpp}
+```.cpp
 int v[8];  // cria um vetor com 8 inteiros
 v[0] = 3; // atribui o valor 3 à primeira posição
 v[7] = 5; // atribui o valor 5 à última posição
@@ -190,7 +190,7 @@ Comparação C/C++:
 
 ::::: {.column width=55%}
 
-```{.cpp}
+```.cpp
 // Em C (tipo agregado P)
 struct P
 {
@@ -208,7 +208,7 @@ struct P p2 = {.x=10, .y='Y'};
 
 ::::: {.column width=45%}
 
-```{.cpp}
+```.cpp
 // Em C++ (tipo agregado P)
 class P
 {
@@ -238,7 +238,7 @@ o operador ponto (.) para acessar campos do agregado.
 
 Exemplo:
 
-```{.cpp}
+```.cpp
 auto p1 = P{.y = 'A'}; // compilador GCC8 (no mínimo)
 
 p1.x = 20;             // atribui 20 à variável x de p1
@@ -262,7 +262,7 @@ enquanto um char ocupa apenas 1 byte.
 No caso de vetores, o espaço ocupado na memória é multiplicado pelo
 número de elementos. Vamos calcular o espaço das variáveis:
 
-```{.cpp}
+```.cpp
 int v [256];   // = 1024 bytes = 1 kibibyte = 1 KiB
 char x [1000]; // = 1000 bytes = 1 kilobyte = 1 kB
 float y [5];   // = 20 bytes
@@ -281,7 +281,7 @@ que permitem que algum *outro tipo* seja passado como parâmetro.
 
 Consideremos o agregado P que carrega um int e um char... como transformá-lo em um agregado genérico em relação à variável x?
 
-```{.cpp}
+```.cpp
 template<typename T>
 class G
 {
@@ -309,7 +309,7 @@ parâmetros.
 Tomemos por exemplo a função quadrado que retorna
 o valor passado elevado ao quadrado.
 
-```{.cpp}
+```.cpp
 // função que retorna um 'int', com parâmetro 'p'
 int quadrado (int p) {
    return p*p;
@@ -325,7 +325,7 @@ int x = quadrado(5);
 Quando nenhum valor é retornado (em um procedimento), utilizamos
 a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
 
-```{.cpp}
+```.cpp
 void imprime (int a , int b) {
    for (int i=a ; i<b ; i++)
       printf("%d\n" , i ) ;
@@ -334,7 +334,7 @@ void imprime (int a , int b) {
 
 Também é possível retornar múltiplos elementos (par ou tupla), através de um *structured binding* (requer `#include<tuple>`):
 
-```{.cpp}
+```.cpp
 auto duplo(int p) {
    return std::make_tuple(p+3, p+6);
 }
@@ -368,7 +368,7 @@ O tamanho do ponteiro varia de acordo com a arquitetura, mas para endereçar 64-
 
 Em ponteiros para agregados, o operador de acesso (.) é substituído por uma seta (->). O operador `&` toma o endereço da variável:
 
-```{.cpp}
+```.cpp
 struct P {
    int x;
    char y;
@@ -410,7 +410,7 @@ free(vp);
 
 ::::: {.column width=45%}
 
-```{.cpp}
+```.cpp
 // Aloca (C++) o agregado P
 auto* vp = new P{
                   .x = 10,
@@ -433,7 +433,7 @@ delete vp;
 
 O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:
 
-```{.cpp}
+```.cpp
 // o tipo da função 'quadrado' é: int(*)(int)
 int quadrado(int p) {
    return p*p;      
@@ -442,7 +442,7 @@ int quadrado(int p) {
 
 Este fato pode ser útil para receber funções como parâmetro, bem como armazenar funções anônimas (*lambdas*):
 
-```{.cpp}
+```.cpp
 // armazena lambda no ponteiro de função 'quad'
 int(*quad)(int) = [](int p) {
                                return p*p;
@@ -481,7 +481,7 @@ void imprimex(struct Z* this)
 
 ::::: {.column width=50%}
 
-```{.cpp}
+```.cpp
 // Em C++ (tipo agregado Z)
 class Z
 {
@@ -506,7 +506,7 @@ C++17 com flag GCC *-fconcepts* (oficialmente sem flags no C++20) traz a possibi
 
 Por exemplo, podemos criar um *conceito* `TemImprimeX`, que exige que o agregado possua um método `imprimex()`:
 
-```{.cpp}
+```.cpp
 template<typename Agregado>
 concept bool
 TemImprimeX = requires(Agregado a) {
@@ -522,7 +522,7 @@ TemImprimeX = requires(Agregado a) {
 
 Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:
 
-```{.cpp}
+```.cpp
 auto        a1 = Z{.x = 1}; // tipo automático
 TemImprimeX a2 = Z{.x = 2}; // tipo conceitual
 Z           a3 = Z{.x = 3}; // tipo explícito 
@@ -553,7 +553,7 @@ Nesse curso, vamos utilizar um padrão mínimo de modularização, para que seja
 
 Um programa começa pelo seu "ponto de entrada" (ou *entrypoint*), tipicamente uma função `int main()`:
 
-```{.cpp}
+```.cpp
 #include<iostream> // inclui arquivo externo
 int main() {
    return 0;       // 0 significa: nenhum erro
@@ -562,7 +562,7 @@ int main() {
 
 A declaração de funções pode ser feita antes da definição:
 
-```{.cpp}
+```.cpp
 int quadrado(int p); // declara a função 'quadrado'
 int quadrado(int p) {
    return p*p;       // implementa a função 'quadrado'
@@ -612,7 +612,7 @@ São "mais eficientes" e "à prova de erros".
 
 Por exemplo, é fácil definir um tipo agregado `Par`, que comporta dois elementos internos (tipo genérico). Porém, é mais vantajoso usar o existente na STL, chamado `std::pair` (o prefixo `std::` é chamado *namespace* e evita colisões de nomes):
 
-```{.cpp}
+```.cpp
 #include<iostream> // funções de entrada/saída
 #include<tuple>    // agregados de par e tupla
 int main() {
@@ -626,7 +626,7 @@ int main() {
 
 ## Relembrando (agregado Z)
 
-```{.cpp}
+```.cpp
 // Em C++ (tipo agregado Z)
 class Z
 {
@@ -643,7 +643,7 @@ public:
 
 ## Relembrando (conceito TemImprimeX)
 
-```{.cpp}
+```.cpp
 template<typename Agregado>
 concept bool
 TemImprimeX = requires(Agregado a) {
@@ -660,7 +660,7 @@ TemImprimeX = requires(Agregado a) {
 Durante o desenvolvimento, é útil verificar partes do código com testes simples e necessários para a corretude do mesmo (em tempo real).
 Para isso, podemos utilizar o `assert()`. Exemplo:
 
-```{.cpp}
+```.cpp
 int x = 10;
 x++;
 assert(x == 11); // x deveria ser 11
@@ -668,7 +668,7 @@ assert(x == 11); // x deveria ser 11
 
 Da mesma forma, podemos verificar tipos, especialmente *conceitos*, em tempo de compilação:
 
-```{.cpp}
+```.cpp
 // verifica se tipo agregado Z tem método imprimex()
 static_assert(TemImprimeX<Z>); 
 ```
@@ -682,7 +682,7 @@ Uma forma prática de testar um código modularizado com `main.cpp` separado do 
 
 Basta criar um arquivo de teste, por exemplo, `teste.cpp`:
 
-```{.cpp}
+```.cpp
 #include "resto.hpp"
 
 #define CATCH_CONFIG_MAIN // catch2 main()

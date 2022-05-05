@@ -89,7 +89,7 @@ Um Dicionário requer 3 operações básicas:
 
 O *conceito* de dicionário somente requer suas três operações básicas. Como consideramos um *dicionário genérico* (mapa de inteiro, char, etc), definimos um *conceito genérico* chamado `DicionarioTAD` (note que precisamos de *dois tipos genéricos*, para *chave* e *valor*):
 
-```{.cpp}
+```.cpp
 template<typename Agregado, typename TChave, typename TValor>
 concept bool
 DicionarioTAD = requires(Agregado a, TChave c, TValor v)
@@ -107,7 +107,7 @@ DicionarioTAD = requires(Agregado a, TChave c, TValor v)
 
 ## Exemplo: Dicionário de `char` para `int`
 
-```{.cpp}
+```.cpp
 class DicionarioCI
 {
 public:
@@ -132,7 +132,7 @@ static_assert(DicionarioTAD<DicionarioCI, char, int>);
 
 Adiciona pares chave-valor `('A', 200)` e `('B', 200)`. Depois faz consultas e remove chave `'B'`.
 
-```{.cpp}
+```.cpp
 int main() {
    DicionarioCI d;
    d.cria();                        // inicializa estrutura
@@ -202,7 +202,7 @@ Podemos utilizar uma Árvore Binária rotulada $T$, tal que:
 
 Relembrando (aula de Árvores) a estrutura de árvore binária considerada:
 
-```{.cpp}
+```.cpp
 class NoEnc3
 {
 public:
@@ -254,7 +254,7 @@ Avalie se as árvores abaixo são árvores binárias de busca:
 
 Implementação da busca em árvores binárias de busca:
 
-```{.cpp}
+```.cpp
 std::optional<char> buscaABB(auto* no, char c) {
    if(!no)
       return std::nullopt;          // chave não encontrada

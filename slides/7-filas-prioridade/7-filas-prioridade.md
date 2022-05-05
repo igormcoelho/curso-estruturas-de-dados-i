@@ -86,7 +86,7 @@ A implementação do TAD Fila de Prioridade geralmente se dá através de uma im
 
 O *conceito* de fila de prioridade somente requer suas três operações básicas. Como consideramos uma *fila de prioridade genérica* (fila de inteiro, char, etc), definimos um *conceito genérico* chamado `FilaPrioridadeTAD`:
 
-```{.cpp}
+```.cpp
 template<typename Agregado, typename Tipo>
 concept bool
 FilaPrioridadeTAD = requires(Agregado a, Tipo t)
@@ -107,7 +107,7 @@ Note que o tipo genérico pode ser estendido para comportar um elemento interno,
 
 Antes de completar as funções, utilizaremos o `FilaPrioridadeTAD`:
 
-```{.cpp}
+```.cpp
 int main () {
    FilaPrioridadeTAD h = // ... inicializa tipo
    // h.cria();
@@ -254,7 +254,7 @@ Revisão 26/08/2021
 
 Consideraremos uma fila sequencial com, no máximo, `MAXN` elementos do tipo caractere.
 
-```{.cpp}
+```.cpp
 constexpr int MAX_N = 50; // capacidade máxima da fila
 class Heap1
 {
@@ -277,7 +277,7 @@ static_assert(FilaPrioridadeTAD<Heap1, int>);
 
 A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 void cria() {
@@ -302,7 +302,7 @@ A operação `frente` retorna a raiz do heap, ou seja, o primeiro elemento. Este
 
 ::::: {.column width=50%}
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 int frente() {
@@ -338,7 +338,7 @@ Métodos auxiliares `pai` e `filho`.
 
 ::::: {.column width=50%}
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 int pai(int pos) {
@@ -385,7 +385,7 @@ A operação `sobe` compara sistematicamente um nó com seu pai, efetuando troca
 
 ::::: {.column width=50%}
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 void sobe(int pos) {
@@ -433,7 +433,7 @@ O método `insere` coloca o novo elemento no final do heap e invoca a operação
 
 ::::: {.column width=50%}
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 void insere(int pos) {
@@ -474,7 +474,7 @@ A operação `desce` compara um nó com seus filhos, trocando enquanto a priorid
 
 ::::: {.column width=50%}
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 void desce(int pos) {
@@ -523,7 +523,7 @@ O método `remove` troca o primeiro com último elemento e invoca a operação `
 
 ::::: {.column width=50%}
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 int remove() {
@@ -585,7 +585,7 @@ nós: | 0 | 1 | 2 | 3 | 4 | ... ->
 
 ## Método Heapify com *sobe*
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 void constroi_sobe(int v[], int N) {
@@ -615,7 +615,7 @@ nós: | 0 | 1 | ... <- | 10 | 11 | 12 | 13 | 14 | ...
 
 ## Método Heapify com *desce*
 
-```{.cpp}
+```.cpp
 class Heap1 {
 ...
 void constroi_desce(int v[], int N) {
