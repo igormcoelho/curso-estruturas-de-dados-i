@@ -422,7 +422,7 @@ Apresente o percurso de pré-ordem para as árvores abaixo:
 
 -------
 
-## Percurso Pré-ordem
+## Percurso Pós-ordem
 
 ```.cpp
 void posordem(auto* no) {
