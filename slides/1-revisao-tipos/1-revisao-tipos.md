@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Revisão de Tipos e Módulos
-date: 13/09/2020
+date: 13/09/2020 - 03/04/2023
 transition: linear
 fontsize: 10
 header-includes:
@@ -38,7 +38,7 @@ quanto para Windows (com a instalação do compilador MinGW).
 
 Também é possível praticar diretamente em um navegador web com
 plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler). Neste caso,
- o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrão C++17).
+ o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrão C++20).
 
 
 # Tipos em C/C++
@@ -69,6 +69,7 @@ float z = 3.7 ; // armazena o real 3.7 na variável z
 
 ------
 
+
 ## Tipos de Variáveis
 
 **Pergunta/Resposta**: Cuidado com tipos. Quais são os valores armazenados nas variáveis abaixo (C++)?
@@ -88,9 +89,53 @@ Verifiquem essas operações de variáveis, escrevendo na saída padrão (tela d
 
 -------
 
+## Conceitos de C/C++ (tipos definidos)
+
+Tipos primitivos em C/C++ tem um tamanho definido, 
+então é uma boa prática utilizar tamanhos fixos.
+
+Dê preferência a inicialização direta com chaves `{ }`,
+ao invés de indireta por atribuição (`operator=`).
+
+```.cpp
+    int64_t x2  {20};  // long (ou long long)
+    int32_t x1  {10};  // int
+    int16_t x3  {30};  // short
+    int8_t  x4  {40};  // signed char
+    uint8_t x5  {50};  // unsigned char
+    std::byte b {60};  // unsigned char
+```
+
+
+------
+
+
 ## Impressão de Saída Padrão
 
-Para imprimir na saída padrão utilizaremos o comando printf. Este
+Para imprimir na saída padrão utilizaremos o comando `print`. 
+Em C, tipicamente é utilizado o comando `printf`, mas devido a
+inúmeras falhas de segurança, é recomendado o uso de uma alternativa mais segura.
+
+O C++20 traz o header `<format>`, que é suficiente para implementar o `print`, 
+mas somente o C++23 traz o header `<print>` com método oficial `std::print`.
+Então utilizaremos o comando `fmt::print`, da biblioteca `<fmt/core.h>`,
+ao invés do `std::print`, ainda indisponível no C++20.
+
+```.cpp
+#include <fmt/core.h>
+using fmt::print;
+
+int main() {
+   print("olá mundo!\n");
+   return 0;
+}
+```
+
+------
+
+## Impressão de Saída Padrão
+
+Para imprimir na saída padrão utilizaremos o comando `fmt::print`. Este
 comando é dividido em duas partes, sendo que na primeira colocamos
 a mensagem formatada e, a seguir, colocamos as variáveis cujo
 conteúdo será impresso.
@@ -100,15 +145,16 @@ cadeia de caracteres ou string) com o conteúdo de variáveis?
 
 . . .
 
-**Resposta:** através dos padrões de formatação (%d, %f, %c, ...).
+**Resposta:** através do padrão de substituição `{}`.
 
 ```.cpp
-int x1 = 7;   printf("x1 é %d", x1); // x1 é 7
-float x6 = x1 / 2.0;
-printf("metade de %d é %f", x1, x6); // metade de 7 é 3.5
-char b = 'L';
-printf("isto é uma %cetra", b) ; // isto é uma Letra
-printf("Olá mundo! \n"); // Olá mundo! (quebra de linha)
+  int32_t x1 = 7;
+  print("x1 é {}", x1);  // x1 é 7
+  float x6 = x1 / 2.0;
+  print("metade de {} é {}", x1, x6);  // metade de 7 é 3.5
+  char b = 'L';
+  print("isto é uma {}etra", b);  // isto é uma Letra
+  print("Olá mundo! \n");  // Olá mundo! (quebra de linha)
 ```
 
 --------
@@ -119,10 +165,10 @@ Condicionais podem ser feitos através dos comandos if ou if else.
 
 ```.cpp
 int x = 12;
-if ( x > 10)
-   printf("x maior de 10\n");
+if (x > 10)
+   print("x maior de 10\n");
 else
-   printf("x menor ou igual a 10\n")
+   print("x menor ou igual a 10\n")
 ```
 
 Laços de repetição podem ser feitos através de comandos while ou
@@ -135,8 +181,8 @@ de continuação e incremento.
 ::::: {.column width=55%}
 
 ```.cpp
-for (int i=0; i < 10 ; i++) {
-   printf("i : %d\n" , i);
+for (auto i=0; i < 10 ; i++) {
+   print("i : {}\n" , i);
 }
 ```
 
@@ -145,9 +191,9 @@ for (int i=0; i < 10 ; i++) {
 ::::: {.column width=45%}
 
 ```.cpp
-int j=0;
+auto j=0;
 while (j < 10) {
-   printf("j : %d\n", j);
+   print("j : {}\n", j);
    j++;
 }
 ```
@@ -170,9 +216,9 @@ Os tipos compostos podem ser vetores (arrays) ou agregados (structs, ...).
 . . .
 
 ```.cpp
-int v[8];  // cria um vetor com 8 inteiros
-v[0] = 3; // atribui o valor 3 à primeira posição
-v[7] = 5; // atribui o valor 5 à última posição
+int32_t v[8]; // cria um vetor com 8 inteiros
+v[0] = 3;     // atribui o valor 3 à primeira posição
+v[7] = 5;     // atribui o valor 5 à última posição
 ```
 
 ```
@@ -194,7 +240,7 @@ Comparação C/C++:
 // Em C (tipo agregado P)
 struct P
 {
-    int x;
+    int32_t x;
     char y;
 };
 
@@ -213,7 +259,7 @@ struct P p2 = {.x=10, .y='Y'};
 class P
 {
 public:
-    int x;
+    int32_t x;
     char y;
 };
 // declara variável tipo P
@@ -239,11 +285,11 @@ o operador ponto (.) para acessar campos do agregado.
 Exemplo:
 
 ```.cpp
-auto p1 = P{.y = 'A'}; // compilador GCC8 (no mínimo)
+auto p1 = P{.y = 'A'};
 
 p1.x = 20;             // atribui 20 à variável x de p1
 p1.x = p1.x + 1;       // incrementa a variável x de p1
-printf("%d %c\n", p1.x, p1.y);  // imprime '21 A'
+print("{} {}\n", p1.x, p1.y);  // imprime '21 A'
 ```
 
 ```
@@ -263,9 +309,9 @@ No caso de vetores, o espaço ocupado na memória é multiplicado pelo
 número de elementos. Vamos calcular o espaço das variáveis:
 
 ```.cpp
-int v [256];   // = 1024 bytes = 1 kibibyte = 1 KiB
-char x [1000]; // = 1000 bytes = 1 kilobyte = 1 kB
-float y [5];   // = 20 bytes
+int32_t v[256]; // = 1024 bytes = 1 kibibyte = 1 KiB
+char x[1000];   // = 1000 bytes = 1 kilobyte = 1 kB
+float y[5];     // = 20 bytes
 ```
 
 Já nos agregados, assumimos o espaço ocupado como a
@@ -327,8 +373,8 @@ a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é r
 
 ```.cpp
 void imprime (int a , int b) {
-   for (int i=a ; i<b ; i++)
-      printf("%d\n" , i ) ;
+   for (auto i=a ; i<b ; i++)
+      print("{}\n", i) ;
 }
 ```
 
@@ -370,18 +416,17 @@ Em ponteiros para agregados, o operador de acesso (.) é substituído por uma se
 
 ```.cpp
 struct P {
-   int x;
+   int32_t x;
    char y;
 };
 
 void imprimir(struct P* p1, struct P p2) {
-   printf("%d %d\n", p1->x, p2.x);
+   print("{} {}\n", p1->x, p2.x);
 }
 // ...
 struct P p0 = {.x = 20, .y = 'Y'}; // cria variável 'p0'
 imprimir(&p0, p0); // resulta em '20 20'
 ```
-
 -------
 
 ## Alocação Dinâmica de Memória
@@ -401,7 +446,7 @@ struct P* vp =
 vp->x = 10;
 vp->y = 'Y';
 // imprime x (valor 10)
-printf("%d\n", vp->x);
+print("{}\n", vp->x);
 // descarta a memória
 free(vp);
 ```
@@ -417,7 +462,7 @@ auto* vp = new P{
                   .y = 'Y'
                 };
 // imprime x (valor 10)
-printf("%d\n", vp->x);
+print("{}\n", vp->x);
 // descarta a memória
 delete vp;
 ```
@@ -447,7 +492,7 @@ Este fato pode ser útil para receber funções como parâmetro, bem como armaze
 int(*quad)(int) = [](int p) {
                                return p*p;
                             };
-printf("%d\n", quad(3)); // 9
+print("{}\n", quad(3)); // 9
 ```
 
 
@@ -473,7 +518,7 @@ struct Z {
 // imprime campo x
 void imprimex(struct Z* this)
 {
-   printf("%d\n", this->x);
+   print("{}\n", this->x);
 }
 ```
 
@@ -489,7 +534,7 @@ public:
    int x;
    // imprime campo x
    void imprimex() {
-      printf("%d\n", this->x);
+      print("{}\n", this->x);
    }
 };
 ```
@@ -498,21 +543,64 @@ public:
 
 :::::::::::::
 
+-------
+
+## Ponteiros III
+
+Ponteiros são estruturas reconhecidamente problemáticas, portanto desde a revisão C++11 é recomendado que se use *ponteiros inteligentes* (ou *smart pointers*) ao invés de ponteiros nativos.
+Existem dois tipos de smart pointers: `unique_ptr` e `shared_ptr`.
+Ambos evitam que o usuário precise de desalocar memória (*com exceção de estruturas cíclicas, a serem abordadas no futuro*).
+Para utilizá-los, basta incluir o cabeçalho `<memory>`, e substituir o `new` por `std::make_unique` ou `std::make_shared`.
+
+
+::::::::::::: {.columns}
+
+::::: {.column width=55%}
+
+```{.c}
+// Aloca (C++) o agregado P
+auto* vp = new P{
+                  .x = 10,
+                  .y = 'Y'
+                };
+// imprime x (valor 10)
+print("{}\n", vp->x);
+// descarta a memória
+delete vp;
+```
+
+:::::
+
+::::: {.column width=45%}
+
+```.cpp
+// Aloca (C++) o agregado P
+auto vp = 
+   std::make_unique<P>(
+     P{.x = 10, .y = 'Y'});
+// imprime x (valor 10)
+print("{}\n", vp->x);
+// descarta a memória
+// delete vp;
+```
+
+:::::
+
+:::::::::::::
+
+
 --------
 
 ## Conceitos I
 
-C++17 com flag GCC *-fconcepts* (oficialmente sem flags no C++20) traz a possibilidade de definir conceitos (ou *concepts*). Esse recurso permite *definições genéricas* sobre algum tipo (inclusive tipos agregados com funções internas).
+C++20 traz a possibilidade de definir conceitos (ou *concepts*). Esse recurso permite *definições genéricas* sobre algum tipo (inclusive tipos agregados com funções internas).
 
 Por exemplo, podemos criar um *conceito* `TemImprimeX`, que exige que o agregado possua um método `imprimex()`:
 
 ```.cpp
-template<typename Agregado>
-concept bool
-TemImprimeX = requires(Agregado a) {
-   {
-      a.imprimex()
-   }
+template <typename Agregado>
+concept TemImprimeX = requires(Agregado a) {
+  { a.imprimex() };
 };
 ```
 
@@ -523,12 +611,80 @@ TemImprimeX = requires(Agregado a) {
 Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:
 
 ```.cpp
-auto        a1 = Z{.x = 1}; // tipo automático
-TemImprimeX a2 = Z{.x = 2}; // tipo conceitual
-Z           a3 = Z{.x = 3}; // tipo explícito 
+auto a1             = Z{.x = 1};  // tipo automático
+TemImprimeX auto a2 = Z{.x = 2};  // tipo conceitual
+Z a3                = Z{.x = 3};  // tipo explícito
 ```
 
 **Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
+
+-------
+
+## Passagem de Parâmetros por Referência I
+
+Em C, só é possível passar variáveis por cópia, 
+o que demanda uso de ponteiros para evitar cópias volumosas e desnecessárias.
+
+Em C++, existem os conceitos de *referência de lado esquerdo* `(&)` e *referência de lado direito* `(&&)`. Em resumo, utilizamos um `tipo&` para denotar uma *referência a um dado vivo*, e `tipo&&` para uma *referência a um dado prestes a morrer* (ou *dado em movimento*).
+Esse conceito é fundamental para lidar com `unique_ptr`, pois eles não permitem cópias, sendo obrigatoriamente passados por referência.
+
+Para transformar uma *variável viva* para uma *variável em movimento*, basta usar o comando `std::move`.
+
+```.cpp
+auto p1 = std::make_unique<P>(P{.x = 10, .y = 'Y'});
+print("{}\n", p1->x); // imprime x (valor 10)
+auto p2 = std::move(p1);
+if(!p1) print("p1 não existe mais!\n");
+print("{}\n", p2->x); // imprime x (valor 10)
+```
+
+
+-------
+
+## Passagem de Parâmetros por Referência II
+
+
+::::::::::::: {.columns}
+
+::::: {.column width=55%}
+
+```{.cpp}
+// C++
+void imprimex(P* vp) {
+  // imprime x (valor 10)
+  print("{}\n", vp->x);
+}
+// ...
+auto p = P{
+         .x = 10,
+         .y = 'Y'
+         };
+// cópia de ponteiro
+imprimex(&p);
+```
+
+:::::
+
+::::: {.column width=45%}
+
+```.cpp
+// C++
+void imprimex(P& vp) {
+  // imprime x (valor 10)
+  print("{}\n", vp.x);
+}
+// ...
+auto p = P{
+         .x = 10,
+         .y = 'Y'
+         };
+// referência (lvalue)
+imprimex(p);
+```
+
+:::::
+
+:::::::::::::
 
 -------
 
@@ -537,7 +693,7 @@ Z           a3 = Z{.x = 3}; // tipo explícito
 Fim do tópicos de tipos.
 
 
-# Modularização e Testes
+# Modularização e Testes (a revisar!!)
 
 -------
 
