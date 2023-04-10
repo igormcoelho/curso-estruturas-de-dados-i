@@ -339,6 +339,18 @@ public:
 G<float> g1 = {.x = 3.14, .y  = 'Y'};
 G<int>   g2 = {.x = 3,    .y  = 'Y'};
 ```
+-------
+
+## Resumo até agora
+
+Até agora, verificamos as seguinte estruturas:
+
+- tipos primitivos (C)
+- tipo automático com **auto** (C)
+- estruturas condicionais e laços de repetição (C)
+- vetores (C)
+- tipos agregados com **struct** ou **class** (C/C++)
+- agregados genéricos (C++)
 
 
 -------
@@ -686,12 +698,253 @@ imprimex(p);
 
 :::::::::::::
 
+
 -------
 
-## Tipos
+## Passagem de Parâmetros por Referência III
 
-Fim do tópicos de tipos.
+Referências de lado esquerdo (*lvalue*) complementam
+referências de lado direito (*rvalue*). Observe:
 
+::::::::::::: {.columns}
+
+::::: {.column width=55%}
+
+```{.cpp}
+void teste1(int x) { 
+   x = 10; 
+}
+void teste2(int* x) { 
+   *x = 10; 
+}
+void teste3(int& x) { 
+   x = 10; 
+}
+void teste4(int&& x) { 
+   x = 10; 
+}
+```
+
+:::::
+
+::::: {.column width=45%}
+
+```.cpp
+int a = 20;
+teste1(a);     // a == 20
+teste2(&a);    // a <- 10
+teste3(a);     // a <- 10
+// teste4(a);  // ERRO
+teste4(std::move(a)); // OK
+// supostamente a <- 10
+
+teste1(20);     // OK
+// teste2(20);  // ERRO
+// teste3(20);  // ERRO
+teste4(20);     // OK
+```
+
+:::::
+
+:::::::::::::
+
+**Observação:** existe também a sintaxe `const tipo&` que permite *lifetime extension*,
+algo que não exploraremos nessa breve revisão.
+
+
+# Uso da biblioteca padrão
+
+
+## O que é biblioteca padrão?
+
+A biblioteca padrão da linguagem tem componentes já testados e de uso comum, 
+resolvendo diversos problemas básicos de programação.
+C++ possui implementações bastante importantes em sua biblioteca padrão, chamada STL.
+Atualmente, é necessário utilizar `#include<...>` para incluir esses componentes, 
+mas em um futuro próximo (C++23) será possível através de `import std`, 
+utilizando a estrutura moderna dos CXX Modules.
+
+Já vimos indiretamente o uso de algumas dessas estruturas no curso, 
+como: tuplas em `std::make_tuple`; ponteiros inteligentes em `std::make_unique` ou `std::make_shared`; entre outras coisas.
+Geralmente, propostas são feitas pela comunidade, e boas implementações são incorporadas à biblioteca padrão, em revisões futuras da linguagem.
+
+Veremos rapidamente exemplos de estruturas muito fundamentais como: `std::string`, `std::array` e `std::vector`.
+
+-------
+
+## Tipo `std::string`
+
+O tipo `std::string` representa cadeias de caracteres, chamadas de *strings*.
+Ela substitui a necessidade de `char*`, `char[]` ou `const char*` em C.
+Para utilizar, basta fazer `#include <string>`. Exemplo:
+
+```.cpp
+std::string s1 = "abcd";
+std::string s2 = "ef";
+print("tamanho1={} tamanho2={}\n", s1.length(), s2.length());
+// tamanho1=4 tamanho2=2
+s1 = s1 + s2;
+print("s1={} s2={}\n", s1, s2);
+// s1=abcdef s2=ef
+const char* cs = s1.c_str();
+print("s1={} cs={}\n", s1, cs);
+// s1=abcdef cs=abcdef
+```
+
+-------
+
+## Tipo `std::array`
+
+Assim como vetores nativos, exemplo `int[]`, 
+o agregado `std::array<tipo, tamanho>` permite representar vetores
+de tamanho fixo.
+Para utilizar, basta fazer `#include <array>`. Exemplo:
+
+```.cpp
+int v1[10];
+int v2[] = {1, 2, 3, 4};
+std::array<int, 10> a1{};
+std::array<int, 4> a2 = {1, 2, 3, 4};
+print("v[0]={} v[3]={} tam={}\n", v2[0], v2[3],
+      sizeof(v2) / sizeof(v2[0]));
+// v[0]=1 v[3]=4 tam=4
+print("a[0]={} a[3]={} tam={}\n", a2[0], a2[3], a2.size());
+// a[0]=1 a[3]=4 tam=4
+print("{} {} {}\n", std::is_aggregate<int*>::value,
+      std::is_aggregate<int[]>::value,
+      std::is_aggregate<std::array<int, 4>>::value);
+// false true true
+```
+
+-------
+
+## Tipo `std::vector`
+
+A popular estrutura `std::vector<tipo>` permite representar vetores
+com tamanho variável (através do método `push_back`).
+Para utilizar, basta fazer `#include <vector>`. Exemplo:
+
+```.cpp
+int v1[10];
+int v2[] = {1, 2, 3, 4};
+std::vector<int> k1{};
+std::vector<int> k2 = {1, 2, 3, 4};
+k2.push_back(999);
+//
+print("v[0]={} v[3]={} tam={}\n", v2[0], v2[3], 
+      sizeof(v2) / sizeof(v2[0]));
+// v[0]=1 v[3]=4 tam=4
+print("k[0]={} k[4]={} tam={}\n", k2[0], k2[4], k2.size());
+// k[0]=1 k[4]=999 tam=5
+print("{}\n", std::is_aggregate<std::vector<int>>::value);
+// false
+```
+
+
+-------
+
+## Tipo `std::unique_ptr`
+
+O `std::unique_ptr<tipo>` representa um ponteiro único para o `tipo` 
+(como se fosse `tipo*`).
+Uma função útil é o `get`, que retorna um ponteiro nativo C para o dado.
+A função `reset` apaga o ponteiro manualmente.
+Para utilizar, basta fazer `#include <memory>`. Exemplo:
+
+```.cpp
+auto* p1 = new int{10};
+auto* p2 = p1;
+print("*p1={} *p2={}\n", *p1, *p2);
+// *p1=10 *p2=10
+delete p1;
+
+auto u1 = std::make_unique<int>(10);
+auto u2 = std::move(u1);
+auto* p3 = u2.get();
+print("*u2={} *p3={}\n", *u2, *p3);
+// *u2=10 *p3=10
+u2.reset(); // apaga ponteiro u2 manualmente
+```
+
+# Bibliotecas experimentais
+
+## Proposta para um `std::scan`
+
+Assim como o `std::print` (atualmente da `fmt`), existem
+propostas para um `std::scan`, atualmente no projeto [`scnlib`](https://github.com/eliaskosunen/scnlib) de `eliaskosunen`.
+
+A proposta experimental para o C++26 se chama P1729 "Text Parsing", e busca criar uma função `scn::scan`
+que substitua a `scanf` (pelo mesmo raciocínio empregado na abolição do `printf`). Exemplo:
+
+```.cpp
+#include <scn/scn.h>
+// lembre-se de incluir o pacote eliaskosunen/scnlib no CMake
+using scn::scan;
+// ...
+int x = 0;
+int y = 0;
+auto resto = scan("10 20", "{}", x);
+scan(resto, "{}", y);
+print("x={} y={}", x, y);
+// x=10 y=20
+```
+
+
+-------
+
+## Ponteiro `cycles::relation_ptr`
+
+Uma proposta de ponteiro inteligente para resolver casos cíclicos foi 
+criado pelo prof. Igor Machado Coelho, chamado [`cycles::relation_ptr`](https://github.com/igormcoelho/cycles).
+Este é um projeto interessante para compreender as
+limitações dos ponteiros inteligentes atuais, e o que pode ser possivelmente
+melhorado em um C++ futuro. Exemplo:
+
+Para utilizar, basta fazer `#include <cycles/relation_ptr>`. Exemplo:
+
+```.cpp
+using cycles::relation_pool;
+using cycles::relation_ptr;
+// veja instruções em: https://github.com/igormcoelho/cycles
+relation_pool<> grupo;
+auto r1 = grupo.make<int>(10);
+auto r2 = std::move(r1);
+print("*r2={}\n",*r2);
+// *r2=10
+r2.reset(); // apaga ponteiro r2 manualmente
+```
+
+# C ou C++?
+
+## Discussão Rápida: C ou C++?
+
+Citamos o comitê diretor do C++, ["DIRECTION FOR ISO C++" (2022-10-15), de H. Hinnant, R. Orr, B. Stroustrup, D. Vandevoorde, M. Wong (página 10)](https://open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2000r4.pdf): 
+
+*C++ is seriously underrepresented in academia and often very poorly taught. It has been conventional to start teaching C++ by first introducing the lowest level and most error-prone facilities. Naturally, that discourages students and increases the time needed to get to what students consider meaningful computing (graphics, networking, mathematics, data analysis, etc.). Often, teachers even go to the extreme of insisting on using a C compiler. If the ultimate aim is to teach C++, that’s like insisting people start learning English by reading Beowulf or the Canterbury Tales in their original early-English language versions. Those are great books, but Early English is incomprehensible to most native Modern-English speakers.*
+
+## Discussão Rápida: C ou C++? (continuação)
+
+Citamos o comitê diretor do C++, ["DIRECTION FOR ISO C++" (2022-10-15), de H. Hinnant, R. Orr, B. Stroustrup, D. Vandevoorde, M. Wong (página 10)](https://open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2000r4.pdf): 
+
+*In addition to the linguistic difficulties, such ancient sources present cultural conventions and idioms that seem very peculiar today. Instead of C, someone could teach Simula to prepare for learning C++. Why don’t people do that? Because the historical approach to teaching language (natural or programming language) complicates and detracts from the end goal: good code.*
+
+*Why then do teachers use the C-first approach to teach C++? Part is tradition, curriculum inertia, and ignorance, but part of the reason is that C++ doesn’t offer a smooth path to idiomatic, proper, modern use of C++. It is hard to bypass both the traps of low-level constructs and the complexities of advanced features and teach programming and proper C++ usage from the start.*
+
+-------
+
+## Discussão Rápida: C ou C++? (resumo)
+
+Em resumo: C++ moderno já é absolutamente superior a C em segurança e clareza, com desempenho equivalente, mas historicamente carece de boas estruturas para fazer o **básico** (como imprimir em tela, fazer vetores, etc), obrigando o uso de estruturas inseguras, como ponteiros.
+Então, as revisões recentes tem buscado esse fim, de facilitar o uso básico (como `std::print`, `std::array`, `std::string`, `std::vector`, smart pointers, ...) e evitar que a linguagem C seja necessária para a escrita de programas básicos.
+
+Hoje (2023) ainda existem problemas, como:
+
+- necessidade de usar bibliotecas externas (estamos precisando do `fmt::print` e `scn::scan`)
+- necessidade de fazer `#include` em um código básico: a ideia é que, a partir da implementação de `import std` no C++23, será desnecessário incluir bibliotecas externas em códigos básicos `:)`
+
+Muitos serão resolvidos na próxima edição do C++ (mas ainda faltará o `scn::scan`), sempre de olho em bons concorrentes modernos como Rust.
+
+-------
 
 # Modularização e Testes (a revisar!!)
 
