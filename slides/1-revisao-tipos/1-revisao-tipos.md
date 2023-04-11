@@ -157,6 +157,8 @@ cadeia de caracteres ou string) com o conteúdo de variáveis?
   print("Olá mundo! \n");  // Olá mundo! (quebra de linha)
 ```
 
+
+
 --------
 
 ## Condicionais e Laços de Repetição
@@ -339,6 +341,33 @@ public:
 G<float> g1 = {.x = 3.14, .y  = 'Y'};
 G<int>   g2 = {.x = 3,    .y  = 'Y'};
 ```
+-------
+
+## Valores constantes e casts
+
+Em C/C+, podemos definir um valor como constante, 
+através da palavra `const`.
+Uma mudança de tipos pode ser feita com *type cast*.
+Em C++, utilize `static_cast<tipo>` ao invés do padrão C de cast.
+
+```.cpp
+unsigned int x = 10;
+int y1 = (int) x;             // em C
+int y2 = int(x);              // em C
+int y3 = static_cast<int>(x); // em C++
+const unsigned int z1 = x;    // OK
+// unsigned int z2 = z1;      // ERRO
+```
+O `const` pode ser removido em algumas circustâncias através de um `const_cast`.
+Em C++, existe também o `constexpr`, que diferentemente do `const`,
+nunca pode ser removido, pois é de tempo de compilação.
+Em C, algo similar é possível com macros, mas permite reescrita, sendo inseguro.
+
+```.cpp
+#define k1 10          // C (inseguro e permite redefinição)
+constexpr int k2 = 10; // C++ (seguro, impossível redefinir)
+```
+
 -------
 
 ## Resumo até agora
@@ -601,6 +630,57 @@ print("{}\n", vp->x);
 :::::::::::::
 
 
+-------
+
+## Ponteiros IV
+
+Ponteiros podem ser utilizados como marcadores de um espaço de memória inválido, 
+geralmente chamado de *nulo*. 
+Em C, a macro `NULL` é geralmente definida como zero, 
+sendo então uma melhor prática usar o número zero diretamente ao invés de `NULL`.
+O condicional pode ser usado para verificar um ponteiro como booleano,
+que é a opção mais segura.
+Em C++, existe o `std::nullptr`, que pode ser utilizado em situações específicas
+ (geralmente *smart pointers*), mas geralmente evite `NULL` e `std::nullptr`.
+
+
+::::::::::::: {.columns}
+
+::::: {.column width=55%}
+
+```{.cpp}
+// Aloca (C++) o agregado P
+auto* vp = new P{
+                  .x = 10,
+                  .y = 'Y'
+                };
+if(vp)  print("sucesso!\n");
+if(!vp)      print("falha!\n");
+if(vp==NULL) print("falha!\n");
+if(vp==0)    print("falha!\n");
+```
+
+:::::
+
+::::: {.column width=45%}
+
+```.cpp
+// Aloca (C++) o agregado P
+auto vp = 
+   std::make_unique<P>(
+     P{.x = 10, .y = 'Y'});
+if(vp)  print("sucesso!\n");
+if(!vp) print("falha!\n");
+
+// reseta manualmente
+vp = std::nullptr;
+```
+
+:::::
+
+:::::::::::::
+
+
 --------
 
 ## Conceitos I
@@ -843,6 +923,30 @@ print("{}\n", std::is_aggregate<std::vector<int>>::value);
 
 -------
 
+## Tipo `std::optional`
+
+O `std::optional<tipo>` representa um valor opcional, 
+com alocação em *stack*, não em *heap* como smart pointers.
+Para utilizar, basta fazer `#include <optional>`. Exemplo:
+
+```.cpp
+std::optional<int> busca(char c, const std::vector<char>& v) {
+  // busca char 'c' num vetor v e retorna posição
+  for(int i=0; i<static_cast<int>(v.size()); i++)
+     if(v[i] == c)
+        return i; // encontrou
+  // não encontrou
+  return std::nullopt;
+}
+// ...
+std::vector<char> v = {'a', 'b', 'c'};
+auto op = busca('x', v);
+if(op) print("posicao={}", *op);
+else   print("não encontrou");
+```
+
+-------
+
 ## Tipo `std::unique_ptr`
 
 O `std::unique_ptr<tipo>` representa um ponteiro único para o `tipo` 
@@ -864,6 +968,29 @@ auto* p3 = u2.get();
 print("*u2={} *p3={}\n", *u2, *p3);
 // *u2=10 *p3=10
 u2.reset(); // apaga ponteiro u2 manualmente
+```
+
+-------
+
+## Tipo `std::shared_ptr`
+
+O `std::shared_ptr<tipo>` representa um ponteiro único para o `tipo` 
+(como se fosse `tipo*`).
+Uma função útil é o `get`, que retorna um ponteiro nativo C para o dado.
+A função `reset` apaga o ponteiro manualmente. 
+O shared permite cópias e compartilhamento, através de *reference counting*.
+Tome cuidado com ciclos, pois podem acarretar vazamento de memória!
+Para isso, utilize `std::weak_ptr` ou `cycles::relation_ptr` (a seguir).
+Para utilizar, basta fazer `#include <memory>`. Exemplo:
+
+```.cpp
+auto s1 = std::make_shared<int>(10);
+auto s2 = s1;
+std::weak_ptr<int> w1 = s1;
+auto s3 = w1.lock();
+print("*s1={} *s2={} *s3={}\n", *s1, *s2, *s3);
+// *s1=10 *s2=10 *s3=10
+s1.reset(); // apaga ponteiro s1 manualmente
 ```
 
 # Bibliotecas experimentais
