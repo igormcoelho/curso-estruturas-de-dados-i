@@ -974,7 +974,7 @@ u2.reset(); // apaga ponteiro u2 manualmente
 
 ## Tipo `std::shared_ptr`
 
-O `std::shared_ptr<tipo>` representa um ponteiro único para o `tipo` 
+O `std::shared_ptr<tipo>` representa um ponteiro compartilhado para o `tipo` 
 (como se fosse `tipo*`).
 Uma função útil é o `get`, que retorna um ponteiro nativo C para o dado.
 A função `reset` apaga o ponteiro manualmente. 
@@ -991,6 +991,7 @@ auto s3 = w1.lock();
 print("*s1={} *s2={} *s3={}\n", *s1, *s2, *s3);
 // *s1=10 *s2=10 *s3=10
 s1.reset(); // apaga ponteiro s1 manualmente
+print("*s2={} *s3={} ainda existem!\n", *s2, *s3);
 ```
 
 # Bibliotecas experimentais

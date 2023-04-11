@@ -1213,13 +1213,14 @@ utilizar, basta fazer <code>#include &lt;memory&gt;</code>. Exemplo:</p>
 <section id="tipo-stdshared_ptr" class="slide level2">
 <h2>Tipo <code>std::shared_ptr</code></h2>
 <p>O <code>std::shared_ptr&lt;tipo&gt;</code> representa um ponteiro
-único para o <code>tipo</code> (como se fosse <code>tipo*</code>). Uma
-função útil é o <code>get</code>, que retorna um ponteiro nativo C para
-o dado. A função <code>reset</code> apaga o ponteiro manualmente. O
-shared permite cópias e compartilhamento, através de <em>reference
-counting</em>. Tome cuidado com ciclos, pois podem acarretar vazamento
-de memória! Para isso, utilize <code>std::weak_ptr</code> ou
-<code>cycles::relation_ptr</code> (a seguir). Para utilizar, basta fazer
+compartilhado para o <code>tipo</code> (como se fosse
+<code>tipo*</code>). Uma função útil é o <code>get</code>, que retorna
+um ponteiro nativo C para o dado. A função <code>reset</code> apaga o
+ponteiro manualmente. O shared permite cópias e compartilhamento,
+através de <em>reference counting</em>. Tome cuidado com ciclos, pois
+podem acarretar vazamento de memória! Para isso, utilize
+<code>std::weak_ptr</code> ou <code>cycles::relation_ptr</code> (a
+seguir). Para utilizar, basta fazer
 <code>#include &lt;memory&gt;</code>. Exemplo:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> s1 <span class="op">=</span> <span class="bu">std::</span>make_shared<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span><span class="dv">10</span><span class="op">);</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> s2 <span class="op">=</span> s1<span class="op">;</span></span>
@@ -1227,7 +1228,8 @@ de memória! Para isso, utilize <code>std::weak_ptr</code> ou
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> s3 <span class="op">=</span> w1<span class="op">.</span>lock<span class="op">();</span></span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;*s1=</span><span class="sc">{}</span><span class="st"> *s2=</span><span class="sc">{}</span><span class="st"> *s3=</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>s1<span class="op">,</span> <span class="op">*</span>s2<span class="op">,</span> <span class="op">*</span>s3<span class="op">);</span></span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">// *s1=10 *s2=10 *s3=10</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>s1<span class="op">.</span>reset<span class="op">();</span> <span class="co">// apaga ponteiro s1 manualmente</span></span></code></pre></div>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>s1<span class="op">.</span>reset<span class="op">();</span> <span class="co">// apaga ponteiro s1 manualmente</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;*s2=</span><span class="sc">{}</span><span class="st"> *s3=</span><span class="sc">{}</span><span class="st"> ainda existem!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>s2<span class="op">,</span> <span class="op">*</span>s3<span class="op">);</span></span></code></pre></div>
 </section></section>
 <section>
 <section id="bibliotecas-experimentais" class="title-slide slide level1">
