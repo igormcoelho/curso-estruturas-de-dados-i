@@ -557,9 +557,6 @@ print("{}\n", quad(3)); // 9
 auto func = [](int p) { return p*p; };
 ```
 
-
-
-
 -------
 
 ## Rotinas IV
@@ -1014,6 +1011,30 @@ print("*s1={} *s2={} *s3={}\n", *s1, *s2, *s3);
 s1.reset(); // apaga ponteiro s1 manualmente
 print("*s2={} *s3={} ainda existem!\n", *s2, *s3);
 ```
+
+-------
+
+## Tipo `std::function`
+
+A estrutura `std::function<tipo>` permite armazenar funções, seja ela uma lambda sem captura (*captureless lambda*) ou uma lambda de captura, também chamada de *closure*.
+Uma *captureless lambda* pode decair para ponteiro de função, enquanto as demais só podem ser encapsuladas como `std::function`.
+Basta fazer `#include <functional>`. Exemplo:
+
+```.cpp
+// captureless lambda
+int(*fquad1)(int) = [](int p) -> int { return p*p; };
+std::function<int(int)> fquad2 = [](int p) { return p*p; };
+// capturando variável x (por cópia)
+int x = 10;
+int y = 20;
+// closure x1 (retorna x + 1)
+std::function<int()> x1 = [x]() { return x+1; };
+// capturando todas variáveis locais com =, y por referência
+std::function<int()> fxy = [=, &y]() { y++; return x+y; };
+int z = fxy(); // z==31  y==21
+```
+
+
 
 # Bibliotecas experimentais
 
