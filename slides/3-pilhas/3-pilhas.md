@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Pilhas
-date: 16/09/2020
+date: 16/09/2020 - 13/04/2023
 transition: cube
 fontsize: 10
 header-includes:
@@ -95,8 +95,7 @@ O *conceito* de pilha somente requer suas três operações básicas. Como consi
 
 ```.cpp
 template<typename Agregado, typename Tipo>
-concept bool
-PilhaTAD = requires(Agregado a, Tipo t)
+concept PilhaTAD = requires(Agregado a, Tipo t)
 {
    // requer operação 'topo'
    { a.topo() };
@@ -104,6 +103,8 @@ PilhaTAD = requires(Agregado a, Tipo t)
    { a.empilha(t) };
    // requer operação 'desempilha'
    { a.desempilha() };
+   // requer operação 'tamanho'
+   { a.tamanho() };
 };
 ```
 
@@ -136,6 +137,7 @@ public:
   char topo () { ... }
   void empilha (char dado){ ... };
   char desempilha () { ... };
+  int tamanho() { ... };
 };
 // verifica se agregado PilhaSeq1 satisfaz conceito PilhaTAD
 static_assert(PilhaTAD<PilhaSeq1, char>);
@@ -157,7 +159,7 @@ int main () {
    printf("%c\n", p.topo());
    printf("%c\n", p.desempilha());
    p.empilha('D');
-   while(p.N > 0)
+   while(p.tamanho() > 0)
       printf("%c\n", p.desempilha());
    p.libera();
    return 0;
@@ -195,13 +197,13 @@ A operação `desempilha` em uma pilha sequencial remove e retorna o último ele
 class PilhaSeq1 {
 ...
 void empilha(char dado) {
-   this->elementos[N] = dado;
+   this->elementos[this->N] = dado;
    this->N++;                 // N = N + 1
 }
 
 char desempilha() {
    this->N--;                 // N = N - 1
-   return elementos[N];
+   return elementos[this->N];
 }
 ...
 }
@@ -216,9 +218,8 @@ A operação de topo em uma pilha sequencial retorna o último elemento empilhad
 ```.cpp
 class PilhaSeq1 {
 ...
-char topo() {
-   return this->elementos[N-1];
-}
+char topo()   { return this->elementos[this->N-1]; }
+int tamanho() { return this->N; }
 ...
 }
 ```
@@ -293,7 +294,7 @@ A desvantagem é depender de implementações ligeiramente mais complexas.
 
 -------
 
-## Implementação
+## Implementação com ponteiros
 
 Consideraremos uma pilha encadeada, utilizando um agregado `NoPilha1` para conectar cada elemento da pilha:
 
@@ -323,8 +324,9 @@ public:
   void cria () { ... }        
   void libera () { ... }     
   char topo () { ... }
-  void empilha (char dado){ ... };
-  char desempilha () { ... };
+  void empilha (char dado){ ... }
+  char desempilha () { ... }
+  int tamanho() { ... }
 };
 // verifica agregado PilhaEnc1
 static_assert(PilhaTAD<PilhaEnc1, char>);
@@ -495,6 +497,133 @@ void libera() {
 ```
 
 --------
+
+## Implementação com ponteiros inteligentes
+
+Para uma implementação mais segura, é possível utilizar *smart pointers*. 
+Em especial, basta utilizar o `std::unique_ptr`.
+Para simplificar a sintaxe, consideramos o seguinte "atalho" para o nome dos ponteiros únicos:
+
+```.cpp
+template<typename T>
+using uptr = std::unique_ptr<T>;
+```
+
+Dessa forma, basta escrever `uptr<int>` para representar um `std::unique_ptr<int>`.
+
+--------
+
+## Implementação com ponteiros inteligentes
+
+Consideraremos uma pilha encadeada, utilizando um agregado `NoPilha2` para conectar cada elemento da pilha:
+
+::::::::::{.columns}
+
+:::::{.column width=33%}
+
+```.cpp
+class NoPilha2
+{
+public:
+  char dado;
+  uptr<NoPilha2> prox;
+};
+```
+
+:::::
+
+:::::{.column  width=67%}
+
+```.cpp
+class PilhaEnc2
+{
+public:
+   uptr<NoPilha2> inicio;
+   int N;                      
+   void cria () { ... }        
+   void libera () { ... }     
+   char topo () { ... }
+   void empilha (char dado){ ... }
+   char desempilha () { ... }
+   int tamanho() { ... }
+};
+// verifica agregado PilhaEnc2
+static_assert(PilhaTAD<PilhaEnc2, char>);
+```
+
+:::::
+
+::::::::::
+
+
+-------
+
+## Implementação: Cria
+
+```.cpp
+class PilhaEnc2 {
+...
+void cria() {
+   this->N = 0;         // zero elementos na pilha
+   // this->inicio = 0; // não é necessário inicializar
+}
+...
+}
+```
+
+---------
+
+## Implementação: Empilha 
+
+```.cpp
+void empilha(char v) {
+  this->inicio = std::make_unique<NoPilha2>(
+    NoPilha2{.dado = v, .prox = std::move(this->inicio)}        
+  );
+  this->N++;              // N = N + 1
+}
+```
+
+---------
+
+## Implementação: Desempilha
+
+
+```.cpp
+char desempilha() {
+   char r = this->inicio->dado;
+   this->inicio = std::move(this->inicio->prox);
+   this->N--;           //N=N-1
+   return r;
+}
+```
+------
+
+## Implementação: Libera (inseguro)
+
+```.cpp
+void libera() {
+   this->inicio.reset();
+   // todo o resto é destruído automaticamente
+   // CUIDADO com estouro de pilha (stack overflow!)
+}
+```
+
+------
+
+## Implementação: Libera (seguro)
+
+```.cpp
+void libera() {
+   // seguro contra stack overflow
+   while (this->tamanho() > 0) {
+      this->inicio = std::move(this->inicio->prox);
+      this->N--; 
+   }
+}
+```
+
+-------
 
 ## Análise Preliminar: Pilha Encadeada
 

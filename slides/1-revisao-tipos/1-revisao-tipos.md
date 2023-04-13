@@ -170,7 +170,7 @@ int x = 12;
 if (x > 10)
    print("x maior de 10\n");
 else
-   print("x menor ou igual a 10\n")
+   print("x menor ou igual a 10\n");
 ```
 
 Laços de repetição podem ser feitos através de comandos while ou
