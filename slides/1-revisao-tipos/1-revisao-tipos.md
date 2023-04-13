@@ -378,7 +378,7 @@ Até agora, verificamos as seguinte estruturas:
 - tipo automático com **auto** (C)
 - estruturas condicionais e laços de repetição (C)
 - vetores (C)
-- tipos agregados com **struct** ou **class** (C/C++)
+- tipos agregados com **struct** ou **class/public:** (C/C++)
 - agregados genéricos (C++)
 
 
