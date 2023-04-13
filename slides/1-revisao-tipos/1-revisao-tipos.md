@@ -553,6 +553,8 @@ int(*quad)(int) = [](int p) -> int {
                      return p*p;
                   };
 print("{}\n", quad(3)); // 9
+// ou, utilizando 'auto' para deduzir o tipo
+auto func = [](int p) { return p*p; };
 ```
 
 

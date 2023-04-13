@@ -884,7 +884,9 @@ armazenar funções anônimas (<em>lambdas</em>):</p>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span><span class="op">(*</span>quad<span class="op">)(</span><span class="dt">int</span><span class="op">)</span> <span class="op">=</span> <span class="op">[](</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">return</span> p<span class="op">*</span>p<span class="op">;</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                  <span class="op">};</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> quad<span class="op">(</span><span class="dv">3</span><span class="op">));</span> <span class="co">// 9</span></span></code></pre></div>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> quad<span class="op">(</span><span class="dv">3</span><span class="op">));</span> <span class="co">// 9</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">// ou, utilizando &#39;auto&#39; para deduzir o tipo</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> func <span class="op">=</span> <span class="op">[](</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> p<span class="op">*</span>p<span class="op">;</span> <span class="op">};</span></span></code></pre></div>
 </section>
 <section id="rotinas-iv" class="slide level2">
 <h2>Rotinas IV</h2>
