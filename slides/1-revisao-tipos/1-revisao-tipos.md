@@ -519,20 +519,39 @@ delete vp;
 
 O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:
 
+::::::::::::: {.columns}
+
+::::: {.column width=55%}
+
 ```.cpp
-// o tipo da função 'quadrado' é: int(*)(int)
+// tipo: int(*)(int)
 int quadrado(int p) {
    return p*p;      
 }
 ```
 
+:::::
+
+::::: {.column width=45%}
+
+```.cpp
+// tipo: float(*)(int)
+auto fquad(int p) -> float{
+   return p*p;      
+}
+```
+
+:::::
+
+:::::::::::::
+
 Este fato pode ser útil para receber funções como parâmetro, bem como armazenar funções anônimas (*lambdas*):
 
 ```.cpp
 // armazena lambda no ponteiro de função 'quad'
-int(*quad)(int) = [](int p) {
-                               return p*p;
-                            };
+int(*quad)(int) = [](int p) -> int {
+                     return p*p;
+                  };
 print("{}\n", quad(3)); // 9
 ```
 
