@@ -130,7 +130,7 @@ static_assert(DicionarioTAD<DicionarioCI, char, int>);
 
 ## Exemplo de Uso com `DicionarioCI`
 
-Adiciona pares chave-valor `('A', 200)` e `('B', 200)`. Depois faz consultas e remove chave `'B'`.
+Adiciona pares chave-valor `('A', 100)` e `('B', 200)`. Depois faz consultas e remove chave `'B'`.
 
 ```.cpp
 int main() {
@@ -222,7 +222,7 @@ public:
 
 ## Problema da Busca com uma ABB
 
-Podemos resolver o *Problema da Busca*, com chave de busca $k$, através de uma ABB.
+Podemos resolver o *Problema da Busca*, com chave de busca $c$, através de uma ABB.
 
 **Ideia Geral**: 
 
