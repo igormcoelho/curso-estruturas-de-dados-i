@@ -232,7 +232,7 @@ v[7] = 5;     // atribui o valor 5 à última posição
 
 ## Tipos Agregados I
 
-Comparação C/C++:
+Comparação C/C++ (lembre-se de usar **struct** ou **class/public:**, caso contrário não será reconhecido como um *tipo agregado*, mas sim um *objeto*, que funciona de forma completamente diferente na linguagem C++):
 
 ::::::::::::: {.columns}
 
