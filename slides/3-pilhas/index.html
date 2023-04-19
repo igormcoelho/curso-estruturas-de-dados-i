@@ -623,11 +623,11 @@ elementos do tipo caractere.</p>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">);</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;C&#39;</span><span class="op">);</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>topo<span class="op">());</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>desempilha<span class="op">());</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>topo<span class="op">());</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>desempilha<span class="op">());</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;D&#39;</span><span class="op">);</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span>p<span class="op">.</span>tamanho<span class="op">()</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>desempilha<span class="op">());</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>desempilha<span class="op">());</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>libera<span class="op">();</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
@@ -1003,25 +1003,26 @@ Pilha. A vantagem é a grande eficiência computacional e amplo conjunto
 de testes, evitando erros de implementação.</p>
 <p>Na STL, basta fazer <code>#include&lt;stack&gt;</code> e usar métodos
 <code>push</code>, <code>pop</code> e <code>top</code>.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp">           </span><span class="co">// inclui printf</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stack&gt;</span><span class="pp">              </span><span class="co">// inclui pilha genérica</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>stack<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> p<span class="op">;</span>       <span class="co">// pilha de char</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>push<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">);</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>push<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>top<span class="op">());</span>  <span class="co">// imprime B</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>pop<span class="op">();</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>top<span class="op">());</span>  <span class="co">// imprime A</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stack&gt;</span><span class="pp">              </span><span class="co">// inclui pilha genérica</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">// #include&lt;fmt/core.h&gt;      // inclui fmt::print</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co">// using fmt::print;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>stack<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> p<span class="op">;</span>       <span class="co">// pilha de char</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>push<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">);</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>push<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// print(&quot;{}\n&quot;, p.top());  // imprime B</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>   <span class="co">// print(&quot;{}\n&quot;, p.top());  // imprime A</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="definindo-um-tad-para-stdstack" class="slide level2">
 <h2>Definindo um TAD para <code>std::stack</code></h2>
 <p><strong><em>Desafio:</em></strong> escreva um <em>conceito</em>
-(utilizando o recurso C++ <code>concept bool</code>) para o
-<code>std::stack</code> da STL, considerando operações
-<code>push</code>, <code>pop</code> e <code>top</code>.</p>
+(utilizando o recurso C++ Concepts) para o <code>std::stack</code> da
+STL, considerando operações <code>push</code>, <code>pop</code> e
+<code>top</code>.</p>
 <p><strong><em>Dica:</em></strong> Utilize o <em>conceito</em>
 <code>PilhaTAD</code> apresentado no curso, e faça os devidos ajustes.
 Verifique se <code>std::stack</code> passa no teste com
@@ -1029,7 +1030,7 @@ Verifique se <code>std::stack</code> passa no teste com
 <p><em>Você pode compilar o código proposto (começando pelo slide
 anterior em um arquivo chamado <code>main_pilha.cpp</code>) através do
 comando:</em></p>
-<p><code>g++ -fconcepts main_pilha.cpp -o appPilha</code></p>
+<p><code>g++ --std=c++20 main_pilha.cpp -o appPilha</code></p>
 </section>
 <section id="fim-implementações" class="slide level2">
 <h2>Fim implementações</h2>

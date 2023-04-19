@@ -6,6 +6,17 @@
 		"dockerfile": "Dockerfile"
 	},
 
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mine.cpplint",
+				"DevonDCarew.bazel-code",
+				"llvm-vs-code-extensions.vscode-clangd",
+				"matepek.vscode-catch2-test-adapter",
+			]
+		}
+	},
+
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 

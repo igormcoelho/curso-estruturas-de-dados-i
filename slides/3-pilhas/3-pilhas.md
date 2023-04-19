@@ -156,11 +156,11 @@ int main () {
    p.empilha('A');
    p.empilha('B');
    p.empilha('C');
-   printf("%c\n", p.topo());
-   printf("%c\n", p.desempilha());
+   print("{}\n", p.topo());
+   print("{}\n", p.desempilha());
    p.empilha('D');
    while(p.tamanho() > 0)
-      printf("%c\n", p.desempilha());
+      print("{}\n", p.desempilha());
    p.libera();
    return 0;
 }
@@ -646,16 +646,17 @@ A vantagem é a grande eficiência computacional e amplo conjunto de testes, evi
 Na STL, basta fazer `#include<stack>` e usar métodos `push`, `pop` e `top`.
 
 ```.cpp
-#include<iostream>           // inclui printf
 #include<stack>              // inclui pilha genérica
+// #include<fmt/core.h>      // inclui fmt::print
+// using fmt::print;
 
 int main() {
    std::stack<char> p;       // pilha de char
    p.push('A');
    p.push('B');
-   printf("%c\n", p.top());  // imprime B
+   // print("{}\n", p.top());  // imprime B
    p.pop();
-   printf("%c\n", p.top());  // imprime A
+   // print("{}\n", p.top());  // imprime A
    return 0;
 }
 ```
@@ -664,13 +665,13 @@ int main() {
 
 ## Definindo um TAD para `std::stack`
 
-***Desafio:*** escreva um *conceito* (utilizando o recurso C++ `concept bool`) para o `std::stack` da STL, considerando operações `push`, `pop` e `top`.
+***Desafio:*** escreva um *conceito* (utilizando o recurso C++ Concepts) para o `std::stack` da STL, considerando operações `push`, `pop` e `top`.
 
 ***Dica:*** Utilize o *conceito* `PilhaTAD` apresentado no curso, e faça os devidos ajustes. Verifique se `std::stack` passa no teste com `static_assert`.
 
-*Você pode compilar o código proposto (começando pelo slide anterior em um arquivo chamado `main_pilha.cpp`) através do comando:*
+*Você pode compilar o código proposto (começando pelo slide anterior em um arquivo chamado `material/3-pilhas/main_pilha_stl.cpp`) através do comando:*
 
-`g++ -fconcepts main_pilha.cpp -o appPilha`
+`g++ --std=c++20 main_pilha_stl.cpp -o appPilha`
 
 -------
 
