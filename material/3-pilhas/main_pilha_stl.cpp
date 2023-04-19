@@ -19,3 +19,10 @@ int main() {
 
   return 0;
 }
+
+// para construir manualmente:
+// g++ --std=c++20 main_pilha_stl.cpp -o appPilhas
+//
+// para construir com cmake:
+// mkdir -p build && cd build && cmake .. && make
+//
