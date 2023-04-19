@@ -1,0 +1,30 @@
+UseColor: true
+
+Checks: >
+    cppcoreguidelines-*,
+    google-*,
+    performance-*,
+    -cppcoreguidelines-avoid-magic-numbers,
+    -cppcoreguidelines-avoid-do-while,
+    -cppcoreguidelines-non-private-member-variables-in-classes,
+    -cppcoreguidelines-pro-type-cstyle-cast,
+    -google-readability-todo,
+    -google-readability-braces-around-statements,
+    -google-readability-casting,
+    -performance-unnecessary-value-param,
+    -clang-diagnostic-builtin-macro-redefined
+#
+HeaderFilterRegex: ".*"
+
+CheckOptions:
+    - key: cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+      value: '1'
+# https://clang.llvm.org/extra/clang-tidy/checks/cppcoreguidelines/special-member-functions.html
+
+FormatStyle: 'file'
+
+WarningsAsErrors: "*"
+
+# ignore protobuf and gRPC generated header (bug in union impl)
+# Code '(?<!' will start a negative look behind expression
+HeaderFilterRegex: 'bftevent.*(?<!\.pb\.h)$'

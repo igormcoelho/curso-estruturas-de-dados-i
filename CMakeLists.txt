@@ -29,6 +29,6 @@ FetchContent_MakeAvailable(fmt)
 FetchContent_Declare(scn GIT_REPOSITORY https://github.com/eliaskosunen/scnlib.git GIT_TAG v1.1.2)
 FetchContent_MakeAvailable(scn)
 #
-
+add_subdirectory(material/1-revisao-tipos)
 add_subdirectory(material/3-pilhas)
 
