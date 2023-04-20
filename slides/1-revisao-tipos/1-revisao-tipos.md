@@ -204,6 +204,86 @@ while (j < 10) {
 
 :::::::::::::
 
+
+--------
+
+## Controle de fluxo com `break` e `continue`
+
+Controles de fluxo em laços de repetição podem ser efetuados com `break` e `continue`.
+O `break` finaliza a execução do laço e o `continue` recomeça o laço.
+
+Contabilize quantos prints são executados (variável `z`):
+
+
+::::::::::::: {.columns}
+
+::::: {.column width=55%}
+
+```.cpp
+int z = 0;
+int i = 0;
+for (; i < 10; i++) {
+   if (i > 5) continue;
+   print("z={} i={}\n", 
+          z, i);
+   z++;
+}
+//
+// z==6  i==10
+print("final z={} i={}\n", 
+       z, i);
+```
+
+:::::
+
+::::: {.column width=45%}
+
+```.cpp
+int z = 0;
+int i = 0;
+while (i < 10) {
+   print("z={} i={}\n", 
+          z, i);
+   z++;
+   if (i > 5) break;
+   i++;
+}
+// z==7  i==6
+print("final z={} i={}\n", 
+       z, i);
+```
+
+:::::
+
+:::::::::::::
+
+
+--------
+
+## Saltos incondicionais com `goto`
+
+Saltos incondicionais no código podem ser feitos com `goto label;` e `label:`.
+Uma aplicação usual é a "quebra múltipla" de laços de repetição.
+Evite ao máximo o uso de `goto` e, sempre que for possível, prefira alternativas estruturadas
+como `for`, `while`, `if`, `else`, `break`, etc.
+
+Contabilize quantos prints são executados (variável `z`):
+
+```.cpp
+  int z = 0;
+  for (auto i = 0; i < 10; i++) {
+    if (i < 5) continue; int j = i;
+    while (j < 10) {
+      if (i > 6) goto fim;
+      print("z={} i={} j={}\n", z, i, j); z++; j++;
+    }
+  }
+fim:
+  // z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]
+  print("final z={}\n", z);
+```
+
+
 -------
 
 ## Tipos Compostos
