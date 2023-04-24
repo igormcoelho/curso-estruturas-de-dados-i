@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Filas
-date: 18/09/2020
+date: 18/09/2020 - 24/04/2023
 transition: cube
 fontsize: 10
 header-includes:
@@ -91,8 +91,7 @@ O *conceito* de fila somente requer suas três operações básicas. Como consid
 
 ```.cpp
 template<typename Agregado, typename Tipo>
-concept bool
-FilaTAD = requires(Agregado a, Tipo t)
+concept FilaTAD = requires(Agregado a, Tipo t)
 {
    // requer operação 'frente'
    { a.frente() };
@@ -100,6 +99,8 @@ FilaTAD = requires(Agregado a, Tipo t)
    { a.enfileira(t) };
    // requer operação 'desenfileira'
    { a.desenfileira() };
+   // requer operação 'tamanho'
+   { a.tamanho() };
 };
 ```
 
@@ -119,7 +120,7 @@ Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 
 ## Implementação FilaSeq1
 
-Consideraremos uma fila sequencial com, no máximo, `MAXN` elementos do tipo caractere.
+Fila sequencial com, no máximo, `MAXN` elementos do tipo caractere:
 
 
 ```.cpp
@@ -132,8 +133,9 @@ public:
   void cria () { ... }        // inicializa agregado
   void libera () { ... }      // finaliza agregado
   char frente () { ... }
-  void enfileira (char dado){ ... };
-  char desenfileira () { ... };
+  void enfileira (char dado){ ... }
+  char desenfileira () { ... }
+  int tamanho() { ... }
 };
 // verifica se agregado FilaSeq1 satisfaz conceito FilaTAD
 static_assert(FilaTAD<FilaSeq1, char>);
@@ -152,11 +154,11 @@ int main () {
    p.enfileira('A');
    p.enfileira('B');
    p.enfileira('C');
-   printf("%c\n", p.frente());
-   printf("%c\n", p.desenfileira());
+   print("{}\n", p.frente());
+   print("{}\n", p.desenfileira());
    p.enfileira('D');
-   while(p.N > 0)
-      printf("%c\n", p.desenfileira());
+   while(p.tamanho() > 0)
+      print("{}\n", p.desenfileira());
    p.libera();
    return 0;
 }
@@ -191,7 +193,6 @@ A operação `desenfileira` remove e retorna o elemento na *frente* da fila.
 
 ```.cpp
 // implementação 'FilaSeq1'
-
 char frente() {
    return this->elementos[0];   // primeiro sempre 'frente'
 }
@@ -199,11 +200,12 @@ void enfileira(char dado) {
    this->elementos[N] = dado;    this->N++;
 }
 char desenfileira() {
-   char r = this->elementos[0]; // primeiro sempre 'frente'
-   for (int i=0; i<N-1; i++)    // laço realmente necessário?
+   char r = this->elementos[0];     // 0 é sempre 'frente'
+   for (auto i=0; i<this->N-1; i++) // realmente necessário?
       this->elementos[i] = this->elementos[i+1];
    this->N--;  return r;
 }
+int tamanho() { return this->N; }
 ```
 ---------
 
@@ -230,8 +232,9 @@ public:
   void cria () { ... }        // inicializa agregado
   void libera () { ... }      // finaliza agregado
   char frente () { ... }
-  void enfileira (char dado){ ... };
-  char desenfileira () { ... };
+  void enfileira (char dado){ ... }
+  char desenfileira () { ... }
+  int tamanho() { ... }
 };
 // verifica se agregado FilaSeq2 satisfaz conceito FilaTAD
 static_assert(FilaTAD<FilaSeq2, char>);
@@ -270,8 +273,10 @@ class FilaSeq2 {
 ...
 
 char frente() {
-   return this->elementos[inicio];   
+   return this->elementos[this->inicio];   
 }
+
+int tamanho() { return this->N; }
 
 ...
 }
@@ -288,15 +293,15 @@ A operação `desenfileira` remove e retorna o elemento na *frente* da fila.
 // implementação 'FilaSeq2'
 
 void enfileira(char dado) {
-   this->elementos[fim] = dado; // dado entra no fim
-   fim++;    
-   N++;
+   this->elementos[this->fim] = dado; // dado entra no fim
+   this->fim++;    
+   this->N++;
 }
 
 char desenfileira() {
-   char r = this->elementos[inicio];
-   inicio++;      
-   N--;
+   char r = this->elementos[this->inicio];
+   this->inicio++;      
+   this->N--;
    return r;
 }
 ```
@@ -347,15 +352,15 @@ Consideramos uma *estratégia circular* na capacidade da fila:
 // implementação 'FilaSeq3'
 
 void enfileira(char dado) {
-   this->elementos[fim] = dado;  // dado entra no fim
-   fim = (fim + 1) % MAXN;       // estratégia circular
-   N++;
+   this->elementos[this->fim] = dado;   // dado entra no fim
+   this->fim = (this->fim + 1) % MAXN;  // circular
+   this->N++;
 }
 
 char desenfileira() {
-   char r = this->elementos[inicio];
-   inicio = (inicio + 1) % MAXN; // estratégia circular
-   N--;
+   char r = this->elementos[this->inicio];
+   this->inicio = (this->inicio + 1) % MAXN; // circular
+   this->N--;
    return r;
 }
 ```
@@ -430,7 +435,7 @@ A desvantagem é o consumo extra de espaço com ponteiros.
 
 ## Implementação
 
-Consideraremos uma fila encadeada, utilizando um agregado `NoFila1` para conectar cada elemento da fila:
+Fila encadeada, utilizando um agregado `NoFila1` auxiliar:
 
 ::::::::::{.columns}
 
@@ -459,8 +464,9 @@ public:
   void cria () { ... }        
   void libera () { ... }     
   char frente () { ... }
-  void enfileira (char dado){ ... };
-  char desenfileira () { ... };
+  void enfileira (char dado){ ... }
+  char desenfileira() { ... }
+  int  tamanho() { ... }
 };
 // verifica agregado FilaEnc1
 static_assert(FilaTAD<FilaEnc1, char>);
@@ -491,6 +497,9 @@ void libera() {
 ...
 }
 ```
+
+
+
 ---------
 
 ## Exemplo de uso
@@ -511,16 +520,30 @@ p.cria();
    0     4    ...   100   104   108   112   116   ...  8GiB
 ```
 
+-------
+
+## Implementação: Frente e Tamanho
+
+```.cpp
+class FilaEnc1 {
+...
+char frente() { return this->inicio->dado; }
+
+int tamanho() { return this->N; }
+...
+}
+```
+
 ---------
 
 ## Implementação: Enfileira
 
 ```.cpp
 void enfileira(char v) {
-   NoFila1* no = new NoFila1{.dado = v, .prox = 0};
-   if(N == 0) {  inicio = fim = no;               }
-   else       {  fim->prox = no;     fim = no;    }
-   N++;
+   NoFila1* no = new NoFila1{.dado = v, .prox = 0 };
+   if(this->N == 0) {  inicio = fim = no;         }
+   else             {  fim->prox = no; fim = no;  }
+   this->N++;
 }
 ```
 ### Na memória: `p.enfileira('A'); p.enfileira('B');`
@@ -553,11 +576,11 @@ void enfileira(char v) {
 
 ```.cpp
 char desenfileira() {
-    NoFila1* p = inicio;   // ponteiro da frente
-    inicio = inicio->prox; // avança fila
-    char r = p->dado;      // conteudo da frente
-    delete p;              // apaga frente
-    N--;
+    NoFila1* p = this->inicio;   // ponteiro da frente
+    this->inicio = this->inicio->prox; // avança fila
+    char r = p->dado;            // conteudo da frente
+    delete p;                    // apaga frente
+    this->N--;
     return r;
 }
 ```
@@ -579,6 +602,125 @@ char desenfileira() {
    0     4    ...   100   104   108   112   116   ...  8GiB
 ```
 
+-----
+
+## Filas Encadeadas com Ponteiros Inteligentes
+
+A implementação do TAD Fila pode ser feito através de uma *estrutura encadeada* com alocação dinâmica de memória segura, através de *smart pointers*.
+
+Assim, não corre-se o risco de perder memória pela falta de `delete/free()`.
+
+Vamos considerar o seguinte "atalho" `uptr` para um `unique_ptr`:
+
+```.cpp
+template<typename T>
+using uptr = std::unique_ptr<T>;
+```
+
+-------
+
+## Implementação
+
+Fila encadeada, utilizando um agregado `NoFila1` auxiliar:
+
+::::::::::{.columns}
+
+:::::{.column width=33%}
+
+```.cpp
+class NoFila2
+{
+public:
+  char dado;
+  uptr<NoFila2> prox;
+};
+```
+
+:::::
+
+:::::{.column  width=67%}
+
+```.cpp
+class FilaEnc2
+{
+public:
+  uptr<NoFila2> inicio; // frente da fila
+  NoFila2* fim;         // fundo da fila
+  int N;                      
+  void cria () { ... }        
+  void libera () { ... }     
+  char frente () { ... }
+  void enfileira (char dado){ ... }
+  char desenfileira() { ... }
+  int  tamanho() { ... }
+};
+// verifica agregado FilaEnc2
+static_assert(FilaTAD<FilaEnc2, char>);
+```
+
+:::::
+
+::::::::::
+
+
+-------
+
+## Implementação: Cria e Libera
+
+```.cpp
+class FilaEnc2 {
+...
+void cria() {
+   this->N = 0;         // zero elementos na fila
+   // this->inicio = 0; // desnecessário...
+   this->fim = 0;       // endereço zero de memória
+}
+
+void libera() {
+   // inicio.reset(); fim=0; N=0;   // stackoverflow!
+   while(this->N > 0) // previne stackoverflow no unique_ptr
+      desenfileira(); // limpa a fila
+}
+...
+}
+```
+
+
+-------
+
+## Implementação: Frente e Tamanho
+
+```.cpp
+class FilaEnc2 {
+...
+char frente() { return this->inicio->dado; }
+
+int tamanho() { return this->N; }
+...
+}
+```
+---------
+
+## Implementação: Enfileira e Desenfileira
+
+```.cpp
+void enfileira(char v) {
+   auto no = std::make_unique<NoFila2>(
+      NoFila2{.dado = v, .prox = std::nullptr}        
+   );
+   if(N == 0){inicio = std::move(no); fim = inicio.get();   }
+   else   {fim->prox = std::move(no); fim = fim->prox.get();}
+   this->N++;
+}
+
+char desenfileira() {
+   char r = p->dado;                 // conteudo da frente
+   this->inicio = std::move(this->inicio->prox); // avança
+   this->N--;
+   if(this->N==0){ this->fim = 0; } // corrige ponteiro 'fim'
+   return r;
+}
+```
 
 --------
 
@@ -601,19 +743,19 @@ Também é considerada como desvantagem o gasto de espaço extra com ponteiros e
 Em C/C++, é possível utilizar implementações *prontas* do TAD Fila.
 A vantagem é a grande eficiência computacional e amplo conjunto de testes, evitando erros de implementação.
 
-Na STL, basta fazer `#include<queue>` e usar métodos `push`, `pop` e `front`.
+Na STL, faça `#include<queue>` e use métodos `push`, `pop` e `front`.
 
 ```.cpp
-#include<iostream>            // inclui printf
 #include<queue>               // inclui fila genérica
-
+#include<fmt/core.h>          // inclui print
+using fmt::print;
 int main() {
    std::queue<char> p;        // fila de char
    p.push('A');
    p.push('B');
-   printf("%c\n", p.front()); // imprime A
+   print("{}\n", p.front()); // imprime A
    p.pop();
-   printf("%c\n", p.front()); // imprime B
+   print("{}\n", p.front()); // imprime B
    return 0;
 }
 ```
@@ -628,7 +770,7 @@ int main() {
 
 *Você pode compilar o código proposto (começando pelo slide anterior em um arquivo chamado `main_fila.cpp`) através do comando:*
 
-`g++ -fconcepts main_fila.cpp -o appFila`
+`g++ --std=c++20 main_fila.cpp -o appFila`
 
 -------
 
