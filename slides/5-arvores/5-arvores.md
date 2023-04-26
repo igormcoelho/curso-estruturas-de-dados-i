@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Árvores
-date: 05/10/2020
+date: 05/10/2020 - 26/04/2023
 transition: cube
 fontsize: 10
 header-includes:
@@ -284,6 +284,30 @@ Consideramos uma implementação de árvore binária, com alocação encadeada d
 
 
 ![Ilustração `NoEnc3`. Crédito: Fabiano Oliveira](2020-09-30-15-18-10-binaria.png){width=40%}
+
+--------
+
+
+## Implementação Encadeada 4 (binária) - unique_ptr
+
+Note que podemos reescrever os ponteiros de `NoEnc3` utilizando `unique_ptr`, para maior segurança:
+
+
+```.cpp
+class NoEnc4
+{
+public:
+   char chave;                     // dado armazenado
+   std::unique_ptr<NoEnc4> esq;    // filho esquerdo
+   std::unique_ptr<NoEnc4> dir;    // filho direito
+};
+
+class ArvoreEnc4
+{
+public:
+  std::unique_ptr<NoEnc4> raiz;    // raiz da árvore
+};
+```
 
 --------
 
