@@ -435,6 +435,126 @@ A desvantagem é o consumo extra de espaço com ponteiros.
 
 ## Implementação
 
+Fila encadeada, utilizando um agregado `NoFila0` auxiliar:
+
+::::::::::{.columns}
+
+:::::{.column width=33%}
+
+```.cpp
+class NoFila0
+{
+public:
+   char dado;
+   NoFila0* prox;
+};
+```
+
+:::::
+
+:::::{.column  width=67%}
+
+```.cpp
+class FilaEnc0
+{
+public:
+  NoFila0* inicio;   // frente da fila
+  int N;                      
+  void cria () { ... }        
+  void libera () { ... }     
+  char frente () { ... }
+  void enfileira (char dado){ ... }
+  char desenfileira() { ... }
+  int  tamanho() { ... }
+};
+// verifica agregado FilaEnc0
+static_assert(FilaTAD<FilaEnc0, char>);
+```
+
+:::::
+
+::::::::::
+
+
+-------
+
+## Implementação: Cria e Libera
+
+```.cpp
+class FilaEnc0 {
+...
+void cria() {
+   this->N = 0;       // zero elementos na fila
+   this->inicio = 0;  // endereço zero de memória
+}
+
+void libera() {
+   while(this->N > 0)
+      desenfileira(); // limpa a fila
+}
+...
+}
+```
+
+---------
+
+## Implementação: Frente e Tamanho
+
+```.cpp
+class FilaEnc0 {
+...
+char frente() { return this->inicio->dado; }
+
+int tamanho() { return this->N; }
+...
+}
+```
+
+---------
+
+## Implementação 0: Enfileira
+
+```.cpp
+void enfileira(char v) {
+   NoFila0* no = new NoFila0{.dado = v, .prox = 0 };
+   if(this->N == 0) { 
+      this->inicio = no; 
+   } else {  
+      NoFila0* fim = this->inicio;
+      // localiza ultimo elemento da fila
+      while(fim->prox != 0)
+         fim = fim->prox;
+      // encadeamento do novo elemento
+      fim->prox = no; 
+   }
+   this->N++;
+}
+```
+
+## Implementação 0: Desenfileira
+
+```.cpp
+char desenfileira() {
+    NoFila0* p = this->inicio;   // ponteiro da frente
+    this->inicio = this->inicio->prox; // avança fila
+    char r = p->dado;            // conteudo da frente
+    delete p;                    // apaga frente
+    this->N--;
+    return r;
+}
+```
+
+-------
+
+## Análise da Implementação 0
+
+Naturalmente, existe um problema de desempenho ao enfileirar novos elementos.
+Como corrigir essa limitação?
+
+-------
+
+## Implementação 1
+
 Fila encadeada, utilizando um agregado `NoFila1` auxiliar:
 
 ::::::::::{.columns}
@@ -576,11 +696,12 @@ void enfileira(char v) {
 
 ```.cpp
 char desenfileira() {
-    NoFila1* p = this->inicio;   // ponteiro da frente
+    NoFila1* p   = this->inicio; // ponteiro da frente
     this->inicio = this->inicio->prox; // avança fila
     char r = p->dado;            // conteudo da frente
     delete p;                    // apaga frente
     this->N--;
+    if(this->N == 0) { this->fim = 0; }
     return r;
 }
 ```
@@ -608,7 +729,7 @@ char desenfileira() {
 
 A implementação do TAD Fila pode ser feito através de uma *estrutura encadeada* com alocação dinâmica de memória segura, através de *smart pointers*.
 
-Assim, não corre-se o risco de perder memória pela falta de `delete/free()`.
+Assim, não corre-se o risco de perder memória pela falta de `delete` ou `free()`.
 
 Vamos considerar o seguinte "atalho" `uptr` para um `unique_ptr`:
 
@@ -731,6 +852,9 @@ A Fila Encadeada é flexível em relação ao espaço de memória, permitindo ma
 Como desvantagem tende a ter acessos de memória ligeiramente mais lentos, devido ao espalhamento dos elementos por toda a memória do computador (perdendo as vantagens de acesso rápido na *memória cache*, por exemplo).
 
 Também é considerada como desvantagem o gasto de espaço extra com ponteiros em cada elemento, o que não acontece na Fila Sequencial.
+
+Alternativamente ao `unique_ptr` e sua contrapartida em ponteiro nativo C, é possível utilizar `shared_ptr` para ambos ponteiros de `inicio` e `fim`. 
+Isso traz uma simplificação ao projeto, mas perde-se um pouco de eficiência dada a natureza de contagem de referências do `shared_ptr`.
 
 
 
