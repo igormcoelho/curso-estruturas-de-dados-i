@@ -9,9 +9,10 @@ all: deps
 	#
 	#
 	# -F pandoc-crossref
-	/usr/bin/pandoc --toc -s --embed-resources --standalone -V theme:Warsaw -t beamer \
+	/usr/bin/pandoc --toc -s --embed-resources --standalone --filter pandoc-latex-fontsize -V theme:Warsaw -t beamer \
 	 -H header.tex \
 		$(MDFILE) -o $(OUTPDF) --slide-level 2
+# $(OUTPDF)
 
 #--filter pandoc-source-exec
 

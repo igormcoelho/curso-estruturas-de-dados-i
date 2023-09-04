@@ -8,6 +8,9 @@ fontsize: 10
 header-includes:
 - <link rel="stylesheet" type="text/css" href="general.css">
 - <link rel="stylesheet" type="text/css" href="reveal-beamer.css">
+pandoc-latex-fontsize:
+  - classes: [cpp, listing]
+    size: footnotesize
 ---
 
 
@@ -41,7 +44,7 @@ plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.co
  o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrão C++20).
 
 
-# Tipos em C/C++
+# Parte 1: Tipos Primitivos, Vetores, Agregados, Tipos Genéricos e Ponteiros em C/C++
 
 ------
 
@@ -74,15 +77,15 @@ float z = 3.7 ; // armazena o real 3.7 na variável z
 
 **Pergunta/Resposta**: Cuidado com tipos. Quais são os valores armazenados nas variáveis abaixo (C++)?
 
-```.cpp
+```{.cpp .listing}
 int    x1 = 5;        // => 5
-int    x2 = x1 + 8;   // => 13
-int    x3 = x2 / 2;   // => 6
-float  x4 = x2 / 2;   // => 6.0
-float  x5 = x2 / 2.0; // => 6.5
-auto   x6 = 13;       // => 13 (C warning: Wimplicit-int)
-auto   x7 = x2 / 2;   // => ?  (C warning: Wimplicit-int)
-auto   x8 = x2 / 2.0; // => ?  (C warning: Wimplicit-int)
+int    x2 = x1 + 10;  // => 15
+int    x3 = x2 / 2;   // => 7
+float  x4 = x2 / 2;   // => 7.0
+float  x5 = x2 / 2.0; // => 7.5
+auto   x6 = 15;       // => 15   (C warning: Wimplicit-int)
+auto   x7 = x2 / 2;   // => ?    (C warning: Wimplicit-int)
+auto   x8 = x2 / 2.0; // => ?    (C warning: Wimplicit-int)
 ```
 
 Verifiquem essas operações de variáveis, escrevendo na saída padrão (tela do computador).
@@ -109,21 +112,42 @@ ao invés de indireta por atribuição (`operator=`).
 
 ------
 
-
 ## Impressão de Saída Padrão
 
 Para imprimir na saída padrão utilizaremos o comando `print`. 
 Em C, tipicamente é utilizado o comando `printf`, mas devido a
 inúmeras falhas de segurança, é recomendado o uso de uma alternativa mais segura.
 
-O C++20 traz o header `<format>`, que é suficiente para implementar o `print`, 
-mas somente o C++23 traz o header `<print>` com método oficial `std::print`.
-Então utilizaremos o comando `fmt::print`, da biblioteca `<fmt/core.h>`,
+Somente o C++23 traz oficialmente o header `<print>` com método oficial `std::print`.
+Então podemos utilizar o comando `fmt::print`, da biblioteca `<fmt/core.h>`,
 ao invés do `std::print`, ainda indisponível no C++20.
 
 ```.cpp
 #include <fmt/core.h>
 using fmt::print;
+
+int main() {
+   print("olá mundo!\n");
+   return 0;
+}
+```
+
+------
+
+## Impressão de Saída Padrão
+
+Tomando vantagem do padrão C++20 com o header `<format>`
+é possível implementar uma versão simplificada do `print`
+(sem depender de bibliotecas externas como `fmt::print`).
+Uma possível solução utilizando macros de C é (tome cuidado
+com possíveis efeitos indesejados de macros):
+
+```.cpp
+#include <format>
+
+// Solution using __VA_ARGS__ and VA_OPT (## from c++20)
+#define print(fmt, ...) \
+  printf("%s", std::format(fmt, ##__VA_ARGS__).c_str())
 
 int main() {
    print("olá mundo!\n");
