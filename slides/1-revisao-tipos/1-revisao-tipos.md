@@ -479,6 +479,52 @@ constexpr int k2 = 10; // C++ (seguro, impossível redefinir)
 
 -------
 
+## Tipo `std::string` na STL
+
+O tipo `std::string` representa cadeias de caracteres, chamadas de *strings*.
+Ela substitui a necessidade de `char*`, `char[]` ou `const char*` em C.
+Para utilizar, basta fazer `#include <string>`. Exemplo:
+
+```.cpp
+std::string s1 = "abcd";
+std::string s2 = "ef";
+print("tamanho1={} tamanho2={}\n", s1.length(), s2.length());
+// tamanho1=4 tamanho2=2
+s1 = s1 + s2;
+print("s1={} s2={}\n", s1, s2);
+// s1=abcdef s2=ef
+const char* cs = s1.c_str();
+print("s1={} cs={}\n", s1, cs);
+// s1=abcdef cs=abcdef
+```
+
+
+-------
+
+## Tipo `std::vector` na STL
+
+A popular estrutura `std::vector<tipo>` permite representar vetores
+com tamanho variável (através do método `push_back`).
+Para utilizar, basta fazer `#include <vector>`. Exemplo:
+
+```.cpp
+int v1[10];
+int v2[] = {1, 2, 3, 4};
+std::vector<int> k1{};
+std::vector<int> k2 = {1, 2, 3, 4};
+k2.push_back(999);
+//
+print("v[0]={} v[3]={} tam={}\n", v2[0], v2[3], 
+      sizeof(v2) / sizeof(v2[0]));
+// v[0]=1 v[3]=4 tam=4
+print("k[0]={} k[4]={} tam={}\n", k2[0], k2[4], k2.size());
+// k[0]=1 k[4]=999 tam=5
+print("{}\n", std::is_aggregate<std::vector<int>>::value);
+// false
+```
+
+-------
+
 ## Resumo até agora
 
 Até agora, verificamos as seguinte estruturas:
@@ -490,7 +536,7 @@ Até agora, verificamos as seguinte estruturas:
 - tipos agregados com **struct** ou **class/public:** (C/C++)
 - agregados genéricos (C++)
 
-# Parte 2: Rotinas, Ponteiros e Concepts em C/C++
+# Parte 2: Rotinas, Ponteiros e Conceitos em C/C++
 
 -------
 
@@ -742,6 +788,31 @@ class Z {
 
 :::::::::::::
 
+
+-------
+
+## Tipo `std::optional` na STL
+
+O `std::optional<tipo>` representa um valor opcional, 
+com alocação em *stack*, não em *heap* como smart pointers.
+Para utilizar, basta fazer `#include <optional>`. Exemplo:
+
+```.cpp
+std::optional<int> busca(char c, const std::vector<char>& v) {
+  // busca char 'c' num vetor v e retorna posição
+  for(int i=0; i<static_cast<int>(v.size()); i++)
+     if(v[i] == c)
+        return i; // encontrou
+  // não encontrou
+  return std::nullopt;
+}
+// ...
+std::vector<char> v = {'a', 'b', 'c'};
+auto op = busca('x', v);
+if(op) print("posicao={}", *op);
+else   print("não encontrou");
+```
+
 --------
 
 ## Conceitos I
@@ -771,7 +842,7 @@ Z a3                = Z{.x = 3};  // tipo explícito
 
 **Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
 
-# Parte 3: Ponteiros Inteligentes e Referências
+# Parte 3: Ponteiros Inteligentes e Referências em C++
 
 -------
 
@@ -991,119 +1062,6 @@ teste4(20);     // OK
 algo que não exploraremos nessa breve revisão.
 
 
-# Parte 4: Uso da biblioteca padrão
-
-
-## O que é biblioteca padrão?
-
-A biblioteca padrão da linguagem tem componentes já testados e de uso comum, 
-resolvendo diversos problemas básicos de programação.
-C++ possui implementações bastante importantes em sua biblioteca padrão, chamada STL.
-Atualmente, é necessário utilizar `#include<...>` para incluir esses componentes, 
-mas em um futuro próximo (C++23) será possível através de `import std`, 
-utilizando a estrutura moderna dos CXX Modules.
-
-Já vimos indiretamente o uso de algumas dessas estruturas no curso, 
-como: tuplas em `std::make_tuple`; ponteiros inteligentes em `std::make_unique` ou `std::make_shared`; entre outras coisas.
-Geralmente, propostas são feitas pela comunidade, e boas implementações são incorporadas à biblioteca padrão, em revisões futuras da linguagem.
-
-Veremos rapidamente exemplos de estruturas muito fundamentais como: `std::string`, `std::array` e `std::vector`.
-
--------
-
-## Tipo `std::string`
-
-O tipo `std::string` representa cadeias de caracteres, chamadas de *strings*.
-Ela substitui a necessidade de `char*`, `char[]` ou `const char*` em C.
-Para utilizar, basta fazer `#include <string>`. Exemplo:
-
-```.cpp
-std::string s1 = "abcd";
-std::string s2 = "ef";
-print("tamanho1={} tamanho2={}\n", s1.length(), s2.length());
-// tamanho1=4 tamanho2=2
-s1 = s1 + s2;
-print("s1={} s2={}\n", s1, s2);
-// s1=abcdef s2=ef
-const char* cs = s1.c_str();
-print("s1={} cs={}\n", s1, cs);
-// s1=abcdef cs=abcdef
-```
-
--------
-
-## Tipo `std::array`
-
-Assim como vetores nativos, exemplo `int[]`, 
-o agregado `std::array<tipo, tamanho>` permite representar vetores
-de tamanho fixo.
-Para utilizar, basta fazer `#include <array>`. Exemplo:
-
-```.cpp
-int v1[10];
-int v2[] = {1, 2, 3, 4};
-std::array<int, 10> a1{};
-std::array<int, 4> a2 = {1, 2, 3, 4};
-print("v[0]={} v[3]={} tam={}\n", v2[0], v2[3],
-      sizeof(v2) / sizeof(v2[0]));
-// v[0]=1 v[3]=4 tam=4
-print("a[0]={} a[3]={} tam={}\n", a2[0], a2[3], a2.size());
-// a[0]=1 a[3]=4 tam=4
-print("{} {} {}\n", std::is_aggregate<int*>::value,
-      std::is_aggregate<int[]>::value,
-      std::is_aggregate<std::array<int, 4>>::value);
-// false true true
-```
-
--------
-
-## Tipo `std::vector`
-
-A popular estrutura `std::vector<tipo>` permite representar vetores
-com tamanho variável (através do método `push_back`).
-Para utilizar, basta fazer `#include <vector>`. Exemplo:
-
-```.cpp
-int v1[10];
-int v2[] = {1, 2, 3, 4};
-std::vector<int> k1{};
-std::vector<int> k2 = {1, 2, 3, 4};
-k2.push_back(999);
-//
-print("v[0]={} v[3]={} tam={}\n", v2[0], v2[3], 
-      sizeof(v2) / sizeof(v2[0]));
-// v[0]=1 v[3]=4 tam=4
-print("k[0]={} k[4]={} tam={}\n", k2[0], k2[4], k2.size());
-// k[0]=1 k[4]=999 tam=5
-print("{}\n", std::is_aggregate<std::vector<int>>::value);
-// false
-```
-
-
--------
-
-## Tipo `std::optional`
-
-O `std::optional<tipo>` representa um valor opcional, 
-com alocação em *stack*, não em *heap* como smart pointers.
-Para utilizar, basta fazer `#include <optional>`. Exemplo:
-
-```.cpp
-std::optional<int> busca(char c, const std::vector<char>& v) {
-  // busca char 'c' num vetor v e retorna posição
-  for(int i=0; i<static_cast<int>(v.size()); i++)
-     if(v[i] == c)
-        return i; // encontrou
-  // não encontrou
-  return std::nullopt;
-}
-// ...
-std::vector<char> v = {'a', 'b', 'c'};
-auto op = busca('x', v);
-if(op) print("posicao={}", *op);
-else   print("não encontrou");
-```
-
 -------
 
 ## Tipo `std::unique_ptr`
@@ -1127,6 +1085,49 @@ auto* p3 = u2.get();
 print("*u2={} *p3={}\n", *u2, *p3);
 // *u2=10 *p3=10
 u2.reset(); // apaga ponteiro u2 manualmente
+```
+
+
+# Parte 4: Bibliotecas experimentais e avançadas em C++
+
+
+## O que é biblioteca padrão STL?
+
+A biblioteca padrão da linguagem tem componentes já testados e de uso comum, 
+resolvendo diversos problemas básicos de programação.
+C++ possui implementações bastante importantes em sua biblioteca padrão, chamada STL.
+Atualmente, é necessário utilizar `#include<...>` para incluir esses componentes, 
+mas em um futuro próximo (C++23) será possível através de `import std`, 
+utilizando a estrutura moderna dos CXX Modules.
+
+Já vimos indiretamente o uso de algumas dessas estruturas no curso, 
+como: tuplas em `std::make_tuple`; ponteiros inteligentes em `std::make_unique` ou `std::make_shared`; entre outras coisas.
+Também vimos  exemplos de estruturas muito fundamentais como: `std::string` e `std::vector`.
+Geralmente, propostas são feitas pela comunidade, e boas implementações são incorporadas à biblioteca padrão, em revisões futuras da linguagem.
+
+-------
+
+## Tipo `std::array` na STL
+
+Assim como vetores nativos, exemplo `int[]`, 
+o agregado `std::array<tipo, tamanho>` permite representar vetores
+de tamanho fixo.
+Para utilizar, basta fazer `#include <array>`. Exemplo:
+
+```.cpp
+int v1[10];
+int v2[] = {1, 2, 3, 4};
+std::array<int, 10> a1{};
+std::array<int, 4> a2 = {1, 2, 3, 4};
+print("v[0]={} v[3]={} tam={}\n", v2[0], v2[3],
+      sizeof(v2) / sizeof(v2[0]));
+// v[0]=1 v[3]=4 tam=4
+print("a[0]={} a[3]={} tam={}\n", a2[0], a2[3], a2.size());
+// a[0]=1 a[3]=4 tam=4
+print("{} {} {}\n", std::is_aggregate<int*>::value,
+      std::is_aggregate<int[]>::value,
+      std::is_aggregate<std::array<int, 4>>::value);
+// false true true
 ```
 
 -------
@@ -1175,10 +1176,6 @@ std::function<int()> fxy = [=, &y]() { y++; return x+y; };
 int z = fxy(); // z==31  y==21
 ```
 
-
-
-# Bibliotecas experimentais
-
 ## Proposta para um `std::scan`
 
 Assim como o `std::print` (atualmente da `fmt`), existem
@@ -1224,8 +1221,6 @@ print("*r2={}\n",*r2);
 // *r2=10
 r2.reset(); // apaga ponteiro r2 manualmente
 ```
-
-# C ou C++?
 
 ## Discussão Rápida: C ou C++?
 
