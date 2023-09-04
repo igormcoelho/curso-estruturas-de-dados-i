@@ -10,10 +10,6 @@ header-includes:
 - <link rel="stylesheet" type="text/css" href="reveal-beamer.css">
 ---
 
-
-
-
-
 # Pilhas
 
 ------
@@ -80,33 +76,11 @@ Seu comportamento é descrito como LIFO (last-in first-out), ou seja, o *último
 De forma geral, uma pilha pode ser implementada utilizando uma lista linear,
 porém com acesso aos elementos restritos a uma única extremidade dessa lista.
 
-$$ \rightleftarrows | \; 3 \; | \; 2 \; | \; 1 \; |$$
+$$ \rightleftarrows | \; C \; | \; B \; | \; A \; |$$
 
+Em C/C++, os métodos esperados para uma pilha de tipo `t` são: 
+`topo()`, `empilha(t)`, `desempilha()`, `tamanho()`.
 
-Para o TAD Pilha, estudaremos duas
-formas distintas de implementação: Sequencial e Encadeada.
-
-
---------
-
-## Definição do *Conceito* Pilha em C++
-
-O *conceito* de pilha somente requer suas três operações básicas. Como consideramos uma *pilha genérica* (pilha de inteiro, char, etc), definimos um *conceito genérico* chamado `PilhaTAD`:
-
-```.cpp
-template<typename Agregado, typename Tipo>
-concept PilhaTAD = requires(Agregado a, Tipo t)
-{
-   // requer operação 'topo'
-   { a.topo() };
-   // requer operação 'empilha' sobre tipo 't'
-   { a.empilha(t) };
-   // requer operação 'desempilha'
-   { a.desempilha() };
-   // requer operação 'tamanho'
-   { a.tamanho() };
-};
-```
 
 # Pilhas Sequenciais
 
@@ -139,8 +113,6 @@ public:
   char desempilha () { ... };
   int tamanho() { ... };
 };
-// verifica se agregado PilhaSeq1 satisfaz conceito PilhaTAD
-static_assert(PilhaTAD<PilhaSeq1, char>);
 ```
 
 -------
@@ -279,6 +251,48 @@ Assim, quando não houver espaço
 para novos elementos, aloque mais espaço na memória (copiando elementos existentes para o novo vetor).
 
 ***Dica:*** Experimente a estratégia de *dobrar a capacidade* da pilha (quando necessário), e reduzir à metade a capacidade (quando necessário). Essa estratégia é bastante eficiente, mas requer alteração nos métodos `cria`, `libera`, `empilha` e `desempilha`.
+
+
+
+# Conceito de Pilha em C++
+
+## Definição do *Conceito* `PilhaTAD` em C++
+
+O *conceito* de pilha somente requer suas três operações básicas. Como consideramos uma *pilha genérica* (pilha de inteiro, char, etc), definimos um *conceito genérico* chamado `PilhaTAD`:
+
+```.cpp
+template<typename Agregado, typename Tipo>
+concept PilhaTAD = requires(Agregado a, Tipo t)
+{
+   // requer operação 'topo'
+   { a.topo() };
+   // requer operação 'empilha' sobre tipo 't'
+   { a.empilha(t) };
+   // requer operação 'desempilha'
+   { a.desempilha() };
+   // requer operação 'tamanho'
+   { a.tamanho() };
+};
+```
+
+## Verificando se `PilhaSeq1` satisfaz conceito `PilhaTAD`
+
+O `static_assert` pode ser usado para assegurar a corretude de
+implementação do conceito `PilhaTAD`:
+
+```{.cpp}
+constexpr int MAXN = 100'000; // capacidade máxima da pilha
+class PilhaSeq1 {
+public:
+  char elementos [MAXN];      // elementos na pilha
+  int N;                      // num. de elementos na pilha
+  // implementa métodos da Pilha
+  // ...
+};
+
+// verifica se agregado PilhaSeq1 satisfaz conceito PilhaTAD
+static_assert(PilhaTAD<PilhaSeq1, char>);
+```
 
 # Pilhas Encadeadas
 
