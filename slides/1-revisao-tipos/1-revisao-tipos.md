@@ -44,7 +44,7 @@ plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.co
  o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrão C++20).
 
 
-# Parte 1: Tipos Primitivos, Vetores, Agregados, Tipos Genéricos e Ponteiros em C/C++
+# Parte 1: Tipos Primitivos, Compostos e Genéricos em C/C++
 
 ------
 
@@ -137,10 +137,10 @@ int main() {
 ## Impressão de Saída Padrão
 
 Tomando vantagem do padrão C++20 com o header `<format>`
-é possível implementar uma versão simplificada do `print`
-(sem depender de bibliotecas externas como `fmt::print`).
-Uma possível solução utilizando macros de C é (tome cuidado
-com possíveis efeitos indesejados de macros):
+é possível implementar uma versão simplificada do `print`,
+sem depender de bibliotecas externas como `fmt::print`.
+Veja uma possível solução utilizando macros de C (tome cuidado
+com possíveis efeitos indesejados de macros!):
 
 ```.cpp
 #include <format>
@@ -159,7 +159,7 @@ int main() {
 
 ## Impressão de Saída Padrão
 
-Para imprimir na saída padrão utilizaremos o comando `fmt::print`. Este
+Para imprimir na saída padrão utilizaremos o comando `print`. Este
 comando é dividido em duas partes, sendo que na primeira colocamos
 a mensagem formatada e, a seguir, colocamos as variáveis cujo
 conteúdo será impresso.
@@ -185,17 +185,26 @@ cadeia de caracteres ou string) com o conteúdo de variáveis?
 
 --------
 
-## Condicionais e Laços de Repetição
+## Condicionais 
+
+**Problema:** dados `x` e `y`, imprima o maior valor.
+
+. . .
 
 Condicionais podem ser feitos através dos comandos if ou if else.
 
 ```.cpp
-int x = 12;
-if (x > 10)
-   print("x maior de 10\n");
+int x = 15;
+int y = 12;
+if (x > y)
+   print("x é maior que y\n");
 else
-   print("x menor ou igual a 10\n");
+   print("x menor ou igual a y\n");
 ```
+
+-----------
+
+## Laços de Repetição 
 
 Laços de repetição podem ser feitos através de comandos while ou
 for. Um comando for é dividido em três partes: inicialização, condição
@@ -229,6 +238,31 @@ while (j < 10) {
 :::::::::::::
 
 
+-------
+
+## Tipos Compostos
+
+Além dos tipos primitivos apresentados anteriormente (int, float,
+char, ...), a linguagem C/C++ nos permite criar tipos compostos.
+Tarefa: estude demais tipos primitivos como double e long long,
+bem como os modificadores unsigned, signed, short e long.
+
+Os tipos compostos podem ser vetores (arrays) ou agregados (structs, ...).
+
+. . .
+
+```.cpp
+int32_t v[8]; // cria um vetor com 8 inteiros
+v[0] = 3;     // atribui o valor 3 à primeira posição
+v[7] = 5;     // atribui o valor 5 à última posição
+```
+
+```
+          v: | 3 |   |   |   |   |   |   | 5 |
+               0   1   2   3   4   5   6   7
+```
+
+
 --------
 
 ## Controle de fluxo com `break` e `continue`
@@ -236,7 +270,7 @@ while (j < 10) {
 Controles de fluxo em laços de repetição podem ser efetuados com `break` e `continue`.
 O `break` finaliza a execução do laço e o `continue` recomeça o laço.
 
-Contabilize quantos prints são executados (variável `z`):
+**Problema**: Dado um vetor B, encontre o primeiro/último valor negativo, ou imprima -1 caso não exista.
 
 
 ::::::::::::: {.columns}
@@ -244,18 +278,16 @@ Contabilize quantos prints são executados (variável `z`):
 ::::: {.column width=55%}
 
 ```.cpp
-int z = 0;
+int B[] = {4, -3, 5, -7, 8};
 int i = 0;
-for (; i < 10; i++) {
-   if (i > 5) continue;
-   print("z={} i={}\n", 
-          z, i);
-   z++;
-}
-//
-// z==6  i==10
-print("final z={} i={}\n", 
-       z, i);
+int z = -1;
+for (auto i=0; i < 5; i++)
+   if (B[i] < 0) {
+      z = i;
+      break;
+   }
+print("z={}\n", z);
+// z==1
 ```
 
 :::::
@@ -263,18 +295,16 @@ print("final z={} i={}\n",
 ::::: {.column width=45%}
 
 ```.cpp
-int z = 0;
+int B[] = {4, -3, 5, -7, 8};
 int i = 0;
-while (i < 10) {
-   print("z={} i={}\n", 
-          z, i);
-   z++;
-   if (i > 5) break;
-   i++;
+int z = -1;
+for (auto i=0; i < 5; i++){
+   if (B[i] >= 0)
+      continue;
+   z = i;
 }
-// z==7  i==6
-print("final z={} i={}\n", 
-       z, i);
+print("z={}\n", z);
+// z==3
 ```
 
 :::::
@@ -305,31 +335,6 @@ Contabilize quantos prints são executados (variável `z`):
 fim:
   // z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]
   print("final z={}\n", z);
-```
-
-
--------
-
-## Tipos Compostos
-
-Além dos tipos primitivos apresentados anteriormente (int, float,
-char, ...), a linguagem C/C++ nos permite criar tipos compostos.
-Tarefa: estude demais tipos primitivos como double e long long,
-bem como os modificadores unsigned, signed, short e long.
-
-Os tipos compostos podem ser vetores (arrays) ou agregados (structs, ...).
-
-. . .
-
-```.cpp
-int32_t v[8]; // cria um vetor com 8 inteiros
-v[0] = 3;     // atribui o valor 3 à primeira posição
-v[7] = 5;     // atribui o valor 5 à última posição
-```
-
-```
-          v: | 3 |   |   |   |   |   |   | 5 |
-               0   1   2   3   4   5   6   7
 ```
 
 -------
@@ -485,6 +490,7 @@ Até agora, verificamos as seguinte estruturas:
 - tipos agregados com **struct** ou **class/public:** (C/C++)
 - agregados genéricos (C++)
 
+# Parte 2: Rotinas, Ponteiros e Concepts em C/C++
 
 -------
 
@@ -517,7 +523,7 @@ Quando nenhum valor é retornado (em um procedimento), utilizamos
 a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
 
 ```.cpp
-void imprime (int a , int b) {
+void imprime (int a, int b) {
    for (auto i=a ; i<b ; i++)
       print("{}\n", i) ;
 }
@@ -560,18 +566,47 @@ O tamanho do ponteiro varia de acordo com a arquitetura, mas para endereçar 64-
 Em ponteiros para agregados, o operador de acesso (.) é substituído por uma seta (->). O operador `&` toma o endereço da variável:
 
 ```.cpp
-struct P {
-   int32_t x;
-   char y;
+class P {
+ public:
+   int32_t x; char y; // mais alguma coisa gigante aqui?
 };
-
-void imprimir(struct P* p1, struct P p2) {
-   print("{} {}\n", p1->x, p2.x);
-}
 // ...
-struct P p0 = {.x = 20, .y = 'Y'}; // cria variável 'p0'
-imprimir(&p0, p0); // resulta em '20 20'
+P p0 = {.x = 20, .y = 'Y'}; 
 ```
+
+Testando procedimentos `f` e `g`:
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```.cpp
+void f(P* p1) {
+   print("{}\n", p1->x);
+   p1->x = 1;
+}
+f(&p0);
+print("{}\n", p0.x); // 1
+```
+
+:::::
+
+::::: {.column width=50%}
+
+```.cpp
+void g(P p2) {
+   print("{}\n", p2.x);
+   p2.x = 1;
+}
+g(p0);
+print("{}\n", p0.x); // 20
+```
+
+:::::
+
+:::::::::::::
+
+
 -------
 
 ## Alocação Dinâmica de Memória
@@ -678,10 +713,11 @@ struct Z {
     int x;
 };
 
-// imprime campo x
-void imprimex(struct Z* this)
+// imprime x negativo
+void neg(struct Z* this)
 {
-   print("{}\n", this->x);
+   print("{}\n", 
+          -1*(this->x));
 }
 ```
 
@@ -691,13 +727,13 @@ void imprimex(struct Z* this)
 
 ```.cpp
 // Em C++ (tipo agregado Z)
-class Z
-{
-public:
+class Z {
+ public:
    int x;
-   // imprime campo x
-   void imprimex() {
-      print("{}\n", this->x);
+   // imprime x negativo
+   void neg() {
+      print("{}\n", 
+           -1*(this->x));
    }
 };
 ```
@@ -705,6 +741,37 @@ public:
 :::::
 
 :::::::::::::
+
+--------
+
+## Conceitos I
+
+C++20 traz a possibilidade de definir conceitos (ou *concepts*). Esse recurso permite *definições genéricas* sobre algum tipo (inclusive tipos agregados com funções internas).
+
+Por exemplo, podemos criar um *conceito* `TemNegativo`, que exige que o agregado possua um método `neg()`:
+
+```.cpp
+template <typename Agregado>
+concept TemNegativo = requires(Agregado a) {
+  { a.neg() };
+};
+```
+
+-------
+
+## Conceitos II
+
+Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:
+
+```.cpp
+auto a1             = Z{.x = 1};  // tipo automático
+TemNegativo auto a2 = Z{.x = 2};  // tipo conceitual
+Z a3                = Z{.x = 3};  // tipo explícito
+```
+
+**Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
+
+# Parte 3: Ponteiros Inteligentes e Referências
 
 -------
 
@@ -718,10 +785,10 @@ Para utilizá-los, basta incluir o cabeçalho `<memory>`, e substituir o `new` p
 
 ::::::::::::: {.columns}
 
-::::: {.column width=55%}
+::::: {.column width=50%}
 
-```{.c}
-// Aloca (C++) o agregado P
+```{.cpp}
+// Aloca (C++) agregado P
 auto* vp = new P{
                   .x = 10,
                   .y = 'Y'
@@ -734,12 +801,11 @@ delete vp;
 
 :::::
 
-::::: {.column width=45%}
+::::: {.column width=50%}
 
 ```.cpp
-// Aloca (C++) o agregado P
-auto vp = 
-   std::make_unique<P>(
+// Aloca (C++) agregado P
+auto vp = std::make_unique<P>(
      P{.x = 10, .y = 'Y'});
 // imprime x (valor 10)
 print("{}\n", vp->x);
@@ -802,35 +868,6 @@ vp = std::nullptr;
 
 :::::::::::::
 
-
---------
-
-## Conceitos I
-
-C++20 traz a possibilidade de definir conceitos (ou *concepts*). Esse recurso permite *definições genéricas* sobre algum tipo (inclusive tipos agregados com funções internas).
-
-Por exemplo, podemos criar um *conceito* `TemImprimeX`, que exige que o agregado possua um método `imprimex()`:
-
-```.cpp
-template <typename Agregado>
-concept TemImprimeX = requires(Agregado a) {
-  { a.imprimex() };
-};
-```
-
--------
-
-## Conceitos II
-
-Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:
-
-```.cpp
-auto a1             = Z{.x = 1};  // tipo automático
-TemImprimeX auto a2 = Z{.x = 2};  // tipo conceitual
-Z a3                = Z{.x = 3};  // tipo explícito
-```
-
-**Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
 
 -------
 
@@ -954,7 +991,7 @@ teste4(20);     // OK
 algo que não exploraremos nessa breve revisão.
 
 
-# Uso da biblioteca padrão
+# Parte 4: Uso da biblioteca padrão
 
 
 ## O que é biblioteca padrão?
