@@ -254,45 +254,6 @@ para novos elementos, aloque mais espaço na memória (copiando elementos existe
 
 
 
-# Conceito de Pilha em C++
-
-## Definição do *Conceito* `PilhaTAD` em C++
-
-O *conceito* de pilha somente requer suas três operações básicas. Como consideramos uma *pilha genérica* (pilha de inteiro, char, etc), definimos um *conceito genérico* chamado `PilhaTAD`:
-
-```.cpp
-template<typename Agregado, typename Tipo>
-concept PilhaTAD = requires(Agregado a, Tipo t)
-{
-   // requer operação 'topo'
-   { a.topo() };
-   // requer operação 'empilha' sobre tipo 't'
-   { a.empilha(t) };
-   // requer operação 'desempilha'
-   { a.desempilha() };
-   // requer operação 'tamanho'
-   { a.tamanho() };
-};
-```
-
-## Verificando se `PilhaSeq1` satisfaz conceito `PilhaTAD`
-
-O `static_assert` pode ser usado para assegurar a corretude de
-implementação do conceito `PilhaTAD`:
-
-```{.cpp}
-constexpr int MAXN = 100'000; // capacidade máxima da pilha
-class PilhaSeq1 {
-public:
-  char elementos [MAXN];      // elementos na pilha
-  int N;                      // num. de elementos na pilha
-  // implementa métodos da Pilha
-  // ...
-};
-
-// verifica se agregado PilhaSeq1 satisfaz conceito PilhaTAD
-static_assert(PilhaTAD<PilhaSeq1, char>);
-```
 
 # Pilhas Encadeadas
 
@@ -647,10 +608,136 @@ Como desvantagem tende a ter acessos de memória ligeiramente mais lentos, devid
 
 Também é considerada como desvantagem o gasto de espaço extra com ponteiros em cada elemento, o que não acontece na Pilha Sequencial.
 
+# Pilhas Genéricas e Conceitos de Pilha
 
-# Pilhas na Biblioteca Padrão
+## Pilha Sequencial Genérica
 
---------
+Uma implementação genérica da pilha sequencial pode ser feita utilizando templates,
+inclusive para o limite de capacidade (permitindo maior personalização caso a caso).
+
+
+```.cpp
+template<typename T, int MAXN>
+class PilhaSeqX
+{
+public:
+  T elementos [MAXN];         // elementos na pilha
+  int N;                      // num. de elementos na pilha
+  void cria () { ... }        // inicializa agregado
+  void libera () { ... }      // finaliza agregado
+  T topo () { ... }
+  void empilha (T dado){ ... };
+  T desempilha () { ... };
+  int tamanho() { ... };
+};
+```
+
+----------
+
+## Utilizando a Pilha Genérica
+
+Antes de completar as funções pendentes, utilizaremos a `PilhaSeqX`:
+
+```.cpp
+int main () {
+   PilhaSeqX<char, 100'000> p;
+   p.cria();
+   p.empilha('A');
+   p.empilha('B');
+   p.empilha('C');
+   print("{}\n", p.topo());
+   print("{}\n", p.desempilha());
+   p.empilha('D');
+   while(p.tamanho() > 0)
+      print("{}\n", p.desempilha());
+   p.libera();
+   return 0;
+}
+``` 
+***Verifique as impressões em tela:*** *C C D B A*
+
+-------
+
+## Definição do *Conceito* `PilhaTAD` em C++
+
+O *conceito* de pilha somente requer suas três operações básicas. Como consideramos uma *pilha genérica* (pilha de inteiro, char, etc), definimos um *conceito genérico* chamado `PilhaTAD`:
+
+```.cpp
+template<typename Agregado, typename Tipo>
+concept PilhaTAD = requires(Agregado a, Tipo t)
+{
+   // requer operação 'topo'
+   { a.topo() };
+   // requer operação 'empilha' sobre tipo 't'
+   { a.empilha(t) };
+   // requer operação 'desempilha'
+   { a.desempilha() };
+   // requer operação 'tamanho'
+   { a.tamanho() };
+};
+```
+
+## Verificando se `PilhaSeq1` satisfaz conceito `PilhaTAD`
+
+O `static_assert` pode ser usado para assegurar a corretude de
+implementação do conceito `PilhaTAD`:
+
+```{.cpp}
+constexpr int MAXN = 100'000; // capacidade máxima da pilha
+class PilhaSeq1 {
+public:
+  char elementos [MAXN];      // elementos na pilha
+  int N;                      // num. de elementos na pilha
+  // implementa métodos da Pilha
+  // ...
+};
+
+// verifica se agregado PilhaSeq1 satisfaz conceito PilhaTAD
+static_assert(PilhaTAD<PilhaSeq1, char>);
+```
+
+## Verificando se `PilhaEnc1` satisfaz conceito `PilhaTAD`
+
+O `static_assert` pode ser usado para assegurar a corretude de
+implementação do conceito `PilhaTAD`:
+
+::::::::::{.columns}
+
+:::::{.column width=33%}
+
+```.cpp
+class NoPilha1 
+{
+public:
+   char dado;
+   NoPilha1* prox;
+};
+```
+
+:::::
+
+:::::{.column  width=67%}
+
+```.cpp
+class PilhaEnc1
+{
+public:
+  NoPilha1* inicio;
+  int N;                      
+  // implementa métodos da Pilha
+  // ...
+};
+// verifica agregado PilhaEnc1
+static_assert(PilhaTAD<PilhaEnc1, char>);
+```
+
+:::::
+
+::::::::::
+
+
+
+# Pilhas na Biblioteca Padrão e Aplicações
 
 ## Uso da `std::stack`
 
@@ -660,18 +747,52 @@ A vantagem é a grande eficiência computacional e amplo conjunto de testes, evi
 Na STL, basta fazer `#include<stack>` e usar métodos `push`, `pop` e `top`.
 
 ```.cpp
-#include<stack>              // inclui pilha genérica
-// #include<fmt/core.h>      // inclui fmt::print
-// using fmt::print;
+#include<stack>           // inclui pilha genérica
+#include<fmt/core.h>      // inclui fmt::print
+using fmt::print;
 
 int main() {
-   std::stack<char> p;       // pilha de char
+   std::stack<char> p;      // pilha de char
    p.push('A');
    p.push('B');
-   // print("{}\n", p.top());  // imprime B
+   print("{}\n", p.top());  // imprime B
    p.pop();
-   // print("{}\n", p.top());  // imprime A
+   print("{}\n", p.top());  // imprime A
    return 0;
+}
+```
+
+--------
+
+## Problema prático com recursão vs pilha
+
+Como reverter uma string? Exemplo: `rev("ESCOLA")` => `"ALOCSE"`.
+
+```{.cpp}
+std::string rev(std::string s) {
+  if (s.length() <= 1) return s;
+  // exclui primeiro caractere de s e adiciona no fim
+  // NOTA: "ESCOLA".substr(2) => "COLA"
+  std::string r = rev(s.substr(1)) + s[0];
+  return r;
+}
+```
+
+## Solução do problema prático com pilha
+
+Solução com pilha (sem recursão):
+
+```{.cpp}
+std::string revs(std::string s) {
+  std::stack<char> pchars;
+  for (char c : s) pchars.push(c);
+  std::string r;
+  // reconstroi string ao contrário
+  while (pchars.size() > 0) {
+    r += pchars.top();
+    pchars.pop();
+  }
+  return r;
 }
 ```
 

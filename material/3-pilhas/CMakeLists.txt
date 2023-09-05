@@ -15,3 +15,6 @@ add_executable(app_pilhas main_pilhas.cpp)
 target_link_libraries(app_pilhas PRIVATE fmt)
 #
 add_executable(app_pilha_stl main_pilha_stl.cpp)
+#
+add_executable(app_use_stack use_stack.cpp)
+target_link_libraries(app_use_stack PRIVATE fmt)
