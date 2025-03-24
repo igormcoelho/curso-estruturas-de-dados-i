@@ -1044,10 +1044,10 @@ Para transformar uma *variável viva* para uma *variável em movimento*, basta u
 
 ```.cpp
 auto p1 = std::make_unique<P>(P{.x = 10, .y = 'Y'});
-print("{}\n", p1->x); // imprime x (valor 10)
+println("{}", p1->x); // imprime x (valor 10)
 auto p2 = std::move(p1);
 if(!p1) print("p1 não existe mais!\n");
-print("{}\n", p2->x); // imprime x (valor 10)
+println("{}", p2->x); // imprime x (valor 10)
 ```
 
 
@@ -1058,13 +1058,13 @@ print("{}\n", p2->x); // imprime x (valor 10)
 
 ::::::::::::: {.columns}
 
-::::: {.column width=55%}
+::::: {.column width=50%}
 
 ```{.cpp}
 // C++
-void imprimex(P* vp) {
+auto imprimex(P* vp) -> void {
   // imprime x (valor 10)
-  print("{}\n", vp->x);
+  println("{}", vp->x);
 }
 // ...
 auto p = P{
@@ -1077,13 +1077,13 @@ imprimex(&p);
 
 :::::
 
-::::: {.column width=45%}
+::::: {.column width=50%}
 
 ```.cpp
 // C++
-void imprimex(P& vp) {
+auto imprimex(P& vp) -> void {
   // imprime x (valor 10)
-  print("{}\n", vp.x);
+  println("{}", vp.x);
 }
 // ...
 auto p = P{
@@ -1160,21 +1160,21 @@ O `std::unique_ptr<tipo>` representa um ponteiro único para o `tipo`
 (como se fosse `tipo*`).
 Uma função útil é o `get`, que retorna um ponteiro nativo C para o dado.
 A função `reset` apaga o ponteiro manualmente.
-Para utilizar, basta fazer `#include <memory>`. Exemplo:
 
 ```.cpp
 auto* p1 = new int{10};
 auto* p2 = p1;
-print("*p1={} *p2={}\n", *p1, *p2);
+println("*p1={} *p2={}", *p1, *p2);
 // *p1=10 *p2=10
 delete p1;
 
 auto u1 = std::make_unique<int>(10);
 auto u2 = std::move(u1);
 auto* p3 = u2.get();
-print("*u2={} *p3={}\n", *u2, *p3);
+println("*u2={} *p3={}", *u2, *p3);
 // *u2=10 *p3=10
-u2.reset(); // apaga ponteiro u2 manualmente
+u2.reset();   // apaga ponteiro u2 manualmente
+u2 = nullptr; // apaga ponteiro u2 manualmente
 ```
 
 
@@ -1198,7 +1198,7 @@ Geralmente, propostas são feitas pela comunidade, e boas implementações são 
 
 -------
 
-## Tipo `std::shared_ptr`
+## Tipo `std::shared_ptr` (avançado)
 
 O `std::shared_ptr<tipo>` representa um ponteiro compartilhado para o `tipo` 
 (como se fosse `tipo*`).
@@ -1214,15 +1214,15 @@ auto s1 = std::make_shared<int>(10);
 auto s2 = s1;
 std::weak_ptr<int> w1 = s1;
 auto s3 = w1.lock();
-print("*s1={} *s2={} *s3={}\n", *s1, *s2, *s3);
+println("*s1={} *s2={} *s3={}", *s1, *s2, *s3);
 // *s1=10 *s2=10 *s3=10
 s1.reset(); // apaga ponteiro s1 manualmente
-print("*s2={} *s3={} ainda existem!\n", *s2, *s3);
+println("*s2={} *s3={} ainda existem!", *s2, *s3);
 ```
 
 -------
 
-## Tipo `std::function`
+## Tipo `std::function` (avançado)
 
 A estrutura `std::function<tipo>` permite armazenar funções, seja ela uma lambda sem captura (*captureless lambda*) ou uma lambda de captura, também chamada de *closure*.
 Uma *captureless lambda* pode decair para ponteiro de função, enquanto as demais só podem ser encapsuladas como `std::function`.
@@ -1242,7 +1242,7 @@ std::function<int()> fxy = [=, &y]() { y++; return x+y; };
 int z = fxy(); // z==31  y==21
 ```
 
-## Proposta para um `std::scan`
+## Proposta para um `std::scan` (avançado/experimental)
 
 Assim como o `std::print` (atualmente da `fmt`), existem
 propostas para um `std::scan`, atualmente no projeto [`scnlib`](https://github.com/eliaskosunen/scnlib) de `eliaskosunen`.
@@ -1266,7 +1266,7 @@ print("x={} y={}", x, y);
 
 -------
 
-## Ponteiro `cycles::relation_ptr`
+## Ponteiro `cycles::relation_ptr` (avançado/experimental)
 
 Uma proposta de ponteiro inteligente para resolver casos cíclicos foi 
 criado pelo prof. Igor Machado Coelho, chamado [`cycles::relation_ptr`](https://github.com/igormcoelho/cycles).

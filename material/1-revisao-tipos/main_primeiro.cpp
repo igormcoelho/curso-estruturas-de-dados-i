@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include <expected>
+#include <memory>
 #include <optional>
 #include <print>
 #include <span>
@@ -200,6 +201,9 @@ int main(int argc, char* argv[]) {
   }
   {
     static_assert(TemNegativo<Z>);
+  }
+  {
+    auto p1 = std::make_unique<Z>(Z{.x = 10});
   }
 
   return 0;

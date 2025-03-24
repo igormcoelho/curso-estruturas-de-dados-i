@@ -27,6 +27,7 @@ std.pcm: /usr/lib/llvm-19/share/libc++/v1/std.cppm
 primeiro:
 	g++ --std=c++23 main_primeiro.c -o app_primeiro_cpp
 	gcc --std=c23   main_primeiro.c -o app_primeiro_c
+	g++ --std=c++23 main_primeiro.cpp
 
 app_print: main_print.cpp
 	clang++ -O3 -std=c++23 -stdlib=libc++ -fmodule-file=std=std.pcm -o $@ $^

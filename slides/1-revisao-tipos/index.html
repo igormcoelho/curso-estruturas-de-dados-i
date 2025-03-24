@@ -926,19 +926,19 @@ não permitem cópias, sendo obrigatoriamente passados por referência.</p>
 <p>Para transformar uma <em>variável viva</em> para uma <em>variável em
 movimento</em>, basta usar o comando <code>std::move</code>.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p1 <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>P<span class="op">&gt;(</span>P<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span> <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span><span class="op">});</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> p1<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p1<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p2 <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>p1<span class="op">);</span></span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(!</span>p1<span class="op">)</span> print<span class="op">(</span><span class="st">&quot;p1 não existe mais!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> p2<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span></code></pre></div>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p2<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span></code></pre></div>
 </section>
 <section id="passagem-de-parâmetros-por-referência-ii" class="slide level2">
 <h2>Passagem de Parâmetros por Referência II</h2>
 <div class="columns">
-<div class="column" style="width:55%;">
+<div class="column" style="width:50%;">
 <div class="sourceCode" id="cb50"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> imprimex<span class="op">(</span>P<span class="op">*</span> vp<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> imprimex<span class="op">(</span>P<span class="op">*</span> vp<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// imprime x (valor 10)</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> vp<span class="op">-&gt;</span>x<span class="op">);</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> vp<span class="op">-&gt;</span>x<span class="op">);</span></span>
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co">// ...</span></span>
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p <span class="op">=</span> P<span class="op">{</span></span>
@@ -947,11 +947,11 @@ movimento</em>, basta usar o comando <code>std::move</code>.</p>
 <span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>         <span class="op">};</span></span>
 <span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="co">// cópia de ponteiro</span></span>
 <span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>imprimex<span class="op">(&amp;</span>p<span class="op">);</span></span></code></pre></div>
-</div><div class="column" style="width:45%;">
+</div><div class="column" style="width:50%;">
 <div class="sourceCode" id="cb51"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> imprimex<span class="op">(</span>P<span class="op">&amp;</span> vp<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> imprimex<span class="op">(</span>P<span class="op">&amp;</span> vp<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// imprime x (valor 10)</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> vp<span class="op">.</span>x<span class="op">);</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> vp<span class="op">.</span>x<span class="op">);</span></span>
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co">// ...</span></span>
 <span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p <span class="op">=</span> P<span class="op">{</span></span>
@@ -1005,20 +1005,20 @@ algo que não exploraremos nessa breve revisão.</p>
 <p>O <code>std::unique_ptr&lt;tipo&gt;</code> representa um ponteiro
 único para o <code>tipo</code> (como se fosse <code>tipo*</code>). Uma
 função útil é o <code>get</code>, que retorna um ponteiro nativo C para
-o dado. A função <code>reset</code> apaga o ponteiro manualmente. Para
-utilizar, basta fazer <code>#include &lt;memory&gt;</code>. Exemplo:</p>
+o dado. A função <code>reset</code> apaga o ponteiro manualmente.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">{</span><span class="dv">10</span><span class="op">};</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> p2 <span class="op">=</span> p1<span class="op">;</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;*p1=</span><span class="sc">{}</span><span class="st"> *p2=</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>p1<span class="op">,</span> <span class="op">*</span>p2<span class="op">);</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;*p1=</span><span class="sc">{}</span><span class="st"> *p2=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>p1<span class="op">,</span> <span class="op">*</span>p2<span class="op">);</span></span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co">// *p1=10 *p2=10</span></span>
 <span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="kw">delete</span> p1<span class="op">;</span></span>
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> u1 <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span><span class="dv">10</span><span class="op">);</span></span>
 <span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> u2 <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>u1<span class="op">);</span></span>
 <span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> p3 <span class="op">=</span> u2<span class="op">.</span>get<span class="op">();</span></span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;*u2=</span><span class="sc">{}</span><span class="st"> *p3=</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>u2<span class="op">,</span> <span class="op">*</span>p3<span class="op">);</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;*u2=</span><span class="sc">{}</span><span class="st"> *p3=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>u2<span class="op">,</span> <span class="op">*</span>p3<span class="op">);</span></span>
 <span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="co">// *u2=10 *p3=10</span></span>
-<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>u2<span class="op">.</span>reset<span class="op">();</span> <span class="co">// apaga ponteiro u2 manualmente</span></span></code></pre></div>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>u2<span class="op">.</span>reset<span class="op">();</span>   <span class="co">// apaga ponteiro u2 manualmente</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>u2 <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span> <span class="co">// apaga ponteiro u2 manualmente</span></span></code></pre></div>
 </section></section>
 <section>
 <section id="parte-5-bibliotecas-experimentais-e-avançadas-em-c" class="title-slide slide level1">
@@ -1043,8 +1043,8 @@ como: <code>std::string</code> e <code>std::vector</code>. Geralmente,
 propostas são feitas pela comunidade, e boas implementações são
 incorporadas à biblioteca padrão, em revisões futuras da linguagem.</p>
 </section>
-<section id="tipo-stdshared_ptr" class="slide level2">
-<h2>Tipo <code>std::shared_ptr</code></h2>
+<section id="tipo-stdshared_ptr-avançado" class="slide level2">
+<h2>Tipo <code>std::shared_ptr</code> (avançado)</h2>
 <p>O <code>std::shared_ptr&lt;tipo&gt;</code> representa um ponteiro
 compartilhado para o <code>tipo</code> (como se fosse
 <code>tipo*</code>). Uma função útil é o <code>get</code>, que retorna
@@ -1059,13 +1059,13 @@ seguir). Para utilizar, basta fazer
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> s2 <span class="op">=</span> s1<span class="op">;</span></span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>weak_ptr<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> w1 <span class="op">=</span> s1<span class="op">;</span></span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> s3 <span class="op">=</span> w1<span class="op">.</span>lock<span class="op">();</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;*s1=</span><span class="sc">{}</span><span class="st"> *s2=</span><span class="sc">{}</span><span class="st"> *s3=</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>s1<span class="op">,</span> <span class="op">*</span>s2<span class="op">,</span> <span class="op">*</span>s3<span class="op">);</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;*s1=</span><span class="sc">{}</span><span class="st"> *s2=</span><span class="sc">{}</span><span class="st"> *s3=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>s1<span class="op">,</span> <span class="op">*</span>s2<span class="op">,</span> <span class="op">*</span>s3<span class="op">);</span></span>
 <span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="co">// *s1=10 *s2=10 *s3=10</span></span>
 <span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>s1<span class="op">.</span>reset<span class="op">();</span> <span class="co">// apaga ponteiro s1 manualmente</span></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;*s2=</span><span class="sc">{}</span><span class="st"> *s3=</span><span class="sc">{}</span><span class="st"> ainda existem!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>s2<span class="op">,</span> <span class="op">*</span>s3<span class="op">);</span></span></code></pre></div>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;*s2=</span><span class="sc">{}</span><span class="st"> *s3=</span><span class="sc">{}</span><span class="st"> ainda existem!&quot;</span><span class="op">,</span> <span class="op">*</span>s2<span class="op">,</span> <span class="op">*</span>s3<span class="op">);</span></span></code></pre></div>
 </section>
-<section id="tipo-stdfunction" class="slide level2">
-<h2>Tipo <code>std::function</code></h2>
+<section id="tipo-stdfunction-avançado" class="slide level2">
+<h2>Tipo <code>std::function</code> (avançado)</h2>
 <p>A estrutura <code>std::function&lt;tipo&gt;</code> permite armazenar
 funções, seja ela uma lambda sem captura (<em>captureless lambda</em>)
 ou uma lambda de captura, também chamada de <em>closure</em>. Uma
@@ -1085,8 +1085,8 @@ enquanto as demais só podem ser encapsuladas como
 <span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>function<span class="op">&lt;</span><span class="dt">int</span><span class="op">()&gt;</span> fxy <span class="op">=</span> <span class="op">[=,</span> <span class="op">&amp;</span>y<span class="op">]()</span> <span class="op">{</span> y<span class="op">++;</span> <span class="cf">return</span> x<span class="op">+</span>y<span class="op">;</span> <span class="op">};</span></span>
 <span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> z <span class="op">=</span> fxy<span class="op">();</span> <span class="co">// z==31  y==21</span></span></code></pre></div>
 </section>
-<section id="proposta-para-um-stdscan" class="slide level2">
-<h2>Proposta para um <code>std::scan</code></h2>
+<section id="proposta-para-um-stdscan-avançadoexperimental" class="slide level2">
+<h2>Proposta para um <code>std::scan</code> (avançado/experimental)</h2>
 <p>Assim como o <code>std::print</code> (atualmente da
 <code>fmt</code>), existem propostas para um <code>std::scan</code>,
 atualmente no projeto <a href="https://github.com/eliaskosunen/scnlib"><code>scnlib</code></a> de
@@ -1106,8 +1106,9 @@ busca criar uma função <code>scn::scan</code> que substitua a
 <span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;x=</span><span class="sc">{}</span><span class="st"> y=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x<span class="op">,</span> y<span class="op">);</span></span>
 <span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="co">// x=10 y=20</span></span></code></pre></div>
 </section>
-<section id="ponteiro-cyclesrelation_ptr" class="slide level2">
-<h2>Ponteiro <code>cycles::relation_ptr</code></h2>
+<section id="ponteiro-cyclesrelation_ptr-avançadoexperimental" class="slide level2">
+<h2>Ponteiro <code>cycles::relation_ptr</code>
+(avançado/experimental)</h2>
 <p>Uma proposta de ponteiro inteligente para resolver casos cíclicos foi
 criado pelo prof. Igor Machado Coelho, chamado <a href="https://github.com/igormcoelho/cycles"><code>cycles::relation_ptr</code></a>.
 Este é um projeto interessante para compreender as limitações dos
