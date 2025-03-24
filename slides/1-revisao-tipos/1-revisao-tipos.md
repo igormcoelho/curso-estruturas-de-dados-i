@@ -819,7 +819,7 @@ class Z {
 Como `std::string_view`, para demais vetores `int[]`,  `std::array` e `std::vector`, o `std::span` suporta sequências de dados *sem posse*.
 
 ```.cpp
-// invocando ./programa 1 2 3
+import std;       // invocando ./programa 1 2 3
 auto main(int argc, char* argv[]) -> int {
    int v2[] = {1, 2, 3, 4};
    std::span<int> s1{v2};
@@ -1050,8 +1050,8 @@ if(!p1) print("p1 não existe mais!\n");
 println("{}", p2->x); // imprime x (valor 10)
 ```
 
+# Parte 5: Referências em C++ (tópico avançado)
 
--------
 
 ## Passagem de Parâmetros por Referência II
 
@@ -1178,7 +1178,7 @@ u2 = nullptr; // apaga ponteiro u2 manualmente
 ```
 
 
-# Parte 5: Bibliotecas experimentais e avançadas em C++
+# Parte 6: Bibliotecas experimentais e avançadas em C++
 
 
 ## O que é biblioteca padrão STL?
