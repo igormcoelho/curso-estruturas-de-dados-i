@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Revisão de Tipos e Módulos
-date: 13/09/2020 - 03/04/2023
+date: 13/09/2020 - 22/03/2025
 transition: linear
 fontsize: 10
 header-includes:
@@ -40,8 +40,8 @@ quanto para Windows (com a instalação do compilador MinGW).
 
 
 Também é possível praticar diretamente em um navegador web com
-plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler). Neste caso,
- o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrão C++20).
+plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler). 
+Neste caso, o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrões C23 e C++23).
 
 
 # Parte 1: Tipos Primitivos, Compostos e Genéricos em C/C++
@@ -50,13 +50,13 @@ plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.co
 
 ## Conceitos de C/C++
 
-Compreender a lógica da programação é a habilidade mais impor-
-tante para um programador! Com ela, você pode facilmente trocar
+Compreender a lógica da programação é a habilidade mais importante para um programador! 
+Com ela, você pode facilmente trocar
 de linguagem de programação, conhecendo apenas alguns comandos
 básicos.
 
 O primeiro conceito a ser revisado é de variável. Uma variável consiste
-de um identificador válido (mesmo para Python) e armazena algum
+de um identificador válido (mesmo para outras linguagens populares como Python) e armazena algum
 tipo de dado da memória do computador.
 
 A linguagem C/C++ é **fortemente tipada**, portando o programador
@@ -64,18 +64,21 @@ deve dizer explicitamente qual o tipo de dado deseja armazenar em
 cada variável.
 
 ```.cpp
-int x = 5; // armazena o inteiro 5 na variável x
-char y = 'A'; // armazena o caractere 'A' na variável y
+int   x = 5;    // armazena o inteiro 5 na variável x
+char  y = 'A';  // armazena o caractere 'A' na variável y
 float z = 3.7 ; // armazena o real 3.7 na variável z
+bool v = true;  // armazena o booleano true na variável v
+auto b = 'B';   // prefira dedução de tipo com 'auto'
 ```
 
+**Responda:** Qual o tipo acima de b? (C++23 e C23)
 
 ------
 
 
 ## Tipos de Variáveis
 
-**Pergunta/Resposta**: Cuidado com tipos. Quais são os valores armazenados nas variáveis abaixo (C++)?
+**Pergunta/Resposta**: Cuidado com tipos. Quais são os valores armazenados nas variáveis abaixo (C++23 e C23)?
 
 ```{.cpp .listing}
 int    x1 = 5;        // => 5
@@ -83,9 +86,9 @@ int    x2 = x1 + 10;  // => 15
 int    x3 = x2 / 2;   // => 7
 float  x4 = x2 / 2;   // => 7.0
 float  x5 = x2 / 2.0; // => 7.5
-auto   x6 = 15;       // => 15   (C warning: Wimplicit-int)
-auto   x7 = x2 / 2;   // => ?    (C warning: Wimplicit-int)
-auto   x8 = x2 / 2.0; // => ?    (C warning: Wimplicit-int)
+auto   x6 = 15;       // => 15 
+auto   x7 = x2 / 2;   // => 7
+auto   x8 = x2 / 2.0; // => 7.5
 ```
 
 Verifiquem essas operações de variáveis, escrevendo na saída padrão (tela do computador).
@@ -101,12 +104,11 @@ Dê preferência a inicialização direta com chaves `{ }`,
 ao invés de indireta por atribuição (`operator=`).
 
 ```.cpp
-    int64_t x2  {20};  // long (ou long long)
-    int32_t x1  {10};  // int
-    int16_t x3  {30};  // short
-    int8_t  x4  {40};  // signed char
-    uint8_t x5  {50};  // unsigned char
-    std::byte b {60};  // unsigned char
+    int64_t x1 = 10;  // long (ou long long)
+    int32_t x2 = 20;  // int
+    int16_t x3 = 30;  // short
+    int8_t  x4 = 40;  // signed char
+    uint8_t x5 = 50;  // unsigned char
 ```
 
 
@@ -114,55 +116,33 @@ ao invés de indireta por atribuição (`operator=`).
 
 ## Impressão de Saída Padrão
 
-Para imprimir na saída padrão utilizaremos o comando `print`. 
 Em C, tipicamente é utilizado o comando `printf`, mas devido a
 inúmeras falhas de segurança, é recomendado o uso de uma alternativa mais segura.
+Assim, em C++, para imprimir na saída padrão utilizaremos o comando `std::print`. 
 
-Somente o C++23 traz oficialmente o header `<print>` com método oficial `std::print`.
-Então podemos utilizar o comando `fmt::print`, da biblioteca `<fmt/core.h>`,
-ao invés do `std::print`, ainda indisponível no C++20.
+
+O C++23 traz oficialmente `std::print` e `std::println` como parte do módulo de biblioteca padrão `std`.
+Para utilizá-lo, basta fazer `import std;`.
 
 ```.cpp
-#include <fmt/core.h>
-using fmt::print;
+import std;
 
-int main() {
-   print("olá mundo!\n");
-   return 0;
+auto main() -> int {
+  std::println("Olá Mundo!");
+  return 0;
 }
+
+// https://godbolt.org/z/dvc5hdv3n
 ```
+
+**Pergunta:** Qual o tipo de retorno da função `main`?
 
 ------
 
 ## Impressão de Saída Padrão
 
-Tomando vantagem do padrão C++20 com o header `<format>`
-é possível implementar uma versão simplificada do `print`,
-sem depender de bibliotecas externas como `fmt::print`.
-Veja uma possível solução utilizando macros de C (tome cuidado
-com possíveis efeitos indesejados de macros!):
-
-```.cpp
-#include <format>
-
-// Solution using __VA_ARGS__ and VA_OPT (## from c++20)
-#define print(fmt, ...) \
-  printf("%s", std::format(fmt, ##__VA_ARGS__).c_str())
-
-int main() {
-   print("olá mundo!\n");
-   return 0;
-}
-```
-
-------
-
-## Impressão de Saída Padrão
-
-Para imprimir na saída padrão utilizaremos o comando `print`. Este
-comando é dividido em duas partes, sendo que na primeira colocamos
-a mensagem formatada e, a seguir, colocamos as variáveis cujo
-conteúdo será impresso.
+Para imprimir na saída padrão utilizaremos o comando `std::print`, 
+e é possível evitar o prefixo `std::` com um `using namespace std;`.
 
 **Pergunta:** como podemos misturar um texto (também chamado de
 cadeia de caracteres ou string) com o conteúdo de variáveis?
@@ -172,16 +152,18 @@ cadeia de caracteres ou string) com o conteúdo de variáveis?
 **Resposta:** através do padrão de substituição `{}`.
 
 ```.cpp
+import std;
+using namespace std;
+int main() -> int {
   int32_t x1 = 7;
-  print("x1 é {}", x1);  // x1 é 7
+  println("x1 é {}", x1);  // x1 é 7
   float x6 = x1 / 2.0;
-  print("metade de {} é {}", x1, x6);  // metade de 7 é 3.5
+  println("metade de {} é {}", x1, x6);  // metade de 7 é 3.5
   char b = 'L';
-  print("isto é uma {}etra", b);  // isto é uma Letra
+  println("isto é uma {}etra", b);  // isto é uma Letra
   print("Olá mundo! \n");  // Olá mundo! (quebra de linha)
+  // ====================================================
 ```
-
-
 
 --------
 
@@ -197,9 +179,9 @@ Condicionais podem ser feitos através dos comandos if ou if else.
 int x = 15;
 int y = 12;
 if (x > y)
-   print("x é maior que y\n");
+   println("x é maior que y");
 else
-   print("x menor ou igual a y\n");
+   println("x menor ou igual a y");
 ```
 
 -----------
@@ -217,7 +199,7 @@ de continuação e incremento.
 
 ```.cpp
 for (auto i=0; i < 10 ; i++) {
-   print("i : {}\n" , i);
+   println("i : {}" , i);
 }
 ```
 
@@ -228,7 +210,7 @@ for (auto i=0; i < 10 ; i++) {
 ```.cpp
 auto j=0;
 while (j < 10) {
-   print("j : {}\n", j);
+   println("j : {}", j);
    j++;
 }
 ```
@@ -238,13 +220,16 @@ while (j < 10) {
 :::::::::::::
 
 
+**Pergunta:** O que é impresso em ambos laços?
+
 -------
 
 ## Tipos Compostos
 
 Além dos tipos primitivos apresentados anteriormente (int, float,
 char, ...), a linguagem C/C++ nos permite criar tipos compostos.
-Tarefa: estude demais tipos primitivos como double e long long,
+
+**Tarefa:** estude demais tipos primitivos como double e long long,
 bem como os modificadores unsigned, signed, short e long.
 
 Os tipos compostos podem ser vetores (arrays) ou agregados (structs, ...).
@@ -261,7 +246,6 @@ v[7] = 5;     // atribui o valor 5 à última posição
           v: | 3 |   |   |   |   |   |   | 5 |
                0   1   2   3   4   5   6   7
 ```
-
 
 --------
 
@@ -286,7 +270,7 @@ for (auto i=0; i < 5; i++)
       z = i;
       break;
    }
-print("z={}\n", z);
+println("z={}", z);
 // z==1
 ```
 
@@ -303,7 +287,7 @@ for (auto i=0; i < 5; i++){
       continue;
    z = i;
 }
-print("z={}\n", z);
+println("z={}", z);
 // z==3
 ```
 
@@ -329,25 +313,25 @@ Contabilize quantos prints são executados (variável `z`):
     if (i < 5) continue; int j = i;
     while (j < 10) {
       if (i > 6) goto fim;
-      print("z={} i={} j={}\n", z, i, j); z++; j++;
+      println("z={} i={} j={}", z, i, j); z++; j++;
     }
   }
 fim:
+  println("final z={}", z);
   // z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]
-  print("final z={}\n", z);
 ```
 
 -------
 
 ## Tipos Agregados I
 
-Comparação C/C++ (lembre-se de usar **struct** ou **class/public:**, caso contrário não será reconhecido como um *tipo agregado*, mas sim um *objeto*, que funciona de forma completamente diferente na linguagem C++):
+Comparação C/C++: lembre-se de usar **struct** ou **class public:**, caso contrário não será reconhecido como um *tipo agregado*, mas sim um *objeto*, que funciona de forma completamente diferente na linguagem C++.
 
 ::::::::::::: {.columns}
 
 ::::: {.column width=55%}
 
-```.cpp
+```.c
 // Em C (tipo agregado P)
 struct P
 {
@@ -383,6 +367,7 @@ auto p2 = P{.x=10, .y='Y'};
 
 :::::::::::::
 
+
 ------
 
 ## Tipos Agregados II
@@ -391,22 +376,22 @@ Retomamos o exemplo da estrutura P anterior e nos perguntamos,
 como acessar as variáveis internas do agregado P?
 
 Assim como na inicialização designada, podemos utilizar
-o operador ponto (.) para acessar campos do agregado.
-
-Exemplo:
+o operador ponto (.) para acessar campos do agregado. Exemplo:
 
 ```.cpp
 auto p1 = P{.y = 'A'};
 
 p1.x = 20;             // atribui 20 à variável x de p1
 p1.x = p1.x + 1;       // incrementa a variável x de p1
-print("{} {}\n", p1.x, p1.y);  // imprime '21 A'
+println("{} {}", p1.x, p1.y);  // imprime '21 A'
 ```
 
 ```
              p1:  |      21       | 'A' |
                         p1.x        p1.y
 ```
+
+**Importante:** veremos à frente que o (.) também pode acessar *métodos internos* do tipo agregado.
 
 -------
 
@@ -446,10 +431,13 @@ public:
    T x;   // qual o tipo da variável x?
    char y;
 };
-// declara o agregado genérico G
+// declara o agregado genérico G com tipo T=float ou T=char
 G<float> g1 = {.x = 3.14, .y  = 'Y'};
-G<int>   g2 = {.x = 3,    .y  = 'Y'};
+G<char>  g2 = {.x = 'A',  .y  = 'Y'};
 ```
+
+**Pergunta:** Quanto espaço (em bytes) cada variável dessa ocupa?
+
 -------
 
 ## Valores constantes e casts
@@ -460,41 +448,44 @@ Uma mudança de tipos pode ser feita com *type cast*.
 Em C++, utilize `static_cast<tipo>` ao invés do padrão C de cast.
 
 ```.cpp
-unsigned int x = 10;
-int y1 = (int) x;             // em C
-int y2 = int(x);              // em C
-int y3 = static_cast<int>(x); // em C++
-const unsigned int z1 = x;    // OK
-// unsigned int z2 = z1;      // ERRO
+unsigned int x = 10;                     // 10
+double y1 = x / -2;                      // 0
+double y2 = (double)x / -2;              // -5
+double y3 = static_cast<double>(x) / -2; // -5 (C++)
+const unsigned int z1 = x;               // 10
+// z1 = 20;                              // ERRO
 ```
-O `const` pode ser removido em algumas circustâncias através de um `const_cast`.
-Em C++, existe também o `constexpr`, que diferentemente do `const`,
-nunca pode ser removido, pois é de tempo de compilação.
-Em C, algo similar é possível com macros, mas permite reescrita, sendo inseguro.
+O `const` pode ser removido através de um `const_cast`, sendo inseguro.
+
+Em C23 e C++23 existe o `constexpr`, que diferentemente do `const`,
+nunca pode ser removido ou redefinido (diferentemente de macros), pois é resolvido em tempo de compilação.
 
 ```.cpp
-#define k1 10          // C (inseguro e permite redefinição)
-constexpr int k2 = 10; // C++ (seguro, impossível redefinir)
+#define k1 10          // inseguro e permite redefinição
+constexpr int k2 = 10; // seguro, impossível redefinir
 ```
 
 -------
 
-## Tipo `std::string` na STL
+## Tipo `std::string` e `std::string_view` na STL
 
 O tipo `std::string` representa cadeias de caracteres, chamadas de *strings*.
 Ela substitui a necessidade de `char*`, `char[]` ou `const char*` em C.
-Para utilizar, basta fazer `#include <string>`. Exemplo:
+
+Caso precise de uma "vista" leve de uma string, como um substring, utilize `std::string_view` (evita a cópia completa do `string`).
 
 ```.cpp
 std::string s1 = "abcd";
 std::string s2 = "ef";
-print("tamanho1={} tamanho2={}\n", s1.length(), s2.length());
+println("tamanho1={} tamanho2={}", s1.length(), s2.length());
 // tamanho1=4 tamanho2=2
 s1 = s1 + s2;
-print("s1={} s2={}\n", s1, s2);
-// s1=abcdef s2=ef
+std::string_view sv = s1;
+std::string_view sub = sv.substr(3, 2);
+println("s1={} s2={} sv={} sub={}", s1, s2, sv, sub);
+// s1=abcdef s2=ef sv=abcdef sub=de
 const char* cs = s1.c_str();
-print("s1={} cs={}\n", s1, cs);
+println("s1={} cs={}", s1, cs);
 // s1=abcdef cs=abcdef
 ```
 
@@ -505,7 +496,7 @@ print("s1={} cs={}\n", s1, cs);
 
 A popular estrutura `std::vector<tipo>` permite representar vetores
 com tamanho variável (através do método `push_back`).
-Para utilizar, basta fazer `#include <vector>`. Exemplo:
+Exemplo:
 
 ```.cpp
 int v1[10];
@@ -521,6 +512,31 @@ print("k[0]={} k[4]={} tam={}\n", k2[0], k2[4], k2.size());
 // k[0]=1 k[4]=999 tam=5
 print("{}\n", std::is_aggregate<std::vector<int>>::value);
 // false
+```
+
+-------
+
+## Tipo `std::array` na STL
+
+Assim como vetores nativos, exemplo `int[]`, 
+o agregado `std::array<tipo, tamanho>` permite representar vetores
+de tamanho fixo.
+Exemplo:
+
+```.cpp
+int v1[10];
+int v2[] = {1, 2, 3, 4};
+std::array<int, 10> a1{};
+std::array<int, 4> a2 = {1, 2, 3, 4};
+print("v[0]={} v[3]={} tam={}\n", v2[0], v2[3],
+      sizeof(v2) / sizeof(v2[0]));
+// v[0]=1 v[3]=4 tam=4
+print("a[0]={} a[3]={} tam={}\n", a2[0], a2[3], a2.size());
+// a[0]=1 a[3]=4 tam=4
+print("{} {} {}\n", std::is_aggregate<int*>::value,
+      std::is_aggregate<int[]>::value,
+      std::is_aggregate<std::array<int, 4>>::value);
+// false true true
 ```
 
 -------
@@ -554,12 +570,14 @@ o valor passado elevado ao quadrado.
 
 ```.cpp
 // função que retorna um 'int', com parâmetro 'p'
-int quadrado (int p) {
+auto quadrado (int p) -> int {
    return p*p;
 }
 // variável do tipo 'int', com valor 25
 int x = quadrado(5);        
 ```
+
+**Importante:** a dedução do tipo após a seta `->` é feita automaticamente.
 
 -------
 
@@ -569,20 +587,22 @@ Quando nenhum valor é retornado (em um procedimento), utilizamos
 a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
 
 ```.cpp
-void imprime (int a, int b) {
-   for (auto i=a ; i<b ; i++)
-      print("{}\n", i) ;
+auto imprime (int a, int b) -> void {
+   for (auto i=a; i<b; i++)
+      println("{}", i);
 }
 ```
 
-Também é possível retornar múltiplos elementos (par ou tupla), através de um *structured binding* (requer `#include<tuple>`):
+Também é possível retornar múltiplos elementos (par ou tupla), através de um *structured binding* com tuplas:
 
 ```.cpp
 auto duplo(int p) {
-   return std::make_tuple(p+3, p+6);
+   return std::tuple{p+3, p+6.5};
 }
-auto [x1,x2] = duplo(10); // x1=13 x2=16
+auto [x1,x2] = duplo(10); // x1=13 x2=16.5
 ```
+
+**Perg.:** qual tipo de retorno de 'duplo'? **R:** `std::tuple<int, double>`.
 
 -------
 
@@ -594,8 +614,10 @@ vetores de muitos elementos) sem perder tempo?
 
 Nestes casos, a linguagem C oferece um tipo especial denominado
 ponteiro.
-A sintaxe do ponteiro simplesmente inclui um asterisco (*)
-após o tipo da variável. **Exemplos:** `int* x; struct P* p1`;
+A sintaxe do ponteiro simplesmente inclui um asterisco (`*`)
+após o tipo da variável. Um estado vazio se faz com **nullptr** (ou `0`).
+
+**Exemplos:** `int* x = nullptr; struct P* p1 = nullptr`;
 
 Um ponteiro simplesmente armazena **o local** (endereço) onde determinada variável
 está armazenada na memória (basicamente, um número).
@@ -609,7 +631,8 @@ O tamanho do ponteiro varia de acordo com a arquitetura, mas para endereçar 64-
 
 ## Ponteiros II
 
-Em ponteiros para agregados, o operador de acesso (.) é substituído por uma seta (->). O operador `&` toma o endereço da variável:
+Em ponteiros para agregados, o operador de acesso (`.`) é substituído por uma seta (`->`). 
+O operador `&` toma o endereço da variável:
 
 ```.cpp
 class P {
@@ -627,12 +650,12 @@ Testando procedimentos `f` e `g`:
 ::::: {.column width=50%}
 
 ```.cpp
-void f(P* p1) {
-   print("{}\n", p1->x);
+auto f(P* p1) -> void {
+   println("{}", p1->x);
    p1->x = 1;
 }
 f(&p0);
-print("{}\n", p0.x); // 1
+println("{}", p0.x); // 1
 ```
 
 :::::
@@ -640,12 +663,12 @@ print("{}\n", p0.x); // 1
 ::::: {.column width=50%}
 
 ```.cpp
-void g(P p2) {
-   print("{}\n", p2.x);
+auto g(P p2) -> void {
+   println("{}", p2.x);
    p2.x = 1;
 }
 g(p0);
-print("{}\n", p0.x); // 20
+println("{}", p0.x); // 20
 ```
 
 :::::
@@ -672,7 +695,7 @@ struct P* vp =
 vp->x = 10;
 vp->y = 'Y';
 // imprime x (valor 10)
-print("{}\n", vp->x);
+printf("%d\n", vp->x);
 // descarta a memória
 free(vp);
 ```
@@ -688,7 +711,7 @@ auto* vp = new P{
                   .y = 'Y'
                 };
 // imprime x (valor 10)
-print("{}\n", vp->x);
+println("{}", vp->x);
 // descarta a memória
 delete vp;
 ```
@@ -737,7 +760,7 @@ Este fato pode ser útil para receber funções como parâmetro, bem como armaze
 int(*quad)(int) = [](int p) -> int {
                      return p*p;
                   };
-print("{}\n", quad(3)); // 9
+println("{}", quad(3)); // 9
 // ou, utilizando 'auto' para deduzir o tipo
 auto func = [](int p) { return p*p; };
 ```
@@ -762,7 +785,7 @@ struct Z {
 // imprime x negativo
 void neg(struct Z* this)
 {
-   print("{}\n", 
+   printf("%d\n", 
           -1*(this->x));
 }
 ```
@@ -777,9 +800,9 @@ class Z {
  public:
    int x;
    // imprime x negativo
-   void neg() {
-      print("{}\n", 
-           -1*(this->x));
+   auto neg() -> void {
+      println("{}", 
+              -1*(this->x));
    }
 };
 ```
@@ -791,29 +814,79 @@ class Z {
 
 -------
 
+## Tipo `std::span` na STL
+
+Como `std::string_view`, para demais vetores `int[]`,  `std::array` e `std::vector`, o `std::span` suporta sequências de dados *sem posse*.
+
+```.cpp
+// invocando ./programa 1 2 3
+auto main(int argc, char* argv[]) -> int {
+   int v2[] = {1, 2, 3, 4};
+   std::span<int> s1{v2};
+   for (auto i : s1) std::println("{}", i);
+   // 1 2 3 4
+   std::vector<int> vec = {1, 2, 3, 4};
+   std::span<int> s2{vec};
+   for (auto i : s2) std::println("{}", i);
+   // 1 2 3 4
+   std::span<char*> entrada{argv, argc};
+   for (auto i : entrada) std::println("{}", i);
+   // ./programa 1 2 3
+   return 0;
+} // ============================================
+```
+
+
+-------
+
 ## Tipo `std::optional` na STL
 
 O `std::optional<tipo>` representa um valor opcional, 
-com alocação em *stack*, não em *heap* como smart pointers.
-Para utilizar, basta fazer `#include <optional>`. Exemplo:
+com alocação em *stack*, não em *heap* como ponteiros (e *smart pointers*, que veremos a seguir).
+O acesso se faz com operador (`*`).
 
 ```.cpp
-std::optional<int> busca(char c, const std::vector<char>& v) {
+auto busca(char c, std::span<char> v) -> std::optional<int> {
   // busca char 'c' num vetor v e retorna posição
-  for(int i=0; i<static_cast<int>(v.size()); i++)
-     if(v[i] == c)
-        return i; // encontrou
+  for (int i = 0; i < v.size(); i++)
+    if (v[i] == c) return i;  // encontrou
   // não encontrou
   return std::nullopt;
 }
 // ...
 std::vector<char> v = {'a', 'b', 'c'};
 auto op = busca('x', v);
-if(op) print("posicao={}", *op);
-else   print("não encontrou");
+if(op) println("posicao={}", *op);
+else   println("não encontrou");
 ```
 
---------
+
+-------
+
+## Tipo `std::expected` na STL
+
+O `std::expected<tipo, tipo_erro>` representa um valor *esperado*, 
+com alocação em *stack*, não em *heap* como ponteiros (e *smart pointers*, que veremos a seguir).
+O acesso se faz com operador (`*`).
+
+```.cpp
+auto busca2(char c, std::span<char> v) 
+                       -> std::expected<int, std::string> {
+  // busca char 'c' num vetor v e retorna posição
+  for (int i = 0; i < v.size(); i++)
+    if (v[i] == c) return i;  // encontrou
+  return std::unexpected{"não encontrou"};
+}
+// ...
+std::vector<char> v = {'a', 'b', 'c'};
+auto exp = busca2('x', v);
+if(exp) println("posicao={}", *exp);
+else    println("{}", exp.error());
+```
+
+# Parte 3: Tipos Abstratos e Conceitos
+
+-------
 
 ## Conceitos I
 
@@ -824,7 +897,17 @@ Por exemplo, podemos criar um *conceito* `TemNegativo`, que exige que o agregado
 ```.cpp
 template <typename Agregado>
 concept TemNegativo = requires(Agregado a) {
-  { a.neg() };
+  { a.neg() } -> std::same_as<void>;
+};
+```
+
+Exemplo de agregado de acordo com conceito `TemNegativo`:
+
+```.cpp
+class Z {
+ public:
+   int x;
+   auto neg() -> void { println("{}", -1*(this->x)); }
 };
 ```
 
@@ -840,9 +923,16 @@ TemNegativo auto a2 = Z{.x = 2};  // tipo conceitual
 Z a3                = Z{.x = 3};  // tipo explícito
 ```
 
+Outra forma de validação de tipos em *tempo de compilação* é o `static_assert`.
+Por exemplo, como garantir que a classe Z está de acordo com o conceito TemNegativo?
+
+```.cpp
+static_assert(TemNegativo<Z>);
+```
+
 **Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
 
-# Parte 3: Ponteiros Inteligentes e Referências em C++
+# Parte 4: Ponteiros Inteligentes e Referências em C++
 
 -------
 
@@ -1088,7 +1178,7 @@ u2.reset(); // apaga ponteiro u2 manualmente
 ```
 
 
-# Parte 4: Bibliotecas experimentais e avançadas em C++
+# Parte 5: Bibliotecas experimentais e avançadas em C++
 
 
 ## O que é biblioteca padrão STL?
@@ -1096,39 +1186,15 @@ u2.reset(); // apaga ponteiro u2 manualmente
 A biblioteca padrão da linguagem tem componentes já testados e de uso comum, 
 resolvendo diversos problemas básicos de programação.
 C++ possui implementações bastante importantes em sua biblioteca padrão, chamada STL.
-Atualmente, é necessário utilizar `#include<...>` para incluir esses componentes, 
-mas em um futuro próximo (C++23) será possível através de `import std`, 
+Antigamente, era necessário utilizar `#include<...>` para incluir esses componentes, 
+mas desde o C++23 é possível fazer tudo automaticamente com um `import std`, 
 utilizando a estrutura moderna dos CXX Modules.
 
 Já vimos indiretamente o uso de algumas dessas estruturas no curso, 
-como: tuplas em `std::make_tuple`; ponteiros inteligentes em `std::make_unique` ou `std::make_shared`; entre outras coisas.
+como: tuplas em `std::tuple`; ponteiros inteligentes em `std::make_unique` ou `std::make_shared`; entre outras coisas.
 Também vimos  exemplos de estruturas muito fundamentais como: `std::string` e `std::vector`.
 Geralmente, propostas são feitas pela comunidade, e boas implementações são incorporadas à biblioteca padrão, em revisões futuras da linguagem.
 
--------
-
-## Tipo `std::array` na STL
-
-Assim como vetores nativos, exemplo `int[]`, 
-o agregado `std::array<tipo, tamanho>` permite representar vetores
-de tamanho fixo.
-Para utilizar, basta fazer `#include <array>`. Exemplo:
-
-```.cpp
-int v1[10];
-int v2[] = {1, 2, 3, 4};
-std::array<int, 10> a1{};
-std::array<int, 4> a2 = {1, 2, 3, 4};
-print("v[0]={} v[3]={} tam={}\n", v2[0], v2[3],
-      sizeof(v2) / sizeof(v2[0]));
-// v[0]=1 v[3]=4 tam=4
-print("a[0]={} a[3]={} tam={}\n", a2[0], a2[3], a2.size());
-// a[0]=1 a[3]=4 tam=4
-print("{} {} {}\n", std::is_aggregate<int*>::value,
-      std::is_aggregate<int[]>::value,
-      std::is_aggregate<std::array<int, 4>>::value);
-// false true true
-```
 
 -------
 

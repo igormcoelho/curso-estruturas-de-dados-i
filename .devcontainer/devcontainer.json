@@ -9,11 +9,11 @@
 		"vscode": {
 			"extensions": [
 				"mine.cpplint",
-				"DevonDCarew.bazel-code",
+				"BazelBuild.vscode-bazel",
 				"matepek.vscode-catch2-test-adapter",
 				"ms-vscode.cmake-tools",
 				"llvm-vs-code-extensions.vscode-clangd",
-				// "-ms-vscode.cpptools-extension-pack"
+				"-ms-vscode.cpptools-extension-pack"
 			],
 			"settings": {
 				"C_Cpp.intelliSenseEngine": "disabled",
@@ -23,6 +23,7 @@
 					"--background-index",
 					"--compile-commands-dir=${workspaceFolder}/build/",
 				],
+				"clangd.path": "clangd",
 				"editor.formatOnSave": true,
 				"testMate.cpp.test.advancedExecutables": [
 					{

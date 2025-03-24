@@ -1,21 +1,27 @@
-cmake_minimum_required(VERSION 3.22)
-#
-project(ed-i-1-tipos-project LANGUAGES CXX VERSION 0.0.1)
-#
-set (CMAKE_CXX_STANDARD 20)
-set (CMAKE_CXX_STANDARD_REQUIRED ON)
-set (CMAKE_CXX_EXTENSIONS OFF)
-set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
-#
-Include(FetchContent)
-FetchContent_Declare(fmt GIT_REPOSITORY https://github.com/fmtlib/fmt.git GIT_TAG 9.1.0)
-FetchContent_MakeAvailable(fmt)
-#
-add_executable(app_tipos_main main.cpp)
-target_link_libraries(app_tipos_main PRIVATE fmt)
+cmake_minimum_required(VERSION 4.0.0)
+# set(CMAKE_CXX_COMPILER /usr/bin/g++-15)
+# set(CMAKE_CXX_COMPILER /usr/bin/clang++-19)
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "a9e1cf81-9932-4810-974b-6eccaf14e457")
+set(CMAKE_CXX_MODULE_STD 1)
+
+project(hello_world_project VERSION 0.1.0 LANGUAGES CXX)
+
+
+add_library(resto)
+target_sources(resto  PUBLIC  FILE_SET CXX_MODULES FILES   resto.cppm)
 #
 add_executable(app_tipos_main_resto main_resto.cpp)
-target_link_libraries(app_tipos_main_resto PRIVATE fmt)
+target_link_libraries(app_tipos_main_resto PRIVATE resto)
+
+#
+add_executable(app_tipos_main main.cpp)
 
 #==========
 #  TESTS

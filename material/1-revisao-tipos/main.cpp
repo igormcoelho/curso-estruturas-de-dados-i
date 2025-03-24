@@ -1,5 +1,4 @@
-#include <fmt/core.h>
-using fmt::print;
+import std;
 
 void teste_loop1() {
   int z = 0;

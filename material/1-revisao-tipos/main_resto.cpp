@@ -1,13 +1,10 @@
-#include<iostream>
+import std;
+import resto;
 
-#include "resto.hpp"
+auto main() -> int {
+  std::println("invocando metodo imprimex():");
+  auto z1 = Z{.x = 10};
+  z1.imprimex();
 
-int main() {
-
-   auto z1 = Z{.x = 10};
-
-   printf("invocando metodo imprimex()\n");
-   z1.imprimex();
-
-   return 0;
+  return 0;
 }

@@ -1,15 +1,12 @@
-#ifndef RESTO_HPP
-#define RESTO_HPP
+export module resto;
 
-#include <fmt/core.h>
-//
-using fmt::print;
+import std;
 
-class Z {
+export class Z {
  public:
   int x;
   // imprime campo x
-  void imprimex() { print("{}\n", this->x); }
+  void imprimex() { std::print("{}\n", this->x); }
 };
 
 template <typename Agregado>
@@ -19,5 +16,3 @@ concept TemImprimeX = requires(Agregado a) {
 
 // verifica tipo Z com conceito TemImprimeX
 static_assert(TemImprimeX<Z>);
-
-#endif /* RESTO_HPP */
