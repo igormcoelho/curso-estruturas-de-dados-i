@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include <expected>
+#include <generator>
 #include <memory>
 #include <optional>
 #include <print>
@@ -51,6 +52,17 @@ class Z {
   int x;
   auto neg() -> void { println("{}", -1 * (this->x)); }
 };
+
+auto fibonacci() -> std::generator<int> {
+  int b = 1, a = 0;
+  while (true) {
+    co_yield b;
+    // a, b <- b, b+a
+    int b2 = a + b;
+    a = b;
+    b = b2;
+  }
+}
 
 int main(int argc, char* argv[]) {
   {
@@ -204,6 +216,13 @@ int main(int argc, char* argv[]) {
   }
   {
     auto p1 = std::make_unique<Z>(Z{.x = 10});
+  }
+  {
+    println("Fib (<10):");
+    for (int num : fibonacci()) {
+      if (num > 10) break;
+      std::println("{}", num);  // prints 1 1 2 3 5 8
+    }
   }
 
   return 0;

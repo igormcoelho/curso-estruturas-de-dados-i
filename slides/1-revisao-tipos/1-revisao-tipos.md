@@ -884,6 +884,46 @@ if(exp) println("posicao={}", *exp);
 else    println("{}", exp.error());
 ```
 
+-------
+
+## Corrotinas I (Coroutines)
+
+Além das clássicas *rotinas*, que retornam (ou não) valores, existem também *corrotinas*, com capacidade de *paralisar e retomar* a execução.
+
+Um exemplo é a *sequência de fibonacci*, que começa de 0, 1, e segue com a soma dos *dois últimos elementos*. Essa é uma *sequência infinita*, e podemos facilmente representá-la assim que retornos `co_yield` de corrotina com `std::generator`:
+
+
+```.cpp
+auto fibonacci() -> std::generator<int> {
+  int b = 1, a = 0;
+  while (true) {
+    co_yield b;
+    // a, b <- b, b+a      
+    int b2 = a + b; a = b; b = b2;
+  }
+}
+```
+
+-------
+
+## Corrotinas II (Coroutines)
+
+Para consumir os valores, basta usar o for range (todos Fib menores que 10):
+
+```.cpp
+for (int num : fibonacci()) {
+   if (num > 10) break;
+   else std::println("{}", num);  // 1 1 2 3 5 8
+}
+```
+
+**Desafio:** como implementar essa mesma funcionalidade sem corrotina?
+
+**Desafio 2:** outro uso é o `std::future` com corrotinas conectadas a programação concorrente com threads. 
+Isso foge um pouco do escopo desse curso, mas verifique outras aplicações de corrotinas e `co_await`.
+
+-------
+
 # Parte 3: Tipos Abstratos e Conceitos
 
 -------
