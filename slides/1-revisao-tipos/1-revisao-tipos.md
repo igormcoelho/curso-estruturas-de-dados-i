@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Revisão de Tipos e Módulos
-date: 13/09/2020 - 22/03/2025
+date: 13/09/2020 - 26/03/2025
 transition: linear
 fontsize: 10
 header-includes:
@@ -12,9 +12,6 @@ pandoc-latex-fontsize:
   - classes: [cpp, listing]
     size: footnotesize
 ---
-
-
-
 
 
 # Revisão de Tipos e Módulos
@@ -154,7 +151,7 @@ cadeia de caracteres ou string) com o conteúdo de variáveis?
 ```.cpp
 import std;
 using namespace std;
-int main() -> int {
+auto main() -> int {
   int32_t x1 = 7;
   println("x1 é {}", x1);  // x1 é 7
   float x6 = x1 / 2.0;
@@ -884,46 +881,6 @@ if(exp) println("posicao={}", *exp);
 else    println("{}", exp.error());
 ```
 
--------
-
-## Corrotinas I (Coroutines)
-
-Além das clássicas *rotinas*, que retornam (ou não) valores, existem também *corrotinas*, com capacidade de *paralisar e retomar* a execução.
-
-Um exemplo é a *sequência de fibonacci*, que começa de 0, 1, e segue com a soma dos *dois últimos elementos*. Essa é uma *sequência infinita*, e podemos facilmente representá-la assim que retornos `co_yield` de corrotina com `std::generator`:
-
-
-```.cpp
-auto fibonacci() -> std::generator<int> {
-  int b = 1, a = 0;
-  while (true) {
-    co_yield b;
-    // a, b <- b, b+a      
-    int b2 = a + b; a = b; b = b2;
-  }
-}
-```
-
--------
-
-## Corrotinas II (Coroutines)
-
-Para consumir os valores, basta usar o for range (todos Fib menores que 10):
-
-```.cpp
-for (int num : fibonacci()) {
-   if (num > 10) break;
-   else std::println("{}", num);  // 1 1 2 3 5 8
-}
-```
-
-**Desafio:** como implementar essa mesma funcionalidade sem corrotina?
-
-**Desafio 2:** outro uso é o `std::future` com corrotinas conectadas a programação concorrente com threads. 
-Isso foge um pouco do escopo desse curso, mas verifique outras aplicações de corrotinas e `co_await`.
-
--------
-
 # Parte 3: Tipos Abstratos e Conceitos
 
 -------
@@ -1090,7 +1047,47 @@ if(!p1) print("p1 não existe mais!\n");
 println("{}", p2->x); // imprime x (valor 10)
 ```
 
-# Parte 5: Referências em C++ (tópico avançado)
+# Parte 5: Corrotinas (tópico avançado)
+
+-------
+
+## Corrotinas I (Coroutines)
+
+Além das clássicas *rotinas*, que retornam (ou não) valores, existem também *corrotinas*, com capacidade de *paralisar e retomar* a execução.
+
+Um exemplo é a *sequência de fibonacci*, que começa de 0, 1, e segue com a soma dos *dois últimos elementos*. Essa é uma *sequência infinita*, e podemos facilmente representá-la assim que retornos `co_yield` de corrotina com `std::generator`:
+
+
+```.cpp
+auto fibonacci() -> std::generator<int> {
+  int b = 1, a = 0;
+  while (true) {
+    co_yield b;
+    // a, b <- b, b+a      
+    int b2 = a + b; a = b; b = b2;
+  }
+}
+```
+
+-------
+
+## Corrotinas II (Coroutines)
+
+Para consumir os valores, basta usar o for range (todos Fib menores que 10):
+
+```.cpp
+for (int num : fibonacci()) {
+   if (num > 10) break;
+   else std::println("{}", num);  // 1 1 2 3 5 8
+}
+```
+
+**Desafio:** como implementar essa mesma funcionalidade sem corrotina?
+
+**Desafio 2:** outro uso é o `std::future` com corrotinas conectadas a programação concorrente com threads. 
+Isso foge um pouco do escopo desse curso, mas verifique outras aplicações de corrotinas e `co_await`.
+
+# Parte 6: Referências em C++ (tópico avançado)
 
 
 ## Passagem de Parâmetros por Referência II
@@ -1218,7 +1215,7 @@ u2 = nullptr; // apaga ponteiro u2 manualmente
 ```
 
 
-# Parte 6: Bibliotecas experimentais e avançadas em C++
+# Parte 7: Bibliotecas experimentais e avançadas em C++
 
 
 ## O que é biblioteca padrão STL?

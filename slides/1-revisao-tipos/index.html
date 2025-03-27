@@ -148,7 +148,7 @@ font-size: 1em;
   <h1 class="title">Estruturas de Dados I</h1>
   <p class="subtitle">Revisão de Tipos e Módulos</p>
   <p class="author">Igor Machado Coelho</p>
-  <p class="date">13/09/2020 - 22/03/2025</p>
+  <p class="date">13/09/2020 - 26/03/2025</p>
 </section>
 
 <section>
@@ -264,7 +264,7 @@ variáveis?</p>
 <code>{}</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int32_t</span> x1 <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;x1 é </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x1<span class="op">);</span>  <span class="co">// x1 é 7</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> x6 <span class="op">=</span> x1 <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span></span>
@@ -797,43 +797,6 @@ seguir). O acesso se faz com operador (<code>*</code>).</p>
 <span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> exp <span class="op">=</span> busca2<span class="op">(</span><span class="ch">&#39;x&#39;</span><span class="op">,</span> v<span class="op">);</span></span>
 <span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>exp<span class="op">)</span> println<span class="op">(</span><span class="st">&quot;posicao=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">*</span>exp<span class="op">);</span></span>
 <span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>    println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> exp<span class="op">.</span>error<span class="op">());</span></span></code></pre></div>
-</section>
-<section id="corrotinas-i-coroutines" class="slide level2">
-<h2>Corrotinas I (Coroutines)</h2>
-<p>Além das clássicas <em>rotinas</em>, que retornam (ou não) valores,
-existem também <em>corrotinas</em>, com capacidade de <em>paralisar e
-retomar</em> a execução.</p>
-<p>Um exemplo é a <em>sequência de fibonacci</em>, que começa de 0, 1, e
-segue com a soma dos <em>dois últimos elementos</em>. Essa é uma
-<em>sequência infinita</em>, e podemos facilmente representá-la assim
-que retornos <code>co_yield</code> de corrotina com
-<code>std::generator</code>:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> fibonacci<span class="op">()</span> <span class="op">-&gt;</span> <span class="bu">std::</span>generator<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> b <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> a <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span><span class="kw">true</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">co_yield</span> b<span class="op">;</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// a, b &lt;- b, b+a      </span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> b2 <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span> a <span class="op">=</span> b<span class="op">;</span> b <span class="op">=</span> b2<span class="op">;</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-</section>
-<section id="corrotinas-ii-coroutines" class="slide level2">
-<h2>Corrotinas II (Coroutines)</h2>
-<p>Para consumir os valores, basta usar o for range (todos Fib menores
-que 10):</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> num <span class="op">:</span> fibonacci<span class="op">())</span> <span class="op">{</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>num <span class="op">&gt;</span> <span class="dv">10</span><span class="op">)</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span> <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> num<span class="op">);</span>  <span class="co">// 1 1 2 3 5 8</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p><strong>Desafio:</strong> como implementar essa mesma funcionalidade
-sem corrotina?</p>
-<p><strong>Desafio 2:</strong> outro uso é o <code>std::future</code>
-com corrotinas conectadas a programação concorrente com threads. Isso
-foge um pouco do escopo desse curso, mas verifique outras aplicações de
-corrotinas e <code>co_await</code>.</p>
-</section>
-<section class="slide level2">
-
 </section></section>
 <section>
 <section id="parte-3-tipos-abstratos-e-conceitos" class="title-slide slide level1">
@@ -848,29 +811,29 @@ sobre algum tipo (inclusive tipos agregados com funções internas).</p>
 <p>Por exemplo, podemos criar um <em>conceito</em>
 <code>TemNegativo</code>, que exige que o agregado possua um método
 <code>neg()</code>:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> Agregado<span class="op">&gt;</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> TemNegativo <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>Agregado a<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span> a<span class="op">.</span>neg<span class="op">()</span> <span class="op">}</span> <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span><span class="dt">void</span><span class="op">&gt;;</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> Agregado<span class="op">&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> TemNegativo <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>Agregado a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span> a<span class="op">.</span>neg<span class="op">()</span> <span class="op">}</span> <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span><span class="dt">void</span><span class="op">&gt;;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 <p>Exemplo de agregado de acordo com conceito
 <code>TemNegativo</code>:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Z <span class="op">{</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span><span class="op">:</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> x<span class="op">;</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> neg<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span> println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">*(</span><span class="kw">this</span><span class="op">-&gt;</span>x<span class="op">));</span> <span class="op">}</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Z <span class="op">{</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span><span class="op">:</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> neg<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span> println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">*(</span><span class="kw">this</span><span class="op">-&gt;</span>x<span class="op">));</span> <span class="op">}</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
 <section id="conceitos-ii" class="slide level2">
 <h2>Conceitos II</h2>
 <p>Assim, podemos utilizar um conceito mais específico ao invés de um
 tipo automático:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> a1             <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">1</span><span class="op">};</span>  <span class="co">// tipo automático</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>TemNegativo <span class="kw">auto</span> a2 <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">2</span><span class="op">};</span>  <span class="co">// tipo conceitual</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>Z a3                <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">3</span><span class="op">};</span>  <span class="co">// tipo explícito</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> a1             <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">1</span><span class="op">};</span>  <span class="co">// tipo automático</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>TemNegativo <span class="kw">auto</span> a2 <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">2</span><span class="op">};</span>  <span class="co">// tipo conceitual</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>Z a3                <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">3</span><span class="op">};</span>  <span class="co">// tipo explícito</span></span></code></pre></div>
 <p>Outra forma de validação de tipos em <em>tempo de compilação</em> é o
 <code>static_assert</code>. Por exemplo, como garantir que a classe Z
 está de acordo com o conceito TemNegativo?</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>TemNegativo<span class="op">&lt;</span>Z<span class="op">&gt;);</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>TemNegativo<span class="op">&lt;</span>Z<span class="op">&gt;);</span></span></code></pre></div>
 <p><strong>Importante:</strong> a noção de <em>conceitos</em> é
 fundamental para a compreensão de <em>tipos abstratos</em>, central no
 curso de estruturas de dados.</p>
@@ -893,23 +856,23 @@ futuro</em>). Para utilizá-los, basta incluir o cabeçalho
 <code>std::make_unique</code> ou <code>std::make_shared</code>.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb47"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aloca (C++) agregado P</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> vp <span class="op">=</span> <span class="kw">new</span> P<span class="op">{</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>                <span class="op">};</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co">// imprime x (valor 10)</span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> vp<span class="op">-&gt;</span>x<span class="op">);</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="co">// descarta a memória</span></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="kw">delete</span> vp<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aloca (C++) agregado P</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> vp <span class="op">=</span> <span class="kw">new</span> P<span class="op">{</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                <span class="op">};</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">// imprime x (valor 10)</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> vp<span class="op">-&gt;</span>x<span class="op">);</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co">// descarta a memória</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="kw">delete</span> vp<span class="op">;</span></span></code></pre></div>
 </div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb48"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aloca (C++) agregado P</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> vp <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>P<span class="op">&gt;(</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>     P<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span> <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span><span class="op">});</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co">// imprime x (valor 10)</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> vp<span class="op">-&gt;</span>x<span class="op">);</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co">// descarta a memória</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co">// delete vp;</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aloca (C++) agregado P</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> vp <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>P<span class="op">&gt;(</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>     P<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span> <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span><span class="op">});</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co">// imprime x (valor 10)</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> vp<span class="op">-&gt;</span>x<span class="op">);</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="co">// descarta a memória</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="co">// delete vp;</span></span></code></pre></div>
 </div>
 </div>
 </section>
@@ -926,25 +889,25 @@ específicas (geralmente <em>smart pointers</em>), mas geralmente evite
 <code>NULL</code> e <code>std::nullptr</code>.</p>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb49"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aloca (C++) o agregado P</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> vp <span class="op">=</span> <span class="kw">new</span> P<span class="op">{</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>                <span class="op">};</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>vp<span class="op">)</span>  print<span class="op">(</span><span class="st">&quot;sucesso!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(!</span>vp<span class="op">)</span>      print<span class="op">(</span><span class="st">&quot;falha!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>vp<span class="op">==</span>NULL<span class="op">)</span> print<span class="op">(</span><span class="st">&quot;falha!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>vp<span class="op">==</span><span class="dv">0</span><span class="op">)</span>    print<span class="op">(</span><span class="st">&quot;falha!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aloca (C++) o agregado P</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> vp <span class="op">=</span> <span class="kw">new</span> P<span class="op">{</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>                <span class="op">};</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>vp<span class="op">)</span>  print<span class="op">(</span><span class="st">&quot;sucesso!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(!</span>vp<span class="op">)</span>      print<span class="op">(</span><span class="st">&quot;falha!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>vp<span class="op">==</span>NULL<span class="op">)</span> print<span class="op">(</span><span class="st">&quot;falha!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>vp<span class="op">==</span><span class="dv">0</span><span class="op">)</span>    print<span class="op">(</span><span class="st">&quot;falha!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span></code></pre></div>
 </div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb50"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aloca (C++) o agregado P</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> vp <span class="op">=</span> </span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>make_unique<span class="op">&lt;</span>P<span class="op">&gt;(</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>     P<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span> <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span><span class="op">});</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>vp<span class="op">)</span>  print<span class="op">(</span><span class="st">&quot;sucesso!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(!</span>vp<span class="op">)</span> print<span class="op">(</span><span class="st">&quot;falha!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="co">// reseta manualmente</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>vp <span class="op">=</span> <span class="bu">std::</span>nullptr<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Aloca (C++) o agregado P</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> vp <span class="op">=</span> </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>make_unique<span class="op">&lt;</span>P<span class="op">&gt;(</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>     P<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span> <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span><span class="op">});</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>vp<span class="op">)</span>  print<span class="op">(</span><span class="st">&quot;sucesso!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(!</span>vp<span class="op">)</span> print<span class="op">(</span><span class="st">&quot;falha!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co">// reseta manualmente</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>vp <span class="op">=</span> <span class="bu">std::</span>nullptr<span class="op">;</span></span></code></pre></div>
 </div>
 </div>
 </section>
@@ -962,15 +925,54 @@ conceito é fundamental para lidar com <code>unique_ptr</code>, pois eles
 não permitem cópias, sendo obrigatoriamente passados por referência.</p>
 <p>Para transformar uma <em>variável viva</em> para uma <em>variável em
 movimento</em>, basta usar o comando <code>std::move</code>.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p1 <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>P<span class="op">&gt;(</span>P<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span> <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span><span class="op">});</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p1<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p2 <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>p1<span class="op">);</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(!</span>p1<span class="op">)</span> print<span class="op">(</span><span class="st">&quot;p1 não existe mais!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p2<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p1 <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>P<span class="op">&gt;(</span>P<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">,</span> <span class="op">.</span>y <span class="op">=</span> <span class="ch">&#39;Y&#39;</span><span class="op">});</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p1<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p2 <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>p1<span class="op">);</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(!</span>p1<span class="op">)</span> print<span class="op">(</span><span class="st">&quot;p1 não existe mais!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p2<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span></code></pre></div>
 </section></section>
 <section>
-<section id="parte-5-referências-em-c-tópico-avançado" class="title-slide slide level1">
-<h1>Parte 5: Referências em C++ (tópico avançado)</h1>
+<section id="parte-5-corrotinas-tópico-avançado" class="title-slide slide level1">
+<h1>Parte 5: Corrotinas (tópico avançado)</h1>
+
+</section>
+<section id="corrotinas-i-coroutines" class="slide level2">
+<h2>Corrotinas I (Coroutines)</h2>
+<p>Além das clássicas <em>rotinas</em>, que retornam (ou não) valores,
+existem também <em>corrotinas</em>, com capacidade de <em>paralisar e
+retomar</em> a execução.</p>
+<p>Um exemplo é a <em>sequência de fibonacci</em>, que começa de 0, 1, e
+segue com a soma dos <em>dois últimos elementos</em>. Essa é uma
+<em>sequência infinita</em>, e podemos facilmente representá-la assim
+que retornos <code>co_yield</code> de corrotina com
+<code>std::generator</code>:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> fibonacci<span class="op">()</span> <span class="op">-&gt;</span> <span class="bu">std::</span>generator<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> b <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> a <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span><span class="kw">true</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">co_yield</span> b<span class="op">;</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// a, b &lt;- b, b+a      </span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> b2 <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span> a <span class="op">=</span> b<span class="op">;</span> b <span class="op">=</span> b2<span class="op">;</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="corrotinas-ii-coroutines" class="slide level2">
+<h2>Corrotinas II (Coroutines)</h2>
+<p>Para consumir os valores, basta usar o for range (todos Fib menores
+que 10):</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> num <span class="op">:</span> fibonacci<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>num <span class="op">&gt;</span> <span class="dv">10</span><span class="op">)</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span> <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> num<span class="op">);</span>  <span class="co">// 1 1 2 3 5 8</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Desafio:</strong> como implementar essa mesma funcionalidade
+sem corrotina?</p>
+<p><strong>Desafio 2:</strong> outro uso é o <code>std::future</code>
+com corrotinas conectadas a programação concorrente com threads. Isso
+foge um pouco do escopo desse curso, mas verifique outras aplicações de
+corrotinas e <code>co_await</code>.</p>
+</section></section>
+<section>
+<section id="parte-6-referências-em-c-tópico-avançado" class="title-slide slide level1">
+<h1>Parte 6: Referências em C++ (tópico avançado)</h1>
 
 </section>
 <section id="passagem-de-parâmetros-por-referência-ii" class="slide level2">
@@ -1063,8 +1065,8 @@ o dado. A função <code>reset</code> apaga o ponteiro manualmente.</p>
 <span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>u2 <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span> <span class="co">// apaga ponteiro u2 manualmente</span></span></code></pre></div>
 </section></section>
 <section>
-<section id="parte-6-bibliotecas-experimentais-e-avançadas-em-c" class="title-slide slide level1">
-<h1>Parte 6: Bibliotecas experimentais e avançadas em C++</h1>
+<section id="parte-7-bibliotecas-experimentais-e-avançadas-em-c" class="title-slide slide level1">
+<h1>Parte 7: Bibliotecas experimentais e avançadas em C++</h1>
 
 </section>
 <section id="o-que-é-biblioteca-padrão-stl" class="slide level2">
