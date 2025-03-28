@@ -65,7 +65,8 @@ int   x = 5;    // armazena o inteiro 5 na variável x
 char  y = 'A';  // armazena o caractere 'A' na variável y
 float z = 3.7 ; // armazena o real 3.7 na variável z
 bool v = true;  // armazena o booleano true na variável v
-auto b = 'B';   // prefira dedução de tipo com 'auto'
+auto b = 'B';     // dedução de tipo com 'auto'... qual tipo?
+auto s = "abcd";  // cadeia de caracteres, ainda veremos tipo
 ```
 
 **Responda:** Qual o tipo acima de b? (C++23 e C23)

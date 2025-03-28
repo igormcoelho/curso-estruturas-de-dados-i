@@ -66,11 +66,12 @@ auto fibonacci() -> std::generator<int> {
 
 int main(int argc, char* argv[]) {
   {
-    int x = 5;      // armazena o inteiro 5 na variável x
-    char y = 'A';   // armazena o caractere 'A' na variável y
-    float z = 3.7;  // armazena o real 3.7 na variável z
-    bool a = true;  // armazena o booleano true na variável a
-    auto b = 'B';   // prefira dedução de tipo com 'auto'
+    int x = 5;        // armazena o inteiro 5 na variável x
+    char y = 'A';     // armazena o caractere 'A' na variável y
+    float z = 3.7;    // armazena o real 3.7 na variável z
+    bool a = true;    // armazena o booleano true na variável a
+    auto b = 'B';     // prefira dedução de tipo com 'auto'
+    auto s = "abcd";  // qual tipo? veremos...
   }
 
   {
