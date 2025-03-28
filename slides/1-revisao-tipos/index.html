@@ -322,6 +322,8 @@ long long, bem como os modificadores unsigned, signed, short e long.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int32_t</span> v<span class="op">[</span><span class="dv">8</span><span class="op">];</span> <span class="co">// cria um vetor com 8 inteiros</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>v<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span>     <span class="co">// atribui o valor 3 à primeira posição</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>v<span class="op">[</span><span class="dv">7</span><span class="op">]</span> <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>     <span class="co">// atribui o valor 5 à última posição</span></span></code></pre></div>
+<p>Exemplo de um vetor <code>v</code>, de 0 a 7, da esquerda para
+direita:</p>
 <pre><code>          v: | 3 |   |   |   |   |   |   | 5 |
                0   1   2   3   4   5   6   7</code></pre>
 </div>
@@ -428,6 +430,8 @@ ponto (.) para acessar campos do agregado. Exemplo:</p>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>p1<span class="op">.</span>x <span class="op">=</span> <span class="dv">20</span><span class="op">;</span>             <span class="co">// atribui 20 à variável x de p1</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>p1<span class="op">.</span>x <span class="op">=</span> p1<span class="op">.</span>x <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>       <span class="co">// incrementa a variável x de p1</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st"> </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p1<span class="op">.</span>x<span class="op">,</span> p1<span class="op">.</span>y<span class="op">);</span>  <span class="co">// imprime &#39;21 A&#39;</span></span></code></pre></div>
+<p>Exemplo de estrutura <code>p1</code>, com p1.x e p1.y, da esquerda
+para direita:</p>
 <pre><code>             p1:  |      21       | &#39;A&#39; |
                         p1.x        p1.y</code></pre>
 <p><strong>Importante:</strong> veremos à frente que o (.) também pode

@@ -240,6 +240,7 @@ v[0] = 3;     // atribui o valor 3 à primeira posição
 v[7] = 5;     // atribui o valor 5 à última posição
 ```
 
+Exemplo de um vetor `v`, de 0 a 7, da esquerda para direita:
 ```
           v: | 3 |   |   |   |   |   |   | 5 |
                0   1   2   3   4   5   6   7
@@ -384,6 +385,7 @@ p1.x = p1.x + 1;       // incrementa a variável x de p1
 println("{} {}", p1.x, p1.y);  // imprime '21 A'
 ```
 
+Exemplo de estrutura `p1`, com p1.x e p1.y, da esquerda para direita:
 ```
              p1:  |      21       | 'A' |
                         p1.x        p1.y
