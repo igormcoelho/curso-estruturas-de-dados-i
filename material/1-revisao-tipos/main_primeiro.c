@@ -14,6 +14,10 @@ int main() {
     bool a = true;    // armazena o booleano true na variável a
     auto b = 'B';     // prefira dedução de tipo com 'auto'
     auto s = "abcd";  // qual tipo? veremos...
+    auto f = 10.5;    // tipo 'double'
+    printf("char=%c\n", b);
+    printf("str=%s\n", s);
+    printf("f=%f\n", f);
   }
 
   {

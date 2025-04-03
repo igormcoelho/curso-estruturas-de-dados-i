@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Revisão de Tipos e Módulos
-date: 13/09/2020 - 26/03/2025
+date: 13/09/2020 - 03/04/2025
 transition: linear
 fontsize: 10
 header-includes:
@@ -108,6 +108,31 @@ ao invés de indireta por atribuição (`operator=`).
     int8_t  x4 = 40;  // signed char
     uint8_t x5 = 50;  // unsigned char
 ```
+
+-------
+
+## Introdução a Rotinas: Funções
+
+A modularização de programas é muito importante, principalmente
+quando trechos de código são repetidos muitas vezes.
+
+Nesses casos, é
+comum criar rotinas, como *funções e procedimentos*, que podem por sua vez receber
+parâmetros.
+
+Tomemos por exemplo a função quadrado que retorna
+o valor passado elevado ao quadrado.
+
+```.cpp
+// função que retorna um 'int', com parâmetro 'p'
+auto quadrado (int p) -> int {
+   return p*p;
+}
+// variável do tipo 'int', com valor 25
+int x = quadrado(5);        
+```
+
+**Importante:** a dedução do tipo após a seta `->` é feita automaticamente.
 
 
 ------
@@ -222,6 +247,30 @@ while (j < 10) {
 
 -------
 
+## Introdução a Rotinas: Procedimentos
+
+Quando nenhum valor é retornado (em um procedimento), utilizamos
+a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
+
+```.cpp
+import std;
+
+auto imprime (int a, int b) -> void {
+   for (auto i=a; i<b; i++)
+      std::println("{}", i);
+}
+
+auto main() -> int {
+   imprime(2, 5);
+   return 0;
+}
+```
+
+**Pergunta:** Por que a rotina `imprime` não precisa retornar nada? O que é impresso ao invocar `imprime(2,5)`?
+
+
+-------
+
 ## Tipos Compostos
 
 Além dos tipos primitivos apresentados anteriormente (int, float,
@@ -297,7 +346,7 @@ println("z={}", z);
 
 --------
 
-## Saltos incondicionais com `goto`
+## Saltos incondicionais com `goto` (tópico avançado)
 
 Saltos incondicionais no código podem ser feitos com `goto label;` e `label:`.
 Uma aplicação usual é a "quebra múltipla" de laços de repetição.
@@ -319,6 +368,7 @@ fim:
   println("final z={}", z);
   // z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]
 ```
+
 
 -------
 
@@ -395,7 +445,7 @@ Exemplo de estrutura `p1`, com p1.x e p1.y, da esquerda para direita:
 
 -------
 
-## Espaço de Memória
+## Espaço de Memória e Métodos em Agregados
 
 Todas variáveis de um programa ocupam determinado espaço na
 memória principal do computador. **Assumiremos** que o tipo int (ou float) ocupa 4 bytes,
@@ -413,6 +463,8 @@ float y[5];     // = 20 bytes
 Já nos agregados, assumimos o espaço ocupado como a
 soma de suas variáveis internas (embora na prática o tamanho possa
 ser ligeiramente superior, devido a alinhamentos de memória).
+
+**Importante:** em C++, agregados também podem conter métodos.
 
 -------
 
@@ -547,6 +599,7 @@ Até agora, verificamos as seguinte estruturas:
 
 - tipos primitivos (C)
 - tipo automático com **auto** (C)
+- introdução a rotinas com retorno **auto** (C++)
 - estruturas condicionais e laços de repetição (C)
 - vetores (C)
 - tipos agregados com **struct** ou **class/public:** (C/C++)
@@ -554,46 +607,11 @@ Até agora, verificamos as seguinte estruturas:
 
 # Parte 2: Rotinas, Ponteiros e Conceitos em C/C++
 
--------
+---------
 
 ## Rotinas I
 
-A modularização de programas é muito importante, principalmente
-quando trechos de código são repetidos muitas vezes.
-
-Nesses casos, é
-comum criar rotinas, como *funções e procedimentos*, que podem por sua vez receber
-parâmetros.
-
-Tomemos por exemplo a função quadrado que retorna
-o valor passado elevado ao quadrado.
-
-```.cpp
-// função que retorna um 'int', com parâmetro 'p'
-auto quadrado (int p) -> int {
-   return p*p;
-}
-// variável do tipo 'int', com valor 25
-int x = quadrado(5);        
-```
-
-**Importante:** a dedução do tipo após a seta `->` é feita automaticamente.
-
--------
-
-## Rotinas II
-
-Quando nenhum valor é retornado (em um procedimento), utilizamos
-a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
-
-```.cpp
-auto imprime (int a, int b) -> void {
-   for (auto i=a; i<b; i++)
-      println("{}", i);
-}
-```
-
-Também é possível retornar múltiplos elementos (par ou tupla), através de um *structured binding* com tuplas:
+É possível retornar múltiplos elementos (par ou tupla), através de um *structured binding* com tuplas:
 
 ```.cpp
 auto duplo(int p) {
@@ -723,7 +741,7 @@ delete vp;
 
 --------
 
-## Rotinas III
+## Rotinas II
 
 O tipo de uma função é basicamente um ponteiro (endereço) da localização desta função na memória do computador. Por exemplo:
 
@@ -767,7 +785,7 @@ auto func = [](int p) { return p*p; };
 
 -------
 
-## Rotinas IV
+## Rotinas III
 
 A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o *ponteiro para o agregado*, chamado **this**:
 
@@ -932,7 +950,7 @@ static_assert(TemNegativo<Z>);
 
 **Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
 
-# Parte 4: Ponteiros Inteligentes e Referências em C++
+# Parte 4: Ponteiros Inteligentes e `std::move` em C++
 
 -------
 

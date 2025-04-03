@@ -26,6 +26,7 @@ add_executable(app_tipos_main main.cpp)
 #==========
 #  TESTS
 #----------
+Include(FetchContent)
 # add_subdirectory(test/external/Catch2/)
 FetchContent_Declare(Catch2 GIT_REPOSITORY https://github.com/catchorg/Catch2.git GIT_TAG v3.3.1)
 FetchContent_MakeAvailable(Catch2)

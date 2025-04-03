@@ -25,9 +25,12 @@ env:
 	source ~/.cargo/env
 	conda activate
 
-deps:
+deps: reveal.js
 	wget -nc https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css
-	# wget -nc https://github.com/hakimel/reveal.js/archive/master.tar.gz
+	# wget -nc https://github.com/hakimel/reveal.js/archive/refs/tags/5.2.1.tar.gz
+	# tar -xzvf 5.2.1.tar.gz && mv reveal.js-5.2.1 reveal.js
+
+reveal.js:
 	wget -nc https://github.com/hakimel/reveal.js/archive/refs/tags/5.2.1.tar.gz
-	# tar -xzvf master.tar.gz && mv reveal.js-master reveal.js
-	tar -xzvf 5.2.1.tar.gz && mv reveal.js-5.2.1 reveal.js
+	tar -xzvf 5.2.1.tar.gz
+	[ -d reveal.js ] || mv reveal.js-5.2.1 reveal.js
