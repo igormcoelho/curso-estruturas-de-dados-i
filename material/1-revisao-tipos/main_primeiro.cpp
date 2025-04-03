@@ -64,6 +64,12 @@ auto fibonacci() -> std::generator<int> {
   }
 }
 
+template <typename T>
+struct G {
+  T x;  // qual o tipo da variável x?
+  char y;
+};
+
 int main(int argc, char* argv[]) {
   {
     int x = 5;        // armazena o inteiro 5 na variável x

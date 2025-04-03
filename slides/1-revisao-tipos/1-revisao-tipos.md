@@ -417,6 +417,13 @@ auto p2 = P{.x=10, .y='Y'};
 :::::::::::::
 
 
+**Importante:** utilizaremos **struct** no decorrer desse curso de C/C++.
+
+<!-- nota 1: é quase impossível explicar que class/public: e struct são sinônimos para agregados.
+     nota 2: é mais difícil explicar que struct pode ser classe, e class pode não ser classe...
+     em C/C++, ambos são agregados... mas podem se tornar "objetos" também, em situações não cobertas no curso.
+-->
+
 ------
 
 ## Tipos Agregados II
@@ -477,9 +484,7 @@ Consideremos o agregado P que carrega um int e um char... como transformá-lo em
 
 ```.cpp
 template<typename T>
-class G
-{
-public:
+struct G {
    T x;   // qual o tipo da variável x?
    char y;
 };
@@ -653,9 +658,9 @@ Em ponteiros para agregados, o operador de acesso (`.`) é substituído por uma 
 O operador `&` toma o endereço da variável:
 
 ```.cpp
-class P {
- public:
-   int32_t x; char y; // mais alguma coisa gigante aqui?
+struct P {
+   int32_t x; 
+   char y; // mais alguma coisa gigante aqui?
 };
 // ...
 P p0 = {.x = 20, .y = 'Y'}; 
@@ -724,10 +729,10 @@ free(vp);
 
 ```.cpp
 // Aloca (C++) o agregado P
-auto* vp = new P{
-                  .x = 10,
-                  .y = 'Y'
-                };
+auto vp = new P{
+                 .x = 10,
+                 .y = 'Y'
+               };
 // imprime x (valor 10)
 println("{}", vp->x);
 // descarta a memória
@@ -814,8 +819,7 @@ void neg(struct Z* this)
 
 ```.cpp
 // Em C++ (tipo agregado Z)
-class Z {
- public:
+struct Z {
    int x;
    // imprime x negativo
    auto neg() -> void {
@@ -922,8 +926,7 @@ concept TemNegativo = requires(Agregado a) {
 Exemplo de agregado de acordo com conceito `TemNegativo`:
 
 ```.cpp
-class Z {
- public:
+struct Z {
    int x;
    auto neg() -> void { println("{}", -1*(this->x)); }
 };
@@ -936,9 +939,11 @@ class Z {
 Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:
 
 ```.cpp
-auto a1             = Z{.x = 1};  // tipo automático
-TemNegativo auto a2 = Z{.x = 2};  // tipo conceitual
-Z a3                = Z{.x = 3};  // tipo explícito
+auto a0             = Z{.x = 1};     // tipo automático
+auto  p0            = new Z{.x = 1}; // tipo ponteiro
+auto* p1            = new Z{.x = 1}; // tipo ponteiro
+TemNegativo auto a2 = Z{.x = 2};     // tipo conceitual
+Z a3                = Z{.x = 3};     // tipo explícito
 ```
 
 Outra forma de validação de tipos em *tempo de compilação* é o `static_assert`.
@@ -968,10 +973,10 @@ Para utilizá-los, basta incluir o cabeçalho `<memory>`, e substituir o `new` p
 
 ```{.cpp}
 // Aloca (C++) agregado P
-auto* vp = new P{
-                  .x = 10,
-                  .y = 'Y'
-                };
+auto vp = new P{
+                 .x = 10,
+                 .y = 'Y'
+               };
 // imprime x (valor 10)
 print("{}\n", vp->x);
 // descarta a memória
@@ -1017,10 +1022,10 @@ Em C++, existe o `std::nullptr`, que pode ser utilizado em situações específi
 
 ```{.cpp}
 // Aloca (C++) o agregado P
-auto* vp = new P{
-                  .x = 10,
-                  .y = 'Y'
-                };
+auto vp = new P{
+                 .x = 10,
+                 .y = 'Y'
+               };
 if(vp)  print("sucesso!\n");
 if(!vp)      print("falha!\n");
 if(vp==NULL) print("falha!\n");
@@ -1220,15 +1225,15 @@ Uma função útil é o `get`, que retorna um ponteiro nativo C para o dado.
 A função `reset` apaga o ponteiro manualmente.
 
 ```.cpp
-auto* p1 = new int{10};
-auto* p2 = p1;
+auto p1 = new int{10};
+auto p2 = p1;
 println("*p1={} *p2={}", *p1, *p2);
 // *p1=10 *p2=10
 delete p1;
 
 auto u1 = std::make_unique<int>(10);
 auto u2 = std::move(u1);
-auto* p3 = u2.get();
+auto p3 = u2.get();
 println("*u2={} *p3={}", *u2, *p3);
 // *u2=10 *p3=10
 u2.reset();   // apaga ponteiro u2 manualmente
