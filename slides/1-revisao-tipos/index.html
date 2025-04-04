@@ -1189,6 +1189,23 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb58-1"><a href="
 <span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>function<span class="op">&lt;</span><span class="dt">int</span><span class="op">()&gt;</span> fxy <span class="op">=</span> <span class="op">[=,</span> <span class="op">&amp;</span>y<span class="op">]()</span> <span class="op">{</span> y<span class="op">++;</span> <span class="cf">return</span> x<span class="op">+</span>y<span class="op">;</span> <span class="op">};</span></span>
 <span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> z <span class="op">=</span> fxy<span class="op">();</span> <span class="co">// z==31  y==21</span></span></code></pre></div>
 </section>
+<section id="dedução-de-this-com-c23-avançado" class="slide level2">
+<h2>Dedução de <code>this</code> com C++23 (avançado)</h2>
+<p>Uma capacidade interessante do C++23 é o <em>deducing this</em>, que
+permite trabalhar com tipagem sobre a variável <code>this</code> em
+funções. Isso pode ser útil para capturar o <code>this</code> como
+referência, ao invés de ponteiro, e também para <em>nomear funções
+anônimas</em>.</p>
+<div class="sourceCode" id="cb59"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> fatorial <span class="op">=</span> <span class="op">[](</span><span class="kw">this</span> <span class="kw">auto</span> func<span class="op">,</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;</span> <span class="dv">2</span><span class="op">)</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> n <span class="op">*</span> func<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> fatorial<span class="op">(</span><span class="dv">5</span><span class="op">));</span> <span class="co">// 120</span></span></code></pre></div>
+</section>
 <section id="proposta-para-um-stdscan-avançadoexperimental"
 class="slide level2">
 <h2>Proposta para um <code>std::scan</code> (avançado/experimental)</h2>
@@ -1201,17 +1218,17 @@ href="https://github.com/eliaskosunen/scnlib"><code>scnlib</code></a> de
 busca criar uma função <code>scn::scan</code> que substitua a
 <code>scanf</code> (pelo mesmo raciocínio empregado na abolição do
 <code>printf</code>). Exemplo:</p>
-<div class="sourceCode" id="cb59"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;scn/scn.h&gt;</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co">// lembre-se de incluir o pacote eliaskosunen/scnlib no CMake</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> scn<span class="op">::</span>scan<span class="op">;</span></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co">// ...</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> resto <span class="op">=</span> scan<span class="op">(</span><span class="st">&quot;10 20&quot;</span><span class="op">,</span> <span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x<span class="op">);</span></span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>scan<span class="op">(</span>resto<span class="op">,</span> <span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> y<span class="op">);</span></span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;x=</span><span class="sc">{}</span><span class="st"> y=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x<span class="op">,</span> y<span class="op">);</span></span>
-<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="co">// x=10 y=20</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;scn/scn.h&gt;</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co">// lembre-se de incluir o pacote eliaskosunen/scnlib no CMake</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> scn<span class="op">::</span>scan<span class="op">;</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co">// ...</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> resto <span class="op">=</span> scan<span class="op">(</span><span class="st">&quot;10 20&quot;</span><span class="op">,</span> <span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>scan<span class="op">(</span>resto<span class="op">,</span> <span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> y<span class="op">);</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;x=</span><span class="sc">{}</span><span class="st"> y=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x<span class="op">,</span> y<span class="op">);</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="co">// x=10 y=20</span></span></code></pre></div>
 </section>
 <section id="ponteiro-cyclesrelation_ptr-avançadoexperimental"
 class="slide level2">
@@ -1225,16 +1242,16 @@ ponteiros inteligentes atuais, e o que pode ser possivelmente melhorado
 em um C++ futuro. Exemplo:</p>
 <p>Para utilizar, basta fazer
 <code>#include &lt;cycles/relation_ptr&gt;</code>. Exemplo:</p>
-<div class="sourceCode" id="cb60"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> cycles<span class="op">::</span>relation_pool<span class="op">;</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> cycles<span class="op">::</span>relation_ptr<span class="op">;</span></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co">// veja instruções em: https://github.com/igormcoelho/cycles</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>relation_pool<span class="op">&lt;&gt;</span> grupo<span class="op">;</span></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> r1 <span class="op">=</span> grupo<span class="op">.</span>make<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span><span class="dv">10</span><span class="op">);</span></span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> r2 <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>r1<span class="op">);</span></span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;*r2=</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,*</span>r2<span class="op">);</span></span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="co">// *r2=10</span></span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>r2<span class="op">.</span>reset<span class="op">();</span> <span class="co">// apaga ponteiro r2 manualmente</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> cycles<span class="op">::</span>relation_pool<span class="op">;</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> cycles<span class="op">::</span>relation_ptr<span class="op">;</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co">// veja instruções em: https://github.com/igormcoelho/cycles</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>relation_pool<span class="op">&lt;&gt;</span> grupo<span class="op">;</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> r1 <span class="op">=</span> grupo<span class="op">.</span>make<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span><span class="dv">10</span><span class="op">);</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> r2 <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>r1<span class="op">);</span></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>print<span class="op">(</span><span class="st">&quot;*r2=</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,*</span>r2<span class="op">);</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="co">// *r2=10</span></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>r2<span class="op">.</span>reset<span class="op">();</span> <span class="co">// apaga ponteiro r2 manualmente</span></span></code></pre></div>
 </section>
 <section id="discussão-rápida-c-ou-c" class="slide level2">
 <h2>Discussão Rápida: C ou C++?</h2>
@@ -1319,17 +1336,17 @@ que seja possível efetuar testes no código (de forma sistemática).</p>
 <p>Um programa começa pelo seu “ponto de entrada” (ou
 <em>entrypoint</em>), tipicamente uma função
 <code>int main()</code>:</p>
-<div class="sourceCode" id="cb61"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// 0 significa: nenhum erro</span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>A declaração de funções pode ser feita antes da definição:</p>
 <div class="sourceCode" id="cb62"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> quadrado<span class="op">(</span><span class="dt">int</span> p<span class="op">);</span> <span class="co">// declara a função &#39;quadrado&#39;</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> quadrado<span class="op">(</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> p<span class="op">*</span>p<span class="op">;</span>       <span class="co">// implementa a função &#39;quadrado&#39;</span></span>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// inclui arquivo externo</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// 0 significa: nenhum erro</span></span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>A declaração de funções pode ser feita antes da definição:</p>
+<div class="sourceCode" id="cb63"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> quadrado<span class="op">(</span><span class="dt">int</span> p<span class="op">);</span> <span class="co">// declara a função &#39;quadrado&#39;</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> quadrado<span class="op">(</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> p<span class="op">*</span>p<span class="op">;</span>       <span class="co">// implementa a função &#39;quadrado&#39;</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Declarações vem em arquivos <code>.h</code>, enquanto as respectivas
 implementações em arquivo <code>.cpp</code> (ou juntas como
 <code>.hpp</code>).</p>
@@ -1382,54 +1399,54 @@ comporta dois elementos internos (tipo genérico). Porém, é mais
 vantajoso usar o existente na STL, chamado <code>std::pair</code> (o
 prefixo <code>std::</code> é chamado <em>namespace</em> e evita colisões
 de nomes):</p>
-<div class="sourceCode" id="cb63"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">char</span><span class="op">&gt;</span> p <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="ch">&#39;C&#39;</span><span class="op">};</span> <span class="co">// direct init.</span></span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>first<span class="op">,</span> p<span class="op">.</span>second<span class="op">);</span> <span class="co">// 5 C</span></span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ...</span></span>
-<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span><span class="pp"> </span><span class="co">// funções de entrada/saída</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span><span class="pp">    </span><span class="co">// agregados de par e tupla</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">char</span><span class="op">&gt;</span> p <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="ch">&#39;C&#39;</span><span class="op">};</span> <span class="co">// direct init.</span></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>first<span class="op">,</span> p<span class="op">.</span>second<span class="op">);</span> <span class="co">// 5 C</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ...</span></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="relembrando-agregado-z" class="slide level2">
 <h2>Relembrando (agregado Z)</h2>
-<div class="sourceCode" id="cb64"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Z</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> x<span class="op">;</span></span>
-<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">// imprime campo x</span></span>
-<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprimex<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>      printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="kw">this</span><span class="op">-&gt;</span>x<span class="op">);</span></span>
-<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Z</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">// imprime campo x</span></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprimex<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>      printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="kw">this</span><span class="op">-&gt;</span>x<span class="op">);</span></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
 <section id="relembrando-conceito-temimprimex" class="slide level2">
 <h2>Relembrando (conceito TemImprimeX)</h2>
-<div class="sourceCode" id="cb65"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">typename</span> Agregado<span class="op">&gt;</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> <span class="dt">bool</span></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>TemImprimeX <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>Agregado a<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>      a<span class="op">.</span>imprimex<span class="op">()</span></span>
-<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">typename</span> Agregado<span class="op">&gt;</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> <span class="dt">bool</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>TemImprimeX <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>Agregado a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>      a<span class="op">.</span>imprimex<span class="op">()</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
 <section id="verificações-com-assert" class="slide level2">
 <h2>Verificações com <code>assert</code></h2>
 <p>Durante o desenvolvimento, é útil verificar partes do código com
 testes simples e necessários para a corretude do mesmo (em tempo real).
 Para isso, podemos utilizar o <code>assert()</code>. Exemplo:</p>
-<div class="sourceCode" id="cb66"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">++;</span></span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span><span class="op">(</span>x <span class="op">==</span> <span class="dv">11</span><span class="op">);</span> <span class="co">// x deveria ser 11</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">++;</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span><span class="op">(</span>x <span class="op">==</span> <span class="dv">11</span><span class="op">);</span> <span class="co">// x deveria ser 11</span></span></code></pre></div>
 <p>Da mesma forma, podemos verificar tipos, especialmente
 <em>conceitos</em>, em tempo de compilação:</p>
-<div class="sourceCode" id="cb67"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se tipo agregado Z tem método imprimex()</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>TemImprimeX<span class="op">&lt;</span>Z<span class="op">&gt;);</span> </span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se tipo agregado Z tem método imprimex()</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>TemImprimeX<span class="op">&lt;</span>Z<span class="op">&gt;);</span> </span></code></pre></div>
 </section>
 <section id="testes-com-a-biblioteca-catch2" class="slide level2">
 <h2>Testes com a biblioteca Catch2</h2>
@@ -1438,18 +1455,18 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb67-1"><a href="
 biblioteca <a href="https://github.com/catchorg/Catch2">Catch2</a>.</p>
 <p>Basta criar um arquivo de teste, por exemplo,
 <code>teste.cpp</code>:</p>
-<div class="sourceCode" id="cb68"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;resto.hpp&quot;</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define CATCH_CONFIG_MAIN </span><span class="co">// catch2 main()</span></span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;catch.hpp&quot;</span></span>
-<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>TEST_CASE<span class="op">(</span><span class="st">&quot;Testa inicializacao do agregado Z&quot;</span><span class="op">)</span> </span>
-<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> z1 <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">};</span></span>
-<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// verifica se, de fato, z1.x vale 10</span></span>
-<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>   REQUIRE<span class="op">(</span>z1<span class="op">.</span>x <span class="op">==</span> <span class="dv">10</span><span class="op">);</span></span>
-<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;resto.hpp&quot;</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define CATCH_CONFIG_MAIN </span><span class="co">// catch2 main()</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;catch.hpp&quot;</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>TEST_CASE<span class="op">(</span><span class="st">&quot;Testa inicializacao do agregado Z&quot;</span><span class="op">)</span> </span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> z1 <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">};</span></span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// verifica se, de fato, z1.x vale 10</span></span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>   REQUIRE<span class="op">(</span>z1<span class="op">.</span>x <span class="op">==</span> <span class="dv">10</span><span class="op">);</span></span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="baixando-o-catch2-e-executando" class="slide level2">
 <h2>Baixando o Catch2 e executando</h2>

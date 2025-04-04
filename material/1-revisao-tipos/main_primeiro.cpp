@@ -1,10 +1,15 @@
-// C23 or C++23
-// import std;
 #include <stdint.h>
 #include <stdio.h>
 
+// C23 or C++23
+#ifdef USE_MODULE
+import std;
+#else
+
 #include <expected>
+#ifdef HAS_GENERATOR
 #include <generator>
+#endif
 #include <memory>
 #include <optional>
 #include <print>
@@ -12,6 +17,8 @@
 #include <vector>
 // #include <cstddef>
 // #include <cstdint>
+#endif
+
 using std::print;
 using std::println;
 
@@ -47,6 +54,7 @@ concept TemNegativo = requires(Agregado a) {
   { a.neg() } -> std::same_as<void>;
 };
 
+#ifdef HAS_GENERATOR
 auto fibonacci() -> std::generator<int> {
   int b = 1, a = 0;
   while (true) {
@@ -57,6 +65,7 @@ auto fibonacci() -> std::generator<int> {
     b = b2;
   }
 }
+#endif
 
 template <typename T>
 struct G {
@@ -73,6 +82,12 @@ struct Z {
   // But reference works fine! Not teaching references in this course...
   // auto neg(this Z& self) -> void { println("{}", -1 * (self.x)); }
   auto neg() -> void { println("{}", -1 * (this->x)); }
+};
+
+// Em C++ (tipo agregado Z)
+struct K {
+  auto test(this K& self) -> void { std::println("ref"); }
+  // auto test(this K* th) -> void { std::println("ptr"); }
 };
 
 int main(int argc, char* argv[]) {
@@ -191,7 +206,7 @@ int main(int argc, char* argv[]) {
     std::span<int> s2{vec};
     for (auto i : s2) std::println("{}", i);
     // 1 2 3 4
-    std::span<char*> entrada{argv, argc};
+    std::span<char*> entrada{argv, (size_t)argc};  // clang cast...
     for (auto i : entrada) std::println("{}", i);
     // ./programa 1 2 3
   }
@@ -230,16 +245,38 @@ int main(int argc, char* argv[]) {
     auto p1 = std::make_unique<Z>(Z{.x = 10});
   }
   {
+#ifdef HAS_GENERATOR
     println("Fib (<10):");
     for (int num : fibonacci()) {
       if (num > 10) break;
       std::println("{}", num);  // prints 1 1 2 3 5 8
     }
+#endif
   }
   {
     // C++: uso de Z e neg
     auto z = Z{.x = 10};
     z.neg();  // this = &z
+  }
+  {
+    std::println("deducing this");
+    K k;
+    // k->test(); // WRONG
+    k.test();      // ref
+    (&k)->test();  // ref
+    K* pk = new K{};
+    pk->test();    // ref
+    (*pk).test();  // ref
+  }
+  {
+    auto factorial = [](this auto func, int n) {
+      if (n < 2)
+        return 1;
+      else
+        return n * func(n - 1);
+    };
+
+    println("{}", factorial(5));
   }
 
   return 0;

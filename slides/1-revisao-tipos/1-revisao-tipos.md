@@ -1309,6 +1309,22 @@ std::function<int()> fxy = [=, &y]() { y++; return x+y; };
 int z = fxy(); // z==31  y==21
 ```
 
+## Dedução de `this` com C++23 (avançado)
+
+Uma capacidade interessante do C++23 é o *deducing this*, que permite trabalhar com tipagem sobre a variável `this` em funções.
+Isso pode ser útil para capturar o `this` como referência, ao invés de ponteiro, e também para *nomear funções anônimas*.
+
+```.cpp
+auto fatorial = [](this auto func, int n) {
+if (n < 2)
+   return 1;
+else
+   return n * func(n - 1);
+};
+//
+println("{}", fatorial(5)); // 120
+```
+
 ## Proposta para um `std::scan` (avançado/experimental)
 
 Assim como o `std::print` (atualmente da `fmt`), existem

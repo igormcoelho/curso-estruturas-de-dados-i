@@ -3,3 +3,5 @@ build/
 app*
 *.pcm
 *.gcm
+primeiro_gcc
+primeiro_clang
