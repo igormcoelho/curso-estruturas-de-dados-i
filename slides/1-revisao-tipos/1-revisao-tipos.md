@@ -1316,10 +1316,10 @@ Isso pode ser útil para capturar o `this` como referência, ao invés de pontei
 
 ```.cpp
 auto fatorial = [](this auto func, int n) {
-if (n < 2)
-   return 1;
-else
-   return n * func(n - 1);
+   if (n < 2)
+      return 1;
+   else
+      return n * func(n - 1);
 };
 //
 println("{}", fatorial(5)); // 120

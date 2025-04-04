@@ -1198,10 +1198,10 @@ referência, ao invés de ponteiro, e também para <em>nomear funções
 anônimas</em>.</p>
 <div class="sourceCode" id="cb59"><pre
 class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> fatorial <span class="op">=</span> <span class="op">[](</span><span class="kw">this</span> <span class="kw">auto</span> func<span class="op">,</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;</span> <span class="dv">2</span><span class="op">)</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> n <span class="op">*</span> func<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;</span> <span class="dv">2</span><span class="op">)</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> n <span class="op">*</span> func<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
 <span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
 <span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
 <span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> fatorial<span class="op">(</span><span class="dv">5</span><span class="op">));</span> <span class="co">// 120</span></span></code></pre></div>
