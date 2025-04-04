@@ -840,6 +840,26 @@ z.neg();  // this = &z
 
 -------
 
+## Rotinas IV
+
+Funções podem se chamar novamente durante sua execução em um processo *recursivo*.
+
+
+```.cpp
+auto fatorial(int n) -> int {
+   if (n < 2)
+      return 1;
+   else
+      return n * fatorial(n - 1);
+};
+
+// 
+println("{}", factorial(5)); // 120
+```
+
+
+-------
+
 ## Tipo `std::span` na STL
 
 Como `std::string_view`, para demais vetores `int[]`,  `std::array` e `std::vector`, o `std::span` suporta sequências de dados *sem posse*.
