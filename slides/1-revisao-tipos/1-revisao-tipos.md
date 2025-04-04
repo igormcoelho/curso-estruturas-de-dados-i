@@ -792,7 +792,7 @@ auto func = [](int p) { return p*p; };
 
 ## Rotinas III
 
-A linguagem C++ permite a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas). Para acessar campos do agregado de dentro dessas funções, utilize o *ponteiro para o agregado*, chamado **this**:
+A linguagem C++ permite métodos membros (*member functions*) com a inclusão de funções e variáveis dentro de agregados (em C, funções devem ser externas/globais). Para acessar campos do agregado de dentro dessas funções, utilize o *ponteiro para o agregado*, chamado **this**:
 
 
 ::::::::::::: {.columns}
@@ -804,13 +804,14 @@ A linguagem C++ permite a inclusão de funções e variáveis dentro de agregado
 struct Z {
     int x;
 };
-
-// imprime x negativo
-void neg(struct Z* this)
-{
+void neg(struct Z* this) {
    printf("%d\n", 
           -1*(this->x));
 }
+
+// C: uso de Z e neg
+struct Z z = {.x = 10};
+neg(&z);
 ```
 
 :::::
@@ -821,12 +822,15 @@ void neg(struct Z* this)
 // Em C++ (tipo agregado Z)
 struct Z {
    int x;
-   // imprime x negativo
+
    auto neg() -> void {
       println("{}", 
               -1*(this->x));
    }
 };
+// C++: uso de Z e neg
+auto z = Z{.x = 10};
+z.neg();  // this = &z
 ```
 
 :::::

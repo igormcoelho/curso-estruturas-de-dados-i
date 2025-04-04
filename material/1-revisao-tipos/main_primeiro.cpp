@@ -47,12 +47,6 @@ concept TemNegativo = requires(Agregado a) {
   { a.neg() } -> std::same_as<void>;
 };
 
-class Z {
- public:
-  int x;
-  auto neg() -> void { println("{}", -1 * (this->x)); }
-};
-
 auto fibonacci() -> std::generator<int> {
   int b = 1, a = 0;
   while (true) {
@@ -68,6 +62,17 @@ template <typename T>
 struct G {
   T x;  // qual o tipo da variável x?
   char y;
+};
+
+// Em C++ (tipo agregado Z)
+struct Z {
+  int x;
+
+  // C++23 'deducing this' ...
+  // Cannot make it work with pointer, like "this Z* z", breaks concepts!
+  // But reference works fine! Not teaching references in this course...
+  // auto neg(this Z& self) -> void { println("{}", -1 * (self.x)); }
+  auto neg() -> void { println("{}", -1 * (this->x)); }
 };
 
 int main(int argc, char* argv[]) {
@@ -230,6 +235,11 @@ int main(int argc, char* argv[]) {
       if (num > 10) break;
       std::println("{}", num);  // prints 1 1 2 3 5 8
     }
+  }
+  {
+    // C++: uso de Z e neg
+    auto z = Z{.x = 10};
+    z.neg();  // this = &z
   }
 
   return 0;

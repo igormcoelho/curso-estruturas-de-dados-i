@@ -732,34 +732,39 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb35-1"><a href="
 </section>
 <section id="rotinas-iii" class="slide level2">
 <h2>Rotinas III</h2>
-<p>A linguagem C++ permite a inclusão de funções e variáveis dentro de
-agregados (em C, funções devem ser externas). Para acessar campos do
-agregado de dentro dessas funções, utilize o <em>ponteiro para o
-agregado</em>, chamado <strong>this</strong>:</p>
+<p>A linguagem C++ permite métodos membros (<em>member functions</em>)
+com a inclusão de funções e variáveis dentro de agregados (em C, funções
+devem ser externas/globais). Para acessar campos do agregado de dentro
+dessas funções, utilize o <em>ponteiro para o agregado</em>, chamado
+<strong>this</strong>:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Em C (tipo agregado Z)</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Z <span class="op">{</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">;</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">// imprime x negativo</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> neg<span class="op">(</span><span class="kw">struct</span> Z<span class="op">*</span> this<span class="op">)</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> </span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>          <span class="op">-</span><span class="dv">1</span><span class="op">*(</span>this<span class="op">-&gt;</span>x<span class="op">));</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> neg<span class="op">(</span><span class="kw">struct</span> Z<span class="op">*</span> this<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>          <span class="op">-</span><span class="dv">1</span><span class="op">*(</span>this<span class="op">-&gt;</span>x<span class="op">));</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co">// C: uso de Z e neg</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Z z <span class="op">=</span> <span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">};</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>neg<span class="op">(&amp;</span>z<span class="op">);</span></span></code></pre></div>
 </div><div class="column" style="width:50%;">
 <div class="sourceCode" id="cb37"><pre
 class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Em C++ (tipo agregado Z)</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Z <span class="op">{</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> x<span class="op">;</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>   <span class="co">// imprime x negativo</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> neg<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>      println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> </span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>              <span class="op">-</span><span class="dv">1</span><span class="op">*(</span><span class="kw">this</span><span class="op">-&gt;</span>x<span class="op">));</span></span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co">// C++: uso de Z e neg</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> z <span class="op">=</span> Z<span class="op">{.</span>x <span class="op">=</span> <span class="dv">10</span><span class="op">};</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>z<span class="op">.</span>neg<span class="op">();</span>  <span class="co">// this = &amp;z</span></span></code></pre></div>
 </div>
 </div>
 </section>
