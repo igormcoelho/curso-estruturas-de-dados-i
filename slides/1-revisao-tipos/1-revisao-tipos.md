@@ -854,7 +854,7 @@ auto fatorial(int n) -> int {
 };
 
 // 
-println("{}", factorial(5)); // 120
+println("{}", fatorial(5)); // 120
 ```
 
 
