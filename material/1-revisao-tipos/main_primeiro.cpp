@@ -90,6 +90,18 @@ struct K {
   // auto test(this K* th) -> void { std::println("ptr"); }
 };
 
+struct Fat {
+  int k;
+  auto fatorial(int n) -> int;
+  auto f() -> int { return this->k; }
+};
+auto Fat::fatorial(int n) -> int {
+  if (n < 2)
+    return 1;
+  else
+    return n * fatorial(n - 1);
+};
+
 int main(int argc, char* argv[]) {
   {
     int x = 5;        // armazena o inteiro 5 na variável x
@@ -277,6 +289,11 @@ int main(int argc, char* argv[]) {
     };
 
     println("{}", factorial(5));
+
+    //
+    Fat f;
+    println("{}", f.fatorial(5));  // 120
+    println("{}", std::is_aggregate<Fat>::value);
   }
 
   return 0;

@@ -179,12 +179,12 @@ import std;
 using namespace std;
 auto main() -> int {
   int32_t x1 = 7;
-  println("x1 é {}", x1);  // x1 é 7
+  println("x1 é {}", x1);  /*  x1 é 7  */
   float x6 = x1 / 2.0;
   println("metade de {} é {}", x1, x6);  // metade de 7 é 3.5
   char b = 'L';
-  println("isto é uma {}etra", b);  // isto é uma Letra
-  print("Olá mundo! \n");  // Olá mundo! (quebra de linha)
+  println("isto é uma {}etra", b);  // isto é uma Letra 
+  print("Olá mundo! \n");   // Olá mundo! (quebra de linha) 
   // ====================================================
 ```
 
@@ -417,7 +417,7 @@ auto p2 = P{.x=10, .y='Y'};
 :::::::::::::
 
 
-**Importante:** utilizaremos **struct** no decorrer desse curso de C/C++.
+**Importante:** sempre utilizaremos **struct** no decorrer desse curso de C/C++ como um *tipo agregado*, nunca como uma *classe*.
 
 <!-- nota 1: é quase impossível explicar que class/public: e struct são sinônimos para agregados.
      nota 2: é mais difícil explicar que struct pode ser classe, e class pode não ser classe...
@@ -843,18 +843,23 @@ z.neg();  // this = &z
 ## Rotinas IV
 
 Funções podem se chamar novamente durante sua execução em um processo *recursivo*.
+A implementação de funções membro pode ocorrer também fora do agregado com a notação do resolutor de escopo (`::`):
 
 
 ```.cpp
-auto fatorial(int n) -> int {
+struct Fat {
+   auto fatorial(int n) -> int;
+};
+
+auto Fat::fatorial(int n) -> int {
    if (n < 2)
       return 1;
    else
       return n * fatorial(n - 1);
 };
-
-// 
-println("{}", fatorial(5)); // 120
+// utilizando dentro do main()...
+Fat f;
+println("{}", f.fatorial(5)); // 120
 ```
 
 
@@ -929,6 +934,59 @@ auto exp = busca2('x', v);
 if(exp) println("posicao={}", *exp);
 else    println("{}", exp.error());
 ```
+
+
+## Modularização de Rotinas e Agregados (CXX Modules)
+
+Rotinas e agregados podem ser *exportados* para outras unidades de compilação, através da palavra `export`.
+Um arquivo de módulo tem extensão `.cppm` e começa com `export module NOME_DO_MODULO;`.
+Tanto arquivos convencionais `.cpp` ou módulos `.cppm` podem importar módulos, com a palavra-chave `import`.
+
+
+::::::::::::: {.columns}
+
+::::: {.column width=50%}
+
+```.cpp
+// arquivo teste.cppm
+export module teste;
+import std;
+
+export auto nada() -> void {} 
+
+export struct ABC {
+   auto zero() -> int { 
+      return  0; 
+   }
+};
+```
+
+:::::
+
+::::: {.column width=50%}
+
+```.cpp
+// arquivo main.cpp
+import teste;
+import std;
+
+auto main() -> int {
+   ABC abc;
+   std::println("{}", 
+         abc.zero()); // 0
+   nada();
+   return 0;
+}
+```
+
+:::::
+
+:::::::::::::
+
+
+
+
+
 
 # Parte 3: Tipos Abstratos e Conceitos
 

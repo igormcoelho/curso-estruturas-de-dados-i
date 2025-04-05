@@ -97,21 +97,19 @@ Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 ## Implementação
 
 
-Consideraremos uma pilha sequencial com, no máximo, `MAXN` elementos do tipo caractere.
+Consideraremos uma pilha sequencial com, no máximo, `MAX_N` elementos no vetor `v` do tipo caractere.
 
 ```.cpp
-constexpr int MAXN = 100'000; // capacidade máxima da pilha
-class PilhaSeq1
-{
-public:
-  char elementos [MAXN];      // elementos na pilha
-  int N;                      // num. de elementos na pilha
-  void cria () { ... }        // inicializa agregado
-  void libera () { ... }      // finaliza agregado
-  char topo () { ... }
-  void empilha (char dado){ ... };
-  char desempilha () { ... };
-  int tamanho() { ... };
+constexpr int MAX_N = 100'000; // capacidade máxima da pilha
+struct PilhaSeq1 {
+  char v[MAX_N];          // elementos na pilha
+  int N;                  // num. de elementos na pilha
+  auto cria()   -> void;  // inicializa agregado
+  auto libera() -> void;  // finaliza agregado
+  auto topo()             -> char;
+  auto empilha(char dado) -> void;
+  auto desempilha()       -> char;
+  auto tamanho()          -> int;
 };
 ```
 
@@ -122,22 +120,23 @@ public:
 Antes de completar as funções pendentes, utilizaremos a `PilhaSeq1`:
 
 ```.cpp
-int main () {
+auto main() -> int {
    PilhaSeq1 p;
-   p.cria();
-   p.empilha('A');
-   p.empilha('B');
-   p.empilha('C');
-   print("{}\n", p.topo());
-   print("{}\n", p.desempilha());
+   p.cria();        // nosso contrato no curso!
+   p.empilha('A');  p.empilha('B');  p.empilha('C');
+   println("{}", p.topo());
+   println("{}", p.desempilha());
    p.empilha('D');
-   while(p.tamanho() > 0)
-      print("{}\n", p.desempilha());
-   p.libera();
+   while(p.tamanho() > 0)  println("{}", p.desempilha());
+   p.libera();     // nosso contrato no curso!
    return 0;
 }
 ``` 
-***Verifique as impressões em tela:*** *C C D B A*
+***Verifique as impressões em tela:*** 
+
+. . .
+
+*C C D B A*
 
 ---------
 
@@ -146,16 +145,12 @@ int main () {
 A operação `cria` inicializa a pilha para uso, e a função `libera` desaloca os recursos dinâmicos.
 
 ```.cpp
-class PilhaSeq1 {
-...
-void cria() {
+auto PilhaSeq1::cria() -> void {
    this->N = 0;
 }
 
-void libera() {
+auto PilhaSeq1::libera() -> void {
    // nenhum recurso dinâmico para desalocar
-}
-...
 }
 ```
 ---------
@@ -166,18 +161,14 @@ A operação `empilha` em uma pilha sequencial adiciona um novo elemento ao topo
 A operação `desempilha` em uma pilha sequencial remove e retorna o último elemento da pilha.
 
 ```.cpp
-class PilhaSeq1 {
-...
-void empilha(char dado) {
-   this->elementos[this->N] = dado;
+auto PilhaSeq1::empilha(char dado) -> void {
+   this->v[this->N] = dado;
    this->N++;                 // N = N + 1
 }
 
-char desempilha() {
+auto PilhaSeq1::desempilha() -> char {
    this->N--;                 // N = N - 1
-   return elementos[this->N];
-}
-...
+   return v[this->N];
 }
 ```
 
@@ -188,51 +179,53 @@ char desempilha() {
 A operação de topo em uma pilha sequencial retorna o último elemento empilhado.
 
 ```.cpp
-class PilhaSeq1 {
-...
-char topo()   { return this->elementos[this->N-1]; }
-int tamanho() { return this->N; }
-...
+auto PilhaSeq1::topo() -> char { 
+   return this->v[this->N-1]; 
+}
+auto PilhaSeq1::tamanho() -> int { 
+   return this->N; 
 }
 ```
 
 ***Desafio:*** *O que aconteceria se a pilha estivesse vazia e o `topo()` fosse invocado? Como permitir que o programa continue mesmo após situações inesperadas como essa?*
 
-***Dica:*** *Retorne um `char` **opcional**, com uma pequena modificação na função `topo()`. Exemplo:* `std::optional<char> topo() { ... }`.
+***Dica:*** *Retorne um `char` **opcional**, com uma pequena modificação na função `topo()`.*
+
+*Exemplo:* `auto PilhaSeq1::topo() -> std::optional<char> {...}`
 
 
 -------
 
 ## Exemplo de uso
 
-Considere uma pilha sequencial (`MAXN=5`):
+Considere uma pilha sequencial (`MAX_N=5`):
 `PilhaSeq1 p; p.cria();`
 
 ```
-p.N: | 0 |     p.elementos: |   |   |   |   |   |   
+p.N: | 0 |     p.v: |   |   |   |   |   |   
                               0   1   2   3   4   
 ```
 
 Agora, empilhamos `A`, `B` e `C`, e depois desempilhamos uma vez.
 
 ```
-p.N: | 1 |     p.elementos: | A |   |   |   |   |   
-                              0   1   2   3   4   
+p.N: | 1 |     p.v: | A |   |   |   |   |   
+                      0   1   2   3   4   
 ```
 
 ```
-p.N: | 2 |     p.elementos: | A | B |   |   |   |   
-                              0   1   2   3   4   
+p.N: | 2 |     p.v: | A | B |   |   |   |   
+                      0   1   2   3   4   
 ```
 
 ```
-p.N: | 3 |     p.elementos: | A | B | C |   |   |   
-                              0   1   2   3   4   
+p.N: | 3 |     p.v: | A | B | C |   |   |   
+                      0   1   2   3   4   
 ```
 
 ```
-p.N: | 2 |     p.elementos: | A | B |   |   |   |   
-                              0   1   2   3   4   
+p.N: | 2 |     p.v: | A | B |   |   |   |   
+                      0   1   2   3   4   
 ```
 
 *Qual o topo atual da pilha?*
@@ -243,10 +236,10 @@ p.N: | 2 |     p.elementos: | A | B |   |   |   |
 
 A Pilha Sequencial tem a vantagem de ser bastante simples de implementar, ocupando um espaço constante (na memória) para todas operações.
 
-Porém, existe a limitação física de `MAXN` posições imposta pela alocação estática, 
+Porém, existe a limitação física de `MAX_N` posições imposta pela alocação estática, 
 não permitindo que a pilha ultrapasse esse limite.
 
-***Desafio:*** implemente uma Pilha Sequencial utilizando alocação dinâmica para o vetor `elementos`. 
+***Desafio:*** implemente uma Pilha Sequencial utilizando alocação dinâmica para o vetor `v`. 
 Assim, quando não houver espaço
 para novos elementos, aloque mais espaço na memória (copiando elementos existentes para o novo vetor).
 
@@ -278,9 +271,7 @@ Consideraremos uma pilha encadeada, utilizando um agregado `NoPilha1` para conec
 :::::{.column width=33%}
 
 ```.cpp
-class NoPilha1 
-{
-public:
+struct NoPilha1 {
    char dado;
    NoPilha1* prox;
 };
@@ -291,20 +282,16 @@ public:
 :::::{.column  width=67%}
 
 ```.cpp
-class PilhaEnc1
-{
-public:
+struct PilhaEnc1 {
   NoPilha1* inicio;
   int N;                      
-  void cria () { ... }        
-  void libera () { ... }     
-  char topo () { ... }
-  void empilha (char dado){ ... }
-  char desempilha () { ... }
-  int tamanho() { ... }
+  auto cria()   -> void;
+  auto libera() -> void;
+  auto topo()             -> char;
+  auto empilha(char dado) -> void;
+  auto desempilha()       -> char;
+  auto tamanho()          -> int;
 };
-// verifica agregado PilhaEnc1
-static_assert(PilhaTAD<PilhaEnc1, char>);
 ```
 
 :::::
@@ -317,13 +304,9 @@ static_assert(PilhaTAD<PilhaEnc1, char>);
 ## Implementação: Cria
 
 ```.cpp
-class PilhaEnc1 {
-...
-void cria() {
+auto PilhaEnc1::cria() -> void {
    this->N = 0;      // zero elementos na pilha
    this->inicio = 0; // endereço zero de memória
-}
-...
 }
 ```
 ---------
@@ -351,8 +334,8 @@ p.cria();
 ## Implementação: Empilha 
 
 ```.cpp
-void empilha(char v) {
-  auto* no = new NoPilha1{.dado = v, .prox = this->inicio};
+auto PilhaEnc1::empilha(char v) -> void {
+  auto no = new NoPilha1{.dado = v, .prox = this->inicio};
   this->inicio = no;
   this->N++;              // N = N + 1
 }
@@ -380,6 +363,28 @@ void empilha(char v) {
    0     4    ...   100   104   108   112   116   ...  8GiB
 ```
 
+---------
+
+## Implementação: Topo 
+
+```.cpp
+auto PilhaEnc1::topo() -> char {
+   auto no = this->inicio;
+   return no->dado;            // return (*no).dado;
+   // ou simplesmente...
+   // return this->inicio->dado;   
+}
+```
+### Na memória: `p.topo();`
+
+**p.N: 2  $\quad$  p.inicio: 100 $\quad$  $topo \leftarrow B \leftarrow A$**
+
+```
+|     |     |     |  B  | 112 |     |  A  |  0  |     |    |    
+   0     4    ...   100   104   108   112   116   ...  8GiB
+```
+
+
 
 ---------
 
@@ -390,7 +395,7 @@ void empilha(char v) {
 :::::{.column width=65%}
 
 ```.cpp
-char desempilha() {
+auto PilhaEnc1::desempilha() -> char {
    NoPilha1* p = this->inicio->prox;
    char r = this->inicio->dado;
    delete this->inicio;
@@ -405,9 +410,8 @@ char desempilha() {
 :::::{.column  width=35%}
 
 ```.cpp
-class NoPilha1 
-{
-public:
+// relembrando...
+struct NoPilha1 {
    char dado;
    NoPilha1* prox;
 };
@@ -440,7 +444,7 @@ public:
 ## Implementação: Libera
 
 ```.cpp
-void libera() {
+auto PilhaEnc1::libera() -> void {
    while (this->N > 0) {
       NoPilha1* p = this->inicio->prox;
       delete this->inicio;   this->inicio = p;    this->N--; 
@@ -494,12 +498,10 @@ Consideraremos uma pilha encadeada, utilizando um agregado `NoPilha2` para conec
 
 ::::::::::{.columns}
 
-:::::{.column width=33%}
+:::::{.column width=40%}
 
 ```.cpp
-class NoPilha2
-{
-public:
+struct NoPilha2 {
   char dado;
   uptr<NoPilha2> prox;
 };
@@ -507,23 +509,19 @@ public:
 
 :::::
 
-:::::{.column  width=67%}
+:::::{.column  width=60%}
 
 ```.cpp
-class PilhaEnc2
-{
-public:
+struct PilhaEnc2 {
    uptr<NoPilha2> inicio;
    int N;                      
-   void cria () { ... }        
-   void libera () { ... }     
-   char topo () { ... }
-   void empilha (char dado){ ... }
-   char desempilha () { ... }
-   int tamanho() { ... }
+   auto cria()   -> void;
+   auto libera() -> void;
+   auto topo()              -> char;
+   auto empilha (char dado) -> void;
+   auto desempilha()        -> char;
+   auto tamanho()           -> int;
 };
-// verifica agregado PilhaEnc2
-static_assert(PilhaTAD<PilhaEnc2, char>);
 ```
 
 :::::
@@ -536,13 +534,9 @@ static_assert(PilhaTAD<PilhaEnc2, char>);
 ## Implementação: Cria
 
 ```.cpp
-class PilhaEnc2 {
-...
-void cria() {
+auto PilhaEnc2::cria() -> void {
    this->N = 0;         // zero elementos na pilha
    // this->inicio = 0; // não é necessário inicializar
-}
-...
 }
 ```
 
@@ -551,7 +545,7 @@ void cria() {
 ## Implementação: Empilha 
 
 ```.cpp
-void empilha(char v) {
+auto PilhaEnc2::empilha(char v) -> void {
   this->inicio = std::make_unique<NoPilha2>(
     NoPilha2{.dado = v, .prox = std::move(this->inicio)}        
   );
@@ -565,7 +559,7 @@ void empilha(char v) {
 
 
 ```.cpp
-char desempilha() {
+auto PilhaEnc2::desempilha() -> char {
    char r = this->inicio->dado;
    this->inicio = std::move(this->inicio->prox);
    this->N--;           //N=N-1
@@ -577,8 +571,8 @@ char desempilha() {
 ## Implementação: Libera (inseguro)
 
 ```.cpp
-void libera() {
-   this->inicio.reset();
+auto PilhaEnc2::libera() -> void {
+   this->inicio = nullptr;   // ou... this->inicio.reset();
    // todo o resto é destruído automaticamente
    // CUIDADO com estouro de pilha (stack overflow!)
 }
@@ -589,7 +583,7 @@ void libera() {
 ## Implementação: Libera (seguro)
 
 ```.cpp
-void libera() {
+auto PilhaEnc2::libera() -> void {
    // seguro contra stack overflow
    while (this->tamanho() > 0) {
       this->inicio = std::move(this->inicio->prox);
@@ -610,25 +604,25 @@ Também é considerada como desvantagem o gasto de espaço extra com ponteiros e
 
 # Pilhas Genéricas e Conceitos de Pilha
 
-## Pilha Sequencial Genérica
+## Tarefa: Pilha Sequencial Genérica
 
 Uma implementação genérica da pilha sequencial pode ser feita utilizando templates,
 inclusive para o limite de capacidade (permitindo maior personalização caso a caso).
 
 
 ```.cpp
-template<typename T, int MAXN>
-class PilhaSeqX
+template<typename T, int MAX_N>
+class PilhaSeq
 {
 public:
-  T elementos [MAXN];         // elementos na pilha
-  int N;                      // num. de elementos na pilha
-  void cria () { ... }        // inicializa agregado
-  void libera () { ... }      // finaliza agregado
-  T topo () { ... }
-  void empilha (T dado){ ... };
-  T desempilha () { ... };
-  int tamanho() { ... };
+  T v[MAX_N];              // elementos na pilha
+  int N;                   // num. de elementos na pilha
+  auto cria()   -> void;   // inicializa agregado
+  auto libera() -> void;   // finaliza agregado
+  auto topo()          -> T;
+  auto empilha(T dado) -> void;
+  auto desempilha()    -> T;
+  auto tamanho()       -> int;
 };
 ```
 
@@ -636,11 +630,11 @@ public:
 
 ## Utilizando a Pilha Genérica
 
-Antes de completar as funções pendentes, utilizaremos a `PilhaSeqX`:
+Antes de completar as funções pendentes, utilizaremos a `PilhaSeq`:
 
 ```.cpp
 int main () {
-   PilhaSeqX<char, 100'000> p;
+   PilhaSeq<char, 100'000> p;
    p.cria();
    p.empilha('A');
    p.empilha('B');
@@ -667,13 +661,13 @@ template<typename Agregado, typename Tipo>
 concept PilhaTAD = requires(Agregado a, Tipo t)
 {
    // requer operação 'topo'
-   { a.topo() };
+   { a.topo() }       -> std::same_as<t>;
    // requer operação 'empilha' sobre tipo 't'
-   { a.empilha(t) };
+   { a.empilha(t) }   -> std::same_as<void>;
    // requer operação 'desempilha'
-   { a.desempilha() };
+   { a.desempilha() } -> std::same_as<t>;
    // requer operação 'tamanho'
-   { a.tamanho() };
+   { a.tamanho() }    -> std::same_as<int>;
 };
 ```
 
@@ -683,11 +677,10 @@ O `static_assert` pode ser usado para assegurar a corretude de
 implementação do conceito `PilhaTAD`:
 
 ```{.cpp}
-constexpr int MAXN = 100'000; // capacidade máxima da pilha
-class PilhaSeq1 {
-public:
-  char elementos [MAXN];      // elementos na pilha
-  int N;                      // num. de elementos na pilha
+constexpr int MAX_N = 100'000; // capacidade máxima da pilha
+struct PilhaSeq1 {
+  char v[MAX_N];               // elementos na pilha
+  int N;                       // num. de elementos na pilha
   // implementa métodos da Pilha
   // ...
 };
@@ -706,9 +699,7 @@ implementação do conceito `PilhaTAD`:
 :::::{.column width=33%}
 
 ```.cpp
-class NoPilha1 
-{
-public:
+struct NoPilha1 {
    char dado;
    NoPilha1* prox;
 };
@@ -719,9 +710,7 @@ public:
 :::::{.column  width=67%}
 
 ```.cpp
-class PilhaEnc1
-{
-public:
+struct PilhaEnc1 {
   NoPilha1* inicio;
   int N;                      
   // implementa métodos da Pilha
@@ -735,6 +724,29 @@ static_assert(PilhaTAD<PilhaEnc1, char>);
 
 ::::::::::
 
+## Tarefa: Implemente uma `PilhaEnc` genérica
+
+Implemente uma pilha encadeada genérica `PilhaEnc`, que satisfaz o conceito `PilhaTAD`:
+
+```{.cpp}
+template<typename T>
+struct NoPilhaEnc {
+  T dado; 
+  NoPilhaEnc<T>* prox;  
+};
+
+template<typename T>
+struct PilhaEnc {
+  NoPilhaEnc<T>* inicio;  // elementos na pilha de tipo T
+  int N;                  // num. de elementos na pilha
+  // implementa métodos da Pilha
+  // ...
+};
+
+// verifica se agregado PilhaSeq satisfaz conceito PilhaTAD
+static_assert(PilhaTAD<PilhaEnc<char>, char>);
+```
+
 
 
 # Pilhas na Biblioteca Padrão e Aplicações
@@ -744,20 +756,18 @@ static_assert(PilhaTAD<PilhaEnc1, char>);
 Em C/C++, é possível utilizar implementações *prontas* do TAD Pilha.
 A vantagem é a grande eficiência computacional e amplo conjunto de testes, evitando erros de implementação.
 
-Na STL, basta fazer `#include<stack>` e usar métodos `push`, `pop` e `top`.
+Na STL, basta fazer `import std;` e usar métodos `push`, `pop` e `top`.
 
 ```.cpp
-#include<stack>           // inclui pilha genérica
-#include<fmt/core.h>      // inclui fmt::print
-using fmt::print;
+import std;
 
 int main() {
    std::stack<char> p;      // pilha de char
    p.push('A');
    p.push('B');
-   print("{}\n", p.top());  // imprime B
+   println("{}", p.top());  // imprime B
    p.pop();
-   print("{}\n", p.top());  // imprime A
+   println("{}", p.top());  // imprime A
    return 0;
 }
 ```
@@ -804,9 +814,7 @@ std::string revs(std::string s) {
 
 ***Dica:*** Utilize o *conceito* `PilhaTAD` apresentado no curso, e faça os devidos ajustes. Verifique se `std::stack` passa no teste com `static_assert`.
 
-*Você pode compilar o código proposto (começando pelo slide anterior em um arquivo chamado `material/3-pilhas/main_pilha_stl.cpp`) através do comando:*
-
-`g++ --std=c++20 main_pilha_stl.cpp -o appPilha`
+*Você pode compilar o código proposto (começando pelo slide anterior em um arquivo chamado `material/3-pilhas/main_pilha_stl.cpp`) usando o CMake 4.*
 
 -------
 
