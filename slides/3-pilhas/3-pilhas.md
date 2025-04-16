@@ -806,7 +806,7 @@ std::string revs(std::string s) {
 }
 ```
 
---------
+-----------
 
 ## Definindo um TAD para `std::stack`
 

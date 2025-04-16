@@ -96,7 +96,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # ubuntu toolchain test does not contain gcc 15 yet
 # RUN sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-RUN sudo add-apt-repository "deb http://cz.archive.ubuntu.com/ubuntu plucky main universe"
+RUN sudo add-apt-repository "deb http://br.archive.ubuntu.com/ubuntu plucky main universe"
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      && apt-get -y install --no-install-recommends g++-15 gcc-15
 

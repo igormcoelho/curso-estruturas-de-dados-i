@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Filas
-date: 18/09/2020 - 24/04/2023
+date: 18/09/2020 - 26/04/2025
 transition: cube
 fontsize: 10
 header-includes:
@@ -83,29 +83,6 @@ Para o TAD Fila, estudaremos duas
 formas distintas de implementação: Sequencial e Encadeada.
 
 
---------
-
-## Definição do *Conceito* Fila em C++
-
-O *conceito* de fila somente requer suas três operações básicas. Como consideramos uma *fila genérica* (fila de inteiro, char, etc), definimos um *conceito genérico* chamado `FilaTAD`:
-
-```.cpp
-template<typename Agregado, typename Tipo>
-concept FilaTAD = requires(Agregado a, Tipo t)
-{
-   // requer operação 'frente'
-   { a.frente() };
-   // requer operação 'enfileira' sobre tipo 't'
-   { a.enfileira(t) };
-   // requer operação 'desenfileira'
-   { a.desenfileira() };
-   // requer operação 'tamanho'
-   { a.tamanho() };
-};
-```
-
-
-
 # Filas Sequenciais
 
 --------
@@ -120,25 +97,21 @@ Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 
 ## Implementação FilaSeq1
 
-Fila sequencial com, no máximo, `MAXN` elementos do tipo caractere:
+Fila sequencial com, no máximo, `MAX_N` elementos do tipo caractere:
 
 
 ```.cpp
-constexpr int MAXN = 100'000; // capacidade máxima da fila
-class FilaSeq1
-{
-public:
-  char elementos [MAXN];      // elementos na fila
-  int N;                      // num. de elementos na fila
-  void cria () { ... }        // inicializa agregado
-  void libera () { ... }      // finaliza agregado
-  char frente () { ... }
-  void enfileira (char dado){ ... }
-  char desenfileira () { ... }
-  int tamanho() { ... }
+constexpr int MAX_N = 100'000; // capacidade máxima da fila
+struct FilaSeq1 {
+  char v[MAX_N];               // elementos na fila
+  int N;                       // num. de elementos na fila
+  auto cria()   -> void;       // inicializa agregado
+  auto libera() -> void;       // finaliza agregado
+  auto frente() -> char;
+  auto enfileira(char dado) -> void;
+  auto desenfileira()       -> char;
+  auto tamanho()            -> int;
 };
-// verifica se agregado FilaSeq1 satisfaz conceito FilaTAD
-static_assert(FilaTAD<FilaSeq1, char>);
 ```
 
 -------
@@ -148,17 +121,17 @@ static_assert(FilaTAD<FilaSeq1, char>);
 Antes de completar as funções pendentes, utilizaremos a `FilaSeq1`:
 
 ```.cpp
-int main () {
+auto main() -> int {
    FilaSeq1 p;
    p.cria();
    p.enfileira('A');
    p.enfileira('B');
    p.enfileira('C');
-   print("{}\n", p.frente());
-   print("{}\n", p.desenfileira());
+   println("{}", p.frente());
+   println("{}", p.desenfileira());
    p.enfileira('D');
    while(p.tamanho() > 0)
-      print("{}\n", p.desenfileira());
+      println("{}", p.desenfileira());
    p.libera();
    return 0;
 }
@@ -172,16 +145,12 @@ int main () {
 A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
 ```.cpp
-class FilaSeq1 {
-...
-void cria() {
-   this->N = 0;
+void FilaSeq1::cria() {
+   N = 0;
 }
 
-void libera() {
+void FilaSeq1::libera() {
    // nenhum recurso dinâmico para desalocar
-}
-...
 }
 ```
 ---------
@@ -193,19 +162,21 @@ A operação `desenfileira` remove e retorna o elemento na *frente* da fila.
 
 ```.cpp
 // implementação 'FilaSeq1'
-char frente() {
-   return this->elementos[0];   // primeiro sempre 'frente'
+auto FilaSeq1::frente() -> char {
+   return v[0];   // primeiro sempre 'frente'
 }
-void enfileira(char dado) {
-   this->elementos[N] = dado;    this->N++;
+auto FilaSeq1::enfileira(char dado) -> void {
+   v[N] = dado;  
+   N++;
 }
-char desenfileira() {
-   char r = this->elementos[0];     // 0 é sempre 'frente'
-   for (auto i=0; i<this->N-1; i++) // realmente necessário?
-      this->elementos[i] = this->elementos[i+1];
-   this->N--;  return r;
+auto FilaSeq1::desenfileira() -> char {
+   char r = v[0];             // 0 é sempre 'frente'
+   for (auto i=0; i<N-1; i++) // realmente necessário?
+      v[i] = v[i+1];
+   N--;
+   return r;
 }
-int tamanho() { return this->N; }
+auto FilaSeq1::tamanho() -> int { return N; }
 ```
 ---------
 
@@ -221,23 +192,19 @@ Seria possível evitar tal efeito?
 ## Implementação FilaSeq2
 
 ```.cpp
-constexpr int MAXN = 100'000; // capacidade máxima da fila
-class FilaSeq2
-{
-public:
-  char elementos [MAXN];      // elementos na fila
+constexpr int MAX_N = 100'000; // capacidade máxima da fila
+struct FilaSeq2 {
+  char v [MAX_N];      // elementos na fila
   int N;                      // num. de elementos na fila
   int inicio;                 // índice inicial da fila
   int fim;                    // índice final da fila
-  void cria () { ... }        // inicializa agregado
-  void libera () { ... }      // finaliza agregado
-  char frente () { ... }
-  void enfileira (char dado){ ... }
-  char desenfileira () { ... }
-  int tamanho() { ... }
+  auto cria () -> void { ... }        // inicializa agregado
+  auto libera () -> void { ... }      // finaliza agregado
+  auto frente () -> char { ... }
+  auto enfileira (char dado) -> void { ... }
+  auto desenfileira ()  -> char { ... }
+  auto tamanho() -> int { ... }
 };
-// verifica se agregado FilaSeq2 satisfaz conceito FilaTAD
-static_assert(FilaTAD<FilaSeq2, char>);
 ```
 
 
@@ -248,15 +215,15 @@ static_assert(FilaTAD<FilaSeq2, char>);
 A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
 ```.cpp
-class FilaSeq2 {
+struct FilaSeq2 {
 ...
-void cria() {
+auto cria() -> void {
    this->N = 0;
    this->inicio = 0;
    this->fim = 0;
 }
 
-void libera() {
+auto libera() -> void {
    // nenhum recurso dinâmico para desalocar
 }
 ...
@@ -269,17 +236,11 @@ void libera() {
 Utilizamos o índice `inicio` para localizar o começo da fila.
 
 ```.cpp
-class FilaSeq2 {
-...
-
-char frente() {
-   return this->elementos[this->inicio];   
+auto FilaSeq2::frente() -> char {
+   return v[inicio];   
 }
 
-int tamanho() { return this->N; }
-
-...
-}
+auto FilaSeq2::tamanho() -> int { return N; }
 ```
 
 ---------
@@ -292,13 +253,13 @@ A operação `desenfileira` remove e retorna o elemento na *frente* da fila.
 ```.cpp
 // implementação 'FilaSeq2'
 
-void enfileira(char dado) {
+auto enfileira(char dado) -> void {
    this->elementos[this->fim] = dado; // dado entra no fim
    this->fim++;    
    this->N++;
 }
 
-char desenfileira() {
+auto desenfileira() -> char {
    char r = this->elementos[this->inicio];
    this->inicio++;      
    this->N--;
@@ -351,13 +312,13 @@ Consideramos uma *estratégia circular* na capacidade da fila:
 ```.cpp
 // implementação 'FilaSeq3'
 
-void enfileira(char dado) {
+auto enfileira(char dado) -> void {
    this->elementos[this->fim] = dado;   // dado entra no fim
    this->fim = (this->fim + 1) % MAXN;  // circular
    this->N++;
 }
 
-char desenfileira() {
+auto desenfileira() -> char {
    char r = this->elementos[this->inicio];
    this->inicio = (this->inicio + 1) % MAXN; // circular
    this->N--;
@@ -401,6 +362,32 @@ p.fim:    | 1 |                    0   1   2   3   4
 
 *Qual a frente atual da fila?*
 
+
+--------
+
+## Definição do *Conceito* Fila em C++
+
+O *conceito* de fila somente requer suas três operações básicas. Como consideramos uma *fila genérica* (fila de inteiro, char, etc), definimos um *conceito genérico* chamado `FilaTAD`:
+
+```.cpp
+template<typename Agregado, typename Tipo>
+concept FilaTAD = requires(Agregado a, Tipo t)
+{
+   // requer operação 'frente'
+   { a.frente() };
+   // requer operação 'enfileira' sobre tipo 't'
+   { a.enfileira(t) };
+   // requer operação 'desenfileira'
+   { a.desenfileira() };
+   // requer operação 'tamanho'
+   { a.tamanho() };
+};
+
+// verifica se agregado FilaSeq2 satisfaz conceito FilaTAD
+static_assert(FilaTAD<FilaSeq2, char>);
+```
+
+
 ---------
 
 
@@ -408,7 +395,7 @@ p.fim:    | 1 |                    0   1   2   3   4
 
 A Fila Sequencial tem a vantagem de ser bastante simples de implementar, ocupando um espaço constante (na memória) para todas operações.
 
-Porém, existe a limitação física de `MAXN` posições imposta pela alocação estática,
+Porém, existe a limitação física de `MAX_N` posições imposta pela alocação estática,
 não permitindo que a fila ultrapasse esse limite.
 
 ***Desafio:*** implemente uma Fila Sequencial utilizando alocação dinâmica para o vetor `elementos`.
@@ -442,9 +429,7 @@ Fila encadeada, utilizando um agregado `NoFila0` auxiliar:
 :::::{.column width=33%}
 
 ```.cpp
-class NoFila0
-{
-public:
+struct NoFila0 {
    char dado;
    NoFila0* prox;
 };
@@ -455,9 +440,7 @@ public:
 :::::{.column  width=67%}
 
 ```.cpp
-class FilaEnc0
-{
-public:
+struct FilaEnc0 {
   NoFila0* inicio;   // frente da fila
   int N;                      
   void cria () { ... }        
@@ -481,7 +464,7 @@ static_assert(FilaTAD<FilaEnc0, char>);
 ## Implementação: Cria e Libera
 
 ```.cpp
-class FilaEnc0 {
+struct FilaEnc0 {
 ...
 void cria() {
    this->N = 0;       // zero elementos na fila
@@ -501,7 +484,7 @@ void libera() {
 ## Implementação: Frente e Tamanho
 
 ```.cpp
-class FilaEnc0 {
+struct FilaEnc0 {
 ...
 char frente() { return this->inicio->dado; }
 
