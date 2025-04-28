@@ -145,11 +145,11 @@ auto main() -> int {
 A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
 ```.cpp
-void FilaSeq1::cria() {
+auto FilaSeq1::cria() -> void {
    N = 0;
 }
 
-void FilaSeq1::libera() {
+auto FilaSeq1::libera() -> void {
    // nenhum recurso dinâmico para desalocar
 }
 ```
@@ -194,16 +194,16 @@ Seria possível evitar tal efeito?
 ```.cpp
 constexpr int MAX_N = 100'000; // capacidade máxima da fila
 struct FilaSeq2 {
-  char v [MAX_N];      // elementos na fila
-  int N;                      // num. de elementos na fila
-  int inicio;                 // índice inicial da fila
-  int fim;                    // índice final da fila
-  auto cria () -> void { ... }        // inicializa agregado
-  auto libera () -> void { ... }      // finaliza agregado
-  auto frente () -> char { ... }
-  auto enfileira (char dado) -> void { ... }
-  auto desenfileira ()  -> char { ... }
-  auto tamanho() -> int { ... }
+  char v [MAX_N];              // elementos na fila
+  int N;                       // num. de elementos na fila
+  int inicio;                  // índice inicial da fila
+  int fim;                     // índice final da fila
+  auto cria()   -> void;       // inicializa agregado
+  auto libera() -> void;       // finaliza agregado
+  auto frente() -> char;
+  auto enfileira(char dado) -> void;
+  auto desenfileira()       -> char;
+  auto tamanho()            -> int;
 };
 ```
 
@@ -217,13 +217,13 @@ A operação `cria` inicializa a fila para uso, e a função `libera` desaloca o
 ```.cpp
 struct FilaSeq2 {
 ...
-auto cria() -> void {
-   this->N = 0;
-   this->inicio = 0;
-   this->fim = 0;
+auto FilaSeq2::cria() -> void {
+   N = 0;      // ou... this->N = 0;
+   inicio = 0;
+   fim = 0;
 }
 
-auto libera() -> void {
+auto FilaSeq2::libera() -> void {
    // nenhum recurso dinâmico para desalocar
 }
 ...
@@ -253,16 +253,16 @@ A operação `desenfileira` remove e retorna o elemento na *frente* da fila.
 ```.cpp
 // implementação 'FilaSeq2'
 
-auto enfileira(char dado) -> void {
-   this->elementos[this->fim] = dado; // dado entra no fim
-   this->fim++;    
-   this->N++;
+auto FilaSeq2::enfileira(char dado) -> void {
+   v[fim] = dado;         // dado entra no fim
+   fim=fim+1;    
+   N=N+1;                 // ou... this->N++;
 }
 
-auto desenfileira() -> char {
-   char r = this->elementos[this->inicio];
-   this->inicio++;      
-   this->N--;
+auto FilaSeq2::desenfileira() -> char {
+   char r = v[inicio];
+   inicio=inicio+1;      
+   N=N-1;                 // ou... this->N--;
    return r;
 }
 ```
@@ -274,30 +274,30 @@ Considere uma fila sequencial (`MAXN=5`):
 `FilaSeq2 p; p.cria();`
 
 ```
-p.inicio: | 0 |     p.elementos: |   |   |   |   |   |   
-p.fim:    | 0 |                    0   1   2   3   4   
+p.inicio: | 0 |     p.v: |   |   |   |   |   |   
+p.fim:    | 0 |            0   1   2   3   4   
 ```
 
 Agora, enfileiramos `A`, `B` e `C`, e depois desenfileiramos uma vez.
 
 ```
-p.inicio: | 0 |     p.elementos: | A |   |   |   |   |   
-p.fim:    | 1 |                    0   1   2   3   4   
+p.inicio: | 0 |     p.v: | A |   |   |   |   |   
+p.fim:    | 1 |            0   1   2   3   4   
 ```
 
 ```
-p.inicio: | 0 |     p.elementos: | A | B |   |   |   |   
-p.fim:    | 2 |                    0   1   2   3   4   
+p.inicio: | 0 |     p.v: | A | B |   |   |   |   
+p.fim:    | 2 |            0   1   2   3   4   
 ```
 
 ```
-p.inicio: | 0 |     p.elementos: | A | B | C |   |   |   
-p.fim:    | 3 |                    0   1   2   3   4   
+p.inicio: | 0 |     p.v: | A | B | C |   |   |   
+p.fim:    | 3 |            0   1   2   3   4   
 ```
 
 ```
-p.inicio: | 1 |     p.elementos: |   | B | C |   |   |   
-p.fim:    | 3 |                    0   1   2   3   4   
+p.inicio: | 1 |     p.v: |   | B | C |   |   |   
+p.fim:    | 3 |            0   1   2   3   4   
 ```
 
 *Qual a frente atual da fila? Quais limitações da fila?*
@@ -312,16 +312,16 @@ Consideramos uma *estratégia circular* na capacidade da fila:
 ```.cpp
 // implementação 'FilaSeq3'
 
-auto enfileira(char dado) -> void {
-   this->elementos[this->fim] = dado;   // dado entra no fim
-   this->fim = (this->fim + 1) % MAXN;  // circular
-   this->N++;
+auto FilaSeq3::enfileira(char dado) -> void {
+   v[fim] = dado;           // dado entra no fim
+   fim = (fim + 1) % MAX_N; // circular
+   N=N+1;                   // ou... this->N++;
 }
 
-auto desenfileira() -> char {
-   char r = this->elementos[this->inicio];
-   this->inicio = (this->inicio + 1) % MAXN; // circular
-   this->N--;
+auto FilaSeq3::desenfileira() -> char {
+   char r = v[inicio];
+   inicio = (inicio + 1) % MAX_N; // circular
+   N=N-1;                         // ou... this->N--;
    return r;
 }
 ```
@@ -330,34 +330,34 @@ auto desenfileira() -> char {
 
 ## Exemplo de uso (FilaSeq3)
 
-Considere uma fila sequencial (`MAXN=5`):
+Considere uma fila sequencial (`MAX_N=5`):
 `FilaSeq3 p; p.cria();`
 
 ```
-p.inicio: | 3 |     p.elementos: |   |   |   |   |   |   
+p.inicio: | 3 |     p.v: |   |   |   |   |   |   
 p.fim:    | 3 |                    0   1   2   3   4   
 ```
 
 Agora, enfileiramos `A`, `B` e `C`, e depois desenfileiramos uma vez.
 
 ```
-p.inicio: | 3 |     p.elementos: |   |   |   | A |   |   
-p.fim:    | 4 |                    0   1   2   3   4   
+p.inicio: | 3 |     p.v: |   |   |   | A |   |   
+p.fim:    | 4 |            0   1   2   3   4   
 ```
 
 ```
-p.inicio: | 3 |     p.elementos: |   |   |   | A | B |   
-p.fim:    | 0 |                    0   1   2   3   4   
+p.inicio: | 3 |     p.v: |   |   |   | A | B |   
+p.fim:    | 0 |            0   1   2   3   4   
 ```
 
 ```
-p.inicio: | 3 |     p.elementos: | C |   |   | A | B |   
-p.fim:    | 1 |                    0   1   2   3   4   
+p.inicio: | 3 |     p.v: | C |   |   | A | B |   
+p.fim:    | 1 |            0   1   2   3   4   
 ```
 
 ```
-p.inicio: | 4 |     p.elementos: | C |   |   |   | B |   
-p.fim:    | 1 |                    0   1   2   3   4   
+p.inicio: | 4 |     p.v: | C |   |   |   | B |   
+p.fim:    | 1 |            0   1   2   3   4   
 ```
 
 *Qual a frente atual da fila?*
@@ -443,12 +443,12 @@ struct NoFila0 {
 struct FilaEnc0 {
   NoFila0* inicio;   // frente da fila
   int N;                      
-  void cria () { ... }        
-  void libera () { ... }     
-  char frente () { ... }
-  void enfileira (char dado){ ... }
-  char desenfileira() { ... }
-  int  tamanho() { ... }
+  auto cria() -> void;
+  auto libera() -> void;
+  auto frente() -> char;
+  auto enfileira (char dado) -> void;
+  auto desenfileira() -> char;
+  auto tamanho() -> int;
 };
 // verifica agregado FilaEnc0
 static_assert(FilaTAD<FilaEnc0, char>);
@@ -464,18 +464,14 @@ static_assert(FilaTAD<FilaEnc0, char>);
 ## Implementação: Cria e Libera
 
 ```.cpp
-struct FilaEnc0 {
-...
-void cria() {
-   this->N = 0;       // zero elementos na fila
-   this->inicio = 0;  // endereço zero de memória
+auto FilaEnc0::cria() -> void {
+   N = 0;       // zero elementos na fila
+   inicio = 0;  // endereço zero de memória
 }
 
-void libera() {
-   while(this->N > 0)
+auto FilaEnc0::libera() -> void {
+   while(N > 0)
       desenfileira(); // limpa a fila
-}
-...
 }
 ```
 
@@ -484,13 +480,9 @@ void libera() {
 ## Implementação: Frente e Tamanho
 
 ```.cpp
-struct FilaEnc0 {
-...
-char frente() { return this->inicio->dado; }
+auto FilaEnc0::frente() -> char { return inicio->dado; }
 
-int tamanho() { return this->N; }
-...
-}
+auto FilaEnc0::tamanho() -> int { return N; }
 ```
 
 ---------
@@ -498,31 +490,31 @@ int tamanho() { return this->N; }
 ## Implementação 0: Enfileira
 
 ```.cpp
-void enfileira(char v) {
-   NoFila0* no = new NoFila0{.dado = v, .prox = 0 };
-   if(this->N == 0) { 
-      this->inicio = no; 
+auto FilaEnc0::enfileira(char v) -> void{
+   auto no = new NoFila0{.dado = v, .prox = 0 };
+   if(N == 0) { 
+      inicio = no; 
    } else {  
-      NoFila0* fim = this->inicio;
+      NoFila0* fim = inicio;
       // localiza ultimo elemento da fila
       while(fim->prox != 0)
          fim = fim->prox;
       // encadeamento do novo elemento
       fim->prox = no; 
    }
-   this->N++;
+   N=N+1;            // ou... this->N++;
 }
 ```
 
 ## Implementação 0: Desenfileira
 
 ```.cpp
-char desenfileira() {
-    NoFila0* p = this->inicio;   // ponteiro da frente
-    this->inicio = this->inicio->prox; // avança fila
-    char r = p->dado;            // conteudo da frente
-    delete p;                    // apaga frente
-    this->N--;
+auto FilaEnc0::desenfileira() -> char {
+    NoFila0* p = inicio;    // ponteiro da frente
+    inicio = inicio->prox;  // avança fila
+    char r = p->dado;       // conteudo da frente
+    delete p;               // apaga frente
+    N=N-1;  // ou... this->N--;             
     return r;
 }
 ```
@@ -545,9 +537,7 @@ Fila encadeada, utilizando um agregado `NoFila1` auxiliar:
 :::::{.column width=33%}
 
 ```.cpp
-class NoFila1
-{
-public:
+struct NoFila1 {
    char dado;
    NoFila1* prox;
 };
@@ -558,18 +548,16 @@ public:
 :::::{.column  width=67%}
 
 ```.cpp
-class FilaEnc1
-{
-public:
+struct FilaEnc1 {
   NoFila1* inicio;   // frente da fila
   NoFila1* fim;      // fundo da fila
   int N;                      
-  void cria () { ... }        
-  void libera () { ... }     
-  char frente () { ... }
-  void enfileira (char dado){ ... }
-  char desenfileira() { ... }
-  int  tamanho() { ... }
+  auto cria()   -> void;
+  auto libera() -> void;
+  auto frente() -> char;
+  auto enfileira (char dado) -> void;
+  auto desenfileira()        -> char;
+  auto tamanho()             -> int;
 };
 // verifica agregado FilaEnc1
 static_assert(FilaTAD<FilaEnc1, char>);
@@ -585,19 +573,15 @@ static_assert(FilaTAD<FilaEnc1, char>);
 ## Implementação: Cria e Libera
 
 ```.cpp
-class FilaEnc1 {
-...
-void cria() {
-   this->N = 0;       // zero elementos na fila
-   this->inicio = 0;  // endereço zero de memória
-   this->fim = 0;     // endereço zero de memória
+auto FilaEnc1::cria() -> void {
+   N = 0;       // zero elementos na fila
+   inicio = 0;  // endereço zero de memória
+   fim = 0;     // endereço zero de memória
 }
 
-void libera() {
-   while(this->N > 0)
+auto FilaEnc1::libera() -> void {
+   while(N > 0)
       desenfileira(); // limpa a fila
-}
-...
 }
 ```
 
@@ -628,13 +612,9 @@ p.cria();
 ## Implementação: Frente e Tamanho
 
 ```.cpp
-class FilaEnc1 {
-...
-char frente() { return this->inicio->dado; }
+auto FilaEnc1::frente() -> char { return inicio->dado; }
 
-int tamanho() { return this->N; }
-...
-}
+auto FilaEnc1::tamanho() -> int { return N; }
 ```
 
 ---------
@@ -642,11 +622,11 @@ int tamanho() { return this->N; }
 ## Implementação: Enfileira
 
 ```.cpp
-void enfileira(char v) {
-   NoFila1* no = new NoFila1{.dado = v, .prox = 0 };
-   if(this->N == 0) {  inicio = fim = no;         }
-   else             {  fim->prox = no; fim = no;  }
-   this->N++;
+auto FilaEnc1::enfileira(char v) -> void {
+   auto no = new NoFila1{.dado = v, .prox = 0 };
+   if(N == 0)  {  inicio = fim = no;         }
+   else        {  fim->prox = no; fim = no;  }
+   N=N+1;  // ou... this->N++;
 }
 ```
 ### Na memória: `p.enfileira('A'); p.enfileira('B');`
@@ -678,13 +658,13 @@ void enfileira(char v) {
 ## Implementação: Desenfileira
 
 ```.cpp
-char desenfileira() {
-    NoFila1* p   = this->inicio; // ponteiro da frente
-    this->inicio = this->inicio->prox; // avança fila
-    char r = p->dado;            // conteudo da frente
-    delete p;                    // apaga frente
-    this->N--;
-    if(this->N == 0) { this->fim = 0; }
+auto FilaEnc1::desenfileira() -> char {
+    NoFila1* p   = inicio; // ponteiro da frente
+    inicio = inicio->prox; // avança fila
+    char r = p->dado;      // conteudo da frente
+    delete p;              // apaga frente
+    N=N-1;    // ou... this->N--;
+    if(N == 0) { fim = 0; }
     return r;
 }
 ```
@@ -706,7 +686,7 @@ char desenfileira() {
    0     4    ...   100   104   108   112   116   ...  8GiB
 ```
 
------
+# Tópico Avançado: Fila com Ponteiro Inteligente
 
 ## Filas Encadeadas com Ponteiros Inteligentes
 
@@ -721,6 +701,9 @@ template<typename T>
 using uptr = std::unique_ptr<T>;
 ```
 
+### Padrão `make_` ao invés de `new`
+Importante: ao invés de criar um `uptr` com `new`, usaremos o padrão `std::make_unique`.
+
 -------
 
 ## Implementação
@@ -732,9 +715,7 @@ Fila encadeada, utilizando um agregado `NoFila1` auxiliar:
 :::::{.column width=33%}
 
 ```.cpp
-class NoFila2
-{
-public:
+struct NoFila2 {
   char dado;
   uptr<NoFila2> prox;
 };
@@ -745,18 +726,16 @@ public:
 :::::{.column  width=67%}
 
 ```.cpp
-class FilaEnc2
-{
-public:
+struct FilaEnc2 {
   uptr<NoFila2> inicio; // frente da fila
   NoFila2* fim;         // fundo da fila
   int N;                      
-  void cria () { ... }        
-  void libera () { ... }     
-  char frente () { ... }
-  void enfileira (char dado){ ... }
-  char desenfileira() { ... }
-  int  tamanho() { ... }
+  auto cria()   -> void;
+  auto libera() -> void;
+  auto frente() -> char;
+  auto enfileira (char dado) -> void;
+  auto desenfileira()        -> char;
+  auto tamanho()             -> int;
 };
 // verifica agregado FilaEnc2
 static_assert(FilaTAD<FilaEnc2, char>);
@@ -772,20 +751,16 @@ static_assert(FilaTAD<FilaEnc2, char>);
 ## Implementação: Cria e Libera
 
 ```.cpp
-class FilaEnc2 {
-...
-void cria() {
-   this->N = 0;         // zero elementos na fila
-   // this->inicio = 0; // desnecessário...
-   this->fim = 0;       // endereço zero de memória
+auto FilaEnc2::cria() -> void {
+   N = 0;         // zero elementos na fila
+   // inicio = 0; // desnecessário...
+   fim = 0;       // endereço zero de memória
 }
 
-void libera() {
+auto FilaEnc2::libera() -> void {
    // inicio.reset(); fim=0; N=0;   // stackoverflow!
-   while(this->N > 0) // previne stackoverflow no unique_ptr
+   while(N > 0)       // previne stackoverflow no unique_ptr
       desenfileira(); // limpa a fila
-}
-...
 }
 ```
 
@@ -795,33 +770,29 @@ void libera() {
 ## Implementação: Frente e Tamanho
 
 ```.cpp
-class FilaEnc2 {
-...
-char frente() { return this->inicio->dado; }
+auto FilaEnc2::frente() -> char { return inicio->dado; }
 
-int tamanho() { return this->N; }
-...
-}
+auto FilaEnc2::tamanho() -> int { return N; }
 ```
 ---------
 
 ## Implementação: Enfileira e Desenfileira
 
 ```.cpp
-void enfileira(char v) {
+auto FilaEnc2::enfileira(char v) -> void {
    auto no = std::make_unique<NoFila2>(
       NoFila2{.dado = v, .prox = std::nullptr}        
    );
    if(N == 0){inicio = std::move(no); fim = inicio.get();   }
    else   {fim->prox = std::move(no); fim = fim->prox.get();}
-   this->N++;
+   N=N+1;  // ou... this->N++;
 }
 
-char desenfileira() {
+auto FilaEnc2::desenfileira() -> char {
    char r = p->dado;                 // conteudo da frente
-   this->inicio = std::move(this->inicio->prox); // avança
-   this->N--;
-   if(this->N==0){ this->fim = 0; } // corrige ponteiro 'fim'
+   inicio = std::move(inicio->prox); // avança
+   N=N-1;  // ou... this->N--;
+   if(N==0){ fim = 0; }              // corrige ponteiro 'fim'
    return r;
 }
 ```
@@ -853,16 +824,16 @@ A vantagem é a grande eficiência computacional e amplo conjunto de testes, evi
 Na STL, faça `#include<queue>` e use métodos `push`, `pop` e `front`.
 
 ```.cpp
-#include<queue>               // inclui fila genérica
-#include<fmt/core.h>          // inclui print
-using fmt::print;
-int main() {
-   std::queue<char> p;        // fila de char
+import std;
+// #include<queue>            // inclui fila genérica
+// #include<print>            // inclui print
+auto main() -> int {
+   std::queue<char> p;             // fila de char
    p.push('A');
    p.push('B');
-   print("{}\n", p.front()); // imprime A
+   std::println("{}", p.front());  // imprime A
    p.pop();
-   print("{}\n", p.front()); // imprime B
+   std::println("{}", p.front());  // imprime B
    return 0;
 }
 ```
@@ -877,7 +848,7 @@ int main() {
 
 *Você pode compilar o código proposto (começando pelo slide anterior em um arquivo chamado `main_fila.cpp`) através do comando:*
 
-`g++ --std=c++20 main_fila.cpp -o appFila`
+`g++ --std=c++23 main_fila.cpp -o appFila`
 
 -------
 

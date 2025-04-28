@@ -236,11 +236,11 @@ C D</em></p>
 <p>A operação <code>cria</code> inicializa a fila para uso, e a função
 <code>libera</code> desaloca os recursos dinâmicos.</p>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> FilaSeq1<span class="op">::</span>cria<span class="op">()</span> <span class="op">{</span></span>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaSeq1<span class="op">::</span>cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> FilaSeq1<span class="op">::</span>libera<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaSeq1<span class="op">::</span>libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">// nenhum recurso dinâmico para desalocar</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
@@ -278,16 +278,16 @@ realocação de todos elementos da fila <em>a cada remoção</em>.</p>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">int</span> MAX_N <span class="op">=</span> <span class="dv">100&#39;000</span><span class="op">;</span> <span class="co">// capacidade máxima da fila</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FilaSeq2 <span class="op">{</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> v <span class="op">[</span>MAX_N<span class="op">];</span>      <span class="co">// elementos na fila</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                      <span class="co">// num. de elementos na fila</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> inicio<span class="op">;</span>                 <span class="co">// índice inicial da fila</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> fim<span class="op">;</span>                    <span class="co">// índice final da fila</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> cria <span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span>        <span class="co">// inicializa agregado</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> libera <span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span>      <span class="co">// finaliza agregado</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> frente <span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> enfileira <span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> desenfileira <span class="op">()</span>  <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> tamanho<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> v <span class="op">[</span>MAX_N<span class="op">];</span>              <span class="co">// elementos na fila</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                       <span class="co">// num. de elementos na fila</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> inicio<span class="op">;</span>                  <span class="co">// índice inicial da fila</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> fim<span class="op">;</span>                     <span class="co">// índice final da fila</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> cria<span class="op">()</span>   <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span>       <span class="co">// inicializa agregado</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span>       <span class="co">// finaliza agregado</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> frente<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> enfileira<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> desenfileira<span class="op">()</span>       <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> tamanho<span class="op">()</span>            <span class="op">-&gt;</span> <span class="dt">int</span><span class="op">;</span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
 <section id="implementação-filaseq2-cria-e-libera" class="slide level2">
@@ -297,13 +297,13 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FilaSeq2 <span class="op">{</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaSeq2<span class="op">::</span>cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>      <span class="co">// ou... this-&gt;N = 0;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   inicio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaSeq2<span class="op">::</span>libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>   <span class="co">// nenhum recurso dinâmico para desalocar</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
@@ -329,16 +329,16 @@ retorna o elemento na <em>frente</em> da fila.</p>
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// implementação &#39;FilaSeq2&#39;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> enfileira<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>elementos<span class="op">[</span><span class="kw">this</span><span class="op">-&gt;</span>fim<span class="op">]</span> <span class="op">=</span> dado<span class="op">;</span> <span class="co">// dado entra no fim</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>fim<span class="op">++;</span>    </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">++;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaSeq2<span class="op">::</span>enfileira<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   v<span class="op">[</span>fim<span class="op">]</span> <span class="op">=</span> dado<span class="op">;</span>         <span class="co">// dado entra no fim</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   fim<span class="op">=</span>fim<span class="op">+</span><span class="dv">1</span><span class="op">;</span>    </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   N<span class="op">=</span>N<span class="op">+</span><span class="dv">1</span><span class="op">;</span>                 <span class="co">// ou... this-&gt;N++;</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> desenfileira<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> r <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>elementos<span class="op">[</span><span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">];</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">++;</span>      </span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">--;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaSeq2<span class="op">::</span>desenfileira<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> r <span class="op">=</span> v<span class="op">[</span>inicio<span class="op">];</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>   inicio<span class="op">=</span>inicio<span class="op">+</span><span class="dv">1</span><span class="op">;</span>      </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>   N<span class="op">=</span>N<span class="op">-</span><span class="dv">1</span><span class="op">;</span>                 <span class="co">// ou... this-&gt;N--;</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> r<span class="op">;</span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
@@ -346,18 +346,18 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#
 <h2>Exemplo de uso (FilaSeq2)</h2>
 <p>Considere uma fila sequencial (<code>MAXN=5</code>):
 <code>FilaSeq2 p; p.cria();</code></p>
-<pre><code>p.inicio: | 0 |     p.elementos: |   |   |   |   |   |   
-p.fim:    | 0 |                    0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 0 |     p.v: |   |   |   |   |   |   
+p.fim:    | 0 |            0   1   2   3   4   </code></pre>
 <p>Agora, enfileiramos <code>A</code>, <code>B</code> e <code>C</code>,
 e depois desenfileiramos uma vez.</p>
-<pre><code>p.inicio: | 0 |     p.elementos: | A |   |   |   |   |   
-p.fim:    | 1 |                    0   1   2   3   4   </code></pre>
-<pre><code>p.inicio: | 0 |     p.elementos: | A | B |   |   |   |   
-p.fim:    | 2 |                    0   1   2   3   4   </code></pre>
-<pre><code>p.inicio: | 0 |     p.elementos: | A | B | C |   |   |   
-p.fim:    | 3 |                    0   1   2   3   4   </code></pre>
-<pre><code>p.inicio: | 1 |     p.elementos: |   | B | C |   |   |   
-p.fim:    | 3 |                    0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 0 |     p.v: | A |   |   |   |   |   
+p.fim:    | 1 |            0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 0 |     p.v: | A | B |   |   |   |   
+p.fim:    | 2 |            0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 0 |     p.v: | A | B | C |   |   |   
+p.fim:    | 3 |            0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 1 |     p.v: |   | B | C |   |   |   
+p.fim:    | 3 |            0   1   2   3   4   </code></pre>
 <p><em>Qual a frente atual da fila? Quais limitações da fila?</em></p>
 </section>
 <section id="implementação-filaseq3-enfileira-e-desenfileira"
@@ -368,35 +368,35 @@ fila:</p>
 <div class="sourceCode" id="cb14"><pre
 class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">// implementação &#39;FilaSeq3&#39;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> enfileira<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>elementos<span class="op">[</span><span class="kw">this</span><span class="op">-&gt;</span>fim<span class="op">]</span> <span class="op">=</span> dado<span class="op">;</span>   <span class="co">// dado entra no fim</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>fim <span class="op">=</span> <span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>fim <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> MAXN<span class="op">;</span>  <span class="co">// circular</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">++;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaSeq3<span class="op">::</span>enfileira<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   v<span class="op">[</span>fim<span class="op">]</span> <span class="op">=</span> dado<span class="op">;</span>           <span class="co">// dado entra no fim</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   fim <span class="op">=</span> <span class="op">(</span>fim <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> MAX_N<span class="op">;</span> <span class="co">// circular</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>   N<span class="op">=</span>N<span class="op">+</span><span class="dv">1</span><span class="op">;</span>                   <span class="co">// ou... this-&gt;N++;</span></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> desenfileira<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> r <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>elementos<span class="op">[</span><span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">];</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> <span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> MAXN<span class="op">;</span> <span class="co">// circular</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">--;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaSeq3<span class="op">::</span>desenfileira<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> r <span class="op">=</span> v<span class="op">[</span>inicio<span class="op">];</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>   inicio <span class="op">=</span> <span class="op">(</span>inicio <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> MAX_N<span class="op">;</span> <span class="co">// circular</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>   N<span class="op">=</span>N<span class="op">-</span><span class="dv">1</span><span class="op">;</span>                         <span class="co">// ou... this-&gt;N--;</span></span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> r<span class="op">;</span></span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="exemplo-de-uso-filaseq3" class="slide level2">
 <h2>Exemplo de uso (FilaSeq3)</h2>
-<p>Considere uma fila sequencial (<code>MAXN=5</code>):
+<p>Considere uma fila sequencial (<code>MAX_N=5</code>):
 <code>FilaSeq3 p; p.cria();</code></p>
-<pre><code>p.inicio: | 3 |     p.elementos: |   |   |   |   |   |   
+<pre><code>p.inicio: | 3 |     p.v: |   |   |   |   |   |   
 p.fim:    | 3 |                    0   1   2   3   4   </code></pre>
 <p>Agora, enfileiramos <code>A</code>, <code>B</code> e <code>C</code>,
 e depois desenfileiramos uma vez.</p>
-<pre><code>p.inicio: | 3 |     p.elementos: |   |   |   | A |   |   
-p.fim:    | 4 |                    0   1   2   3   4   </code></pre>
-<pre><code>p.inicio: | 3 |     p.elementos: |   |   |   | A | B |   
-p.fim:    | 0 |                    0   1   2   3   4   </code></pre>
-<pre><code>p.inicio: | 3 |     p.elementos: | C |   |   | A | B |   
-p.fim:    | 1 |                    0   1   2   3   4   </code></pre>
-<pre><code>p.inicio: | 4 |     p.elementos: | C |   |   |   | B |   
-p.fim:    | 1 |                    0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 3 |     p.v: |   |   |   | A |   |   
+p.fim:    | 4 |            0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 3 |     p.v: |   |   |   | A | B |   
+p.fim:    | 0 |            0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 3 |     p.v: | C |   |   | A | B |   
+p.fim:    | 1 |            0   1   2   3   4   </code></pre>
+<pre><code>p.inicio: | 4 |     p.v: | C |   |   |   | B |   
+p.fim:    | 1 |            0   1   2   3   4   </code></pre>
 <p><em>Qual a frente atual da fila?</em></p>
 </section>
 <section id="definição-do-conceito-fila-em-c" class="slide level2">
@@ -470,12 +470,12 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="
 class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FilaEnc0 <span class="op">{</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  NoFila0<span class="op">*</span> inicio<span class="op">;</span>   <span class="co">// frente da fila</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                      </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> cria <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span>        </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> libera <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span>     </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> frente <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> enfileira <span class="op">(</span><span class="dt">char</span> dado<span class="op">){</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> desenfileira<span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>  tamanho<span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> frente<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> enfileira <span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> desenfileira<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> tamanho<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span><span class="op">;</span></span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica agregado FilaEnc0</span></span>
 <span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>FilaTAD<span class="op">&lt;</span>FilaEnc0<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
@@ -485,58 +485,50 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="
 <section id="implementação-cria-e-libera" class="slide level2">
 <h2>Implementação: Cria e Libera</h2>
 <div class="sourceCode" id="cb23"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FilaEnc0 <span class="op">{</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cria<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// zero elementos na fila</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>  <span class="co">// endereço zero de memória</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> libera<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>      desenfileira<span class="op">();</span> <span class="co">// limpa a fila</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc0<span class="op">::</span>cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>   N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// zero elementos na fila</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>   inicio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>  <span class="co">// endereço zero de memória</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc0<span class="op">::</span>libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span>N <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>      desenfileira<span class="op">();</span> <span class="co">// limpa a fila</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="implementação-frente-e-tamanho" class="slide level2">
 <h2>Implementação: Frente e Tamanho</h2>
 <div class="sourceCode" id="cb24"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FilaEnc0 <span class="op">{</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> frente<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>dado<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> tamanho<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc0<span class="op">::</span>frente<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span> <span class="cf">return</span> inicio<span class="op">-&gt;</span>dado<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc0<span class="op">::</span>tamanho<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span> <span class="cf">return</span> N<span class="op">;</span> <span class="op">}</span></span></code></pre></div>
 </section>
 <section id="implementação-0-enfileira" class="slide level2">
 <h2>Implementação 0: Enfileira</h2>
 <div class="sourceCode" id="cb25"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> enfileira<span class="op">(</span><span class="dt">char</span> v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>   NoFila0<span class="op">*</span> no <span class="op">=</span> <span class="kw">new</span> NoFila0<span class="op">{.</span>dado <span class="op">=</span> v<span class="op">,</span> <span class="op">.</span>prox <span class="op">=</span> <span class="dv">0</span> <span class="op">};</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span><span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> no<span class="op">;</span> </span>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc0<span class="op">::</span>enfileira<span class="op">(</span><span class="dt">char</span> v<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">{</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> no <span class="op">=</span> <span class="kw">new</span> NoFila0<span class="op">{.</span>dado <span class="op">=</span> v<span class="op">,</span> <span class="op">.</span>prox <span class="op">=</span> <span class="dv">0</span> <span class="op">};</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span><span class="op">(</span>N <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>      inicio <span class="op">=</span> no<span class="op">;</span> </span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>  </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>      NoFila0<span class="op">*</span> fim <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>      NoFila0<span class="op">*</span> fim <span class="op">=</span> inicio<span class="op">;</span></span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>      <span class="co">// localiza ultimo elemento da fila</span></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">while</span><span class="op">(</span>fim<span class="op">-&gt;</span>prox <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span></span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>         fim <span class="op">=</span> fim<span class="op">-&gt;</span>prox<span class="op">;</span></span>
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>      <span class="co">// encadeamento do novo elemento</span></span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>      fim<span class="op">-&gt;</span>prox <span class="op">=</span> no<span class="op">;</span> </span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">++;</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>   N<span class="op">=</span>N<span class="op">+</span><span class="dv">1</span><span class="op">;</span>            <span class="co">// ou... this-&gt;N++;</span></span>
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="implementação-0-desenfileira" class="slide level2">
 <h2>Implementação 0: Desenfileira</h2>
 <div class="sourceCode" id="cb26"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> desenfileira<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    NoFila0<span class="op">*</span> p <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">;</span>   <span class="co">// ponteiro da frente</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>prox<span class="op">;</span> <span class="co">// avança fila</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> r <span class="op">=</span> p<span class="op">-&gt;</span>dado<span class="op">;</span>            <span class="co">// conteudo da frente</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> p<span class="op">;</span>                    <span class="co">// apaga frente</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">--;</span></span>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc0<span class="op">::</span>desenfileira<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    NoFila0<span class="op">*</span> p <span class="op">=</span> inicio<span class="op">;</span>    <span class="co">// ponteiro da frente</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    inicio <span class="op">=</span> inicio<span class="op">-&gt;</span>prox<span class="op">;</span>  <span class="co">// avança fila</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> r <span class="op">=</span> p<span class="op">-&gt;</span>dado<span class="op">;</span>       <span class="co">// conteudo da frente</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> p<span class="op">;</span>               <span class="co">// apaga frente</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    N<span class="op">=</span>N<span class="op">-</span><span class="dv">1</span><span class="op">;</span>  <span class="co">// ou... this-&gt;N--;             </span></span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r<span class="op">;</span></span>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
@@ -552,49 +544,41 @@ auxiliar:</p>
 <div class="columns">
 <div class="column" style="width:33%;">
 <div class="sourceCode" id="cb27"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NoFila1</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> dado<span class="op">;</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>   NoFila1<span class="op">*</span> prox<span class="op">;</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoFila1 <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> dado<span class="op">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>   NoFila1<span class="op">*</span> prox<span class="op">;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><div class="column" style="width:67%;">
 <div class="sourceCode" id="cb28"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FilaEnc1</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  NoFila1<span class="op">*</span> inicio<span class="op">;</span>   <span class="co">// frente da fila</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  NoFila1<span class="op">*</span> fim<span class="op">;</span>      <span class="co">// fundo da fila</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                      </span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> cria <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span>        </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> libera <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span>     </span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> frente <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> enfileira <span class="op">(</span><span class="dt">char</span> dado<span class="op">){</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> desenfileira<span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>  tamanho<span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica agregado FilaEnc1</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>FilaTAD<span class="op">&lt;</span>FilaEnc1<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FilaEnc1 <span class="op">{</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  NoFila1<span class="op">*</span> inicio<span class="op">;</span>   <span class="co">// frente da fila</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  NoFila1<span class="op">*</span> fim<span class="op">;</span>      <span class="co">// fundo da fila</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                      </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> cria<span class="op">()</span>   <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> frente<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> enfileira <span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> desenfileira<span class="op">()</span>        <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> tamanho<span class="op">()</span>             <span class="op">-&gt;</span> <span class="dt">int</span><span class="op">;</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica agregado FilaEnc1</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>FilaTAD<span class="op">&lt;</span>FilaEnc1<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
 </div>
 </div>
 </section>
 <section id="implementação-cria-e-libera-1" class="slide level2">
 <h2>Implementação: Cria e Libera</h2>
 <div class="sourceCode" id="cb29"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FilaEnc1 <span class="op">{</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cria<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// zero elementos na fila</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>  <span class="co">// endereço zero de memória</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>     <span class="co">// endereço zero de memória</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> libera<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>      desenfileira<span class="op">();</span> <span class="co">// limpa a fila</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc1<span class="op">::</span>cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>   N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// zero elementos na fila</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   inicio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>  <span class="co">// endereço zero de memória</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>   fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>     <span class="co">// endereço zero de memória</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc1<span class="op">::</span>libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span>N <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>      desenfileira<span class="op">();</span> <span class="co">// limpa a fila</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="exemplo-de-uso" class="slide level2">
 <h2>Exemplo de uso</h2>
@@ -616,22 +600,18 @@ p.fim: 0
 <section id="implementação-frente-e-tamanho-1" class="slide level2">
 <h2>Implementação: Frente e Tamanho</h2>
 <div class="sourceCode" id="cb32"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FilaEnc1 <span class="op">{</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> frente<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>dado<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> tamanho<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc1<span class="op">::</span>frente<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span> <span class="cf">return</span> inicio<span class="op">-&gt;</span>dado<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc1<span class="op">::</span>tamanho<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span> <span class="cf">return</span> N<span class="op">;</span> <span class="op">}</span></span></code></pre></div>
 </section>
 <section id="implementação-enfileira" class="slide level2">
 <h2>Implementação: Enfileira</h2>
 <div class="sourceCode" id="cb33"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> enfileira<span class="op">(</span><span class="dt">char</span> v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   NoFila1<span class="op">*</span> no <span class="op">=</span> <span class="kw">new</span> NoFila1<span class="op">{.</span>dado <span class="op">=</span> v<span class="op">,</span> <span class="op">.</span>prox <span class="op">=</span> <span class="dv">0</span> <span class="op">};</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span><span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span>  inicio <span class="op">=</span> fim <span class="op">=</span> no<span class="op">;</span>         <span class="op">}</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span>             <span class="op">{</span>  fim<span class="op">-&gt;</span>prox <span class="op">=</span> no<span class="op">;</span> fim <span class="op">=</span> no<span class="op">;</span>  <span class="op">}</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">++;</span></span>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc1<span class="op">::</span>enfileira<span class="op">(</span><span class="dt">char</span> v<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> no <span class="op">=</span> <span class="kw">new</span> NoFila1<span class="op">{.</span>dado <span class="op">=</span> v<span class="op">,</span> <span class="op">.</span>prox <span class="op">=</span> <span class="dv">0</span> <span class="op">};</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span><span class="op">(</span>N <span class="op">==</span> <span class="dv">0</span><span class="op">)</span>  <span class="op">{</span>  inicio <span class="op">=</span> fim <span class="op">=</span> no<span class="op">;</span>         <span class="op">}</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span>        <span class="op">{</span>  fim<span class="op">-&gt;</span>prox <span class="op">=</span> no<span class="op">;</span> fim <span class="op">=</span> no<span class="op">;</span>  <span class="op">}</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>   N<span class="op">=</span>N<span class="op">+</span><span class="dv">1</span><span class="op">;</span>  <span class="co">// ou... this-&gt;N++;</span></span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="na-memória-p.enfileiraa-p.enfileirab">Na memória:
 <code>p.enfileira('A'); p.enfileira('B');</code></h3>
@@ -666,13 +646,13 @@ p.fim: 100
 <section id="implementação-desenfileira" class="slide level2">
 <h2>Implementação: Desenfileira</h2>
 <div class="sourceCode" id="cb37"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> desenfileira<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    NoFila1<span class="op">*</span> p   <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">;</span> <span class="co">// ponteiro da frente</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>prox<span class="op">;</span> <span class="co">// avança fila</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> r <span class="op">=</span> p<span class="op">-&gt;</span>dado<span class="op">;</span>            <span class="co">// conteudo da frente</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> p<span class="op">;</span>                    <span class="co">// apaga frente</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">--;</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span> <span class="kw">this</span><span class="op">-&gt;</span>fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span></span>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc1<span class="op">::</span>desenfileira<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    NoFila1<span class="op">*</span> p   <span class="op">=</span> inicio<span class="op">;</span> <span class="co">// ponteiro da frente</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    inicio <span class="op">=</span> inicio<span class="op">-&gt;</span>prox<span class="op">;</span> <span class="co">// avança fila</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> r <span class="op">=</span> p<span class="op">-&gt;</span>dado<span class="op">;</span>      <span class="co">// conteudo da frente</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> p<span class="op">;</span>              <span class="co">// apaga frente</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    N<span class="op">=</span>N<span class="op">-</span><span class="dv">1</span><span class="op">;</span>    <span class="co">// ou... this-&gt;N--;</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>N <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span> fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span></span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r<span class="op">;</span></span>
 <span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="na-memória-p.desenfileira">Na memória:
@@ -695,6 +675,12 @@ p.fim: 100
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>e</mi><mo>←</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">frente \leftarrow B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">re</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span></strong></p>
 <pre><code>|     |     |     |  B  |  0  |     |     |     |     |    |    
    0     4    ...   100   104   108   112   116   ...  8GiB</code></pre>
+</section></section>
+<section>
+<section id="tópico-avançado-fila-com-ponteiro-inteligente"
+class="title-slide slide level1">
+<h1>Tópico Avançado: Fila com Ponteiro Inteligente</h1>
+
 </section>
 <section id="filas-encadeadas-com-ponteiros-inteligentes"
 class="slide level2">
@@ -709,6 +695,10 @@ através de <em>smart pointers</em>.</p>
 <div class="sourceCode" id="cb40"><pre
 class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">typename</span> T<span class="op">&gt;</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> uptr <span class="op">=</span> <span class="bu">std::</span>unique_ptr<span class="op">&lt;</span>T<span class="op">&gt;;</span></span></code></pre></div>
+<h3 id="padrão-make_-ao-invés-de-new">Padrão <code>make_</code> ao invés
+de <code>new</code></h3>
+<p>Importante: ao invés de criar um <code>uptr</code> com
+<code>new</code>, usaremos o padrão <code>std::make_unique</code>.</p>
 </section>
 <section id="implementação-2" class="slide level2">
 <h2>Implementação</h2>
@@ -717,80 +707,68 @@ auxiliar:</p>
 <div class="columns">
 <div class="column" style="width:33%;">
 <div class="sourceCode" id="cb41"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NoFila2</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> dado<span class="op">;</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  uptr<span class="op">&lt;</span>NoFila2<span class="op">&gt;</span> prox<span class="op">;</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoFila2 <span class="op">{</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> dado<span class="op">;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  uptr<span class="op">&lt;</span>NoFila2<span class="op">&gt;</span> prox<span class="op">;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><div class="column" style="width:67%;">
 <div class="sourceCode" id="cb42"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FilaEnc2</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  uptr<span class="op">&lt;</span>NoFila2<span class="op">&gt;</span> inicio<span class="op">;</span> <span class="co">// frente da fila</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  NoFila2<span class="op">*</span> fim<span class="op">;</span>         <span class="co">// fundo da fila</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                      </span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> cria <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span>        </span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> libera <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span>     </span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> frente <span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> enfileira <span class="op">(</span><span class="dt">char</span> dado<span class="op">){</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> desenfileira<span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>  tamanho<span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica agregado FilaEnc2</span></span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>FilaTAD<span class="op">&lt;</span>FilaEnc2<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FilaEnc2 <span class="op">{</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  uptr<span class="op">&lt;</span>NoFila2<span class="op">&gt;</span> inicio<span class="op">;</span> <span class="co">// frente da fila</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  NoFila2<span class="op">*</span> fim<span class="op">;</span>         <span class="co">// fundo da fila</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                      </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> cria<span class="op">()</span>   <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> frente<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> enfileira <span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> desenfileira<span class="op">()</span>        <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> tamanho<span class="op">()</span>             <span class="op">-&gt;</span> <span class="dt">int</span><span class="op">;</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica agregado FilaEnc2</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>FilaTAD<span class="op">&lt;</span>FilaEnc2<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
 </div>
 </div>
 </section>
 <section id="implementação-cria-e-libera-2" class="slide level2">
 <h2>Implementação: Cria e Libera</h2>
 <div class="sourceCode" id="cb43"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FilaEnc2 <span class="op">{</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cria<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>         <span class="co">// zero elementos na fila</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">// this-&gt;inicio = 0; // desnecessário...</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// endereço zero de memória</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> libera<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>   <span class="co">// inicio.reset(); fim=0; N=0;   // stackoverflow!</span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="co">// previne stackoverflow no unique_ptr</span></span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>      desenfileira<span class="op">();</span> <span class="co">// limpa a fila</span></span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc2<span class="op">::</span>cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>   N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>         <span class="co">// zero elementos na fila</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>   <span class="co">// inicio = 0; // desnecessário...</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>   fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// endereço zero de memória</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc2<span class="op">::</span>libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>   <span class="co">// inicio.reset(); fim=0; N=0;   // stackoverflow!</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span>N <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span>       <span class="co">// previne stackoverflow no unique_ptr</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>      desenfileira<span class="op">();</span> <span class="co">// limpa a fila</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="implementação-frente-e-tamanho-2" class="slide level2">
 <h2>Implementação: Frente e Tamanho</h2>
 <div class="sourceCode" id="cb44"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FilaEnc2 <span class="op">{</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> frente<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>dado<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> tamanho<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc2<span class="op">::</span>frente<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span> <span class="cf">return</span> inicio<span class="op">-&gt;</span>dado<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc2<span class="op">::</span>tamanho<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span> <span class="cf">return</span> N<span class="op">;</span> <span class="op">}</span></span></code></pre></div>
 </section>
 <section id="implementação-enfileira-e-desenfileira"
 class="slide level2">
 <h2>Implementação: Enfileira e Desenfileira</h2>
 <div class="sourceCode" id="cb45"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> enfileira<span class="op">(</span><span class="dt">char</span> v<span class="op">)</span> <span class="op">{</span></span>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc2<span class="op">::</span>enfileira<span class="op">(</span><span class="dt">char</span> v<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> no <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>NoFila2<span class="op">&gt;(</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>      NoFila2<span class="op">{.</span>dado <span class="op">=</span> v<span class="op">,</span> <span class="op">.</span>prox <span class="op">=</span> <span class="bu">std::</span>nullptr<span class="op">}</span>        </span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">);</span></span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span><span class="op">(</span>N <span class="op">==</span> <span class="dv">0</span><span class="op">){</span>inicio <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>no<span class="op">);</span> fim <span class="op">=</span> inicio<span class="op">.</span>get<span class="op">();</span>   <span class="op">}</span></span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span>   <span class="op">{</span>fim<span class="op">-&gt;</span>prox <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>no<span class="op">);</span> fim <span class="op">=</span> fim<span class="op">-&gt;</span>prox<span class="op">.</span>get<span class="op">();}</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">++;</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>   N<span class="op">=</span>N<span class="op">+</span><span class="dv">1</span><span class="op">;</span>  <span class="co">// ou... this-&gt;N++;</span></span>
 <span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> desenfileira<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> FilaEnc2<span class="op">::</span>desenfileira<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
 <span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> r <span class="op">=</span> p<span class="op">-&gt;</span>dado<span class="op">;</span>                 <span class="co">// conteudo da frente</span></span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>prox<span class="op">);</span> <span class="co">// avança</span></span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">--;</span></span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span><span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">==</span><span class="dv">0</span><span class="op">){</span> <span class="kw">this</span><span class="op">-&gt;</span>fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span> <span class="co">// corrige ponteiro &#39;fim&#39;</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>   inicio <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>inicio<span class="op">-&gt;</span>prox<span class="op">);</span> <span class="co">// avança</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>   N<span class="op">=</span>N<span class="op">-</span><span class="dv">1</span><span class="op">;</span>  <span class="co">// ou... this-&gt;N--;</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span><span class="op">(</span>N<span class="op">==</span><span class="dv">0</span><span class="op">){</span> fim <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span>              <span class="co">// corrige ponteiro &#39;fim&#39;</span></span>
 <span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> r<span class="op">;</span></span>
 <span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
@@ -824,16 +802,16 @@ testes, evitando erros de implementação.</p>
 <p>Na STL, faça <code>#include&lt;queue&gt;</code> e use métodos
 <code>push</code>, <code>pop</code> e <code>front</code>.</p>
 <div class="sourceCode" id="cb46"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;queue&gt;</span><span class="pp">               </span><span class="co">// inclui fila genérica</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;fmt/core.h&gt;</span><span class="pp">          </span><span class="co">// inclui print</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> fmt<span class="op">::</span>print<span class="op">;</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> p<span class="op">;</span>        <span class="co">// fila de char</span></span>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co">// #include&lt;queue&gt;            // inclui fila genérica</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co">// #include&lt;print&gt;            // inclui print</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> p<span class="op">;</span>             <span class="co">// fila de char</span></span>
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>push<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">);</span></span>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>push<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span></span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>   print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>front<span class="op">());</span> <span class="co">// imprime A</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>front<span class="op">());</span>  <span class="co">// imprime A</span></span>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>pop<span class="op">();</span></span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>   print<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}\n</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>front<span class="op">());</span> <span class="co">// imprime B</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>front<span class="op">());</span>  <span class="co">// imprime B</span></span>
 <span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
@@ -850,7 +828,7 @@ Verifique se <code>std::queue</code> passa no teste com
 <p><em>Você pode compilar o código proposto (começando pelo slide
 anterior em um arquivo chamado <code>main_fila.cpp</code>) através do
 comando:</em></p>
-<p><code>g++ --std=c++20 main_fila.cpp -o appFila</code></p>
+<p><code>g++ --std=c++23 main_fila.cpp -o appFila</code></p>
 </section>
 <section id="fim-implementações" class="slide level2">
 <h2>Fim implementações</h2>
