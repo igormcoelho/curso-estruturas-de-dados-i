@@ -10,6 +10,8 @@
 
 using fmt::print;
 
+void inverte(PilhaTAD<char> auto* p) {}
+
 int main() {
   // testando PilhaSeq1
   {
@@ -63,6 +65,12 @@ int main() {
     print("{}\n", p.top());  // B
     p.pop();
     print("{}\n", p.top());  // A
+  }
+  {
+    PilhaEnc1 p;
+    p.cria();
+    inverte(&p);
+    p.libera();
   }
 
   return 0;

@@ -32,12 +32,12 @@ São requisitos para essa aula o conhecimento de:
 ## Ambiente de Programação
 
 Exemplos serão dados com base no sistema GNU/Linux e compiladores GCC, mas existem ferramentas equivalentes para Windows e demais sistemas operacionais. A IDE
-Visual Studio Code suporta a linguagem C++ tanto para Linux (nativamente)
-quanto para Windows (com a instalação do compilador MinGW).
-
+Visual Studio Code suporta a linguagem C++ tanto para Linux
+quanto para Windows, sendo necessário o CMake 4.0 com Ninja.
+No Windows/WSL ou Linux, instale o compilador Clang 19 (no Windows, use o Scoop com `scoop install main/llvm`).
 
 Também é possível praticar diretamente em um navegador web com
-plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler). 
+plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler) ou [Godbolt](https://godbolt.org/).
 Neste caso, o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrões C23 e C++23).
 
 

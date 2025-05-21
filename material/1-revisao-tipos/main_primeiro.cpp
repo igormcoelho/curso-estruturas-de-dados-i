@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -100,6 +101,28 @@ auto Fat::fatorial(int n) -> int {
     return 1;
   else
     return n * fatorial(n - 1);
+};
+
+struct A {
+  int x, y;
+  A& operator=(const A& a) {
+    x = a.x;
+    y = a.y;
+    return *this;
+  }
+
+  A& operator=(A&& a) {
+    x = a.x;
+    y = a.y;
+    a.x = -1;
+    a.y = -1;
+    return *this;
+  }
+};
+
+struct B {
+  int x, y;
+  B(int z) {}  // Não é mais agregado
 };
 
 int main(int argc, char* argv[]) {
@@ -294,6 +317,22 @@ int main(int argc, char* argv[]) {
     Fat f;
     println("{}", f.fatorial(5));  // 120
     println("{}", std::is_aggregate<Fat>::value);
+  }
+  {
+    // inicialização agregada ainda funciona com operator=
+    A a1 = {0, 0};
+    A a2 = {1, 2};
+    a1 = a2;
+    assert(a1.x == 1);
+    assert(a1.y == 2);
+    assert(a2.x == 1);
+    assert(a2.y == 2);
+    a1 = std::move(a2);
+    assert(a1.x == 1);
+    assert(a1.y == 2);
+    assert(a2.x == -1);
+    assert(a2.y == -1);
+    std::println("ok!");
   }
 
   return 0;
