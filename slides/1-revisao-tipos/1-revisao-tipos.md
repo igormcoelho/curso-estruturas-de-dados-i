@@ -37,7 +37,7 @@ quanto para Windows, sendo necessário o CMake 4.0 com Ninja.
 No Windows/WSL ou Linux, instale o compilador Clang 19 (no Windows, use o Scoop com `scoop install main/llvm`).
 
 Também é possível praticar diretamente em um navegador web com
-plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler) ou [Godbolt](https://godbolt.org/).
+plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler) ou [Godbolt](https://godbolt.org/z/sd7dbxY3o) (mais recomendada!).
 Neste caso, o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrões C23 e C++23).
 
 
@@ -155,7 +155,7 @@ auto main() -> int {
   return 0;
 }
 
-// https://godbolt.org/z/dvc5hdv3n
+// online: https://godbolt.org/z/sd7dbxY3o
 ```
 
 **Pergunta:** Qual o tipo de retorno da função `main`?
