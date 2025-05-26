@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Árvores
-date: 05/10/2020 - 26/04/2023
+date: 05/10/2020 - 26/05/2025
 transition: cube
 fontsize: 10
 header-includes:
