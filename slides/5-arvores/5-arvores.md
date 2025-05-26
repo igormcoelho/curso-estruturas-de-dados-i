@@ -42,17 +42,14 @@ A Árvore (do inglês *Tree*) é um Tipo Abstrato de Dado (TAD) que pode assumir
    * um nó $R$ chamado de *nó raiz*
    * $0$ ou mais árvores disjuntas $T_1$, $T_2$, ..., associadas a $R$; tais árvores são chamadas de *subárvores*
 
-
-![Representação de árvore](2020-09-30-12-47-14.png){width=55%}
-
+![Representação de árvore ($A1$)](./img-pratica/curso-ed-i-A1.png){height=40%}
 
 -------
 
 ## Nomenclatura
 
-Um conjunto de árvores é chamado *floresta*
-
-Se T é uma árvore com raiz R, então:
+Um conjunto de árvores é chamado *floresta*. 
+Se T é árvore com raiz R:
 
 - os *nós de T* são todas as raízes de subárvores de R, além da raiz de T
 - um nó com 0 filhos é chamado de *folha* (do inglês *leaf*)
@@ -60,20 +57,37 @@ Se T é uma árvore com raiz R, então:
 - a raiz é um nó *ancestral* de todos nós da árvore
 - todos os nós da árvore são descendentes do nó raiz
 
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Árvore $A1$ com seis folhas](./img-pratica/curso-ed-i-A1.png){height=40%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Árvore $A0$ com único nó $J$](./img-pratica/curso-ed-i-A0.png){height=40%}
+
+:::::
+
+::::::::::
+
 
 -------
 
 ## Caminhos
 
-Um caminho em uma árvore é uma sequência de nós com relação *filho de* ou *pai de*:
+Um caminho em uma árvore é uma *sequência de nós* com relação *filho de* ou *pai de*:
 
-![](2020-09-30-12-47-14.png){width=55%}
+![Árvore $A1$ com seis folhas](./img-pratica/curso-ed-i-A1.png){height=40%}
 
 **Exemplos:** 
 
-- E,C,A
-- D,G,I
-- C,A,D,G
+- F, D, A
+- C, E, J
+- B, A, D, F
+
 
 -------
 
@@ -81,10 +95,10 @@ Um caminho em uma árvore é uma sequência de nós com relação *filho de* ou 
 
 O *tamanho de um caminho* consiste no número de nós. O *nível* de um nó é o tamanho de seu caminho até a raiz:
 
-![](2020-09-30-12-47-14.png){width=55%}
+![Árvore $A1$ com seis folhas](./img-pratica/curso-ed-i-A1.png){height=40%}
 
 
-**Nível de:** A=1; C=2; F=3; H=4.  
+**Nível de:** A=1; C=2; F=3; J=4.  
 
 **Desafio:** em cursos de Teoria dos Grafos é provado que existe um único caminho conectando dois nós na árvore. *Utilize sua intuição para verificar esta afirmação!*
 
@@ -94,9 +108,9 @@ O *tamanho de um caminho* consiste no número de nós. O *nível* de um nó é o
 
 A *altura* de nó X é o tamanho do maior caminho que conecta X a uma folha descendente. Denotamos a altura de $X$ por $h(X)$:
 
-![](2020-09-30-12-47-14.png){width=55%}
+![Árvore $A1$ com seis folhas](./img-pratica/curso-ed-i-A1.png){height=40%}
 
-**Alturas:** $h(B)=1$; $h(C)=2$; $h(D)=3$; $h(A)=4$.  
+**Alturas:** $h(B)=1$; $h(C)=3$; $h(D)=2$; $h(A)=4$.  
 
 A *altura da árvore* é a altura de sua raiz! 
 
@@ -111,7 +125,7 @@ Uma árvore é dita *ordenada* se há uma ordem associada aos filhos de cada nó
 
 Uma árvore é dita $m$*-ária* se cada nó é *limitado a um máximo* de $m$ filhos.
 
-![](2020-09-30-12-47-14.png){width=55%}
+![Árvore $A1$ com seis folhas](./img-pratica/curso-ed-i-A1.png){height=40%}
 
 A árvore acima é ternária (podendo também ser $4$-ária, $5$-ária, $6$-ária, ...), mas *não é binária*!
 
@@ -121,9 +135,9 @@ A árvore acima é ternária (podendo também ser $4$-ária, $5$-ária, $6$-ári
 
 Em *árvores binárias ordenadas* de raiz R, a primeira subárvore de cada nó é denominada *subárvore à esquerda de R* (cuja raiz se chama *filho esquerdo*), e a segunda é a *subárvore à direita de R* (cuja raiz se chama *filho direito*).
 
-![](2020-09-30-14-04-14.png){width=50%}
+![Árvore $A2$ com três folhas](./img-pratica/curso-ed-i-A2.png){height=40%}
 
-**Exemplo:** B é filho esquerdo e C é filho direito de A
+**Exemplo:** $D$ é filho esquerdo de $M$; e $O$ é filho direito de $M$
 
 --------
 
@@ -131,19 +145,34 @@ Em *árvores binárias ordenadas* de raiz R, a primeira subárvore de cada nó �
 
 Uma árvore *estritamente $m$-ária* é aquela na qual cada nó possui *exatamente* $0$ ou $m$ filhos.
 
-![](2020-09-30-14-04-14.png){width=50%}
 
-**Exemplo:** Considere a inclusão de um filho à esquerda de C.
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Árvore $A2$ com três folhas](./img-pratica/curso-ed-i-A2.png){height=40%}
+
+:::::
+
+:::::{.column  width=50%}
+
+![Árvore $A3$ com cinco folhas](./img-pratica/curso-ed-i-A3.png){height=40%}
+
+:::::
+
+::::::::::
+
+**Exemplo:** Considere a inclusão de um filho à esquerda de $D$, e outro à direita de $O$.
 
 **Observação:** Chamada pelo NIST de [full binary tree](https://xlinux.nist.gov/dads/HTML/fullBinaryTree.html), embora também seja preferivelmente chamada de *própria* (ou *proper*).
 
 --------
 
-## Árvore Cheia ou Perfeita
+## Árvore Perfeita (ou Cheia)
 
-Uma *árvore $m$-ária cheia* (ou *perfeita*) é aquela na qual todo nó com alguma subárvore vazia está no *último nível*.
+Uma *árvore $m$-ária perfeita* (ou *cheia*) é aquela na qual todo nó com alguma subárvore vazia está no *último nível*.
 
-![](2020-09-30-14-32-19.png){width=40%}
+![Árvore $A5$ perfeita](./img-pratica/curso-ed-i-A5.png){height=50%}
 
 **Observação:** Chamada pelo NIST de [perfect binary tree](https://xlinux.nist.gov/dads/HTML/perfectBinaryTree.html) (ou *perfect k-ary tree*), embora também seja chamada de *full* ou, preferencialmente *perfect*.
 
@@ -153,7 +182,7 @@ Uma *árvore $m$-ária cheia* (ou *perfeita*) é aquela na qual todo nó com alg
 
 Uma *árvore $m$-ária completa* é aquela na qual todo nó com alguma subárvore vazia está no *último ou penúltimo níveis, estando os nós do último nível completamente preenchidos da esquerda para a direita*.
 
-![](2020-09-30-14-32-19-completa.png){width=40%}
+![Árvore $A4$ completa com três folhas](./img-pratica/curso-ed-i-A4.png){height=40%}
 
 
 **Observação:** Chamada pelo NIST de [complete binary tree](https://xlinux.nist.gov/dads/HTML/completeBinaryTree.html). Note que alguns autores consideram essa mesma definição para árvores cheias ou perfeitas.
@@ -171,7 +200,7 @@ Uma *árvore $m$-ária completa* é aquela na qual todo nó com alguma subárvor
 
 3. Qual a altura mínima de uma árvore binária com n nós?
 
-4. Numa árvore binária cheia com n nós, qual o número de nós no último nível?
+4. Numa árvore binária perfeita com n nós, qual o número de nós no último nível?
 
 . . .
 
@@ -198,16 +227,12 @@ Consideramos uma implementação de árvore $m$-ária, com alocação encadeada 
 
 ```.cpp
 constexpr int M = 3;     // aridade M=3 (ternária)
-class NoEnc1
-{
-public:
-   char chave            // dado armazenado
+struct NoEnc1 {
+   char chave;           // dado armazenado
    NoEnc1* nosFilhos[M]; // ponteiros para filhos
 };
 
-class ArvoreEnc1
-{
-public:
+struct ArvoreEnc1 {
   NoEnc1* raiz;          // raiz da árvore
 };
 ```
@@ -228,17 +253,13 @@ Consideramos uma implementação de árvore $m$-ária, com alocação encadeada 
 
 ```.cpp
 constexpr int M = 3;     // aridade M=3 (ternária)
-class NoEnc2
-{
-public:
+struct NoEnc2 {
    char chave;           // dado armazenado
    NoEnc2* prox;         // proximo elemento
    NoEnc2* nosFilhos;    // ponteiro único para filhos
 };
 
-class ArvoreEnc2
-{
-public:
+struct ArvoreEnc2 {
   NoEnc2* raiz;          // raiz da árvore
 };
 ```
@@ -261,17 +282,13 @@ Note que podemos reescrever os ponteiros de `NoEnc2` com os termos `esq` e `dir`
 
 
 ```.cpp
-class NoEnc3
-{
-public:
+struct NoEnc3 {
    char chave;     // dado armazenado
    NoEnc3* esq;    // filho esquerdo
    NoEnc3* dir;    // filho direito
 };
 
-class ArvoreEnc3
-{
-public:
+struct ArvoreEnc3 {
   NoEnc3* raiz;    // raiz da árvore
 };
 ```
@@ -290,21 +307,19 @@ Consideramos uma implementação de árvore binária, com alocação encadeada d
 
 ## Implementação Encadeada 4 (binária) - unique_ptr
 
+**AVISO:** *Tópico Avançado!*
+
 Note que podemos reescrever os ponteiros de `NoEnc3` utilizando `unique_ptr`, para maior segurança:
 
 
 ```.cpp
-class NoEnc4
-{
-public:
+struct NoEnc4 {
    char chave;                     // dado armazenado
    std::unique_ptr<NoEnc4> esq;    // filho esquerdo
    std::unique_ptr<NoEnc4> dir;    // filho direito
 };
 
-class ArvoreEnc4
-{
-public:
+struct ArvoreEnc4 {
   std::unique_ptr<NoEnc4> raiz;    // raiz da árvore
 };
 ```
@@ -335,10 +350,8 @@ Consideraremos uma árvore sequencial com, no máximo, `MAX_N` elementos do tipo
 
 ```.cpp
 constexpr int MAX_N = 50; // capacidade máxima da árvore
-class ArvoreSeq1
-{
-public:
-  char elem [MAX_N];      // elementos na fila
+struct ArvoreSeq1 {
+  char elem [MAX_N];      // elementos na árvore
 };
 ```
 
