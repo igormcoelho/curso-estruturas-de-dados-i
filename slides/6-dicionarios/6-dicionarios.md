@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Dicionários e Árvores de Busca
-date: 05/10/2020
+date: 01/06/2025
 transition: cube
 fontsize: 10
 header-includes:
@@ -91,15 +91,14 @@ O *conceito* de dicionário somente requer suas três operações básicas. Como
 
 ```.cpp
 template<typename Agregado, typename TChave, typename TValor>
-concept bool
-DicionarioTAD = requires(Agregado a, TChave c, TValor v)
-{
+concept 
+DicionarioTAD = requires(Agregado d, TChave c, TValor v) {
    // requer operação 'consulta'
-   { a.consulta(c) };
+   { d.consulta(c) };
    // requer operação 'adiciona'
-   { a.adiciona(c, v) };
+   { d.adiciona(c, v) };
    // requer operação 'remove'
-   { a.remove(c) };
+   { d.remove(c) };
 };
 ```
 
@@ -108,9 +107,7 @@ DicionarioTAD = requires(Agregado a, TChave c, TValor v)
 ## Exemplo: Dicionário de `char` para `int`
 
 ```.cpp
-class DicionarioCI
-{
-public:
+struct DicionarioCI {
    // ... 
    int consulta(char c) {
       // ...
@@ -133,16 +130,16 @@ static_assert(DicionarioTAD<DicionarioCI, char, int>);
 Adiciona pares chave-valor `('A', 100)` e `('B', 200)`. Depois faz consultas e remove chave `'B'`.
 
 ```.cpp
-int main() {
+auto main() -> int {
    DicionarioCI d;
-   d.cria();                        // inicializa estrutura
+   d.cria();                            // inicializa
    d.adiciona('A', 100);
    d.adiciona('B', 200);
-   printf("%d\n", d.consulta('A')); // 100
-   printf("%d\n", d.consulta('B')); // 200
-   d.remove('B');                   // 200
+   std::println("{}", d.consulta('A')); // 100
+   std::println("{}", d.consulta('B')); // 200
+   d.remove('B');                       // 200
    // ...
-   d.libera();                      // libera estrutura
+   d.libera();                          // libera estrutura
    
    return 0;
 }
@@ -193,7 +190,23 @@ Podemos utilizar uma Árvore Binária rotulada $T$, tal que:
 
 ## Árvore Binária de Busca: Exemplo
 
-![Exemplos de ABB](2020-10-05-16-28-06.png){width=70%}
+Exemplos de ABB, contendo nós D, E, F, L, M, N e O.
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Árvore $A2$ com três folhas](./img-pratica/curso-ed-i-A2.png){height=40%}
+
+:::::
+
+:::::{.column  width=50%}
+
+![Árvore $A3$ com cinco folhas](./img-pratica/curso-ed-i-A3.png){height=40%}
+
+:::::
+
+::::::::::
 
 
 ------
@@ -203,17 +216,13 @@ Podemos utilizar uma Árvore Binária rotulada $T$, tal que:
 Relembrando (aula de Árvores) a estrutura de árvore binária considerada:
 
 ```.cpp
-class NoEnc3
-{
-public:
+struct NoEnc3 {
    char chave;     // dado armazenado
    NoEnc3* esq;    // filho esquerdo
    NoEnc3* dir;    // filho direito
 };
 
-class ArvoreEnc3
-{
-public:
+struct ArvoreEnc3 {
   NoEnc3* raiz;    // raiz da árvore
 };
 ```
@@ -234,7 +243,7 @@ Podemos resolver o *Problema da Busca*, com chave de busca $c$, através de uma 
    *  `c > v->chave`: refaça o algoritmo na subárvore direita
 - Caso o nó $v$ não exista, a busca termina.
 
-![](2020-10-05-16-32-21.png){width=20%}
+![Árvore $A3$ com cinco folhas](./img-pratica/curso-ed-i-A3.png){height=30%}
 
 --------
 
@@ -242,11 +251,26 @@ Podemos resolver o *Problema da Busca*, com chave de busca $c$, através de uma 
 
 Avalie se as árvores abaixo são árvores binárias de busca:
 
-![](2020-10-05-16-42-48.png)
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Árvore $A1$ com três folhas](./img-pratica/curso-ed-i-A1.png){height=40%}
+
+:::::
+
+:::::{.column  width=50%}
+
+![Árvore $A4$ com cinco folhas](./img-pratica/curso-ed-i-A4.png){height=40%}
+
+:::::
+
+::::::::::
 
 . . .
 
-**Solução:** nenhuma delas é! Erros: $24 < 15$, $19 > 21$, $4 < 3$ e $5 < 4$
+**Solução:** nenhuma delas é! Erros: $B < A$ (na A1); $H > K$ (na A4).
 
 --------
 
@@ -255,7 +279,7 @@ Avalie se as árvores abaixo são árvores binárias de busca:
 Implementação da busca em árvores binárias de busca:
 
 ```.cpp
-std::optional<char> buscaABB(auto* no, char c) {
+std::optional<char> buscaABB(NoEnc3* no, char c) {
    if(!no)
       return std::nullopt;          // chave não encontrada
    if(no->chave == c)
@@ -269,6 +293,8 @@ std::optional<char> buscaABB(auto* no, char c) {
 
 **Pergunta:** *Quantos chamadas recursivas esse algoritmo pode precisar?*
 
+. . .
+
 **Resposta:** Em uma árvore degenerada com $N$ nós, até $N$ passos (observe que, nesse caso, $N$ também é a *altura da árvore*)
 
 ---------
@@ -277,11 +303,25 @@ std::optional<char> buscaABB(auto* no, char c) {
 
 Encontre o *pior caso* (pior *chave de busca*) para a execução do algoritmo `buscaABB` nas quatro árvores abaixo (avalie primeiro se são ou não árvores binárias de busca):
 
-![](2020-10-05-12-17-24.png){width=70%}
+::::::::::{.columns}
+
+:::::{.column width=70%}
+
+![](2020-10-05-12-17-24.png){width=90%}
+
+:::::
+
+:::::{.column  width=30%}
+
+![Árvore $A3$ com cinco folhas](./img-pratica/curso-ed-i-A3.png){height=40%}
+
+:::::
+
+::::::::::
 
 . . .
 
-**Solução:** 1. N/A, 2. N/A, 3. E, 4. N/A 
+**Solução:** 1. N/A, 2. N/A, 3. E, 4. N/A, Fig.7 L
 
 ---------
 
@@ -292,11 +332,26 @@ Como a `buscaABB` depende a altura da árvore, qual o melhor caso possível para
 Relembrando: uma árvore binária completa (ou cheia/perfeita) possui $\lceil \log_2 (N+1) \rceil$ níveis.
 **Verifique essa afirmação:**
 
-![](2020-10-05-12-17-24.png){width=70%}
+
+::::::::::{.columns}
+
+:::::{.column width=70%}
+
+![](2020-10-05-12-17-24.png){width=90%}
+
+:::::
+
+:::::{.column  width=30%}
+
+![Árvore $A3$](./img-pratica/curso-ed-i-A3.png){height=40%}
+
+:::::
+
+::::::::::
 
 . . .
 
-**Solução:** 1. N/A, 2. N/A, 3. N/A, 4. $N=7$ e $\log_2 8 = 3$
+**Solução:** 1. N/A, 2. N/A, 3. N/A, 4. $N=7$ e $\log_2 8 = 3$ (Fig.7 tem $\log_2 9 = 4$)
 
 
 # Árvores Balanceadas
@@ -315,16 +370,135 @@ Tal controle é conseguido pelo cálculo de um **fator de balanceamento (FB)** p
 
 Calcule o fator de balanceamento da raiz das quatro árvores abaixo e informe se estão balanceadas:
 
-![](2020-10-05-12-17-24.png){width=70%}
+
+::::::::::{.columns}
+
+:::::{.column width=70%}
+
+![](2020-10-05-12-17-24.png){width=90%}
+
+:::::
+
+:::::{.column  width=30%}
+
+![Árvore $A3$](./img-pratica/curso-ed-i-A3.png){height=40%}
+
+:::::
+
+::::::::::
 
 . . .
 
-**Solução:** 1. $1-3=-2$ (não), 2. $0-3=-3$ (não), 3. $3-0=3$ (não), 4. $2-2=0$ (sim)
+**Solução:** 1. $1-3=-2$ (não), 2. $0-3=-3$ (não), 3. $3-0=3$ (não), 4. $2-2=0$ (sim), Fig.7 $3-2=1$ (sim)
 
 
 # Implementação de Dicionário com Árvores
 
 ## Implementação de Dicionário com Árvores
+
+Existem duas implementações populares de árvores balanceadas para dicionários: AVL e rubro-negra.
+
+Iremos explorar a árvore AVL, por sua simplicidade.
+
+Criada em 1962 pelos russos Georgy Adelson-Velsky e Evgenii Landis, ela consegue manter um balanceamento após uma operação de inserção ou remoção.
+
+Basta calcular o fator de balanceamento em cada nó e, caso esteja desbalanceada, algum tipo de operação de rotação será feita.
+
+Nos próximos slides demonstramos as rotações possíveis.
+
+
+## Rotação Simples à Direita
+
+Ocorre quando os fatores de balanceamento são 2 e 1 (ou 0).
+
+![Rotacao Simples Vermelha - Z Y X](./img-pratica/rotacao-simples-direita.png){height=40%}
+
+Após rotação à direita, a árvore fica enraizada em Y, com X à esquerda e Y à direita.
+
+## Rotação Simples à Esquerda
+
+Ocorre quando os fatores de balanceamento são -2 e -1 (ou 0).
+
+![Rotacao Simples Azul - P Q R](./img-pratica/rotacao-simples-esquerda.png){height=40%}
+
+Após rotação à direita, a árvore fica enraizada em Q, com P à esquerda e R à direita.
+
+## Rotação Dupla à Direita
+
+Ocorre quando os fatores de balanceamento são 2 e -1.
+Isso exige duas rotações, uma à direita e outra à esquerda.
+
+::::::::::{.columns}
+
+:::::{.column width=50%}
+
+![Rotacao Simples Vermelha - P R Q](./img-pratica/rotacao-dupla-direita.png){height=40%}
+
+:::::
+
+:::::{.column  width=50%}
+
+![Rotacao Simples Vermelha - P Q R](./img-pratica/rotacao-simples-esquerda.png){height=40%}
+
+:::::
+
+::::::::::
+
+
+Após rotação à direita, a árvore fica enraizada em P, mas ainda desbalanceada como -2 -1.
+Uma nova rotação à esquerda resolve o problema.
+
+## Rotação Dupla à Esquerda
+
+Ocorre quando os fatores de balanceamento são -2 e 1.
+Isso exige duas rotações, uma à esquerda e outra à direita.
+
+::::::::::{.columns}
+
+:::::{.column width=50%}
+
+![Rotacao Simples Vermelha - Z X Y](./img-pratica/rotacao-dupla-esquerda.png){height=40%}
+
+:::::
+
+:::::{.column  width=50%}
+
+![Rotacao Simples Vermelha - Z Y X](./img-pratica/rotacao-simples-direita.png){height=40%}
+
+:::::
+
+::::::::::
+
+
+Após rotação à direita, a árvore fica enraizada em P, mas ainda desbalanceada como -2 -1.
+Uma nova rotação à esquerda resolve o problema.
+
+## Praticando as Rotações
+
+Considere uma árvore A3 com nós M, D, O, B, F, N, S, E, L.
+A exclusão de S não acarreta em desbalanceamento.
+A exclusão de B gera um desbalanceamento no nó D, com fator 0-2=-2 seguido de 0.
+
+Isso indica uma Rotação Simples à Esquerda, no nó D.
+
+::::::::::{.columns}
+
+:::::{.column width=70%}
+
+![Árvore $A3$](./img-pratica/curso-ed-i-A3.png){height=30%}
+
+:::::
+
+:::::{.column  width=30%}
+
+![Árvore $A2$](./img-pratica/curso-ed-i-A2.png){height=30%}
+
+:::::
+
+::::::::::
+
+Qual o final após a rotação? F substitui D, tornando E seu filho à esquerda, seguido de D à esquerda, sendo que o filho à direita de F se torna L.
+A árvore se torna balanceada.
 
 ---------
 
