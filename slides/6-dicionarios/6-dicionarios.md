@@ -423,55 +423,57 @@ Ocorre quando os fatores de balanceamento são -2 e -1 (ou 0).
 
 Após rotação à direita, a árvore fica enraizada em Q, com P à esquerda e R à direita.
 
+
 ## Rotação Dupla à Direita
 
 Ocorre quando os fatores de balanceamento são 2 e -1.
-Isso exige duas rotações, uma à direita e outra à esquerda.
-
-::::::::::{.columns}
-
-:::::{.column width=50%}
-
-![Rotacao Simples Vermelha - P R Q](./img-pratica/rotacao-dupla-direita.png){height=40%}
-
-:::::
-
-:::::{.column  width=50%}
-
-![Rotacao Simples Vermelha - P Q R](./img-pratica/rotacao-simples-esquerda.png){height=40%}
-
-:::::
-
-::::::::::
-
-
-Após rotação à direita, a árvore fica enraizada em P, mas ainda desbalanceada como -2 -1.
-Uma nova rotação à esquerda resolve o problema.
-
-## Rotação Dupla à Esquerda
-
-Ocorre quando os fatores de balanceamento são -2 e 1.
 Isso exige duas rotações, uma à esquerda e outra à direita.
 
 ::::::::::{.columns}
 
 :::::{.column width=50%}
 
-![Rotacao Simples Vermelha - Z X Y](./img-pratica/rotacao-dupla-esquerda.png){height=40%}
+![Rotacao Simples Esquerda do filho X - Z X Y](./img-pratica/rotacao-filho-esquerda.png){height=40%}
 
 :::::
 
 :::::{.column  width=50%}
 
-![Rotacao Simples Vermelha - Z Y X](./img-pratica/rotacao-simples-direita.png){height=40%}
+![Rotacao Simples Direita da raiz Z - Z Y X](./img-pratica/rotacao-simples-direita.png){height=40%}
 
 :::::
 
 ::::::::::
 
 
-Após rotação à direita, a árvore fica enraizada em P, mas ainda desbalanceada como -2 -1.
-Uma nova rotação à esquerda resolve o problema.
+Após rotação à esquerda em X, a árvore fica enraizada em Z, mas ainda desbalanceada como 2 1.
+Uma nova rotação à direita da raiz Z resolve o problema.
+
+## Rotação Dupla à Esquerda
+
+Ocorre quando os fatores de balanceamento são -2 e 1.
+Isso exige duas rotações, uma à direita e outra à esquerda.
+
+::::::::::{.columns}
+
+:::::{.column width=50%}
+
+![Rotacao Simples Direita do filho R - P R Q](./img-pratica/rotacao-filho-direita.png){height=40%}
+
+:::::
+
+:::::{.column  width=50%}
+
+![Rotacao Simples Esquerda da raiz P - P Q R](./img-pratica/rotacao-simples-esquerda.png){height=40%}
+
+:::::
+
+::::::::::
+
+
+Após rotação à direita em R, a árvore fica enraizada em P, mas ainda desbalanceada como -2 -1.
+Uma nova rotação à esquerda da raiz P resolve o problema.
+
 
 ## Praticando as Rotações
 
