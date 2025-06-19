@@ -3,17 +3,17 @@ OUTHTML=index.html
 OUTPDF=7-filas-prioridade.pdf
 
 all: deps
-	# --filter pandoc-source-exec  --filter pandoc-katex 
-	/usr/bin/pandoc -s --self-contained -V theme=beige -s -t revealjs \
-		--katex --css katex.min.css \
+	/usr/bin/pandoc -s -V revealjs-url=./reveal.js --standalone -V theme=beige -s -t revealjs \
+         --filter pandoc-katex --css katex.min.css \
 	$(MDFILE) -o $(OUTHTML) --slide-level 2 # --toc
+	# sed -i 's|//dist/|/dist/|g' index.html
 	#
-	# -V lang=nl 
+	#
 	# -F pandoc-crossref
-	# --filter pandoc-latex-color --filter pandoc-source-exec
-	/usr/bin/pandoc --toc -s --self-contained -V theme:Warsaw -t beamer \
-	      -H header.tex \
-			$(MDFILE) -o $(OUTPDF) --slide-level 2
+	/usr/bin/pandoc --toc -s --embed-resources --standalone --filter pandoc-latex-fontsize -V theme:Warsaw -t beamer \
+	 -H header.tex \
+		$(MDFILE) -o $(OUTPDF) --slide-level 2
+# $(OUTPDF)
 
 #--filter pandoc-source-exec
 
@@ -25,7 +25,12 @@ env:
 	source ~/.cargo/env
 	conda activate
 
-deps:
-	# wget -nc https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css
-	# wget -nc https://github.com/hakimel/reveal.js/archive/master.tar.gz
-	# tar -xzvf master.tar.gz && mv reveal.js-master reveal.js
+deps: reveal.js
+	wget -nc https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css
+	# wget -nc https://github.com/hakimel/reveal.js/archive/refs/tags/5.2.1.tar.gz
+	# tar -xzvf 5.2.1.tar.gz && mv reveal.js-5.2.1 reveal.js
+
+reveal.js:
+	wget -nc https://github.com/hakimel/reveal.js/archive/refs/tags/5.2.1.tar.gz
+	tar -xzvf 5.2.1.tar.gz
+	[ -d reveal.js ] || mv reveal.js-5.2.1 reveal.js

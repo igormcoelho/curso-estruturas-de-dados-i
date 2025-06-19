@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Filas de Prioridade
-date: 14/10/2020 - rev. 26/08/2021
+date: 14/10/2020 - rev. 18/06/2025
 transition: cube
 output:
   slide_level: 2
@@ -74,11 +74,25 @@ Outra operação comum no TAD, embora considerada uma *operação interna*, é a
 
 ## Implementações
 
-A implementação do TAD Fila de Prioridade geralmente se dá através de uma implementação de *árvores de prioridade* denominada *heap* binário. O heap (ou *min heap*) é uma *árvore binária completa* com a seguinte propriedade:
+A implementação do TAD Fila de Prioridade geralmente se dá através de uma implementação de *árvores de prioridade* denominada *heap* binário. O heap (ou *min heap*) é uma *árvore binária completa*, ou seja, facilmente representada como um vetor, com a seguinte propriedade de *heap*:
 
 - se $x$ é pai de $y$, então $x \leq y$
 
-![Min-Heap. Créditos: Fabiano Oliveira](2020-10-14-16-39-35.png){width=70%}
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H1](img-pratica/H1.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH1](img-pratica/SeqH1.png){width=100%}
+
+:::::
+
+::::::::::
 
 -------
 
@@ -88,15 +102,15 @@ O *conceito* de fila de prioridade somente requer suas três operações básica
 
 ```.cpp
 template<typename Agregado, typename Tipo>
-concept bool
-FilaPrioridadeTAD = requires(Agregado a, Tipo t)
-{
+concept FilaPrioridadeTAD = requires(Agregado a, Tipo t) {
    // requer operação 'frente' mais prioritária 
    { a.frente() };
    // requer operação 'insere' sobre tipo 't'
    { a.insere(t) };
    // requer operação 'remove' mais prioritário
    { a.remove() };
+   // requer operação 'tamanho'
+   { a.tamanho() };
 };
 ```
 Note que o tipo genérico pode ser estendido para comportar um elemento interno, além da chave numérica.
@@ -108,8 +122,8 @@ Note que o tipo genérico pode ser estendido para comportar um elemento interno,
 Antes de completar as funções, utilizaremos o `FilaPrioridadeTAD`:
 
 ```.cpp
-int main () {
-   FilaPrioridadeTAD h = // ... inicializa tipo
+auto main() -> int {
+   FilaPrioridadeTAD auto h = // ... inicializa tipo
    // h.cria();
    h.insere(20);
    h.insere(10);
@@ -117,7 +131,7 @@ int main () {
    printf("%c\n", h.frente());      
    printf("%c\n", h.remove());  
    h.insere(25);
-   while(p.N > 0)
+   while(p.tamanho() > 0)
       printf("%c\n", h.remove());
    // h.libera();
    return 0;
@@ -133,11 +147,27 @@ int main () {
 
 Apesar de sua estrutura de árvore, podemos representá-la eficientemente com um vetor, numa implementação puramente sequencial.
 
-![](2020-10-14-16-39-35.png){width=70%}
 
-Representação por níveis (*árvore completa*):
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H1](img-pratica/H1.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH1](img-pratica/SeqH1.png){width=100%}
+
+:::::
+
+::::::::::
+
+Representação por níveis com `N=6` e `MAX_N=7`:
 ```
-| 3 | 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 44 |
+| 2 | 3 | 6 | 9 | 4 | 7 |   |
+  0   1   2   3   4   5   6
 ```
 
 Assim, os dados sempre estarão em um *espaço contíguo* de memória.
@@ -151,94 +181,293 @@ Assim, os dados sempre estarão em um *espaço contíguo* de memória.
 A operação `frente` retorna o elemento mais prioritário do heap.
 Felizmente, ele sempre será a raiz da árvore!
 
-![](2020-10-14-16-39-35.png){width=70%}
 
-Representação por níveis (*árvore completa*):
-```
-| 3 | 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 44 |
-```
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H1](img-pratica/H1.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH1](img-pratica/SeqH1.png){width=100%}
+
+:::::
+
+::::::::::
 
 **Desafio**: verifique se é possível o elemento mais prioritário não estar na raiz do heap.
 
 ---------
 
-## Algoritmo FilaPrioridadeTAD *insere* - Parte 1/2
 
-A operação `insere` em adiciona um novo elemento de acordo com sua prioridade.
-Como manter a corretude das propriedades do heap?
-
-**Exemplo:** como inserir o elemento $5$?
-
-![](2020-10-14-16-39-35.png){width=70%}
-
-Representação por níveis (*árvore completa*):
-```
-| 3 | 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 44 |
-```
-
--------
-
-## Algoritmo FilaPrioridadeTAD *insere* - Parte 2/2
-
-Para manter a corretude das propriedades do heap, em especial, de uma *árvore completa*, adicionamos o elemento na *última posição do vetor*.
-
-**Exemplo:** como inserir o elemento $5$?
-
-![](2020-10-14-16-39-35.png){width=30%}
-
-Representação por níveis (*árvore completa*):
-```
-| 3 | 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 44 |
-```
-
-Como *corrigir* a árvore? **Solução:** trocas sucessivas *subindo* até a raiz.
-
-```
-|3| 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 44 |5|
-|3| 10 | 7 | 11 | 19 | *5 | 8 | 14 | 12 | 22 | 30 | 44 |*35|
-|3| 10 | *5 | 11 | 19 | *7 | 8 | 14 | 12 | 22 | 30 | 44 |*35|
-```
-
--------
-
-
-## Algoritmo FilaPrioridadeTAD *remove* - Parte 1/2
+## Algoritmo FilaPrioridadeTAD *remove* - Parte 1/5
 
 A operação `remove` em adiciona um novo elemento de acordo com sua prioridade.
 Como manter a corretude das propriedades do heap?
 
-**Exemplo:** como remover o elemento $3$?
+**Exemplo:** como remover o elemento $2$?
 
-![](2020-10-14-16-39-35.png){width=70%}
 
-Representação por níveis (*árvore completa*):
-```
-| 3 | 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 44 |
-```
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H1](img-pratica/H1.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH1](img-pratica/SeqH1.png){width=100%}
+
+:::::
+
+::::::::::
 
 -------
 
-## Algoritmo FilaPrioridadeTAD *remove* - Parte 2/2
+## Algoritmo FilaPrioridadeTAD *remove* - Parte 2/5
 
 Para manter a corretude das propriedades do heap, em especial, de uma *árvore completa*, trocamos o *primeiro* com o *último* elemento do vetor.
 
-**Exemplo:** como remover o elemento $3$?
+**Exemplo:** como remover o elemento $2$?
 
-![](2020-10-14-16-39-35.png){width=30%}
 
-Representação por níveis (*árvore completa*):
-```
-| 3 | 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 44 |
-```
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H1](img-pratica/H1.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH1paraH2](img-pratica/SeqH1paraH2.png){width=100%}
+
+:::::
+
+::::::::::
+
+-------
+
+## Algoritmo FilaPrioridadeTAD *remove* - Parte 3/5
+
+Após a troca do último elemento com a raiz, perdemos a propriedade *heap*.
 
 Como *corrigir* a árvore? **Solução:** trocas sucessivas *descendo* até uma folha.
 
-```
-| 44 | 10 | 7 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 3 |
-| *7 | 10 | *44 | 11 | 19 | 35 | 8 | 14 | 12 | 22 | 30 | 3 |
-| *7 | 10 | *8 | 11 | 19 | 35 | *44 | 14 | 12 | 22 | 30 | 3 |
-| *7 | 10 | *8 | 11 | 19 | 35 | *44 | 14 | 12 | 22 | 30 | x |
-```
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H2](img-pratica/H2.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH2](img-pratica/SeqH2.png){width=100%}
+
+:::::
+
+::::::::::
+
+Mas qual filho trocar? **Solução:** sempre existe um filho certo, sendo ele o *mais prioritário* entre os irmãos. Assim trocamos o 7 pelo 3. 
+
+-------
+
+## Algoritmo FilaPrioridadeTAD *remove* - Parte 4/5
+
+Ainda assim, seguimos sem a propriedade *heap*.
+
+Como *corrigir* a árvore? **Solução:** trocas sucessivas *descendo* até uma folha.
+
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H3](img-pratica/H3.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH3](img-pratica/SeqH3.png){width=100%}
+
+:::::
+
+::::::::::
+
+Mas qual filho trocar? **Solução:** sempre existe um filho certo, sendo ele o *mais prioritário* entre os irmãos. Assim trocamos o 7 pelo 4.
+
+
+-------
+
+## Algoritmo FilaPrioridadeTAD *remove* - Parte 5/5
+
+Finalmente, recuperamos a propriedade *heap*.
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H4](img-pratica/H4.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH4](img-pratica/SeqH4.png){width=100%}
+
+:::::
+
+::::::::::
+
+Chegamos na folha, não é preciso mais efetuar trocas.
+
+---------
+
+## Algoritmo FilaPrioridadeTAD *insere* - Parte 1/5
+
+A operação `insere` em adiciona um novo elemento de acordo com sua prioridade.
+Como manter a corretude das propriedades do heap?
+
+**Exemplo:** como inserir o elemento $1$?
+
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H4](img-pratica/H4.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH4](img-pratica/SeqH4.png){width=100%}
+
+:::::
+
+::::::::::
+
+**Solução:** precisamos manter a árvore completa!
+
+-------
+
+## Algoritmo FilaPrioridadeTAD *insere* - Parte 2/5
+
+Para manter a corretude das propriedades do heap, em especial, de uma *árvore completa*, adicionamos o elemento na *última posição do vetor*.
+
+**Exemplo:** como inserir o elemento $1$?
+
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H5](img-pratica/H5.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH5](img-pratica/SeqH5.png){width=100%}
+
+:::::
+
+::::::::::
+
+-------
+
+## Algoritmo FilaPrioridadeTAD *insere* - Parte 3/5
+
+Mas agora perdemos a propriedade de *heap*.
+
+**Exemplo:** como inserir o elemento $1$?
+
+Como *corrigir* a árvore? **Solução:** trocas sucessivas *subindo* até a raiz.
+
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H5](img-pratica/H5.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH5paraH6](img-pratica/SeqH5paraH6.png){width=100%}
+
+:::::
+
+::::::::::
+
+Mas onde está o pai da posição $5$ no vetor? Fácil, $pai(5)=\lfloor (5-1)/2 \rfloor=2$
+
+
+-------
+
+## Algoritmo FilaPrioridadeTAD *insere* - Parte 4/5
+
+Mas seguimos sem a propriedade de *heap*.
+
+**Exemplo:** como inserir o elemento $1$?
+
+Como *corrigir* a árvore? **Solução:** trocas sucessivas *subindo* até a raiz.
+
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H6](img-pratica/H6.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH6](img-pratica/SeqH6.png){width=100%}
+
+:::::
+
+::::::::::
+
+Trocamos então o elemento na posição $2$ pelo seu pai.
+
+
+-------
+
+## Algoritmo FilaPrioridadeTAD *insere* - Parte 5/5
+
+Finalmente, recuperamos a propriedade de *heap*.
+
+::::::::::{.columns}
+
+:::::{.column width=45%}
+
+![Min-Heap H7](img-pratica/H7.png){width=80%}
+
+:::::
+
+:::::{.column  width=45%}
+
+![Min-Heap SeqH7](img-pratica/SeqH7.png){width=100%}
+
+:::::
+
+::::::::::
+
+Finalizamos a inserção do elemento $1$.
+
 
 # Implementação Heap em C/C++
 
@@ -248,26 +477,24 @@ Prof. Igor Machado Coelho
 
 https://github.com/igormcoelho/curso-estruturas-de-dados-i
 
-Revisão 26/08/2021
+Revisão 18/06/2025
 
 ## Implementação Heap1
 
-Consideraremos uma fila sequencial com, no máximo, `MAXN` elementos do tipo caractere.
+Consideraremos uma fila sequencial com, no máximo, `MAX_N` elementos do tipo caractere.
 
 ```.cpp
 constexpr int MAX_N = 50; // capacidade máxima da fila
-class Heap1
-{
-public:
-  int elementos [MAX_N];      // elementos na fila
-  int N;                     // num. de elementos na fila
-  void cria () { ... }       // inicializa agregado
-  void libera () { ... }     // finaliza agregado
-  int frente () { ... }
-  void insere (int chave){ ... }
-  int remove () { ... }
+struct Heap1 {
+  int v[MAX_N];           // elementos na fila
+  int N;                  // num. de elementos na fila
+  void cria ();           // inicializa agregado
+  void libera();          // finaliza agregado
+  int  frente();
+  void insere(int chave);
+  int  remove();
 };
-// verifica se agregado Heap1 satisfaz conceito FilaPrioridadeTAD
+// verifica se agregado Heap1 satisfaz FilaPrioridadeTAD
 static_assert(FilaPrioridadeTAD<Heap1, int>);
 ```
 
@@ -278,16 +505,12 @@ static_assert(FilaPrioridadeTAD<Heap1, int>);
 A operação `cria` inicializa a fila para uso, e a função `libera` desaloca os recursos dinâmicos.
 
 ```.cpp
-class Heap1 {
-...
-void cria() {
-   this->N = 0;
+auto Heap1::cria() -> void {
+   N = 0;
 }
 
-void libera() {
+auto Heap1::libera() -> void {
    // nenhum recurso dinâmico para desalocar
-}
-...
 }
 ```
 
@@ -303,12 +526,8 @@ A operação `frente` retorna a raiz do heap, ou seja, o primeiro elemento. Este
 ::::: {.column width=50%}
 
 ```.cpp
-class Heap1 {
-...
-int frente() {
-   return this->elementos[0];
-}
-...
+auto Heap1::frente() -> int {
+   return v[0];
 }
 ```
 
@@ -339,20 +558,16 @@ Métodos auxiliares `pai` e `filho`.
 ::::: {.column width=50%}
 
 ```.cpp
-class Heap1 {
-...
-int pai(int pos) {
+auto Heap1::pai(int pos) -> int {
   return (pos - 1) / 2;
 }
 
-int filho1(int pos) {
+auto Heap1::filho1(int pos) -> int {
   return (2 * pos) + 1;
 }
 
-int filho2(int pos) {
+auto Heap1::filho2(int pos) -> int {
   return filho1(pos) + 1;
-}
-...
 }
 ```
 
@@ -386,21 +601,16 @@ A operação `sobe` compara sistematicamente um nó com seu pai, efetuando troca
 ::::: {.column width=50%}
 
 ```.cpp
-class Heap1 {
-...
-void sobe(int pos) {
+auto Heap1::sobe(int pos) -> void {
   int p = pai(pos);
   while (pos > 0) {
     // compara filho com pai
-    if (elementos[pos] >= 
-                 elementos[p]);
+    if (v[pos] >= v[p])
       break;
-    troca(p, pos, elementos);
+    troca(p, pos, v);
     pos = p;     // repete
     p = pai(pos);
   }
-}
-...
 }
 ```
 
@@ -434,14 +644,10 @@ O método `insere` coloca o novo elemento no final do heap e invoca a operação
 ::::: {.column width=50%}
 
 ```.cpp
-class Heap1 {
-...
-void insere(int pos) {
-  elementos[N] = pos;
+auto Heap1::insere(int pos) -> void {
+  v[N] = pos;
   N++;
   sobe(N-1);
-}
-...
 }
 ```
 
@@ -475,22 +681,16 @@ A operação `desce` compara um nó com seus filhos, trocando enquanto a priorid
 ::::: {.column width=50%}
 
 ```.cpp
-class Heap1 {
-...
-void desce(int pos) {
+auto Heap1::desce(int pos) -> void {
   int f = filho1(pos);
   while (f < N) {
     // existe segundo filho?
-    if ((f < N-1) && 
-(elementos[f+1]<elementos[f]))
+    if ((f < N-1) && (v[f+1]<v[f]))
       f = f + 1;
-    if (elementos[f] >= 
-           elementos[pos]) break;
-    troca(f, pos, elementos);
+    if (v[f] >= v[pos]) break;
+    troca(f, pos, v);
     pos = f;  f = filho1(pos);
   }
-}
-...
 }
 ```
 
@@ -524,15 +724,11 @@ O método `remove` troca o primeiro com último elemento e invoca a operação `
 ::::: {.column width=50%}
 
 ```.cpp
-class Heap1 {
-...
-int remove() {
-  troca(0, N-1, elementos);
+auto Heap1::remove() -> int {
+  troca(0, N-1, v);
   N--;
   desce(0);
-  return elementos[N];
-}
-...
+  return v[N];
 }
 ```
 
@@ -586,16 +782,12 @@ nós: | 0 | 1 | 2 | 3 | 4 | ... ->
 ## Método Heapify com *sobe*
 
 ```.cpp
-class Heap1 {
-...
-void constroi_sobe(int v[], int N) {
-  for (int i = 1; i < N; i++)
-     this->elementos[i] = v[i];
-  this->N = N;
-  for (int i = 1; i < N; i++)
+void Heap1::constroi_sobe(int v2[], int N2) {
+  for (int i = 1; i < N2; i++)
+     v[i] = v2[i];
+  N = N2;
+  for (int i = 1; i < N2; i++)
     sobe(i);
-}
-...
 }
 ```
 
@@ -616,16 +808,12 @@ nós: | 0 | 1 | ... <- | 10 | 11 | 12 | 13 | 14 | ...
 ## Método Heapify com *desce*
 
 ```.cpp
-class Heap1 {
-...
-void constroi_desce(int v[], int N) {
-  for (int i = 1; i < N; i++)
-     this->elementos[i] = v[i];
-  this->N = N;
+void Heap1::constroi_desce(int v2[], int N2) {
+  for (int i = 1; i < N2; i++)
+     v[i] = v2[i];
+  N = N2;
   for (int i = N / 2 - 1; i >= 0; i--)
     desce(i);
-}
-...
 }
 ```
 
@@ -677,7 +865,7 @@ $$
 \begin{matrix}
 =&  (2^{h-1}-1) + (2^{h-2}-1) &+ \cdots +& (2^3-1)  +  (2^2-1) + (2^1-1)\\
 =&  2^{h-1} + 2^{h-2} &+ \cdots +& 2^3  +  2^2  +  2^1  - (h-1)\\
-=& \sum_{i=0}^{h-1} 2^i - h &=&  2^h  - (h+1) \qed
+=& \sum_{i=0}^{h-1} 2^i - h &=&  2^h  - (h+1) \blacksquare
 \end{matrix}
 $$
 
