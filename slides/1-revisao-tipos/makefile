@@ -3,14 +3,14 @@ OUTHTML=index.html
 OUTPDF=1-revisao-tipos.pdf
 
 all: deps
-	/usr/bin/pandoc -s -V revealjs-url=./reveal.js --standalone -V theme=beige -s -t revealjs \
+	/usr/bin/pandoc -s -V revealjs-url=./reveal.js --standalone --lua-filter div-shortcuts.lua --lua-filter fonts-and-alignment.lua -V theme=beige -s -t revealjs \
          --filter pandoc-katex --css katex.min.css \
 	$(MDFILE) -o $(OUTHTML) --slide-level 2 # --toc
 	# sed -i 's|//dist/|/dist/|g' index.html
 	#
 	#
 	# -F pandoc-crossref
-	/usr/bin/pandoc --toc -s --embed-resources --standalone --filter pandoc-latex-fontsize -V theme:Warsaw -t beamer \
+	/usr/bin/pandoc --toc -s --embed-resources --standalone --lua-filter div-shortcuts.lua --lua-filter fonts-and-alignment.lua --filter pandoc-latex-fontsize -V theme:Warsaw -t beamer \
 	 -H header.tex \
 		$(MDFILE) -o $(OUTPDF) --slide-level 2
 # $(OUTPDF)

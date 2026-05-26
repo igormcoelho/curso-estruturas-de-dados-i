@@ -2,15 +2,19 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Revisão de Tipos e Módulos
-date: 13/09/2020 - 03/04/2025
+date: 13/09/2020 - 26/05/2026
 transition: linear
 fontsize: 10
+aspectratio: 169
 header-includes:
 - <link rel="stylesheet" type="text/css" href="general.css">
 - <link rel="stylesheet" type="text/css" href="reveal-beamer.css">
 pandoc-latex-fontsize:
   - classes: [cpp, listing]
     size: footnotesize
+filters:
+  - div-shortcuts.lua
+  - fonts-and-alignment.lua
 ---
 
 
@@ -37,9 +41,174 @@ quanto para Windows, sendo necessário o CMake 4.0 com Ninja.
 No Windows/WSL ou Linux, instale o compilador Clang 19 (no Windows, use o Scoop com `scoop install main/llvm`).
 
 Também é possível praticar diretamente em um navegador web com
-plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler) ou [Godbolt](https://godbolt.org/z/sd7dbxY3o) (mais recomendada!).
+plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler) ou [Godbolt](https://godbolt.org) (mais recomendada!).
 Neste caso, o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrões C23 e C++23).
 
+Para configurar IDE, leia o tutorial ["Breve Introdução ao C/C++ com IDE de Desenvolvimento"](https://zenodo.org/records/20077167).
+
+## Exemplo de Programa em Padrão C
+
+O Compilador GCC suporta C/C++, então consegue compilar tanto C quanto *C com C++*.
+
+Código main.c:
+
+
+```.cpp
+#include <stdio.h>
+
+int main() {
+   auto m = "Mundo";
+   printf("Olá %s!\n", m);
+   return 0;
+}
+```
+
+::: -
+Para compilar manualmente (sem CMake), execute o seguinte comando com GCC 15:
+
+```
+g++ -std=c23 main.c -o exemplo_c
+```
+
+:::
+
+Como o C++ inclui tudo que o C tem e ainda adiciona recursos mais seguros e simples, como `import` e `print`, utilizaremos o padrão C++ no compilador.
+
+## Exemplo de Programa em C/C++
+
+Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
+
+Código main.cpp:
+
+
+```.cpp
+import std;
+
+int main() {
+  auto m = "Mundo";
+  std::println("Olá {}!", m);
+  return 0;
+}
+```
+
+::: -
+Para compilar manualmente (sem CMake), execute o seguinte comando com GCC 15:
+
+```
+g++ -std=c++23 -fmodules -fsearch-include-path bits/std.cc main.cpp -o exemplo
+```
+
+:::
+
+Para programas maiores e mais complexos (com muitos arquivos), é necessário usar algum sistema de construção, como CMake ou Bazel.
+No próximo slide, um exemplo de CMakeLists.txt.
+
+## Exemplo de Programa em C/C++ com CMake 4.1 e GCC
+
+Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
+
+::: --
+
+Código CMakeLists.txt (precisa instalar CMake 4.1 e Ninja)
+
+
+```
+cmake_minimum_required(VERSION 4.1)
+
+# https://github.com/Kitware/CMake/blob/master/Help/dev/experimental.rst
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "d0edc3af-4c50-42ea-a356-e2862fe7a444") # 4.1
+# set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "451f2fe2-a8a2-47c3-bc32-94786d8fc91b") # 4.3
+set(CMAKE_CXX_MODULE_STD 1)
+
+project(my_project VERSION 0.1.0 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+add_executable(exemplo src/main.cpp)
+```
+:::
+
+## Exemplo de Programa em C/C++ com CMake 4.1 e GCC
+
+Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
+
+Para construir, são quatro comandos:
+
+```
+mkdir -p build
+cd build
+cmake .. -GNinja
+ninja
+```
+
+Outra solução bem elegante é utilizar o Bazel com o compilador Clang.
+
+### Dica para IDE VSCode: use extensão clangd
+
+Para utilizar IDE de desenvolvimento como o VSCode, é necessário usar Clang com extensão clangd para um correto processamento visual do código (não funciona direito com GCC nem com a extensão padrão C/C++ da Microsoft).
+
+
+## Exemplo de Programa em C/C++ com Bazel 9 e Clang
+
+Veja exemplo no tutorial ["Local import std module on C++23 with Bazel"](https://igormcoelho.medium.com/local-import-std-module-on-c-23-with-bazel-95b449a8e881).
+Só precisa configurar os seus arquivos MODULE.bazel e BUILD (copie o `extensions.bzl` do tutorial!).
+
+::: --
+```
+# MODULE.bazel
+module(name = "projeto")
+
+bazel_dep(name = "rules_cc", version = "0.2.17")
+std_modules = use_extension("//:extensions.bzl", "local_libcxx_extension")
+use_repo(std_modules, "std_modules")
+```
+
+:::
+
+::: --
+```
+# BUILD
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_binary(
+    name = "exemplo",
+    srcs = ["main.cpp"],
+    deps = ["@std_modules"]
+    features = ["cpp_modules"]
+)
+```
+:::
+
+
+## Exemplo de Programa em C/C++ com Bazel 9 e Clang
+
+Veja exemplo no tutorial ["Local import std module on C++23 with Bazel"](https://igormcoelho.medium.com/local-import-std-module-on-c-23-with-bazel-95b449a8e881).
+
+
+Para construir e executar, são dois comandos:
+
+```
+bazel build ...
+bazel run :exemplo
+```
+
+Lembre-se de atualizar seu arquivo `.bazelrc` com versão correta do compilador:
+
+::: --
+```
+# .bazelrc
+
+build --repo_env=BAZEL_COMPILER=clang
+build --repo_env=BAZEL_CXXOPTS=-stdlib=libc++
+build --repo_env=BAZEL_LINKOPTS=-stdlib=libc++ 
+
+build --repo_env=LIBCXX_MODULE_PATH=/usr/lib/llvm-21/share/libc++/v1
+build --experimental_cpp_modules
+build --cxxopt=-std=c++23
+```
+:::
 
 # Parte 1: Tipos Primitivos, Compostos e Genéricos em C/C++
 
@@ -60,7 +229,7 @@ A linguagem C/C++ é **fortemente tipada**, portando o programador
 deve dizer explicitamente qual o tipo de dado deseja armazenar em
 cada variável.
 
-```.cpp
+```{.cpp}
 int   x = 5;    // armazena o inteiro 5 na variável x
 char  y = 'A';  // armazena o caractere 'A' na variável y
 float z = 3.7 ; // armazena o real 3.7 na variável z
@@ -102,11 +271,12 @@ Dê preferência a inicialização direta com chaves `{ }`,
 ao invés de indireta por atribuição (`operator=`).
 
 ```.cpp
-    int64_t x1 = 10;  // long (ou long long)
-    int32_t x2 = 20;  // int
-    int16_t x3 = 30;  // short
-    int8_t  x4 = 40;  // signed char
-    uint8_t x5 = 50;  // unsigned char
+   int     x0 {-1};  // inicialização direta!
+   int64_t x1 = 10;  // long (ou long long)
+   int32_t x2 = 20;  // int
+   int16_t x3 = 30;  // short
+   int8_t  x4 = 40;  // signed char
+   uint8_t x5 = 50;  // unsigned char
 ```
 
 -------

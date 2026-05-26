@@ -71,3 +71,31 @@ VIEW=Fish Eye at Centre
   AAC=130
 END
 \end{filecontents*}
+
+
+% ============== BEGIN SOLUCAO KIMI PARA JUSTIFYING =============
+\usepackage{ragged2e}
+\usepackage{etoolbox}
+\usepackage{verbatim}
+
+%\begin{comment}
+% Apenas força justifying em parágrafos, sem tocar em raggedright global
+\everypar{\justifying}
+
+% Patch no frame para garantir
+\makeatletter
+\pretocmd{\beamer@reseteecodes}{\justifying}{}{}
+\apptocmd{\beamer@framefootnotetext}{\justifying}{}{}
+\makeatother
+
+% Garante que environments de alinhamento funcionem
+\apptocmd{\center}{\centering}{}{}
+\apptocmd{\flushleft}{\raggedright}{}{}
+\apptocmd{\flushright}{\raggedleft}{}{}
+%\end{comment}
+
+\usepackage{wrapfig}
+
+% ============== END SOLUCAO KIMI =================
+
+% https://github.com/pandoc-ext/fonts-and-alignment/blob/main/fonts-and-alignment.lua
