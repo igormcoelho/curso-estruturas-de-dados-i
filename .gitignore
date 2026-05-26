@@ -1,7 +1,10 @@
 build/
 .cache
+a.out
+gcm.cache
 app*
 *.pcm
 *.gcm
 primeiro_gcc
 primeiro_clang
+

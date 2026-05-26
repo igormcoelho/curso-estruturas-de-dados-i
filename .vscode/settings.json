@@ -4,11 +4,12 @@
     "cpplint.cpplintPath": "/usr/local/bin/cpplint",
     "cpplint.root": "${workspaceFolder}/include",
     "cpplint.repository": "${workspaceFolder}",
+    "editor.inlayHints.enabled": "off",
     "clangd.arguments": [
         "-log=verbose",
         "-pretty",
         "--background-index",
-        "--compile-commands-dir=${workspaceFolder}/build/",
+        "--compile-commands-dir=${workspaceFolder}/material/2-sacos/build/",
     ],
     "testMate.cpp.test.advancedExecutables": [
         {
