@@ -485,7 +485,7 @@ void preordem(auto* no) {
 
 Apresente o percurso de pré-ordem para as árvores abaixo:
 
-![Execício de Pré-ordem](2020-10-05-12-17-24.png){width=70%}
+![Execício de Pré-ordem](2020-10-05-12-17-24.png){width=60%}
 
 . . . 
 
@@ -524,7 +524,7 @@ void posordem(auto* no) {
 
 Apresente o percurso de pós-ordem para as árvores abaixo:
 
-![Execício de Pós-ordem](2020-10-05-12-17-24.png){width=70%}
+![Execício de Pós-ordem](2020-10-05-12-17-24.png){width=60%}
 
 . . . 
 
@@ -568,7 +568,7 @@ void emordem(auto* no) {
 
 Apresente o percurso de ordem simétrica para as árvores abaixo:
 
-![Execício de Ordem Simétrica](2020-10-05-12-17-24.png){width=70%}
+![Execício de Ordem Simétrica](2020-10-05-12-17-24.png){width=60%}
 
 . . . 
 
@@ -630,7 +630,6 @@ Dado um nó do tipo `NoEnc3` e um nó raiz, calcule o nível do nó com o métod
 `int nivel(auto* no, auto* raiz) { ... }`
 
 :::::::: ||
-
 ::::: |{30%}
 
 ```.cpp
@@ -660,7 +659,6 @@ int nivel(auto* no, auto* raiz) {
 ```
 
 :::::
-
 ::::::::
 
 **Exercício:** Qual nível de C na seguinte árvore completa: A B C D.

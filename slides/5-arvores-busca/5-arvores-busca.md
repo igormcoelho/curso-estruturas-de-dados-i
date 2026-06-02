@@ -314,7 +314,7 @@ NoEnc5* sucessor(NoEnc5* const no)
 Dado um nó do tipo `NoEnc6`, com chave char e dado complementar float,
 implemente a operação `upsert`: um *update*, caso chave exista, ou um *insert*, caso chave não exista:
 
-`NoEnc5* sucessor(NoEnc5* const no)  { ... }`
+`void upsertABB(char c, float v, NoEnc6* no)  { ... }`
 
 ::: -
 :::::::: ||
