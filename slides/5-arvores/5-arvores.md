@@ -2,15 +2,14 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Árvores
-date: 05/10/2020 - 26/05/2025
+date: 05/10/2020 - 01/06/2026
 transition: cube
 fontsize: 10
+aspectratio: 169
 header-includes:
 - <link rel="stylesheet" type="text/css" href="general.css">
 - <link rel="stylesheet" type="text/css" href="reveal-beamer.css">
 ---
-
-
 
 
 # Árvores
@@ -35,10 +34,10 @@ São requisitos para essa aula:
 
 ## Árvore
 
-A Árvore (do inglês *Tree*) é um Tipo Abstrato de Dado (TAD) que pode assumir duas formas:
+A *Árvore* (do inglês *Tree*), ou *Árvore Enraizada*, é um Tipo Abstrato de Dado (TAD) que pode assumir duas formas:
 
 - árvore $T$ vazia, denotada por $T = \emptyset$
-- árvore $T$ composta por:
+- árvore $T$ não-vazia, composta por:
    * um nó $R$ chamado de *nó raiz*
    * $0$ ou mais árvores disjuntas $T_1$, $T_2$, ..., associadas a $R$; tais árvores são chamadas de *subárvores*
 
@@ -57,15 +56,15 @@ Se T é árvore com raiz R:
 - a raiz é um nó *ancestral* de todos nós da árvore
 - todos os nós da árvore são descendentes do nó raiz
 
-::::::::::{.columns}
+:::::::::: ||
 
-:::::{.column width=45%}
+::::: |{45%}
 
 ![Árvore $A1$ com seis folhas](./img-pratica/curso-ed-i-A1.png){height=40%}
 
 :::::
 
-:::::{.column  width=45%}
+::::: |{45%}
 
 ![Árvore $A0$ com único nó $J$](./img-pratica/curso-ed-i-A0.png){height=40%}
 
@@ -326,6 +325,27 @@ struct ArvoreEnc4 {
 
 --------
 
+## Implementação Encadeada 5 (binária) com pai
+
+Note que podemos reescrever os ponteiros de `NoEnc3` também para incluir um nó pai:
+
+
+```.cpp
+struct NoEnc5 {
+   char chave;     // dado armazenado
+   NoEnc5* esq;    // filho esquerdo
+   NoEnc5* dir;    // filho direito
+   NoEnc5* pai;    // pai
+};
+
+struct ArvoreEnc5 {
+   NoEnc5* raiz;   // raiz da árvore
+};
+```
+
+
+--------
+
 ## Conversão para Árvores Binárias
 
 Observamos pelas implementações `NoEnc2` e `NoEnc3` que uma árvore $m$-ária *qualquer* pode ser convertida para uma árvore binária. Isso reforça a importância do estudo de implementações eficientes para árvores binárias.
@@ -388,14 +408,9 @@ Dado um nó $V$ na posição $i$ da árvore sequencial $T$, em que posição est
 
 **Solução:** posições $\lfloor (i-1)/2 \rfloor$ (pai), $2i+1$ e $2i+2$ (filhos).
 
---------
-
-## Fim implementações
-
-Fim parte de implementações.
 
 
-# Operações em Árvores
+# Percursos em Árvores
 
 -------
 
@@ -433,17 +448,36 @@ No percurso *em-ordem*, os filhos esquerdos são visitados primeiro, depois o n�
 
 ## Percurso Pré-ordem
 
+
+::::::::::: ||
+
+:::::: |{30%}
+
 ```.cpp
 void preordem(auto* no) {
    if(no) {
-      printf("%c\n", no->chave); // operação ou "visita"
+      // operação ou "visita"
+      println("{}", no->chave);
       preordem(no->esq);
       preordem(no->dir);   
    }
 }
 ```
+
+
+::::::
+
+:::::: |{10%}
+
+::::::
+
+:::::: |{55%}
+
 ![Percurso de Pré-ordem: A B D G C E H I F](2020-10-05-12-38-13.png){width=50%}
 
+::::::
+
+::::::::::: 
 
 -------
 
@@ -461,18 +495,28 @@ Apresente o percurso de pré-ordem para as árvores abaixo:
 
 ## Percurso Pós-ordem
 
+::::::::::: ||
+:::::: |{30%}
+
 ```.cpp
 void posordem(auto* no) {
    if(no) {
       posordem(no->esq);
       posordem(no->dir);   
-      printf("%c\n", no->chave); // operação ou "visita"
+      // operação ou "visita"
+      println("{}", no->chave); 
    }
 }
 ```
+::::::
+:::::: |{10%}
+::::::
+:::::: |{55%}
 
 ![Percurso de Pós-ordem: G D B H I E F C A](2020-10-05-12-38-13.png){width=50%}
 
+::::::
+:::::::::::
 
 -------
 
@@ -491,17 +535,31 @@ Apresente o percurso de pós-ordem para as árvores abaixo:
 
 ## Percurso Em-ordem (ordem simétrica)
 
+::::::::::: ||
+:::::: |{30%}
+
 ```.cpp
 void emordem(auto* no) {
    if(no) {
       emordem(no->esq);
-      printf("%c\n", no->chave); // operação ou "visita"
+      // operação ou "visita"
+      println("{}", no->chave);
       emordem(no->dir);   
    }
 }
 ```
+::::::
+
+:::::: |{10%}
+::::::
+
+:::::: |{55%}
+
 
 ![Percurso de ordem simétrica: DGBAHEICF](2020-10-05-12-38-13.png){width=50%}
+
+::::::
+::::::::::: 
 
 
 -------
@@ -521,7 +579,233 @@ Apresente o percurso de ordem simétrica para as árvores abaixo:
 
 Fim parte de percursos.
 
+
+# Operações Básicas em Árvores (Exercícios Práticos)
+
+## Exercício: Calcule a altura de uma árvore encadeada
+
+Dado um nó do tipo `NoEnc3`, calcule a altura da árvore, com método:
+
+`int altura(auto* const no) { ... }`
+
+:::::::: ||
+
+::::: |{30%}
+
+```.cpp
+struct NoEnc3 {
+   char chave; 
+   NoEnc3* esq; 
+   NoEnc3* dir; 
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+int altura(auto* const no) {
+    if (!no) return 0;
+    int he = altura(no->esq);
+    int hd = altura(no->dir);
+    if(he > hd) return he+1;
+    else        return hd+1;
+}
+```
+
+:::::
+
+::::::::
+
+
+--------
+
+## Exercício: Calcule o nível de um nó em árvore encadeada
+
+Dado um nó do tipo `NoEnc3` e um nó raiz, calcule o nível do nó com o método:
+
+`int nivel(auto* no, auto* raiz) { ... }`
+
+:::::::: ||
+
+::::: |{30%}
+
+```.cpp
+struct NoEnc3 {
+   char chave; 
+   NoEnc3* esq; 
+   NoEnc3* dir; 
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+int nivel(auto* no, auto* raiz) {
+    if (!raiz) return 0;
+    if (no == raiz) return 1;
+    int esq = nivel(no, raiz->esq);
+    if (esq != 0) return 1 + esq;
+    int dir = nivel(no, raiz->dir);
+    if (dir != 0) return 1 + dir;
+    return 0; // nós em árvores distintas
+}
+```
+
+:::::
+
+::::::::
+
 ---------
+
+## Exercício: Propriedade de ser filho direito
+
+Dado um nó do tipo `NoEnc5` com pai, escreva a propriedade:
+
+`bool eh_filho_direito(auto* f) { ... }`
+
+:::::::: ||
+
+::::: |{30%}
+
+```.cpp
+struct NoEnc5 {
+   char chave;  
+   NoEnc5* esq; 
+   NoEnc5* dir;
+   NoEnc5* pai;
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+bool eh_filho_direito(auto* f) 
+// pre(f && f->pai)   // C++26
+{
+    return f == f->pai->dir;
+} 
+```
+
+:::::
+
+::::::::
+
+---------
+
+
+## Exercício: Propriedade de ter no máximo zero ou um filho
+
+Dado um nó do tipo `NoEnc5` com pai, escreva sa propriedades:
+
+`bool tem_zero_filhos(auto* no) { ... }`
+
+`bool tem_um_ou_zero_filhos(auto* no) { ... }`
+
+:::::::: ||
+
+::::: |{30%}
+
+```.cpp
+struct NoEnc5 {
+   char chave;  
+   NoEnc5* esq; 
+   NoEnc5* dir;
+   NoEnc5* pai;
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+bool tem_zero_filhos(auto* const no) 
+// pre(no)  // C++26
+{ return !no->esq && !no->dir; } 
+
+bool tem_um_ou_zero_filhos(auto* const no) 
+// pre(no)  // C++26
+{ return !no->esq || !no->dir;}
+```
+
+:::::
+
+::::::::
+
+---------
+
+
+## Exercício: Extrair um nó que tem no máximo um filho
+
+Dado um nó do tipo `NoEnc5` com pai, 
+faça uma operação que extrai da árvore um nó que tem no máximo um filho.
+Essa operação retorna o ponteiro do nó pai e nó filho, se houver, 
+e ajusta o nó para que seu filho seja conectado a seu pai: `auto extrai(auto* const no) { ... }`
+
+::: -
+
+:::::::: ||
+::::: |{30%}
+
+```.cpp
+struct NoEnc5 {
+   char chave;  
+   NoEnc5* esq; 
+   NoEnc5* dir;
+   NoEnc5* pai;
+};
+```
+
+:::::
+
+. . .
+
+::::: |{60%}
+
+```.cpp
+auto extrai(auto* const no)
+// pre(tem_um_ou_zero_filhos(no))  // C++26
+// post(tem_zero_filhos(no))       // C++26
+{
+    auto* filho = no->esq ? no->esq : no->dir;
+    auto* pai   = no->pai;
+    if (filho) filho->pai = pai;
+    if (pai) {
+        if (eh_filho_esquerdo(no)) pai->esq = filho;
+        else                       pai->dir = filho;
+    }
+    no->pai = no->esq = no->dir = 0;
+    return std::tuple{pai, filho};
+}
+```
+
+:::::
+::::::::
+
+:::
+
+---------
+
+## Fim exercícios práticos resolvidos
+
+Fim parte de exercícios práticos resolvidos.
+
+Continue na lista de exercícios! Pratique!
+
 
 
 ## Bibliografia Recomendada
