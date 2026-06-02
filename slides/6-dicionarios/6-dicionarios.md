@@ -1,7 +1,7 @@
 ---
 author: Igor Machado Coelho
 title: Estruturas de Dados I
-subtitle: Dicionários e Árvores de Busca
+subtitle: Dicionários e Árvores Balanceadas
 date: 01/06/2025
 transition: cube
 fontsize: 10
@@ -13,7 +13,7 @@ header-includes:
 
 
 
-# Dicionários e Árvores de Busca
+# Dicionários
 
 ------
 
@@ -65,9 +65,9 @@ Por exemplo, algumas linguagens de programação (como Python) oferecem suporte 
 
 ```{.python}
 >>> M = dict()
->>> M['A'] = 100
+>>> M['A'] = 100.0
 >>> M['A']
-100
+100.0
 ```
 
 Assim como *arrays*, servem para armazenar um conjunto de dados de certo tipo (estrutura homogênea). Uma diferença em relação a vetores, é que permitem indexação da *chave de busca* por tipos arbitrários.
@@ -151,42 +151,11 @@ auto main() -> int {
 
 Existem duas formas eficientes de implementação de dicionários:
 
-- Árvores de Busca (essa aula)
+- Árvores de Busca (aula anterior) + Balanceamento (essa aula!)
 - Tabelas de Dispersão/*Hash* (aula futura)
 
 
-# Árvores de Busca
-
-------
-
-## Problema de Busca
-
-Consideramos o *Problema da Busca* em que, dados:
-
-- Conjunto de chaves $S = \{s_1, ..., s_i, ..., s_n\}$, $s_1 < ... < s_n$
-- Dado $x$ (do mesmo tipo dos elementos de $S$)
-
-**Responda:** $x$ pertence a $S$?
-
-Em caso positivo, encontrar $s_i$ tal que $s_i = x$.
-
-**Desafio:** Como organizar os dados de forma a facilitar a operação de busca?
-
-------
-
-## Árvore Binária de Busca: Definição
-
-Podemos utilizar uma Árvore Binária rotulada $T$, tal que:
-
-- $T$ possui $N$ nós. Cada nó $v$ corresponde a uma chave distinta $s_i \in S$ e possui como rótulo o *valor* $r(v)=s_i$
-- Sejam $v$, $v_1$, $v_2$ nós distintos de $T$, sendo $v_1$ pertencente à subárvore esquerda de $v$, e $v_2$ à subárvore direita de $v$, tais que: $r(v_1) < r(v)$ e $r(v_2) > r(v)$
-
-![Relação entre nós numa Árvore Binária de Busca](2020-10-05-16-24-39.png){width=30%}
-
-*$T$ é uma Árvore Binária de Busca (ABB)*
-
-
-------
+# Árvores Binárias de Busca (breve revisão)
 
 ## Árvore Binária de Busca: Exemplo
 
@@ -207,152 +176,6 @@ Exemplos de ABB, contendo nós D, E, F, L, M, N e O.
 :::::
 
 ::::::::::
-
-
-------
-
-## Estrutura de Árvore Binária
-
-Relembrando (aula de Árvores) a estrutura de árvore binária considerada:
-
-```.cpp
-struct NoEnc3 {
-   char chave;     // dado armazenado
-   NoEnc3* esq;    // filho esquerdo
-   NoEnc3* dir;    // filho direito
-};
-
-struct ArvoreEnc3 {
-  NoEnc3* raiz;    // raiz da árvore
-};
-```
-
-------
-
-## Problema da Busca com uma ABB
-
-Podemos resolver o *Problema da Busca*, com chave de busca $c$, através de uma ABB.
-
-**Ideia Geral**: 
-
-- Parta do nó raiz $v$
-- Verifique se a chave de $v$ é $c$, ou seja, `v->chave == c`
-- Em caso positivo, o algoritmo termina (chave encontrada)
-- Caso contrário, verifique se:
-   *  `c < v->chave`: refaça o algoritmo na subárvore esquerda
-   *  `c > v->chave`: refaça o algoritmo na subárvore direita
-- Caso o nó $v$ não exista, a busca termina.
-
-![Árvore $A3$ com cinco folhas](./img-pratica/curso-ed-i-A3.png){height=30%}
-
---------
-
-## Tarefa
-
-Avalie se as árvores abaixo são árvores binárias de busca:
-
-
-::::::::::{.columns}
-
-:::::{.column width=45%}
-
-![Árvore $A1$ com três folhas](./img-pratica/curso-ed-i-A1.png){height=40%}
-
-:::::
-
-:::::{.column  width=50%}
-
-![Árvore $A4$ com cinco folhas](./img-pratica/curso-ed-i-A4.png){height=40%}
-
-:::::
-
-::::::::::
-
-. . .
-
-**Solução:** nenhuma delas é! Erros: $B < A$ (na A1); $H > K$ (na A4).
-
---------
-
-## Implementação: `buscaABB`
-
-Implementação da busca em árvores binárias de busca:
-
-```.cpp
-std::optional<char> buscaABB(NoEnc3* no, char c) {
-   if(!no)
-      return std::nullopt;          // chave não encontrada
-   if(no->chave == c)
-      return std::make_optional(c); // chave encontrada
-   if(c < no->chave)
-      return buscaABB(no->esq, c);  // recursão esquerda
-   else
-      return buscaABB(no->dir, c);  // recursão direita
-}
-```
-
-**Pergunta:** *Quantos chamadas recursivas esse algoritmo pode precisar?*
-
-. . .
-
-**Resposta:** Em uma árvore degenerada com $N$ nós, até $N$ passos (observe que, nesse caso, $N$ também é a *altura da árvore*)
-
----------
-
-## Exercício
-
-Encontre o *pior caso* (pior *chave de busca*) para a execução do algoritmo `buscaABB` nas quatro árvores abaixo (avalie primeiro se são ou não árvores binárias de busca):
-
-::::::::::{.columns}
-
-:::::{.column width=70%}
-
-![](2020-10-05-12-17-24.png){width=90%}
-
-:::::
-
-:::::{.column  width=30%}
-
-![Árvore $A3$ com cinco folhas](./img-pratica/curso-ed-i-A3.png){height=40%}
-
-:::::
-
-::::::::::
-
-. . .
-
-**Solução:** 1. N/A, 2. N/A, 3. E, 4. N/A, Fig.7 L
-
----------
-
-## Árvore Binária de Busca Ótima
-
-Como a `buscaABB` depende a altura da árvore, qual o melhor caso possível para a busca (menor altura possível) em uma árvore binária com $N$ nós?
-
-Relembrando: uma árvore binária completa (ou cheia/perfeita) possui $\lceil \log_2 (N+1) \rceil$ níveis.
-**Verifique essa afirmação:**
-
-
-::::::::::{.columns}
-
-:::::{.column width=70%}
-
-![](2020-10-05-12-17-24.png){width=90%}
-
-:::::
-
-:::::{.column  width=30%}
-
-![Árvore $A3$](./img-pratica/curso-ed-i-A3.png){height=40%}
-
-:::::
-
-::::::::::
-
-. . .
-
-**Solução:** 1. N/A, 2. N/A, 3. N/A, 4. $N=7$ e $\log_2 8 = 3$ (Fig.7 tem $\log_2 9 = 4$)
-
 
 # Árvores Balanceadas
 

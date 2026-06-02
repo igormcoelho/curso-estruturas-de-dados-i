@@ -663,6 +663,8 @@ int nivel(auto* no, auto* raiz) {
 
 ::::::::
 
+**Exercício:** Qual nível de C na seguinte árvore completa: A B C D.
+
 ---------
 
 ## Exercício: Propriedade de ser filho direito
