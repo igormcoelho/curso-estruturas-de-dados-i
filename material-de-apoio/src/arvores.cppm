@@ -57,6 +57,15 @@ struct NoEnc6 {
    NoEnc6* pai;    // pai
 };
 
+struct NoEnc7 {
+   char chave;     // chave de busca
+   float dado;     // valor armazenado
+   int h;          // altura
+   NoEnc7* esq;    // filho esquerdo
+   NoEnc7* dir;    // filho direito
+   NoEnc7* pai;    // pai
+};
+
 // template<NoBin TipoNo>
 auto altura(auto* const no) -> int {
     if (!no) return 0;

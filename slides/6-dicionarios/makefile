@@ -1,15 +1,16 @@
 MDFILE=6-dicionarios.md
 OUTHTML=index.html
 OUTPDF=6-dicionarios.pdf
+LUA_FILTERS=--lua-filter div-shortcuts.lua --lua-filter fonts-and-alignment.lua
 
 all: deps
-	/usr/bin/pandoc -s --embed-resources --standalone -V theme=beige -s -t revealjs \
+	/usr/bin/pandoc -s --embed-resources --standalone $(LUA_FILTERS) -V theme=beige -s -t revealjs \
      --filter pandoc-katex --css katex.min.css \
 		$(MDFILE) -o $(OUTHTML) --slide-level 2 # --toc
 	#
 	#
 	# -F pandoc-crossref
-	/usr/bin/pandoc --toc -s --embed-resources --standalone -V theme:Warsaw -t beamer \
+	/usr/bin/pandoc --toc -s --embed-resources --standalone $(LUA_FILTERS) -V theme:Warsaw -t beamer \
 	 -H header.tex \
 		$(MDFILE) -o $(OUTPDF) --slide-level 2
 

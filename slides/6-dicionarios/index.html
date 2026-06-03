@@ -532,19 +532,19 @@ Protti, cujo conteúdo didático forma a base desses slides</em></p>
 <em>Map</em>) é um Tipo Abstrato de Dado (TAD) que visa oferecer
 operações de <em>chave-valor</em>. Também é conhecido como
 <em>mapeamento</em>.</p>
-<p>Supondo um mapeamento M do tipo <em>caractere para inteiro</em>, por
+<p>Supondo um mapeamento M do tipo <em>caractere para float</em>, por
 exemplo:</p>
 <ul>
-<li>Podemos <em>adicionar</em> uma chave B com valor 100</li>
-<li>Podemos <em>adicionar</em> uma chave C com valor 150</li>
-<li>Podemos <em>adicionar</em> uma chave D com valor 200</li>
-<li>Podemos <em>buscar</em> a chave B, recebendo o valor 100</li>
+<li>Podemos <em>adicionar</em> uma chave B com valor 100.0</li>
+<li>Podemos <em>adicionar</em> uma chave C com valor 150.0</li>
+<li>Podemos <em>adicionar</em> uma chave D com valor 200.0</li>
+<li>Podemos <em>buscar</em> a chave B, recebendo o valor 100.0</li>
 <li>Podemos <em>remover</em> a chave D</li>
-<li>Podemos <em>atualizar</em> o valor da chave B para 120</li>
+<li>Podemos <em>atualizar</em> o valor da chave B para 120.0</li>
 </ul>
 <pre><code>M:
-B -&gt; 120
-C -&gt; 150
+B -&gt; 120.0
+C -&gt; 150.0
 ...</code></pre>
 </section>
 <section id="dicionários-na-computação" class="slide level2">
@@ -588,14 +588,15 @@ genéricos</em>, para <em>chave</em> e <em>valor</em>):</p>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>remove<span class="op">(</span>c<span class="op">)</span> <span class="op">};</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
-<section id="exemplo-dicionário-de-char-para-int" class="slide level2">
-<h2>Exemplo: Dicionário de <code>char</code> para <code>int</code></h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> DicionarioCI <span class="op">{</span></span>
+<section id="exemplo-dicionário-de-char-para-float" class="slide level2">
+<h2>Exemplo: Dicionário de <code>char</code> para
+<code>float</code></h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> DicionarioCF <span class="op">{</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ... </span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> consulta<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="co">// ...</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> adiciona<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="dt">int</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> adiciona<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="dt">float</span> v<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="co">// ...</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> remove<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span></span>
@@ -603,21 +604,21 @@ genéricos</em>, para <em>chave</em> e <em>valor</em>):</p>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica estrutura do DicionarioTAD</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>DicionarioTAD<span class="op">&lt;</span>DicionarioCI<span class="op">,</span> <span class="dt">char</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;);</span></span></code></pre></div>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>DicionarioTAD<span class="op">&lt;</span>DicionarioCF<span class="op">,</span> <span class="dt">char</span><span class="op">,</span> <span class="dt">float</span><span class="op">&gt;);</span></span></code></pre></div>
 </section>
 <section id="exemplo-de-uso-com-dicionarioci" class="slide level2">
 <h2>Exemplo de Uso com <code>DicionarioCI</code></h2>
-<p>Adiciona pares chave-valor <code>(&#39;A&#39;, 100)</code> e
-<code>(&#39;B&#39;, 200)</code>. Depois faz consultas e remove chave
+<p>Adiciona pares chave-valor <code>(&#39;A&#39;, 100.0)</code> e
+<code>(&#39;B&#39;, 200.0)</code>. Depois faz consultas e remove chave
 <code>&#39;B&#39;</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   DicionarioCI d<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   DicionarioCF d<span class="op">;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>cria<span class="op">();</span>                            <span class="co">// inicializa</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">,</span> <span class="dv">100</span><span class="op">);</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">,</span> <span class="dv">200</span><span class="op">);</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>consulta<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">));</span> <span class="co">// 100</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>consulta<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">));</span> <span class="co">// 200</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>remove<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span>                       <span class="co">// 200</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">,</span> <span class="fl">100.0</span><span class="op">);</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">,</span> <span class="fl">200.0</span><span class="op">);</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>consulta<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">));</span> <span class="co">// 100.0</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>consulta<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">));</span> <span class="co">// 200.0</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>remove<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span>                       <span class="co">// 200.0</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ...</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>libera<span class="op">();</span>                          <span class="co">// libera estrutura</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>   </span>
@@ -703,12 +704,106 @@ informe se estão balanceadas:</p>
 </div>
 </section></section>
 <section>
-<section id="implementação-de-dicionário-com-árvores" class="title-slide slide level1">
-<h1>Implementação de Dicionário com Árvores</h1>
+<section id="operações-básicas-em-abbb-exercícios-práticos" class="title-slide slide level1">
+<h1>Operações Básicas em ABBB (Exercícios Práticos)</h1>
 
 </section>
-<section id="implementação-de-dicionário-com-árvores-1" class="slide level2">
-<h2>Implementação de Dicionário com Árvores</h2>
+<section id="exercício-calcule-a-altura-de-um-nó-de-uma-abbb" class="slide level2">
+<h2>Exercício: Calcule a altura de um nó de uma ABBB</h2>
+<p>Considere uma Árvore Binária de Busca Balanceada (ABBB) com controle
+de altura. Dado um nó do tipo <code>NoEnc7</code>, calcule a altura com
+base na altura dos filhos. Faça um método auxiliar
+<code>get_altura(no)</code>, que dá altura zero para um nó vazio:</p>
+<p><code>int get_altura(const NoEnc7* no) { ... }</code></p>
+<p><code>int calc_altura(const NoEnc7* no)  { ... }</code></p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="sourceCode" id="cb6"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</div><p>. . .</p><div class="column" style="width:55%;">
+<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> get_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no <span class="op">?</span> no<span class="op">-&gt;</span>h <span class="op">:</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> calc_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                      <span class="co">// pre(no)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> he <span class="op">=</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">);</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> hd <span class="op">=</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">);</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="op">(</span>he <span class="op">&gt;</span> hd<span class="op">?</span> he <span class="op">:</span> hd<span class="op">);</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div>
+</div>
+</section>
+<section id="exercício-calcule-o-fator-de-balanceamento-de-uma-abbb" class="slide level2">
+<h2>Exercício: Calcule o fator de balanceamento de uma ABBB</h2>
+<p>Considere uma Árvore Binária de Busca Balanceada (ABBB) com controle
+de altura. Dado um nó do tipo <code>NoEnc7</code>, calcule o fator de
+balanceamento com método auxiliar <code>get_altura(no)</code> já criado
+previamente:</p>
+<p><code>int fb(const NoEnc7* no)  { ... }</code></p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="sourceCode" id="cb8"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</div><p>. . .</p><div class="column" style="width:55%;">
+<div class="sourceCode" id="cb9"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> get_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no <span class="op">?</span> no<span class="op">-&gt;</span>h <span class="op">:</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fb<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(no)               // C++26</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">)</span> <span class="op">-</span> </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>          get_altura<span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">);</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div>
+</div>
+</section>
+<section id="exercício-propriedade-de-um-nó-regulado-em-abbb" class="slide level2">
+<h2>Exercício: Propriedade de um nó regulado em ABBB</h2>
+<p>Dado um nó do tipo <code>NoEnc7</code>, escreva a propriedade
+<code>eh_regulado</code>, que retorna verdadeiro caso seu fator de
+balanceamento seja no máximo 1 em módulo:</p>
+<p><code>bool eh_regulado(auto* no) { ... }</code></p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="sourceCode" id="cb10"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</div><p>. . .</p><div class="column" style="width:55%;">
+<div class="sourceCode" id="cb11"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> eh_regulado<span class="op">(</span><span class="kw">auto</span><span class="op">*</span> no<span class="op">)</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(no)        // C++26</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">||</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>           fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>           fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code></pre></div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="implementação-de-dicionário" class="title-slide slide level1">
+<h1>Implementação de Dicionário</h1>
+
+</section>
+<section id="dicionário-com-avl" class="slide level2">
+<h2>Dicionário com AVL</h2>
 <p>Existem duas implementações populares de árvores balanceadas para
 dicionários: AVL e rubro-negra.</p>
 <p>Iremos explorar a árvore AVL, por sua simplicidade.</p>
@@ -810,6 +905,130 @@ desbalanceamento no nó D, com fator 0-2=-2 seguido de 0.</p>
 <p>Qual o final após a rotação? F substitui D, tornando E seu filho à
 esquerda, seguido de D à esquerda, sendo que o filho à direita de F se
 torna L. A árvore se torna balanceada.</p>
+</section></section>
+<section>
+<section id="rotações-em-avl-exercícios-práticos" class="title-slide slide level1">
+<h1>Rotações em AVL (Exercícios Práticos)</h1>
+
+</section>
+<section id="exercício-faça-uma-rotação-à-direita-em-uma-avl" class="slide level2">
+<h2>Exercício: Faça uma Rotação à Direita em uma AVL</h2>
+<p>Dado um nó do tipo <code>NoEnc7</code> desregulado (com peso à
+esquerda), faça uma rotação à direita na raiz de uma subárvore e retorne
+a nova raiz da subárvore:</p>
+<p><code>NoEnc7* rotDir(NoEnc7* const raiz) { ... }</code></p>
+<div class="small">
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="sourceCode" id="cb12"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</div><p>. . .</p><div class="column" style="width:55%;">
+<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> rotDir<span class="op">(</span>NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)             // C++26</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> x <span class="op">=</span> raiz<span class="op">-&gt;</span>esq<span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>esq <span class="op">=</span> x<span class="op">-&gt;</span>dir<span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>x<span class="op">-&gt;</span>dir<span class="op">)</span> x<span class="op">-&gt;</span>dir<span class="op">-&gt;</span>pai <span class="op">=</span> raiz<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>dir <span class="op">=</span> raiz<span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>pai <span class="op">=</span> raiz<span class="op">-&gt;</span>pai<span class="op">;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>pai <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>h <span class="op">=</span> calc_altura<span class="op">(</span>raiz<span class="op">);</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>h    <span class="op">=</span> calc_altura<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x<span class="op">;</span>  <span class="co">// nova raiz</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercício-faça-o-balanceamento-de-um-nó-de-avl" class="slide level2">
+<h2>Exercício: Faça o Balanceamento de um nó de AVL</h2>
+<p>Dado um nó do tipo <code>NoEnc7</code> regulado ou desregulado,
+efetue o balanceamento (se necessário) e retorne a nova raiz da
+subárvore:</p>
+<p><code>NoEnc7* balanceia(NoEnc7* const raiz) { ... }</code></p>
+<div class="small">
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="sourceCode" id="cb14"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</div><p>. . .</p><div class="column" style="width:55%;">
+<div class="sourceCode" id="cb15"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> balanceia<span class="op">(</span>NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)                   // C++26</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">// post(out: eh_regulado(out)) // C++26</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> f <span class="op">=</span> fb<span class="op">(</span>raiz<span class="op">);</span> <span class="cf">if</span> <span class="op">(</span>f <span class="op">&gt;</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>fb<span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">)</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        raiz<span class="op">-&gt;</span>esq <span class="op">=</span> rotEsq<span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">);</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rotDir<span class="op">(</span>raiz<span class="op">);</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span> <span class="cf">if</span> <span class="op">(</span>f <span class="op">&lt;</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>fb<span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">)</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        raiz<span class="op">-&gt;</span>dir <span class="op">=</span> rotDir<span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">);</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> rotEsq<span class="op">(</span>raiz<span class="op">);</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> raiz<span class="op">;</span> <span class="co">// sem rotação necessária!</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="implementação-de-avl" class="title-slide slide level1">
+<h1>Implementação de AVL</h1>
+
+</section>
+<section id="estrutura-de-avl" class="slide level2">
+<h2>Estrutura de AVL</h2>
+<p>Relembrando a estrutura de árvore binária com pai, chave-valor e
+alturas:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>     <span class="co">// chave de busca</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span>     <span class="co">// valor armazenado</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>          <span class="co">// altura</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span>    <span class="co">// filho esquerdo</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span>    <span class="co">// filho direito</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>    <span class="co">// pai</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> AVL <span class="op">{</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  NoEnc7<span class="op">*</span> raiz<span class="op">;</span>    <span class="co">// raiz da árvore</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>           <span class="co">// número de nós</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span>              <span class="co">// métodos típicos: busca, upsert, remove, ...</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</section>
+<section id="implementação-upsertavl" class="slide level2">
+<h2>Implementação: <code>upsertAVL</code></h2>
+<p>Implementação de “upserção” (inserção, se chave nova, ou atualização,
+se chave já existe) em árvore binária de busca balanceada não-vazia:</p>
+<div class="small">
+<div class="sourceCode" id="cb17"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> upsertAVL<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="dt">float</span> d<span class="op">,</span> NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)                                  // C++26</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">==</span> raiz<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span> raiz<span class="op">-&gt;</span>dado <span class="op">=</span> d<span class="op">;</span> <span class="cf">return</span> raiz<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">&lt;</span> raiz<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">)</span> raiz<span class="op">-&gt;</span>esq <span class="op">=</span> upsertAVL<span class="op">(</span>c<span class="op">,</span> d<span class="op">,</span> raiz<span class="op">-&gt;</span>esq<span class="op">);</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> raiz<span class="op">-&gt;</span>esq <span class="op">=</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>      <span class="kw">new</span> NoEnc7<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>d<span class="op">,.</span>h<span class="op">=</span><span class="dv">1</span><span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>raiz<span class="op">};</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">)</span> raiz<span class="op">-&gt;</span>dir <span class="op">=</span> upsertAVL<span class="op">(</span>c<span class="op">,</span> d<span class="op">,</span> raiz<span class="op">-&gt;</span>dir<span class="op">);</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> raiz<span class="op">-&gt;</span>dir <span class="op">=</span> </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">new</span> NoEnc7<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>d<span class="op">,.</span>h<span class="op">=</span><span class="dv">1</span><span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>raiz<span class="op">};</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  raiz<span class="op">-&gt;</span>h <span class="op">=</span> calc_altura<span class="op">(</span>raiz<span class="op">);</span> <span class="co">// sempre muda altura até raiz!</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> balanceia<span class="op">(</span>raiz<span class="op">);</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div>
 </section>
 <section id="bibliografia-recomendada" class="slide level2">
 <h2>Bibliografia Recomendada</h2>

@@ -68,7 +68,7 @@ int main() {
     abb.remove('Z');
     imprime_vertical(abb.raiz);
 
-    abb.destroi();
+    abb.libera();
 
     return 0; 
 }

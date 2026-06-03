@@ -38,19 +38,19 @@ São requisitos para essa aula:
 
 O Dicionário (do inglês *Dictionary*) ou Mapa (do inglês *Map*) é um Tipo Abstrato de Dado (TAD) que visa oferecer operações de *chave-valor*. Também é conhecido como *mapeamento*.
 
-Supondo um mapeamento M do tipo *caractere para inteiro*, por exemplo:
+Supondo um mapeamento M do tipo *caractere para float*, por exemplo:
 
-- Podemos *adicionar* uma chave B com valor 100
-- Podemos *adicionar* uma chave C com valor 150
-- Podemos *adicionar* uma chave D com valor 200
-- Podemos *buscar* a chave B, recebendo o valor 100
+- Podemos *adicionar* uma chave B com valor 100.0
+- Podemos *adicionar* uma chave C com valor 150.0
+- Podemos *adicionar* uma chave D com valor 200.0
+- Podemos *buscar* a chave B, recebendo o valor 100.0
 - Podemos *remover* a chave D
-- Podemos *atualizar* o valor da chave B para 120
+- Podemos *atualizar* o valor da chave B para 120.0
 
 ```
 M:
-B -> 120
-C -> 150
+B -> 120.0
+C -> 150.0
 ...
 ```
 
@@ -104,15 +104,15 @@ DicionarioTAD = requires(Agregado d, TChave c, TValor v) {
 
 ---------
 
-## Exemplo: Dicionário de `char` para `int`
+## Exemplo: Dicionário de `char` para `float`
 
 ```.cpp
-struct DicionarioCI {
+struct DicionarioCF {
    // ... 
    int consulta(char c) {
       // ...
    }
-   void adiciona(char c, int v) {
+   void adiciona(char c, float v) {
       // ...
    }
    int remove(char c) {
@@ -120,24 +120,24 @@ struct DicionarioCI {
    }
 };
 // verifica estrutura do DicionarioTAD
-static_assert(DicionarioTAD<DicionarioCI, char, int>);
+static_assert(DicionarioTAD<DicionarioCF, char, float>);
 ```
 
 ---------
 
 ## Exemplo de Uso com `DicionarioCI`
 
-Adiciona pares chave-valor `('A', 100)` e `('B', 200)`. Depois faz consultas e remove chave `'B'`.
+Adiciona pares chave-valor `('A', 100.0)` e `('B', 200.0)`. Depois faz consultas e remove chave `'B'`.
 
 ```.cpp
 auto main() -> int {
-   DicionarioCI d;
+   DicionarioCF d;
    d.cria();                            // inicializa
-   d.adiciona('A', 100);
-   d.adiciona('B', 200);
-   std::println("{}", d.consulta('A')); // 100
-   std::println("{}", d.consulta('B')); // 200
-   d.remove('B');                       // 200
+   d.adiciona('A', 100.0);
+   d.adiciona('B', 200.0);
+   std::println("{}", d.consulta('A')); // 100.0
+   std::println("{}", d.consulta('B')); // 200.0
+   d.remove('B');                       // 200.0
    // ...
    d.libera();                          // libera estrutura
    
@@ -214,10 +214,141 @@ Calcule o fator de balanceamento da raiz das quatro árvores abaixo e informe se
 
 **Solução:** 1. $1-3=-2$ (não), 2. $0-3=-3$ (não), 3. $3-0=3$ (não), 4. $2-2=0$ (sim), Fig.7 $3-2=1$ (sim)
 
+# Operações Básicas em ABBB (Exercícios Práticos)
 
-# Implementação de Dicionário com Árvores
+## Exercício: Calcule a altura de um nó de uma ABBB
 
-## Implementação de Dicionário com Árvores
+Considere uma Árvore Binária de Busca Balanceada (ABBB) com controle de altura.
+Dado um nó do tipo `NoEnc7`, calcule a altura com base na altura dos filhos.
+Faça um método auxiliar `get_altura(no)`, que dá altura zero para um nó vazio:
+
+`int get_altura(const NoEnc7* no) { ... }`
+
+`int calc_altura(const NoEnc7* no)  { ... }`
+
+:::::::: ||
+::::: |{30%}
+
+```.cpp
+struct NoEnc7 {
+   char chave;  
+   float dado; 
+   int h;      
+   NoEnc7* esq; 
+   NoEnc7* dir; 
+   NoEnc7* pai;  
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+int get_altura(const NoEnc7* no) {
+   return no ? no->h : 0; 
+}
+int calc_altura(const NoEnc7* no) 
+{                      // pre(no)
+    int he = get_altura(no->esq);
+    int hd = get_altura(no->dir);
+    return 1 + (he > hd? he : hd); 
+}
+```
+
+:::::
+::::::::
+
+## Exercício: Calcule o fator de balanceamento de uma ABBB
+
+Considere uma Árvore Binária de Busca Balanceada (ABBB) com controle de altura.
+Dado um nó do tipo `NoEnc7`, calcule o fator de balanceamento 
+com método auxiliar `get_altura(no)` já criado previamente:
+
+`int fb(const NoEnc7* no)  { ... }`
+
+:::::::: ||
+::::: |{30%}
+
+```.cpp
+struct NoEnc7 {
+   char chave;  
+   float dado; 
+   int h;      
+   NoEnc7* esq; 
+   NoEnc7* dir; 
+   NoEnc7* pai;  
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+int get_altura(const NoEnc7* no) {
+   return no ? no->h : 0; 
+}
+
+int fb(const NoEnc7* no)
+// pre(no)               // C++26
+{ 
+   return get_altura(no->esq) - 
+          get_altura(no->dir); 
+}
+```
+
+:::::
+::::::::
+
+## Exercício: Propriedade de um nó regulado em ABBB
+
+Dado um nó do tipo `NoEnc7`, escreva a propriedade `eh_regulado`,
+que retorna verdadeiro caso seu fator de balanceamento seja no máximo 1 em módulo:
+
+`bool eh_regulado(auto* no) { ... }`
+
+:::::::: ||
+::::: |{30%}
+
+```.cpp
+struct NoEnc7 {
+   char chave;  
+   float dado; 
+   int h;      
+   NoEnc7* esq; 
+   NoEnc7* dir; 
+   NoEnc7* pai;  
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+bool eh_regulado(auto* no) 
+// pre(no)        // C++26
+{
+    return fb(no) == 1 || 
+           fb(no) == 0 || 
+           fb(no) == -1;
+} 
+```
+
+:::::
+::::::::
+
+
+# Implementação de Dicionário
+
+## Dicionário com AVL
 
 Existem duas implementações populares de árvores balanceadas para dicionários: AVL e rubro-negra.
 
@@ -324,6 +455,158 @@ Isso indica uma Rotação Simples à Esquerda, no nó D.
 
 Qual o final após a rotação? F substitui D, tornando E seu filho à esquerda, seguido de D à esquerda, sendo que o filho à direita de F se torna L.
 A árvore se torna balanceada.
+
+# Rotações em AVL (Exercícios Práticos)
+
+## Exercício: Faça uma Rotação à Direita em uma AVL
+
+Dado um nó do tipo `NoEnc7` desregulado (com peso à esquerda), 
+faça uma rotação à direita na raiz de uma subárvore e
+retorne a nova raiz da subárvore:
+
+`NoEnc7* rotDir(NoEnc7* const raiz) { ... }`
+
+::: -
+:::::::: ||
+::::: |{30%}
+
+```.cpp
+struct NoEnc7 {
+   char chave;  
+   float dado; 
+   int h;      
+   NoEnc7* esq; 
+   NoEnc7* dir; 
+   NoEnc7* pai;  
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+NoEnc7* rotDir(NoEnc7* const raiz) 
+// pre(raiz)             // C++26
+{
+    auto* x = raiz->esq;
+    raiz->esq = x->dir;
+    if(x->dir) x->dir->pai = raiz;
+    x->dir = raiz;
+    x->pai = raiz->pai;
+    raiz->pai = x;
+    raiz->h = calc_altura(raiz);
+    x->h    = calc_altura(x);
+    return x;  // nova raiz
+}
+```
+
+:::::
+::::::::
+:::
+
+## Exercício: Faça o Balanceamento de um nó de AVL
+
+Dado um nó do tipo `NoEnc7` regulado ou desregulado,
+efetue o balanceamento (se necessário) e
+retorne a nova raiz da subárvore:
+
+`NoEnc7* balanceia(NoEnc7* const raiz) { ... }`
+
+::: -
+:::::::: ||
+::::: |{30%}
+
+```.cpp
+struct NoEnc7 {
+   char chave;  
+   float dado; 
+   int h;      
+   NoEnc7* esq; 
+   NoEnc7* dir; 
+   NoEnc7* pai;  
+};
+```
+
+:::::
+
+. . .
+
+::::: |{55%}
+
+```.cpp
+NoEnc7* balanceia(NoEnc7* const raiz) 
+// pre(raiz)                   // C++26
+// post(out: eh_regulado(out)) // C++26
+{
+  int f = fb(raiz); if (f > 1) {
+      if (fb(raiz->esq) < 0)
+        raiz->esq = rotEsq(raiz->esq);
+    return rotDir(raiz);
+  }; if (f < -1) {
+      if (fb(raiz->dir) > 0)
+        raiz->dir = rotDir(raiz->dir);
+      return rotEsq(raiz);
+  }
+  return raiz; // sem rotação necessária!
+}
+```
+
+:::::
+::::::::
+:::
+
+# Implementação de AVL
+
+## Estrutura de AVL
+
+Relembrando a estrutura de árvore binária com pai, chave-valor e alturas:
+
+```.cpp
+struct NoEnc7 {
+   char chave;     // chave de busca
+   float dado;     // valor armazenado
+   int h;          // altura
+   NoEnc7* esq;    // filho esquerdo
+   NoEnc7* dir;    // filho direito
+   NoEnc7* pai;    // pai
+};
+
+struct AVL {
+  NoEnc7* raiz;    // raiz da árvore
+  int N;           // número de nós
+  ...              // métodos típicos: busca, upsert, remove, ...
+};
+```
+
+
+## Implementação: `upsertAVL`
+
+Implementação de "upserção" (inserção, se chave nova, ou atualização, se chave já existe) em árvore binária de busca balanceada não-vazia:
+
+::: -
+```.cpp
+NoEnc7* upsertAVL(char c, float d, NoEnc7* const raiz) 
+// pre(raiz)                                  // C++26
+{  
+  if (c == raiz->chave) { raiz->dado = d; return raiz; }
+  if (c < raiz->chave) {
+    if (raiz->esq) raiz->esq = upsertAVL(c, d, raiz->esq);
+    else raiz->esq = 
+      new NoEnc7{.chave=c,.dado=d,.h=1,.esq=0,.dir=0,.pai=raiz};
+  } else {
+    if (raiz->dir) raiz->dir = upsertAVL(c, d, raiz->dir);
+    else raiz->dir = 
+      new NoEnc7{.chave=c,.dado=d,.h=1,.esq=0,.dir=0,.pai=raiz};
+  }
+  raiz->h = calc_altura(raiz); // sempre muda altura até raiz!
+  return balanceia(raiz);
+}
+```
+:::
+
 
 ---------
 

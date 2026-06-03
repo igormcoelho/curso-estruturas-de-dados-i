@@ -195,7 +195,7 @@ export struct ABB {
   }
   */
 
-  void destroi() {
+  void libera() {
     if(raiz) ::destroi_bin(raiz);
     raiz = 0;
   }
