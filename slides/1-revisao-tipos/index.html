@@ -123,13 +123,317 @@ class="title-slide slide level1">
 <ul>
 <li>Introdução/Fundamentos de Programação (em alguma linguagem de
 programação)</li>
-<li>Interesse em aprender C/C++</li>
-<li>Familiaridade com uso e instalação de compiladores/IDEs ou uso de
-ferramentas de programação online</li>
+<li><strong>Interesse</strong> em aprender C/C++</li>
+<li>Familiaridade com uso e instalação de programas via linha de comando
+(no seu sistema operacional preferido)</li>
+<li>Familiaridade com uso de compiladores/IDEs ou uso de ferramentas de
+programação online</li>
 </ul>
 </section>
 <section id="ambiente-de-programação" class="slide level2">
 <h2>Ambiente de Programação</h2>
+<h3 id="por-que-programar-em-cc">Por que programar em C/C++?</h3>
+<div class="large">
+<ul>
+<li>Linguagem consolidada, eficiente e de <strong>baixo nível</strong>
+(próxima ao <em>hardware</em>)</li>
+<li><strong>Muito</strong> material online e livros, etc</li>
+<li><strong>Muitas</strong> ferramentas e códigos prontos, funciona em
+qualquer sistema operacional</li>
+</ul>
+</div>
+<h3 id="como-programar-em-cc">Como programar em C/C++?</h3>
+<div class="large">
+<ul>
+<li>Instalar compilador <strong>moderno</strong> para
+<strong>C23/C++23</strong>. Recomendação geral: <strong>clang
+22</strong>
+<ul>
+<li>Link de download: <a
+href="https://github.com/llvm/llvm-project/releases">https://github.com/llvm/llvm-project/releases</a></li>
+</ul></li>
+<li>Para Linux, pode usar o <strong>GCC 15</strong> ou
+<strong>clang</strong></li>
+<li>Para Mac, use o <strong>clang</strong></li>
+<li>Para Windows, <strong>evite</strong> tanto o <strong>MSVC</strong>
+nativo quanto o <em><strong>clang-cl</strong> para Windows</em>!
+<ul>
+<li><strong>Deve</strong> instalar o <strong>WSL2</strong> no Windows e
+usar o suporte de linux recomendado acima.</li>
+</ul></li>
+<li>Se for usar um compilador online, use o <a
+href="https://godbolt.org">https://godbolt.org</a></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="parte-1-tipos-primitivos-compostos-e-genéricos-em-cc"
+class="title-slide slide level1">
+<h1>Parte 1: Tipos Primitivos, Compostos e Genéricos em C/C++</h1>
+
+</section>
+<section id="conceitos-de-cc" class="slide level2">
+<h2>Conceitos de C/C++</h2>
+<p>Compreender a lógica da programação é a habilidade mais importante
+para um programador! Com ela, você pode facilmente trocar de linguagem
+de programação, conhecendo apenas alguns comandos básicos.</p>
+<p>O primeiro conceito a ser revisado é de variável. Uma variável
+consiste de um identificador válido (mesmo para outras linguagens
+populares como Python) e armazena algum tipo de dado da memória do
+computador.</p>
+<p>A linguagem C/C++ é <strong>fortemente tipada</strong>, portando o
+programador deve dizer explicitamente qual o tipo de dado deseja
+armazenar em cada variável.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>   x <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>    <span class="co">// armazena o inteiro 5 na variável x</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span>  y <span class="op">=</span> <span class="ch">&#39;A&#39;</span><span class="op">;</span>  <span class="co">// armazena o caractere &#39;A&#39; na variável y</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> z <span class="op">=</span> <span class="fl">3.7</span> <span class="op">;</span> <span class="co">// armazena o real 3.7 na variável z</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> v <span class="op">=</span> <span class="kw">true</span><span class="op">;</span>  <span class="co">// armazena o booleano true na variável v</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> b <span class="op">=</span> <span class="ch">&#39;B&#39;</span><span class="op">;</span>     <span class="co">// dedução de tipo com &#39;auto&#39;... qual tipo?</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> s <span class="op">=</span> <span class="st">&quot;abcd&quot;</span><span class="op">;</span>  <span class="co">// cadeia de caracteres, ainda veremos tipo</span></span></code></pre></div>
+<p><strong>Responda:</strong> Qual o tipo acima de b? (C++23 e C23)</p>
+</section>
+<section id="tipos-de-variáveis" class="slide level2">
+<h2>Tipos de Variáveis</h2>
+<p><strong>Pergunta/Resposta</strong>: Cuidado com tipos. Quais são os
+valores armazenados nas variáveis abaixo (C++23 e C23)?</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp listing"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    x1 <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>        <span class="co">// =&gt; 5</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    x2 <span class="op">=</span> x1 <span class="op">+</span> <span class="dv">10</span><span class="op">;</span>  <span class="co">// =&gt; 15</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    x3 <span class="op">=</span> x2 <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>   <span class="co">// =&gt; 7</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span>  x4 <span class="op">=</span> x2 <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>   <span class="co">// =&gt; 7.0</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span>  x5 <span class="op">=</span> x2 <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span> <span class="co">// =&gt; 7.5</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span>   x6 <span class="op">=</span> <span class="dv">15</span><span class="op">;</span>       <span class="co">// =&gt; 15 </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span>   x7 <span class="op">=</span> x2 <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>   <span class="co">// =&gt; 7</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span>   x8 <span class="op">=</span> x2 <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span> <span class="co">// =&gt; 7.5</span></span></code></pre></div>
+<p>Verifiquem essas operações de variáveis, escrevendo na saída padrão
+(tela do computador).</p>
+</section>
+<section id="conceitos-de-cc-tipos-definidos" class="slide level2">
+<h2>Conceitos de C/C++ (tipos definidos)</h2>
+<p>Tipos primitivos em C/C++ tem um tamanho definido, então é uma boa
+prática utilizar tamanhos fixos.</p>
+<p>Dê preferência a inicialização direta com chaves <code>{ }</code>, ao
+invés de indireta por atribuição (<code>operator=</code>).</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span>     x0 <span class="op">{-</span><span class="dv">1</span><span class="op">};</span>  <span class="co">// inicialização direta!</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int64_t</span> x1 <span class="op">=</span> <span class="dv">10</span><span class="op">;</span>  <span class="co">// long (ou long long)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int32_t</span> x2 <span class="op">=</span> <span class="dv">20</span><span class="op">;</span>  <span class="co">// int</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int16_t</span> x3 <span class="op">=</span> <span class="dv">30</span><span class="op">;</span>  <span class="co">// short</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int8_t</span>  x4 <span class="op">=</span> <span class="dv">40</span><span class="op">;</span>  <span class="co">// signed char</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">uint8_t</span> x5 <span class="op">=</span> <span class="dv">50</span><span class="op">;</span>  <span class="co">// unsigned char</span></span></code></pre></div>
+</section>
+<section id="introdução-a-rotinas-funções" class="slide level2">
+<h2>Introdução a Rotinas: Funções</h2>
+<p>A modularização de programas é muito importante, principalmente
+quando trechos de código são repetidos muitas vezes.</p>
+<p>Nesses casos, é comum criar rotinas, como <em>funções e
+procedimentos</em>, que podem por sua vez receber parâmetros.</p>
+<p>Tomemos por exemplo a função quadrado que retorna o valor passado
+elevado ao quadrado.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// função que retorna um &#39;int&#39;, com parâmetro &#39;p&#39;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> quadrado <span class="op">(</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> p<span class="op">*</span>p<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">// variável do tipo &#39;int&#39;, com valor 25</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> quadrado<span class="op">(</span><span class="dv">5</span><span class="op">);</span>        </span></code></pre></div>
+<p><strong>Importante:</strong> a dedução do tipo após a seta
+<code>-&gt;</code> é feita automaticamente.</p>
+</section>
+<section id="impressão-de-saída-padrão" class="slide level2">
+<h2>Impressão de Saída Padrão</h2>
+<p>Em C, tipicamente é utilizado o comando <code>printf</code>, mas
+devido a inúmeras falhas de segurança, é recomendado o uso de uma
+alternativa mais segura. Assim, em C++, para imprimir na saída padrão
+utilizaremos o comando <code>std::print</code>.</p>
+<p>O C++23 traz oficialmente <code>std::print</code> e
+<code>std::println</code> como parte do módulo de biblioteca padrão
+<code>std</code>. Para utilizá-lo, basta fazer
+<code>import std;</code>.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;Olá Mundo!&quot;</span><span class="op">);</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">// online: https://godbolt.org/z/sd7dbxY3o</span></span></code></pre></div>
+<p><strong>Pergunta:</strong> Qual o tipo de retorno da função
+<code>main</code>?</p>
+</section>
+<section id="impressão-de-saída-padrão-1" class="slide level2">
+<h2>Impressão de Saída Padrão</h2>
+<p>Para imprimir na saída padrão utilizaremos o comando
+<code>std::print</code>, e é possível evitar o prefixo
+<code>std::</code> com um <code>using namespace std;</code>.</p>
+<p><strong>Pergunta:</strong> como podemos misturar um texto (também
+chamado de cadeia de caracteres ou string) com o conteúdo de
+variáveis?</p>
+<div class="fragment">
+<p><strong>Resposta:</strong> através do padrão de substituição
+<code>{}</code>.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int32_t</span> x1 <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;x1 é </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x1<span class="op">);</span>  <span class="co">/*  x1 é 7  */</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> x6 <span class="op">=</span> x1 <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;metade de </span><span class="sc">{}</span><span class="st"> é </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x1<span class="op">,</span> x6<span class="op">);</span>  <span class="co">// metade de 7 é 3.5</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> b <span class="op">=</span> <span class="ch">&#39;L&#39;</span><span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;isto é uma </span><span class="sc">{}</span><span class="st">etra&quot;</span><span class="op">,</span> b<span class="op">);</span>  <span class="co">// isto é uma Letra </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;Olá mundo! </span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span>   <span class="co">// Olá mundo! (quebra de linha) </span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ====================================================</span></span></code></pre></div>
+</div>
+</section>
+<section id="condicionais" class="slide level2">
+<h2>Condicionais</h2>
+<p><strong>Problema:</strong> dados <code>x</code> e <code>y</code>,
+imprima o maior valor.</p>
+<div class="fragment">
+<p>Condicionais podem ser feitos através dos comandos if ou if else.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> <span class="dv">15</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="dv">12</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>x <span class="op">&gt;</span> y<span class="op">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;x é maior que y&quot;</span><span class="op">);</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;x menor ou igual a y&quot;</span><span class="op">);</span></span></code></pre></div>
+</div>
+</section>
+<section id="laços-de-repetição" class="slide level2">
+<h2>Laços de Repetição</h2>
+<p>Laços de repetição podem ser feitos através de comandos while ou for.
+Um comando for é dividido em três partes: inicialização, condição de
+continuação e incremento.</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span> <span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;i : </span><span class="sc">{}</span><span class="st">&quot;</span> <span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> j<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>j <span class="op">&lt;</span> <span class="dv">10</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;j : </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> j<span class="op">);</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   j<span class="op">++;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div>
+</div>
+<p><strong>Pergunta:</strong> O que é impresso em ambos laços?</p>
+</section>
+<section id="introdução-a-rotinas-procedimentos" class="slide level2">
+<h2>Introdução a Rotinas: Procedimentos</h2>
+<p>Quando nenhum valor é retornado (em um procedimento), utilizamos a
+palavra-chave <code>void</code>. Procedimentos são úteis mesmo quando
+nenhum valor é retornado. <strong>Exemplo</strong>: (de a até b):</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> imprime <span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i<span class="op">=</span>a<span class="op">;</span> i<span class="op">&lt;</span>b<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>   imprime<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Pergunta:</strong> Por que a rotina <code>imprime</code> não
+precisa retornar nada? O que é impresso ao invocar
+<code>imprime(2,5)</code>?</p>
+</section>
+<section id="tipos-compostos" class="slide level2">
+<h2>Tipos Compostos</h2>
+<p>Além dos tipos primitivos apresentados anteriormente (int, float,
+char, …), a linguagem C/C++ nos permite criar tipos compostos.</p>
+<p><strong>Tarefa:</strong> estude demais tipos primitivos como double e
+long long, bem como os modificadores unsigned, signed, short e long.</p>
+<p>Os tipos compostos podem ser vetores (arrays) ou agregados (structs,
+…).</p>
+<div class="fragment">
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int32_t</span> v<span class="op">[</span><span class="dv">8</span><span class="op">];</span> <span class="co">// cria um vetor com 8 inteiros</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>v<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span>     <span class="co">// atribui o valor 3 à primeira posição</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>v<span class="op">[</span><span class="dv">7</span><span class="op">]</span> <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>     <span class="co">// atribui o valor 5 à última posição</span></span></code></pre></div>
+<p>Exemplo de um vetor <code>v</code>, de 0 a 7, da esquerda para
+direita:</p>
+<pre><code>          v: | 3 |   |   |   |   |   |   | 5 |
+               0   1   2   3   4   5   6   7</code></pre>
+</div>
+</section>
+<section id="controle-de-fluxo-com-break-e-continue"
+class="slide level2">
+<h2>Controle de fluxo com <code>break</code> e
+<code>continue</code></h2>
+<p>Controles de fluxo em laços de repetição podem ser efetuados com
+<code>break</code> e <code>continue</code>. O <code>break</code>
+finaliza a execução do laço e o <code>continue</code> recomeça o
+laço.</p>
+<p><strong>Problema</strong>: Dado um vetor B, encontre o
+primeiro/último valor negativo, ou imprima -1 caso não exista.</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> B<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">4</span><span class="op">,</span> <span class="op">-</span><span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="op">-</span><span class="dv">7</span><span class="op">,</span> <span class="dv">8</span><span class="op">};</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> z <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>B<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>      z <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;z=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> z<span class="op">);</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">// z==1</span></span></code></pre></div>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> B<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">4</span><span class="op">,</span> <span class="op">-</span><span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="op">-</span><span class="dv">7</span><span class="op">,</span> <span class="dv">8</span><span class="op">};</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> z <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>B<span class="op">[</span>i<span class="op">]</span> <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>   z <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;z=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> z<span class="op">);</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">// z==3</span></span></code></pre></div>
+</div>
+</div>
+</section>
+<section id="saltos-incondicionais-com-goto-tópico-avançado"
+class="slide level2">
+<h2>Saltos incondicionais com <code>goto</code> (tópico avançado)</h2>
+<p>Saltos incondicionais no código podem ser feitos com
+<code>goto label;</code> e <code>label:</code>. Uma aplicação usual é a
+“quebra múltipla” de laços de repetição. Evite ao máximo o uso de
+<code>goto</code> e, sempre que for possível, prefira alternativas
+estruturadas como <code>for</code>, <code>while</code>, <code>if</code>,
+<code>else</code>, <code>break</code>, etc.</p>
+<p>Contabilize quantos prints são executados (variável
+<code>z</code>):</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> z <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span> <span class="dt">int</span> j <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>j <span class="op">&lt;</span> <span class="dv">10</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">6</span><span class="op">)</span> <span class="cf">goto</span> fim<span class="op">;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>      println<span class="op">(</span><span class="st">&quot;z=</span><span class="sc">{}</span><span class="st"> i=</span><span class="sc">{}</span><span class="st"> j=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> z<span class="op">,</span> i<span class="op">,</span> j<span class="op">);</span> z<span class="op">++;</span> j<span class="op">++;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>fim<span class="op">:</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;final z=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> z<span class="op">);</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]</span></span></code></pre></div>
+</section></section>
+<section>
+<section id="prática-programas-em-cc" class="title-slide slide level1">
+<h1>Prática: Programas em C/C++</h1>
+
+</section>
+<section id="ambiente-de-programação-detalhes" class="slide level2">
+<h2>Ambiente de Programação (detalhes)</h2>
 <p>Exemplos serão dados com base no sistema GNU/Linux e compiladores
 GCC, mas existem ferramentas equivalentes para Windows e demais sistemas
 operacionais. A IDE Visual Studio Code suporta a linguagem C++ tanto
@@ -151,14 +455,14 @@ com IDE de Desenvolvimento”</a>.</p>
 <p>O Compilador GCC suporta C/C++, então consegue compilar tanto C
 quanto <em>C com C++</em>.</p>
 <p>Código main.c:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> m <span class="op">=</span> <span class="st">&quot;Mundo&quot;</span><span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;Olá </span><span class="sc">%s</span><span class="st">!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> m<span class="op">);</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> m <span class="op">=</span> <span class="st">&quot;Mundo&quot;</span><span class="op">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">&quot;Olá </span><span class="sc">%s</span><span class="st">!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <div class="small">
 <p>Para compilar manualmente (sem CMake), execute o seguinte comando com
 GCC 15:</p>
@@ -173,14 +477,14 @@ utilizaremos o padrão C++ no compilador.</p>
 <p>Veja exemplo no <a
 href="https://godbolt.org/z/KojTzxEE8">https://godbolt.org/z/KojTzxEE8</a>:</p>
 <p>Código main.cpp:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> m <span class="op">=</span> <span class="st">&quot;Mundo&quot;</span><span class="op">;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;Olá </span><span class="sc">{}</span><span class="st">!&quot;</span><span class="op">,</span> m<span class="op">);</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> m <span class="op">=</span> <span class="st">&quot;Mundo&quot;</span><span class="op">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;Olá </span><span class="sc">{}</span><span class="st">!&quot;</span><span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <div class="small">
 <p>Para compilar manualmente (sem CMake), execute o seguinte comando com
 GCC 15:</p>
@@ -284,265 +588,9 @@ build --cxxopt=-std=c++23</code></pre>
 </div>
 </section></section>
 <section>
-<section id="parte-1-tipos-primitivos-compostos-e-genéricos-em-cc"
-class="title-slide slide level1">
-<h1>Parte 1: Tipos Primitivos, Compostos e Genéricos em C/C++</h1>
+<section id="tipos-agregados-triviais" class="title-slide slide level1">
+<h1>Tipos Agregados Triviais</h1>
 
-</section>
-<section id="conceitos-de-cc" class="slide level2">
-<h2>Conceitos de C/C++</h2>
-<p>Compreender a lógica da programação é a habilidade mais importante
-para um programador! Com ela, você pode facilmente trocar de linguagem
-de programação, conhecendo apenas alguns comandos básicos.</p>
-<p>O primeiro conceito a ser revisado é de variável. Uma variável
-consiste de um identificador válido (mesmo para outras linguagens
-populares como Python) e armazena algum tipo de dado da memória do
-computador.</p>
-<p>A linguagem C/C++ é <strong>fortemente tipada</strong>, portando o
-programador deve dizer explicitamente qual o tipo de dado deseja
-armazenar em cada variável.</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>   x <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>    <span class="co">// armazena o inteiro 5 na variável x</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span>  y <span class="op">=</span> <span class="ch">&#39;A&#39;</span><span class="op">;</span>  <span class="co">// armazena o caractere &#39;A&#39; na variável y</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> z <span class="op">=</span> <span class="fl">3.7</span> <span class="op">;</span> <span class="co">// armazena o real 3.7 na variável z</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> v <span class="op">=</span> <span class="kw">true</span><span class="op">;</span>  <span class="co">// armazena o booleano true na variável v</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> b <span class="op">=</span> <span class="ch">&#39;B&#39;</span><span class="op">;</span>     <span class="co">// dedução de tipo com &#39;auto&#39;... qual tipo?</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> s <span class="op">=</span> <span class="st">&quot;abcd&quot;</span><span class="op">;</span>  <span class="co">// cadeia de caracteres, ainda veremos tipo</span></span></code></pre></div>
-<p><strong>Responda:</strong> Qual o tipo acima de b? (C++23 e C23)</p>
-</section>
-<section id="tipos-de-variáveis" class="slide level2">
-<h2>Tipos de Variáveis</h2>
-<p><strong>Pergunta/Resposta</strong>: Cuidado com tipos. Quais são os
-valores armazenados nas variáveis abaixo (C++23 e C23)?</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode cpp listing"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    x1 <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>        <span class="co">// =&gt; 5</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    x2 <span class="op">=</span> x1 <span class="op">+</span> <span class="dv">10</span><span class="op">;</span>  <span class="co">// =&gt; 15</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    x3 <span class="op">=</span> x2 <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>   <span class="co">// =&gt; 7</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span>  x4 <span class="op">=</span> x2 <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>   <span class="co">// =&gt; 7.0</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span>  x5 <span class="op">=</span> x2 <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span> <span class="co">// =&gt; 7.5</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span>   x6 <span class="op">=</span> <span class="dv">15</span><span class="op">;</span>       <span class="co">// =&gt; 15 </span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span>   x7 <span class="op">=</span> x2 <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>   <span class="co">// =&gt; 7</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span>   x8 <span class="op">=</span> x2 <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span> <span class="co">// =&gt; 7.5</span></span></code></pre></div>
-<p>Verifiquem essas operações de variáveis, escrevendo na saída padrão
-(tela do computador).</p>
-</section>
-<section id="conceitos-de-cc-tipos-definidos" class="slide level2">
-<h2>Conceitos de C/C++ (tipos definidos)</h2>
-<p>Tipos primitivos em C/C++ tem um tamanho definido, então é uma boa
-prática utilizar tamanhos fixos.</p>
-<p>Dê preferência a inicialização direta com chaves <code>{ }</code>, ao
-invés de indireta por atribuição (<code>operator=</code>).</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span>     x0 <span class="op">{-</span><span class="dv">1</span><span class="op">};</span>  <span class="co">// inicialização direta!</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int64_t</span> x1 <span class="op">=</span> <span class="dv">10</span><span class="op">;</span>  <span class="co">// long (ou long long)</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int32_t</span> x2 <span class="op">=</span> <span class="dv">20</span><span class="op">;</span>  <span class="co">// int</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int16_t</span> x3 <span class="op">=</span> <span class="dv">30</span><span class="op">;</span>  <span class="co">// short</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int8_t</span>  x4 <span class="op">=</span> <span class="dv">40</span><span class="op">;</span>  <span class="co">// signed char</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">uint8_t</span> x5 <span class="op">=</span> <span class="dv">50</span><span class="op">;</span>  <span class="co">// unsigned char</span></span></code></pre></div>
-</section>
-<section id="introdução-a-rotinas-funções" class="slide level2">
-<h2>Introdução a Rotinas: Funções</h2>
-<p>A modularização de programas é muito importante, principalmente
-quando trechos de código são repetidos muitas vezes.</p>
-<p>Nesses casos, é comum criar rotinas, como <em>funções e
-procedimentos</em>, que podem por sua vez receber parâmetros.</p>
-<p>Tomemos por exemplo a função quadrado que retorna o valor passado
-elevado ao quadrado.</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">// função que retorna um &#39;int&#39;, com parâmetro &#39;p&#39;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> quadrado <span class="op">(</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> p<span class="op">*</span>p<span class="op">;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">// variável do tipo &#39;int&#39;, com valor 25</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> quadrado<span class="op">(</span><span class="dv">5</span><span class="op">);</span>        </span></code></pre></div>
-<p><strong>Importante:</strong> a dedução do tipo após a seta
-<code>-&gt;</code> é feita automaticamente.</p>
-</section>
-<section id="impressão-de-saída-padrão" class="slide level2">
-<h2>Impressão de Saída Padrão</h2>
-<p>Em C, tipicamente é utilizado o comando <code>printf</code>, mas
-devido a inúmeras falhas de segurança, é recomendado o uso de uma
-alternativa mais segura. Assim, em C++, para imprimir na saída padrão
-utilizaremos o comando <code>std::print</code>.</p>
-<p>O C++23 traz oficialmente <code>std::print</code> e
-<code>std::println</code> como parte do módulo de biblioteca padrão
-<code>std</code>. Para utilizá-lo, basta fazer
-<code>import std;</code>.</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;Olá Mundo!&quot;</span><span class="op">);</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">// online: https://godbolt.org/z/sd7dbxY3o</span></span></code></pre></div>
-<p><strong>Pergunta:</strong> Qual o tipo de retorno da função
-<code>main</code>?</p>
-</section>
-<section id="impressão-de-saída-padrão-1" class="slide level2">
-<h2>Impressão de Saída Padrão</h2>
-<p>Para imprimir na saída padrão utilizaremos o comando
-<code>std::print</code>, e é possível evitar o prefixo
-<code>std::</code> com um <code>using namespace std;</code>.</p>
-<p><strong>Pergunta:</strong> como podemos misturar um texto (também
-chamado de cadeia de caracteres ou string) com o conteúdo de
-variáveis?</p>
-<div class="fragment">
-<p><strong>Resposta:</strong> através do padrão de substituição
-<code>{}</code>.</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int32_t</span> x1 <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;x1 é </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x1<span class="op">);</span>  <span class="co">/*  x1 é 7  */</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> x6 <span class="op">=</span> x1 <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;metade de </span><span class="sc">{}</span><span class="st"> é </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> x1<span class="op">,</span> x6<span class="op">);</span>  <span class="co">// metade de 7 é 3.5</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> b <span class="op">=</span> <span class="ch">&#39;L&#39;</span><span class="op">;</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;isto é uma </span><span class="sc">{}</span><span class="st">etra&quot;</span><span class="op">,</span> b<span class="op">);</span>  <span class="co">// isto é uma Letra </span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;Olá mundo! </span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span>   <span class="co">// Olá mundo! (quebra de linha) </span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ====================================================</span></span></code></pre></div>
-</div>
-</section>
-<section id="condicionais" class="slide level2">
-<h2>Condicionais</h2>
-<p><strong>Problema:</strong> dados <code>x</code> e <code>y</code>,
-imprima o maior valor.</p>
-<div class="fragment">
-<p>Condicionais podem ser feitos através dos comandos if ou if else.</p>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> <span class="dv">15</span><span class="op">;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="dv">12</span><span class="op">;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>x <span class="op">&gt;</span> y<span class="op">)</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;x é maior que y&quot;</span><span class="op">);</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;x menor ou igual a y&quot;</span><span class="op">);</span></span></code></pre></div>
-</div>
-</section>
-<section id="laços-de-repetição" class="slide level2">
-<h2>Laços de Repetição</h2>
-<p>Laços de repetição podem ser feitos através de comandos while ou for.
-Um comando for é dividido em três partes: inicialização, condição de
-continuação e incremento.</p>
-<div class="columns">
-<div class="column" style="width:55%;">
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span> <span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;i : </span><span class="sc">{}</span><span class="st">&quot;</span> <span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-</div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> j<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>j <span class="op">&lt;</span> <span class="dv">10</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;j : </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> j<span class="op">);</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>   j<span class="op">++;</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-</div>
-</div>
-<p><strong>Pergunta:</strong> O que é impresso em ambos laços?</p>
-</section>
-<section id="introdução-a-rotinas-procedimentos" class="slide level2">
-<h2>Introdução a Rotinas: Procedimentos</h2>
-<p>Quando nenhum valor é retornado (em um procedimento), utilizamos a
-palavra-chave <code>void</code>. Procedimentos são úteis mesmo quando
-nenhum valor é retornado. <strong>Exemplo</strong>: (de a até b):</p>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> imprime <span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i<span class="op">=</span>a<span class="op">;</span> i<span class="op">&lt;</span>b<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>      <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>   imprime<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p><strong>Pergunta:</strong> Por que a rotina <code>imprime</code> não
-precisa retornar nada? O que é impresso ao invocar
-<code>imprime(2,5)</code>?</p>
-</section>
-<section id="tipos-compostos" class="slide level2">
-<h2>Tipos Compostos</h2>
-<p>Além dos tipos primitivos apresentados anteriormente (int, float,
-char, …), a linguagem C/C++ nos permite criar tipos compostos.</p>
-<p><strong>Tarefa:</strong> estude demais tipos primitivos como double e
-long long, bem como os modificadores unsigned, signed, short e long.</p>
-<p>Os tipos compostos podem ser vetores (arrays) ou agregados (structs,
-…).</p>
-<div class="fragment">
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int32_t</span> v<span class="op">[</span><span class="dv">8</span><span class="op">];</span> <span class="co">// cria um vetor com 8 inteiros</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>v<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span>     <span class="co">// atribui o valor 3 à primeira posição</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>v<span class="op">[</span><span class="dv">7</span><span class="op">]</span> <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>     <span class="co">// atribui o valor 5 à última posição</span></span></code></pre></div>
-<p>Exemplo de um vetor <code>v</code>, de 0 a 7, da esquerda para
-direita:</p>
-<pre><code>          v: | 3 |   |   |   |   |   |   | 5 |
-               0   1   2   3   4   5   6   7</code></pre>
-</div>
-</section>
-<section id="controle-de-fluxo-com-break-e-continue"
-class="slide level2">
-<h2>Controle de fluxo com <code>break</code> e
-<code>continue</code></h2>
-<p>Controles de fluxo em laços de repetição podem ser efetuados com
-<code>break</code> e <code>continue</code>. O <code>break</code>
-finaliza a execução do laço e o <code>continue</code> recomeça o
-laço.</p>
-<p><strong>Problema</strong>: Dado um vetor B, encontre o
-primeiro/último valor negativo, ou imprima -1 caso não exista.</p>
-<div class="columns">
-<div class="column" style="width:55%;">
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> B<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">4</span><span class="op">,</span> <span class="op">-</span><span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="op">-</span><span class="dv">7</span><span class="op">,</span> <span class="dv">8</span><span class="op">};</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> z <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>B<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>      z <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;z=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> z<span class="op">);</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">// z==1</span></span></code></pre></div>
-</div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb24"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> B<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">4</span><span class="op">,</span> <span class="op">-</span><span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="op">-</span><span class="dv">7</span><span class="op">,</span> <span class="dv">8</span><span class="op">};</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> z <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++){</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>B<span class="op">[</span>i<span class="op">]</span> <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">continue</span><span class="op">;</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>   z <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;z=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> z<span class="op">);</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">// z==3</span></span></code></pre></div>
-</div>
-</div>
-</section>
-<section id="saltos-incondicionais-com-goto-tópico-avançado"
-class="slide level2">
-<h2>Saltos incondicionais com <code>goto</code> (tópico avançado)</h2>
-<p>Saltos incondicionais no código podem ser feitos com
-<code>goto label;</code> e <code>label:</code>. Uma aplicação usual é a
-“quebra múltipla” de laços de repetição. Evite ao máximo o uso de
-<code>goto</code> e, sempre que for possível, prefira alternativas
-estruturadas como <code>for</code>, <code>while</code>, <code>if</code>,
-<code>else</code>, <code>break</code>, etc.</p>
-<p>Contabilize quantos prints são executados (variável
-<code>z</code>):</p>
-<div class="sourceCode" id="cb25"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> z <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span> <span class="dt">int</span> j <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>j <span class="op">&lt;</span> <span class="dv">10</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">6</span><span class="op">)</span> <span class="cf">goto</span> fim<span class="op">;</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>      println<span class="op">(</span><span class="st">&quot;z=</span><span class="sc">{}</span><span class="st"> i=</span><span class="sc">{}</span><span class="st"> j=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> z<span class="op">,</span> i<span class="op">,</span> j<span class="op">);</span> z<span class="op">++;</span> j<span class="op">++;</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>fim<span class="op">:</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  println<span class="op">(</span><span class="st">&quot;final z=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> z<span class="op">);</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]</span></span></code></pre></div>
 </section>
 <section id="tipos-agregados-i" class="slide level2">
 <h2>Tipos Agregados I</h2>

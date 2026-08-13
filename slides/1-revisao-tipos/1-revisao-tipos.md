@@ -27,187 +27,35 @@ filters:
 São requisitos para essa aula o conhecimento de:
 
 - Introdução/Fundamentos de Programação (em alguma linguagem de programação)
-- Interesse em aprender C/C++
-- Familiaridade com uso e instalação de compiladores/IDEs ou uso de ferramentas de programação online
+- **Interesse** em aprender C/C++
+- Familiaridade com uso e instalação de programas via linha de comando (no seu sistema operacional preferido) 
+- Familiaridade com uso de compiladores/IDEs ou uso de ferramentas de programação online
 
 
 ------
 
 ## Ambiente de Programação
 
-Exemplos serão dados com base no sistema GNU/Linux e compiladores GCC, mas existem ferramentas equivalentes para Windows e demais sistemas operacionais. A IDE
-Visual Studio Code suporta a linguagem C++ tanto para Linux
-quanto para Windows, sendo necessário o CMake 4.0 com Ninja.
-No Windows/WSL ou Linux, instale o compilador Clang 19 (no Windows, use o Scoop com `scoop install main/llvm`).
+### Por que programar em C/C++?
 
-Também é possível praticar diretamente em um navegador web com
-plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler) ou [Godbolt](https://godbolt.org) (mais recomendada!).
-Neste caso, o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrões C23 e C++23).
+::: +
 
-Para configurar IDE, leia o tutorial ["Breve Introdução ao C/C++ com IDE de Desenvolvimento"](https://zenodo.org/records/20077167).
-
-## Exemplo de Programa em Padrão C
-
-O Compilador GCC suporta C/C++, então consegue compilar tanto C quanto *C com C++*.
-
-Código main.c:
-
-
-```.cpp
-#include <stdio.h>
-
-int main() {
-   auto m = "Mundo";
-   printf("Olá %s!\n", m);
-   return 0;
-}
-```
-
-::: -
-Para compilar manualmente (sem CMake), execute o seguinte comando com GCC 15:
-
-```
-g++ -std=c23 main.c -o exemplo_c
-```
+- Linguagem consolidada, eficiente e de **baixo nível** (próxima ao *hardware*)
+- **Muito** material online e livros, etc
+- **Muitas** ferramentas e códigos prontos, funciona em qualquer sistema operacional
 
 :::
 
-Como o C++ inclui tudo que o C tem e ainda adiciona recursos mais seguros e simples, como `import` e `print`, utilizaremos o padrão C++ no compilador.
+### Como programar em C/C++?
 
-## Exemplo de Programa em C/C++
-
-Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
-
-Código main.cpp:
-
-
-```.cpp
-import std;
-
-int main() {
-  auto m = "Mundo";
-  std::println("Olá {}!", m);
-  return 0;
-}
-```
-
-::: -
-Para compilar manualmente (sem CMake), execute o seguinte comando com GCC 15:
-
-```
-g++ -std=c++23 -fmodules -fsearch-include-path bits/std.cc main.cpp -o exemplo
-```
-
-:::
-
-Para programas maiores e mais complexos (com muitos arquivos), é necessário usar algum sistema de construção, como CMake ou Bazel.
-No próximo slide, um exemplo de CMakeLists.txt.
-
-## Exemplo de Programa em C/C++ com CMake 4.1 e GCC
-
-Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
-
-::: --
-
-Código CMakeLists.txt (precisa instalar CMake 4.1 e Ninja)
-
-
-```
-cmake_minimum_required(VERSION 4.1)
-
-# https://github.com/Kitware/CMake/blob/master/Help/dev/experimental.rst
-set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "d0edc3af-4c50-42ea-a356-e2862fe7a444") # 4.1
-# set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "451f2fe2-a8a2-47c3-bc32-94786d8fc91b") # 4.3
-set(CMAKE_CXX_MODULE_STD 1)
-
-project(my_project VERSION 0.1.0 LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-add_executable(exemplo src/main.cpp)
-```
-:::
-
-## Exemplo de Programa em C/C++ com CMake 4.1 e GCC
-
-Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
-
-Para construir, são quatro comandos:
-
-```
-mkdir -p build
-cd build
-cmake .. -GNinja
-ninja
-```
-
-Outra solução bem elegante é utilizar o Bazel com o compilador Clang.
-
-### Dica para IDE VSCode: use extensão clangd
-
-Para utilizar IDE de desenvolvimento como o VSCode, é necessário usar Clang com extensão clangd para um correto processamento visual do código (não funciona direito com GCC nem com a extensão padrão C/C++ da Microsoft).
-
-
-## Exemplo de Programa em C/C++ com Bazel 9 e Clang
-
-Veja exemplo no tutorial ["Local import std module on C++23 with Bazel"](https://igormcoelho.medium.com/local-import-std-module-on-c-23-with-bazel-95b449a8e881).
-Só precisa configurar os seus arquivos MODULE.bazel e BUILD (copie o `extensions.bzl` do tutorial!).
-
-::: --
-```
-# MODULE.bazel
-module(name = "projeto")
-
-bazel_dep(name = "rules_cc", version = "0.2.17")
-std_modules = use_extension("//:extensions.bzl", "local_libcxx_extension")
-use_repo(std_modules, "std_modules")
-```
-
-:::
-
-::: --
-```
-# BUILD
-load("@rules_cc//cc:defs.bzl", "cc_binary")
-
-cc_binary(
-    name = "exemplo",
-    srcs = ["main.cpp"],
-    deps = ["@std_modules"]
-    features = ["cpp_modules"]
-)
-```
-:::
-
-
-## Exemplo de Programa em C/C++ com Bazel 9 e Clang
-
-Veja exemplo no tutorial ["Local import std module on C++23 with Bazel"](https://igormcoelho.medium.com/local-import-std-module-on-c-23-with-bazel-95b449a8e881).
-
-
-Para construir e executar, são dois comandos:
-
-```
-bazel build ...
-bazel run :exemplo
-```
-
-Lembre-se de atualizar seu arquivo `.bazelrc` com versão correta do compilador:
-
-::: --
-```
-# .bazelrc
-
-build --repo_env=BAZEL_COMPILER=clang
-build --repo_env=BAZEL_CXXOPTS=-stdlib=libc++
-build --repo_env=BAZEL_LINKOPTS=-stdlib=libc++ 
-
-build --repo_env=LIBCXX_MODULE_PATH=/usr/lib/llvm-21/share/libc++/v1
-build --experimental_cpp_modules
-build --cxxopt=-std=c++23
-```
+::: +
+- Instalar compilador **moderno** para **C23/C++23**. Recomendação geral: **clang 22**
+   * Link de download: [https://github.com/llvm/llvm-project/releases](https://github.com/llvm/llvm-project/releases)
+- Para Linux, pode usar o **GCC 15** ou **clang**
+- Para Mac, use o **clang**
+- Para Windows, **evite** tanto o **MSVC** nativo quanto o _**clang-cl** para Windows_!
+    * **Deve** instalar o **WSL2** no Windows e usar o suporte de linux recomendado acima.
+- Se for usar um compilador online, use o [https://godbolt.org](https://godbolt.org)
 :::
 
 # Parte 1: Tipos Primitivos, Compostos e Genéricos em C/C++
@@ -358,7 +206,6 @@ auto main() -> int {
   // ====================================================
 ```
 
---------
 
 ## Condicionais 
 
@@ -539,6 +386,187 @@ fim:
   // z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]
 ```
 
+
+# Prática: Programas em C/C++
+
+## Ambiente de Programação (detalhes)
+
+Exemplos serão dados com base no sistema GNU/Linux e compiladores GCC, mas existem ferramentas equivalentes para Windows e demais sistemas operacionais. A IDE
+Visual Studio Code suporta a linguagem C++ tanto para Linux
+quanto para Windows, sendo necessário o CMake 4.0 com Ninja.
+No Windows/WSL ou Linux, instale o compilador Clang 19 (no Windows, use o Scoop com `scoop install main/llvm`).
+
+Também é possível praticar diretamente em um navegador web com
+plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler) ou [Godbolt](https://godbolt.org) (mais recomendada!).
+Neste caso, o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrões C23 e C++23).
+
+Para configurar IDE, leia o tutorial ["Breve Introdução ao C/C++ com IDE de Desenvolvimento"](https://zenodo.org/records/20077167).
+
+## Exemplo de Programa em Padrão C
+
+O Compilador GCC suporta C/C++, então consegue compilar tanto C quanto *C com C++*.
+
+Código main.c:
+
+
+```.cpp
+#include <stdio.h>
+
+int main() {
+   auto m = "Mundo";
+   printf("Olá %s!\n", m);
+   return 0;
+}
+```
+
+::: -
+Para compilar manualmente (sem CMake), execute o seguinte comando com GCC 15:
+
+```
+g++ -std=c23 main.c -o exemplo_c
+```
+
+:::
+
+Como o C++ inclui tudo que o C tem e ainda adiciona recursos mais seguros e simples, como `import` e `print`, utilizaremos o padrão C++ no compilador.
+
+## Exemplo de Programa em C/C++
+
+Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
+
+Código main.cpp:
+
+
+```.cpp
+import std;
+
+int main() {
+  auto m = "Mundo";
+  std::println("Olá {}!", m);
+  return 0;
+}
+```
+
+::: -
+Para compilar manualmente (sem CMake), execute o seguinte comando com GCC 15:
+
+```
+g++ -std=c++23 -fmodules -fsearch-include-path bits/std.cc main.cpp -o exemplo
+```
+
+:::
+
+Para programas maiores e mais complexos (com muitos arquivos), é necessário usar algum sistema de construção, como CMake ou Bazel.
+No próximo slide, um exemplo de CMakeLists.txt.
+
+## Exemplo de Programa em C/C++ com CMake 4.1 e GCC
+
+Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
+
+::: --
+
+Código CMakeLists.txt (precisa instalar CMake 4.1 e Ninja)
+
+
+```
+cmake_minimum_required(VERSION 4.1)
+
+# https://github.com/Kitware/CMake/blob/master/Help/dev/experimental.rst
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "d0edc3af-4c50-42ea-a356-e2862fe7a444") # 4.1
+# set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "451f2fe2-a8a2-47c3-bc32-94786d8fc91b") # 4.3
+set(CMAKE_CXX_MODULE_STD 1)
+
+project(my_project VERSION 0.1.0 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+add_executable(exemplo src/main.cpp)
+```
+:::
+
+## Exemplo de Programa em C/C++ com CMake 4.1 e GCC
+
+Veja exemplo no [https://godbolt.org/z/KojTzxEE8](https://godbolt.org/z/KojTzxEE8):
+
+Para construir, são quatro comandos:
+
+```
+mkdir -p build
+cd build
+cmake .. -GNinja
+ninja
+```
+
+Outra solução bem elegante é utilizar o Bazel com o compilador Clang.
+
+### Dica para IDE VSCode: use extensão clangd
+
+Para utilizar IDE de desenvolvimento como o VSCode, é necessário usar Clang com extensão clangd para um correto processamento visual do código (não funciona direito com GCC nem com a extensão padrão C/C++ da Microsoft).
+
+
+## Exemplo de Programa em C/C++ com Bazel 9 e Clang
+
+Veja exemplo no tutorial ["Local import std module on C++23 with Bazel"](https://igormcoelho.medium.com/local-import-std-module-on-c-23-with-bazel-95b449a8e881).
+Só precisa configurar os seus arquivos MODULE.bazel e BUILD (copie o `extensions.bzl` do tutorial!).
+
+::: --
+```
+# MODULE.bazel
+module(name = "projeto")
+
+bazel_dep(name = "rules_cc", version = "0.2.17")
+std_modules = use_extension("//:extensions.bzl", "local_libcxx_extension")
+use_repo(std_modules, "std_modules")
+```
+
+:::
+
+::: --
+```
+# BUILD
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_binary(
+    name = "exemplo",
+    srcs = ["main.cpp"],
+    deps = ["@std_modules"]
+    features = ["cpp_modules"]
+)
+```
+:::
+
+
+## Exemplo de Programa em C/C++ com Bazel 9 e Clang
+
+Veja exemplo no tutorial ["Local import std module on C++23 with Bazel"](https://igormcoelho.medium.com/local-import-std-module-on-c-23-with-bazel-95b449a8e881).
+
+
+Para construir e executar, são dois comandos:
+
+```
+bazel build ...
+bazel run :exemplo
+```
+
+Lembre-se de atualizar seu arquivo `.bazelrc` com versão correta do compilador:
+
+::: --
+```
+# .bazelrc
+
+build --repo_env=BAZEL_COMPILER=clang
+build --repo_env=BAZEL_CXXOPTS=-stdlib=libc++
+build --repo_env=BAZEL_LINKOPTS=-stdlib=libc++ 
+
+build --repo_env=LIBCXX_MODULE_PATH=/usr/lib/llvm-21/share/libc++/v1
+build --experimental_cpp_modules
+build --cxxopt=-std=c++23
+```
+:::
+
+# Tipos Agregados Triviais
 
 -------
 
