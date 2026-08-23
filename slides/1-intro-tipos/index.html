@@ -352,19 +352,21 @@ ocupa 4 bytes e é capaz de suportar até
 valores distintos (aprox. -2 bilhões até +2 bilhões), enquanto o
 <strong>char</strong> suporta até 256 valores ocupando apenas 1
 byte.</p>
-<p>Em alguns casos, também é util tipos com menores valores, como o
-<strong>std::monostate</strong>, que ocupa 1 byte e só tem um único
-valor, e finalmente o tipo <strong>void</strong>, que é um <em>tipo
-incompleto</em> e <em>não representa nenhum valor</em>. Como o
+<p>Em alguns casos, também é util o uso de tipos com menor número de
+valores, como o <strong>std::monostate</strong>, que ocupa 1 byte e só
+tem um único valor, e finalmente o tipo <strong>void</strong>, que é um
+<em>tipo incompleto</em> e <em>não representa nenhum valor</em>. Como o
 <strong>void</strong> não representa valores, não é possível criar
 variáveis do tipo <strong>void</strong>!</p>
 <div class="sourceCode" id="cb11"><pre
-class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span>            a<span class="op">;</span>      <span class="co">// erro de compilação</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>monostate  b<span class="op">;</span>      <span class="co">// somente um valor possível</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span>            c <span class="op">=</span> b<span class="op">;</span>  <span class="co">// monostate pode ser copiado</span></span></code></pre></div>
+class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>             i <span class="op">=</span> <span class="dv">10</span><span class="op">;</span>    <span class="co">// um dentre 4 bilhões de valores válidos</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span>            b <span class="op">=</span> <span class="kw">true</span><span class="op">;</span>  <span class="co">// um dentre dois valores válidos</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">// void         v;         // erro de compilação: void não tem valor</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>monostate  m<span class="op">;</span>         <span class="co">// somente um valor possível</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span>            n <span class="op">=</span> m<span class="op">;</span>     <span class="co">// monostate pode ser copiado</span></span></code></pre></div>
 <p><strong>Importante:</strong> o tipo <code>std::monostate</code> só
-existe em C++, pois em C nunca houve a necessidade pela definição desse
-tipo, por falta de <em>tipos genéricos</em> (veremos mais adiante).</p>
+existe em C++, pois em C nunca houve a necessidade de definir esse tipo,
+por falta de <em>tipos genéricos</em> (veremos mais adiante).</p>
 </section>
 <section id="introdução-a-rotinas-procedimentos" class="slide level2">
 <h2>Introdução a Rotinas: Procedimentos</h2>
@@ -401,8 +403,8 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="
 </div>
 </div>
 <p><strong>Pergunta:</strong> Por que a rotina <code>imprime</code> não
-precisa retornar nada? O que é impresso ao invocar
-<code>imprime(2,5)</code>?</p>
+precisa retornar nada? O que acontece de <em>efeito colateral</em> ao
+invocar <code>imprime(2,5)</code>?</p>
 </section>
 <section id="tipos-compostos-vetores" class="slide level2">
 <h2>Tipos Compostos: Vetores</h2>

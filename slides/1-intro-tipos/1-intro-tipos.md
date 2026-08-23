@@ -291,16 +291,18 @@ while (j < 10) {
 
 Vimos alguns tipos com número maior de valores, por exemplo, o **int** e o **char**. O **int** ocupa 4 bytes e é capaz de suportar até $2^{32}$ valores distintos (aprox. -2 bilhões até +2 bilhões), enquanto o **char** suporta até 256 valores ocupando apenas 1 byte.
 
-Em alguns casos, também é util tipos com menores valores, como o **std::monostate**, que ocupa 1 byte e só tem um único valor, e finalmente o tipo **void**, que é um *tipo incompleto* e *não representa nenhum valor*.
+Em alguns casos, também é util o uso de tipos com menor número de valores, como o **std::monostate**, que ocupa 1 byte e só tem um único valor, e finalmente o tipo **void**, que é um *tipo incompleto* e *não representa nenhum valor*.
 Como o **void** não representa valores, não é possível criar variáveis do tipo **void**!
 
 ```.cpp
-void            a;      // erro de compilação
-std::monostate  b;      // somente um valor possível
-auto            c = b;  // monostate pode ser copiado
+int             i = 10;    // um dentre 4 bilhões de valores válidos
+bool            b = true;  // um dentre dois valores válidos
+// void         v;         // erro de compilação: void não tem valor
+std::monostate  m;         // somente um valor possível
+auto            n = m;     // monostate pode ser copiado
 ```
 
-**Importante:** o tipo `std::monostate` só existe em C++, pois em C nunca houve a necessidade pela definição desse tipo, por falta de *tipos genéricos* (veremos mais adiante).
+**Importante:** o tipo `std::monostate` só existe em C++, pois em C nunca houve a necessidade de definir esse tipo, por falta de *tipos genéricos* (veremos mais adiante).
 
 --------
 
@@ -350,7 +352,7 @@ auto main() -> int {
 ::::::: 
 
 
-**Pergunta:** Por que a rotina `imprime` não precisa retornar nada? O que é impresso ao invocar `imprime(2,5)`?
+**Pergunta:** Por que a rotina `imprime` não precisa retornar nada? O que acontece de *efeito colateral* ao invocar `imprime(2,5)`?
 
 
 -------
