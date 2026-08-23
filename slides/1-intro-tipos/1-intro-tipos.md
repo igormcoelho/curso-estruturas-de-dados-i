@@ -1,7 +1,7 @@
 ---
 author: Igor Machado Coelho
 title: Estruturas de Dados I
-subtitle: Introdução de Tipos em C/C++ para Estruturas de Dados
+subtitle: Introdução a Tipos em C/C++ e Análise de Algoritmos
 date: 13/09/2020 - 13/08/2026
 transition: linear
 fontsize: 10
@@ -18,7 +18,7 @@ filters:
 ---
 
 
-# Introdução de Tipos em C/C++ para Estruturas de Dados
+# Introdução a Tipos em C/C++ e Análise de Algoritmos
 
 ------
 
@@ -62,7 +62,7 @@ São requisitos para essa aula o conhecimento de:
 
 ------
 
-## Conceitos de C/C++
+## Conceitos de Tipos em C/C++
 
 Compreender a lógica da programação é a habilidade mais importante para um programador! 
 Com ela, você pode facilmente trocar
@@ -75,16 +75,21 @@ tipo de dado da memória do computador.
 
 A linguagem C/C++ é **fortemente tipada**, portando o programador
 deve dizer explicitamente qual o tipo de dado deseja armazenar em
-cada variável.
+cada variável ou deixar **auto** deduzir automaticamente.
+
+::: -
 
 ```{.cpp}
-int   x = 5;    // armazena o inteiro 5 na variável x
-char  y = 'A';  // armazena o caractere 'A' na variável y
-float z = 3.7 ; // armazena o real 3.7 na variável z
-bool v = true;  // armazena o booleano true na variável v
-auto b = 'B';     // dedução de tipo com 'auto'... qual tipo?
-auto s = "abcd";  // cadeia de caracteres, ainda veremos tipo
+int    x = 5;    // armazena o inteiro 5 na variável x
+char   y = 'A';  // armazena o caractere 'A' na variável y
+float  k = 3.7f; // armazena o real 3.7 na variável z
+double z = 3.7;  // armazena o real 3.7 na variável z
+bool v = true;   // armazena o booleano true na variável v
+auto b = 'B';    // dedução de tipo com 'auto'... qual tipo?
+auto s = "abcd"; // cadeia de caracteres, ainda veremos tipo
 ```
+
+:::
 
 **Responda:** Qual o tipo acima de b? (C++23 e C23)
 
@@ -95,12 +100,12 @@ auto s = "abcd";  // cadeia de caracteres, ainda veremos tipo
 
 **Pergunta/Resposta**: Cuidado com tipos. Quais são os valores armazenados nas variáveis abaixo (C++23 e C23)?
 
-```{.cpp .listing}
+```{.cpp}
 int    x1 = 5;        // => 5
 int    x2 = x1 + 10;  // => 15
 int    x3 = x2 / 2;   // => 7
-float  x4 = x2 / 2;   // => 7.0
-float  x5 = x2 / 2.0; // => 7.5
+double x4 = x2 / 2;   // => 7.0
+double x5 = x2 / 2.0; // => 7.5
 auto   x6 = 15;       // => 15 
 auto   x7 = x2 / 2;   // => 7
 auto   x8 = x2 / 2.0; // => 7.5
@@ -195,7 +200,7 @@ int main() {
 // online GCC: https://godbolt.org/z/j3W938PP6
 ```
 
-**Pergunta:** Qual o valor de retorno da função `main`?
+**Pergunta:** Qual o valor de retorno da função `main`? O que ele significa?
 
 ------
 
@@ -214,7 +219,7 @@ import std;
 int main() {
   int x1 = 7;
   std::println("x1 é {}", x1);  /*  x1 é 7  */
-  float x6 = x1 / 2.0;
+  double x6 = x1 / 2.0;
   std::println("metade de {} é {}", x1, x6);  // metade de 7 é 3.5
   char b = 'L';
   std::println("isto é uma {}etra", b);  // isto é uma Letra 
@@ -228,8 +233,6 @@ int main() {
 
 **Problema:** dados `x` e `y`, imprima o maior valor.
 
-. . .
-
 Condicionais podem ser feitos através dos comandos if ou if else.
 
 ```.cpp
@@ -241,9 +244,11 @@ else
    println("x menor ou igual a y");
 ```
 
+**Pergunta:** Qual resultado da expressão `if(x = y)`? E `if(x == y)`?
+
 -----------
 
-## Laços de Repetição 
+## Laços de Repetição (Parte 1/2)
 
 Laços de repetição podem ser feitos através de comandos while ou
 for. Um comando for é dividido em três partes: inicialização, condição
@@ -255,8 +260,8 @@ de continuação e incremento.
 ::::: {.column width=55%}
 
 ```.cpp
-for (auto i=0; i < 10 ; i++) {
-   println("i : {}" , i);
+for (int i=0; i < 10; i++) {
+   std::println("i : {}", i);
 }
 ```
 
@@ -265,9 +270,9 @@ for (auto i=0; i < 10 ; i++) {
 ::::: {.column width=45%}
 
 ```.cpp
-auto j=0;
+int j=0;
 while (j < 10) {
-   println("j : {}", j);
+   std::println("j : {}", j);
    j++;
 }
 ```
@@ -279,6 +284,100 @@ while (j < 10) {
 
 **Pergunta:** O que é impresso em ambos laços?
 
+
+-----------
+
+## Tipos `void` e `std::monostate`
+
+Vimos alguns tipos com número maior de valores, por exemplo, o **int** e o **char**. O **int** ocupa 4 bytes e é capaz de suportar até $2^{32}$ valores distintos (aprox. -2 bilhões até +2 bilhões), enquanto o **char** suporta até 256 valores ocupando apenas 1 byte.
+
+Em alguns casos, também é util tipos com menores valores, como o **std::monostate**, que ocupa 1 byte e só tem um único valor, e finalmente o tipo **void**, que é um *tipo incompleto* e *não representa nenhum valor*.
+Como o **void** não representa valores, não é possível criar variáveis do tipo **void**!
+
+```.cpp
+void            a;      // erro de compilação
+std::monostate  b;      // somente um valor possível
+auto            c = b;  // monostate pode ser copiado
+```
+
+**Importante:** o tipo `std::monostate` só existe em C++, pois em C nunca houve a necessidade pela definição desse tipo, por falta de *tipos genéricos* (veremos mais adiante).
+
+--------
+
+## Introdução a Rotinas: Procedimentos
+
+Quando nenhum valor é retornado (em um procedimento), utilizamos
+o tipo **void**.
+Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
+
+::::::: ||
+
+::: |
+
+```.cpp
+import std;
+
+void imprime (int a, int b) {
+   for (int i=a; i<b; i++)
+      std::println("{}", i);
+}
+
+int main() {
+   imprime(2, 5);
+   return 0;
+}
+```
+:::
+
+::: |
+
+```.cpp
+import std;
+
+auto imprime (int a, int b) -> void {
+   for (int i=a; i<b; i++)
+      std::println("{}", i);
+}
+
+auto main() -> int {
+   imprime(2, 5);
+   return 0;
+}
+```
+
+:::
+
+::::::: 
+
+
+**Pergunta:** Por que a rotina `imprime` não precisa retornar nada? O que é impresso ao invocar `imprime(2,5)`?
+
+
+-------
+
+## Tipos Compostos: Vetores
+
+Além dos tipos primitivos apresentados anteriormente (int, float,
+char, ...), a linguagem C/C++ nos permite criar tipos compostos.
+
+**Tarefa:** estude demais tipos primitivos como double e long long,
+bem como os modificadores unsigned, signed, short e long.
+
+Os tipos compostos podem ser agregados homogêneos (vetores/arrays) ou agregados heterogêneos (structs, ...).
+
+. . .
+
+```.cpp
+int v[10];  // cria um vetor com 10 inteiros  (40 bytes)
+v[0] = 3;   // atribui o valor 3 à primeira posição
+v[9] = 5;   // atribui o valor 5 à última posição
+```
+
+Exemplo de um vetor `v`, de 0 a 9, da esquerda para direita:
+```
+          v: | 3 |   |   |   |   |   |   |   |   | 5 |
+               0   1   2   3   4   5   6   7   8   9
+```
 
 --------
 
@@ -296,9 +395,8 @@ O `break` finaliza a execução do laço e o `continue` recomeça o laço.
 
 ```.cpp
 int B[] = {4, -3, 5, -7, 8};
-int i = 0;
 int z = -1;
-for (auto i=0; i < 5; i++)
+for (int i=0; i < 5; i++)
    if (B[i] < 0) {
       z = i;
       break;
@@ -313,9 +411,8 @@ println("z={}", z);
 
 ```.cpp
 int B[] = {4, -3, 5, -7, 8};
-int i = 0;
 int z = -1;
-for (auto i=0; i < 5; i++){
+for (int i=0; i < 5; i++){
    if (B[i] >= 0)
       continue;
    z = i;
@@ -342,7 +439,7 @@ Contabilize quantos prints são executados (variável `z`):
 
 ```.cpp
   int z = 0;
-  for (auto i = 0; i < 10; i++) {
+  for (int i = 0; i < 10; i++) {
     if (i < 5) continue; int j = i;
     while (j < 10) {
       if (i > 6) goto fim;
@@ -353,83 +450,6 @@ fim:
   println("final z={}", z);
   // z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]
 ```
-
--------
-
-## Introdução a Rotinas: Procedimentos
-
-Quando nenhum valor é retornado (em um procedimento), utilizamos
-a palavra-chave `void`. Procedimentos são úteis mesmo quando nenhum valor é retornado. **Exemplo**: (de a até b):
-
-::::::: ||
-
-::: |
-
-```.cpp
-import std;
-
-void imprime (int a, int b) {
-   for (auto i=a; i<b; i++)
-      std::println("{}", i);
-}
-
-int main() {
-   imprime(2, 5);
-   return 0;
-}
-```
-:::
-
-::: |
-
-```.cpp
-import std;
-
-auto imprime (int a, int b) -> void {
-   for (auto i=a; i<b; i++)
-      std::println("{}", i);
-}
-
-auto main() -> int {
-   imprime(2, 5);
-   return 0;
-}
-```
-
-:::
-
-::::::: 
-
-
-**Pergunta:** Por que a rotina `imprime` não precisa retornar nada? O que é impresso ao invocar `imprime(2,5)`?
-
-
--------
-
-## Tipos Compostos
-
-Além dos tipos primitivos apresentados anteriormente (int, float,
-char, ...), a linguagem C/C++ nos permite criar tipos compostos.
-
-**Tarefa:** estude demais tipos primitivos como double e long long,
-bem como os modificadores unsigned, signed, short e long.
-
-Os tipos compostos podem ser agregados homogêneos (vetores/arrays) ou agregados heterogêneos (structs, ...).
-
-. . .
-
-```.cpp
-int v[10];  // cria um vetor com 10 inteiros  (40 bytes)
-v[0] = 3;   // atribui o valor 3 à primeira posição
-v[9] = 5;   // atribui o valor 5 à última posição
-```
-
-Exemplo de um vetor `v`, de 0 a 9, da esquerda para direita:
-```
-          v: | 3 |   |   |   |   |   |   |   |   | 5 |
-               0   1   2   3   4   5   6   7   8   9
-```
-
 
 # Prática: Programas em C/C++
 
@@ -612,6 +632,8 @@ build --cxxopt=-std=c++23
 ```
 :::
 
+
+
 # Tipos Agregados Triviais
 
 -------
@@ -626,10 +648,9 @@ Comparação C/C++: lembre-se de usar **struct** ou **class public:**, caso cont
 
 ```.c
 // Em C (tipo agregado P)
-struct P
-{
-    int32_t x;
-    char y;
+struct P {
+   int  x;
+   char y;
 };
 
 // declara variável tipo P
@@ -644,11 +665,11 @@ struct P p2 = {.x=10, .y='Y'};
 
 ```.cpp
 // Em C++ (tipo agregado P)
-struct P
-{
-    int32_t x;
-    char y;
+struct P {
+   int  x;
+   char y;
 };
+
 // declara variável tipo P
 P p1;
 // designated initializers
@@ -679,7 +700,6 @@ o operador ponto (.) para acessar campos do agregado. Exemplo:
 
 ```.cpp
 auto p1 = P{.y = 'A'};
-
 p1.x = 20;             // atribui 20 à variável x de p1
 p1.x = p1.x + 1;       // incrementa a variável x de p1
 println("{} {}", p1.x, p1.y);  // imprime '21 A'
@@ -698,7 +718,8 @@ Exemplo de estrutura `p1`, com p1.x e p1.y, da esquerda para direita:
 ## Espaço de Memória e Métodos em Agregados
 
 Todas variáveis de um programa ocupam determinado espaço na
-memória principal do computador. **Assumiremos** que o tipo int (ou float) ocupa 4 bytes,
+memória principal do computador. 
+**Assumiremos** que o tipo int (ou float) ocupa 4 bytes,
 enquanto um char ocupa apenas 1 byte.
 
 No caso de vetores, o espaço ocupado na memória é multiplicado pelo
@@ -714,7 +735,7 @@ Já nos agregados, assumimos o espaço ocupado como a
 soma de suas variáveis internas (embora na prática o tamanho possa
 ser ligeiramente superior, devido a alinhamentos de memória).
 
-**Importante:** em C++, agregados também podem conter métodos.
+**Importante:** em C++, agregados triviais *também podem conter métodos*.
 
 -------
 
@@ -900,14 +921,15 @@ O tamanho do ponteiro varia de acordo com a arquitetura, mas para endereçar 64-
 Em ponteiros para agregados, o operador de acesso (`.`) é substituído por uma seta (`->`). 
 O operador `&` toma o endereço da variável:
 
+::: -
+
 ```.cpp
-struct P {
-   int32_t x; 
-   char y; // mais alguma coisa gigante aqui?
-};
+struct P { int x; char y; };
 // ...
 P p0 = {.x = 20, .y = 'Y'}; 
 ```
+
+:::
 
 Testando procedimentos `f` e `g`:
 
@@ -915,8 +937,10 @@ Testando procedimentos `f` e `g`:
 
 ::::: {.column width=50%}
 
+::: -
+
 ```.cpp
-auto f(P* p1) -> void {
+void f(P* p1) {
    println("{}", p1->x);
    p1->x = 1;
 }
@@ -924,18 +948,24 @@ f(&p0);
 println("{}", p0.x); // 1
 ```
 
+:::
+
 :::::
 
 ::::: {.column width=50%}
 
+::: -
+
 ```.cpp
-auto g(P p2) -> void {
+void g(P p2) {
    println("{}", p2.x);
    p2.x = 1;
 }
 g(p0);
 println("{}", p0.x); // 20
 ```
+
+:::
 
 :::::
 
@@ -976,6 +1006,7 @@ auto vp = new P{
                  .x = 10,
                  .y = 'Y'
                };
+
 // imprime x (valor 10)
 println("{}", vp->x);
 // descarta a memória
@@ -1010,7 +1041,7 @@ int quadrado(int p) {
 
 ```.cpp
 // tipo: float(*)(int)
-auto fquad(int p) -> float{
+auto fquad(int p) -> float {
    return p*p;      
 }
 ```
@@ -1023,12 +1054,11 @@ Este fato pode ser útil para receber funções como parâmetro, bem como armaze
 
 ```.cpp
 // armazena lambda no ponteiro de função 'quad'
-int(*quad)(int) = [](int p) -> int {
-                     return p*p;
-                  };
+int(*quad)(int) = [](int p) -> int { return p*p; };
 println("{}", quad(3)); // 9
 // ou, utilizando 'auto' para deduzir o tipo
 auto func = [](int p) { return p*p; };
+println("{}", func(3)); // 9
 ```
 
 -------
@@ -1048,8 +1078,7 @@ struct Z {
     int x;
 };
 void neg(struct Z* this) {
-   printf("%d\n", 
-          -1*(this->x));
+   printf("%d\n", -1*(this->x));
 }
 
 // C: uso de Z e neg
@@ -1065,10 +1094,9 @@ neg(&z);
 // Em C++ (tipo agregado Z)
 struct Z {
    int x;
-
-   auto neg() -> void {
-      println("{}", 
-              -1*(this->x));
+   void neg() {
+      println("{}", -1*(this->x));
+      // println("{}", -1*x);
    }
 };
 // C++: uso de Z e neg
@@ -1088,23 +1116,25 @@ z.neg();  // this = &z
 Funções podem se chamar novamente durante sua execução em um processo *recursivo*.
 A implementação de funções membro pode ocorrer também fora do agregado com a notação do resolutor de escopo (`::`):
 
+::: -
 
 ```.cpp
 struct Fat {
-   auto fatorial(int n) -> int;
+   int fatorial(int n);      // declaração: termina em ;
 };
 
-auto Fat::fatorial(int n) -> int {
+int Fat::fatorial(int n) {   // definição ou implementação
    if (n < 2)
       return 1;
    else
       return n * fatorial(n - 1);
-};
+}
 // utilizando dentro do main()...
 Fat f;
 println("{}", f.fatorial(5)); // 120
 ```
 
+:::
 
 -------
 
@@ -1112,9 +1142,11 @@ println("{}", f.fatorial(5)); // 120
 
 Como `std::string_view`, para demais vetores `int[]`,  `std::array` e `std::vector`, o `std::span` suporta sequências de dados *sem posse*.
 
+::: -
+
 ```.cpp
 import std;       // invocando ./programa 1 2 3
-auto main(int argc, char* argv[]) -> int {
+int main(int argc, char* argv[]) {
    int v2[] = {1, 2, 3, 4};
    std::span<int> s1{v2};
    for (auto i : s1) std::println("{}", i);
@@ -1130,6 +1162,7 @@ auto main(int argc, char* argv[]) -> int {
 } // ============================================
 ```
 
+:::
 
 -------
 
@@ -1138,6 +1171,8 @@ auto main(int argc, char* argv[]) -> int {
 O `std::optional<tipo>` representa um valor opcional, 
 com alocação em *stack*, não em *heap* como ponteiros (e *smart pointers*, que veremos a seguir).
 O acesso se faz com operador (`*`).
+
+::: -
 
 ```.cpp
 auto busca(char c, std::span<char> v) -> std::optional<int> {
@@ -1154,6 +1189,7 @@ if(op) println("posicao={}", *op);
 else   println("não encontrou");
 ```
 
+:::
 
 -------
 
@@ -1163,9 +1199,10 @@ O `std::expected<tipo, tipo_erro>` representa um valor *esperado*,
 com alocação em *stack*, não em *heap* como ponteiros (e *smart pointers*, que veremos a seguir).
 O acesso se faz com operador (`*`).
 
+::: -
+
 ```.cpp
-auto busca2(char c, std::span<char> v) 
-                       -> std::expected<int, std::string> {
+auto busca2(char c, std::span<char> v) -> std::expected<int, std::string> {
   // busca char 'c' num vetor v e retorna posição
   for (int i = 0; i < v.size(); i++)
     if (v[i] == c) return i;  // encontrou
@@ -1177,6 +1214,8 @@ auto exp = busca2('x', v);
 if(exp) println("posicao={}", *exp);
 else    println("{}", exp.error());
 ```
+
+:::
 
 
 ## Modularização de Rotinas e Agregados (CXX Modules)
@@ -1190,44 +1229,48 @@ Tanto arquivos convencionais `.cpp` ou módulos `.cppm` podem importar módulos,
 
 ::::: {.column width=50%}
 
+::: -
+
 ```.cpp
 // arquivo teste.cppm
 export module teste;
 import std;
 
-export auto nada() -> void {} 
+export void ola() {std::println("olá!");} 
 
 export struct ABC {
-   auto zero() -> int { 
+   int zero() { 
       return  0; 
    }
 };
 ```
 
+::: 
+
 :::::
 
 ::::: {.column width=50%}
+
+::: -
 
 ```.cpp
 // arquivo main.cpp
 import teste;
 import std;
 
-auto main() -> int {
+int main() {
    ABC abc;
-   std::println("{}", 
-         abc.zero()); // 0
-   nada();
+   std::println("{}", abc.zero()); // 0
+   ola();
    return 0;
 }
 ```
 
+:::
+
 :::::
 
 :::::::::::::
-
-
-
 
 
 
@@ -1239,21 +1282,21 @@ auto main() -> int {
 
 C++20 traz a possibilidade de definir conceitos (ou *concepts*). Esse recurso permite *definições genéricas* sobre algum tipo (inclusive tipos agregados com funções internas).
 
-Por exemplo, podemos criar um *conceito* `TemNegativo`, que exige que o agregado possua um método `neg()`:
+Por exemplo, podemos criar um *conceito* `TemNeg`, que exige que o agregado possua um método `neg()`:
 
 ```.cpp
-template <typename Agregado>
-concept TemNegativo = requires(Agregado a) {
-  { a.neg() } -> std::same_as<void>;
+template <typename T>
+concept TemNeg = requires(T a) {
+  { a.neg() };
 };
 ```
 
-Exemplo de agregado de acordo com conceito `TemNegativo`:
+Exemplo de agregado de acordo com conceito `TemNeg`:
 
 ```.cpp
 struct Z {
    int x;
-   auto neg() -> void { println("{}", -1*(this->x)); }
+   void neg() { std::println("{}", -1*x); }
 };
 ```
 
@@ -1264,18 +1307,18 @@ struct Z {
 Assim, podemos utilizar um conceito mais específico ao invés de um tipo automático:
 
 ```.cpp
-auto a0             = Z{.x = 1};     // tipo automático
-auto  p0            = new Z{.x = 1}; // tipo ponteiro
-auto* p1            = new Z{.x = 1}; // tipo ponteiro
-TemNegativo auto a2 = Z{.x = 2};     // tipo conceitual
-Z a3                = Z{.x = 3};     // tipo explícito
+auto  a0       = Z{.x = 1};     // tipo automático
+auto  p0       = new Z{.x = 1}; // tipo ponteiro
+auto* p1       = new Z{.x = 1}; // tipo ponteiro
+TemNeg auto a2 = Z{.x = 2};     // tipo conceitual
+Z     a3       = Z{.x = 3};     // tipo explícito
 ```
 
 Outra forma de validação de tipos em *tempo de compilação* é o `static_assert`.
-Por exemplo, como garantir que o agregado Z está de acordo com o conceito TemNegativo?
+Por exemplo, como garantir que o agregado Z está de acordo com o conceito TemNeg?
 
 ```.cpp
-static_assert(TemNegativo<Z>);
+static_assert(TemNeg<Z>);
 ```
 
 **Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
@@ -1316,6 +1359,8 @@ delete vp;
 // Aloca (C++) agregado P
 auto vp = std::make_unique<P>(
      P{.x = 10, .y = 'Y'});
+
+
 // imprime x (valor 10)
 print("{}\n", vp->x);
 // descarta a memória
@@ -1345,33 +1390,43 @@ Em C++, existe o `std::nullptr`, que pode ser utilizado em situações específi
 
 ::::: {.column width=55%}
 
+::: -
+
 ```{.cpp}
 // Aloca (C++) o agregado P
 auto vp = new P{
                  .x = 10,
                  .y = 'Y'
                };
-if(vp)  print("sucesso!\n");
+if(vp)       print("sucesso!\n");
 if(!vp)      print("falha!\n");
 if(vp==NULL) print("falha!\n");
 if(vp==0)    print("falha!\n");
+if(vp)       delete vp;
 ```
+
+:::
 
 :::::
 
 ::::: {.column width=45%}
 
+::: -
+
 ```.cpp
 // Aloca (C++) o agregado P
-auto vp = 
-   std::make_unique<P>(
-     P{.x = 10, .y = 'Y'});
+auto vp = std::make_unique<P>(
+            P{.x = 10, .y = 'Y'}
+          );
+
 if(vp)  print("sucesso!\n");
 if(!vp) print("falha!\n");
 
 // reseta manualmente
-vp = std::nullptr;
+vp = nullptr;
 ```
+
+:::
 
 :::::
 
@@ -1392,10 +1447,10 @@ Para transformar uma *variável viva* para uma *variável em movimento*, basta u
 
 ```.cpp
 auto p1 = std::make_unique<P>(P{.x = 10, .y = 'Y'});
-println("{}", p1->x); // imprime x (valor 10)
+std::println("{}", p1->x); // imprime x (valor 10)
 auto p2 = std::move(p1);
-if(!p1) print("p1 não existe mais!\n");
-println("{}", p2->x); // imprime x (valor 10)
+if(!p1) std::print("p1 não existe mais!\n");
+std::println("{}", p2->x); // imprime x (valor 10)
 ```
 
 # Parte 5: Corrotinas (tópico avançado)
@@ -1549,6 +1604,8 @@ O `std::unique_ptr<tipo>` representa um ponteiro único para o `tipo`
 Uma função útil é o `get`, que retorna um ponteiro nativo C para o dado.
 A função `reset` apaga o ponteiro manualmente.
 
+::: -
+
 ```.cpp
 auto p1 = new int{10};
 auto p2 = p1;
@@ -1565,6 +1622,7 @@ u2.reset();   // apaga ponteiro u2 manualmente
 u2 = nullptr; // apaga ponteiro u2 manualmente
 ```
 
+:::
 
 # Parte 7: Bibliotecas experimentais e avançadas em C++
 
