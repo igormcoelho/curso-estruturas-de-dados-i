@@ -58,7 +58,7 @@ São requisitos para essa aula o conhecimento de:
 - Se for usar um compilador online, use o [https://godbolt.org](https://godbolt.org)
 :::
 
-# Parte 1: Tipos Primitivos, Compostos e Genéricos em C/C++
+# Parte 1: Tipos Primitivos em C/C++
 
 ------
 
@@ -453,7 +453,7 @@ fim:
   // z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]
 ```
 
-# Prática: Programas em C/C++
+# Parte 2 - Prática: Programas em C/C++
 
 ## Ambiente de Programação (detalhes)
 
@@ -634,9 +634,72 @@ build --cxxopt=-std=c++23
 ```
 :::
 
+# Parte 3: Introdução a Análise de Algoritmos e Notação Big-O
+
+-------
+
+## Análise de Algoritmos
+
+- A análise de algoritmos (ou análise de complexidade de algoritmos) trata da eficiência de algoritmos
+   * também se trata de determinar os recursos (tempo/espaço) necessários para executar um dado algoritmo
+- Mas como medir a eficiência de algoritmos?
+- Não confundir com a área de Complexidade Computacional, que inclui outros tópicos de análise da complexidade de problemas computacionais
+- Termo cunhado por Donald Knuth (*Analysis of Algorithms*), mas historicamente já explorado por outros pensadores (próximo slide!)
+
+## Máquina Analítica de Charles Babbage
+
+- Charles Babbage foi um pensador da computação e que tentou construir um computador, na época Mecânico, chamado de *máquina analítica*
+   * só foi possível nos anos 2000, com avanços na tecnologia de produção de engrenagens
+   * Veja na Wiki a [Máquina Analítica](https://pt.wikipedia.org/wiki/M%C3%A1quina_anal%C3%ADtica)
+
+Charles Babbage (1864) diz: 
+> "As soon as analytic engine exists, it will necessarily guide the future course of science. Whenever any result is sought by its aid, the question will raise ? By what means of calculation can these results be arrived at by this machine in the shortest time?"
+
+- Figura Babbage [veja link](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Charles_Babbage_-_1860.jpg/250px-Charles_Babbage_-_1860.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)
+
+## Métrica de Eficiência
+
+- Considere a seguinte métrica de eficiência: em qualquer execução, o algoritmo deve responder em menos de $t$ unidades de tempo.
+- Exemplo: sistemas do Google são notáveis por manterem tempo de resposta tolerável em qualquer interação.
+- O Google é eficiente? As IAs de chat são eficientes?
+
+. . .
+
+- Métrica inadequada, pois tempo de execução varia com o hardware!
+- Por exemplo, o que seria da análise de complexidade se o hardware fosse infinitamente rápido e sem restrições de
+quantidade?
 
 
-# Tipos Agregados Triviais
+## Máquina de Turing - Alan Turing
+
+- Alan Turing foi outro pensador importante da computação, e mesmo sem uma máquina eletrônica moderna como temos nos dias de hoje, ele já levantava aspectos teóricos que, ainda hoje, são fundamentais para a área
+- Alan Turing (1947) diz: 
+> "It is convenient to have a measure of the amount of work involved in a computing process, even if it has to be a very crude one. We may count up the number of things that various times at various elementary operations are applied in the whole process."
+- Foto Turing [veja link](https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Alan_turing_header.jpg/250px-Alan_turing_header.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)
+
+## Contando Passos
+
+- Consideremos, portanto, outra métrica: assumindo que cada instrução leva tempo constante, a eficiência é dada pelo número de passos de uma execução
+- Podemos estudar eficiência para complexidades de **pior caso**, **médias**, de **melhor caso**, também **análises amortizadas** ou mesmo para instâncias de execução particulares.
+
+## Modelo de Random Access Machine (RAM)
+
+- Assume-se, portanto, o modelo Random-Access Machine de computação com um único processador.
+  * Adotamos a RAM de Aho-Hopcroft-Ullman, aplicada diretamente a C/C++: como o modelo
+    não possui registradores, toda variável reside em memória e toda referência a ela é um acesso.
+- Não se leva em conta hierarquia de memória (cache, memória virtual, etc.)
+- Instruções cujo custo não dependa do tamanho do dado sendo processado contam como um passo;
+  caso contrário, contam como uma função desse tamanho.
+- Naturalmente, uma linha de código pode incluir diversas instruções, e não apenas uma, por
+  exemplo, aritméticas, leituras de memória, escritas em memória, acesso a índice de vetores, etc.
+  * Constantes literais são operandos imediatos e não custam acesso.
+  * Consideramos a tradução ingênua dirigida pela sintaxe para cada expressão, sem alocação
+    de registradores e sem eliminação de subexpressões comuns (otimizações típicas de um compilador).
+
+
+## A continuar...
+
+# Parte 4: Tipos Agregados Triviais e Genéricos
 
 -------
 
@@ -876,7 +939,7 @@ Até agora, verificamos as seguinte estruturas:
 - tipos agregados com **struct** ou **class/public:** (C/C++)
 - agregados genéricos (C++)
 
-# Parte 2: Rotinas, Ponteiros e Conceitos em C/C++
+# Parte 4: Ponteiros, Rotinas e Alocação Dinâmica em C/C++
 
 ---------
 
@@ -1276,7 +1339,7 @@ int main() {
 
 
 
-# Parte 3: Tipos Abstratos e Conceitos
+# Parte 5: Tipos Abstratos e Conceitos
 
 -------
 
@@ -1325,7 +1388,7 @@ static_assert(TemNeg<Z>);
 
 **Importante:** a noção de *conceitos* é fundamental para a compreensão de *tipos abstratos*, central no curso de estruturas de dados.
 
-# Parte 4: Ponteiros Inteligentes e `std::move` em C++
+# Parte 6: Ponteiros Inteligentes e `std::move` em C++
 
 -------
 
@@ -1455,7 +1518,7 @@ if(!p1) std::print("p1 não existe mais!\n");
 std::println("{}", p2->x); // imprime x (valor 10)
 ```
 
-# Parte 5: Corrotinas (tópico avançado)
+# Parte 7: Corrotinas (tópico avançado)
 
 -------
 
@@ -1495,7 +1558,7 @@ for (int num : fibonacci()) {
 **Desafio 2:** outro uso é o `std::future` com corrotinas conectadas a programação concorrente com threads. 
 Isso foge um pouco do escopo desse curso, mas verifique outras aplicações de corrotinas e `co_await`.
 
-# Parte 6: Referências em C++ (tópico avançado)
+# Parte 8: Referências em C++ (tópico avançado)
 
 
 ## Passagem de Parâmetros por Referência II
@@ -1626,7 +1689,7 @@ u2 = nullptr; // apaga ponteiro u2 manualmente
 
 :::
 
-# Parte 7: Bibliotecas experimentais e avançadas em C++
+# Parte 9: Bibliotecas experimentais e avançadas em C++
 
 
 ## O que é biblioteca padrão STL?
@@ -1773,7 +1836,7 @@ Citamos o comitê diretor do C++, ["DIRECTION FOR ISO C++" (2022-10-15), de H. H
 Em resumo: C++ moderno já é absolutamente superior a C em segurança e clareza, com desempenho equivalente, mas historicamente carece de boas estruturas para fazer o **básico** (como imprimir em tela, fazer vetores, etc), obrigando o uso de estruturas inseguras, como ponteiros.
 Então, as revisões recentes tem buscado esse fim, de facilitar o uso básico (como `std::print`, `std::array`, `std::string`, `std::vector`, smart pointers, ...) e evitar que a linguagem C seja necessária para a escrita de programas básicos.
 
-Hoje (2023) ainda existem problemas, como:
+Hoje (2023 no padrão C++20) ainda existem problemas, como:
 
 - necessidade de usar bibliotecas externas (estamos precisando do `fmt::print` e `scn::scan`)
 - necessidade de fazer `#include` em um código básico: a ideia é que, a partir da implementação de `import std` no C++23, será desnecessário incluir bibliotecas externas em códigos básicos `:)`
@@ -1823,7 +1886,7 @@ Declarações vem em arquivos `.h`, enquanto as respectivas implementações em 
 Quando utilizando o GCC e um *entrypoint* no arquivo `main.cpp`:
 
 
-***Para compilar:*** `g++ -fconcepts -O3 main.cpp -o appMain`
+***Para compilar:*** `g++ -std=c++23 -O3 main.cpp -o appMain`
 
 ***Para executar código:*** `./appMain`
 

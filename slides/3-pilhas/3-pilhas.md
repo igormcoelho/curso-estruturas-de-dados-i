@@ -104,12 +104,12 @@ constexpr int MAX_N = 100'000; // capacidade máxima da pilha
 struct PilhaSeq1 {
   char v[MAX_N];          // elementos na pilha
   int N;                  // num. de elementos na pilha
-  auto cria()   -> void;  // inicializa agregado
-  auto libera() -> void;  // finaliza agregado
-  auto topo()             -> char;
-  auto empilha(char dado) -> void;
-  auto desempilha()       -> char;
-  auto tamanho()          -> int;
+  void cria();            // inicializa agregado
+  void libera();          // finaliza agregado
+  char topo();
+  void empilha(char dado);
+  char desempilha();
+  int tamanho();
 };
 ```
 
@@ -120,7 +120,8 @@ struct PilhaSeq1 {
 Antes de completar as funções pendentes, utilizaremos a `PilhaSeq1`:
 
 ```.cpp
-auto main() -> int {
+import std;
+int main() {
    PilhaSeq1 p;
    p.cria();        // nosso contrato no curso!
    p.empilha('A');  p.empilha('B');  p.empilha('C');
@@ -145,11 +146,11 @@ auto main() -> int {
 A operação `cria` inicializa a pilha para uso, e a função `libera` desaloca os recursos dinâmicos.
 
 ```.cpp
-auto PilhaSeq1::cria() -> void {
-   this->N = 0;
+void PilhaSeq1::cria() {
+   N = 0;     // this->N = 0;
 }
 
-auto PilhaSeq1::libera() -> void {
+void PilhaSeq1::libera() {
    // nenhum recurso dinâmico para desalocar
 }
 ```
@@ -161,14 +162,14 @@ A operação `empilha` em uma pilha sequencial adiciona um novo elemento ao topo
 A operação `desempilha` em uma pilha sequencial remove e retorna o último elemento da pilha.
 
 ```.cpp
-auto PilhaSeq1::empilha(char dado) -> void {
-   this->v[this->N] = dado;
-   this->N++;                 // N = N + 1
+void PilhaSeq1::empilha(char dado) {
+   v[N] = dado;
+   N++;                 // N = N + 1
 }
 
-auto PilhaSeq1::desempilha() -> char {
-   this->N--;                 // N = N - 1
-   return v[this->N];
+char PilhaSeq1::desempilha() {
+   N--;                 // N = N - 1
+   return v[N];
 }
 ```
 
@@ -179,11 +180,11 @@ auto PilhaSeq1::desempilha() -> char {
 A operação de topo em uma pilha sequencial retorna o último elemento empilhado.
 
 ```.cpp
-auto PilhaSeq1::topo() -> char { 
-   return this->v[this->N-1]; 
+char PilhaSeq1::topo() { 
+   return v[N-1]; 
 }
-auto PilhaSeq1::tamanho() -> int { 
-   return this->N; 
+int PilhaSeq1::tamanho() { 
+   return N; 
 }
 ```
 
@@ -285,12 +286,12 @@ struct NoPilha1 {
 struct PilhaEnc1 {
   NoPilha1* inicio;
   int N;                      
-  auto cria()   -> void;
-  auto libera() -> void;
-  auto topo()             -> char;
-  auto empilha(char dado) -> void;
-  auto desempilha()       -> char;
-  auto tamanho()          -> int;
+  void cria();
+  void libera();
+  char topo();
+  void empilha(char dado);
+  char desempilha();
+  int  tamanho();
 };
 ```
 
@@ -304,9 +305,9 @@ struct PilhaEnc1 {
 ## Implementação: Cria
 
 ```.cpp
-auto PilhaEnc1::cria() -> void {
-   this->N = 0;      // zero elementos na pilha
-   this->inicio = 0; // endereço zero de memória
+void PilhaEnc1::cria() {
+   N = 0;      // zero elementos na pilha
+   inicio = 0; // endereço zero de memória
 }
 ```
 ---------
@@ -334,10 +335,10 @@ p.cria();
 ## Implementação: Empilha 
 
 ```.cpp
-auto PilhaEnc1::empilha(char v) -> void {
-  auto no = new NoPilha1{.dado = v, .prox = this->inicio};
-  this->inicio = no;
-  this->N++;              // N = N + 1
+void PilhaEnc1::empilha(char v) {
+  auto no = new NoPilha1{.dado = v, .prox = inicio};
+  inicio = no;
+  N++;              // N = N + 1
 }
 ```
 ### Na memória: `p.empilha('A'); p.empilha('B');`
@@ -368,9 +369,8 @@ auto PilhaEnc1::empilha(char v) -> void {
 ## Implementação: Topo 
 
 ```.cpp
-auto PilhaEnc1::topo() -> char {
-   auto no = this->inicio;
-   return no->dado;            // return (*no).dado;
+char PilhaEnc1::topo() {
+   return inicio->dado;      // (*inicio).dado;
    // ou simplesmente...
    // return this->inicio->dado;   
 }
@@ -395,12 +395,13 @@ auto PilhaEnc1::topo() -> char {
 :::::{.column width=65%}
 
 ```.cpp
-auto PilhaEnc1::desempilha() -> char {
-   NoPilha1* p = this->inicio->prox;
-   char r = this->inicio->dado;
-   delete this->inicio;
-   this->inicio = p;
-   this->N--;           //N=N-1
+char PilhaEnc1::desempilha() {
+   NoPilha1* p = inicio->prox;
+   char r = inicio->dado;
+   delete inicio;
+   std::println("{}", inicio); // qual valor?
+   inicio = p;
+   N--;           // N=N-1
    return r;
 }
 ```
@@ -444,10 +445,10 @@ struct NoPilha1 {
 ## Implementação: Libera
 
 ```.cpp
-auto PilhaEnc1::libera() -> void {
-   while (this->N > 0) {
-      NoPilha1* p = this->inicio->prox;
-      delete this->inicio;   this->inicio = p;    this->N--; 
+void PilhaEnc1::libera() {
+   while (N > 0) {
+      NoPilha1* p = inicio->prox;
+      delete inicio;   inicio = p;    N--; 
    }
 }
 ```
@@ -474,6 +475,8 @@ auto PilhaEnc1::libera() -> void {
 |     |     |     |     |     |     |     |     |     |    |    
    0     4    ...   100   104   108   112   116   ...  8GiB
 ```
+
+# Implementação Avançada com Ponteiros Inteligentes
 
 --------
 

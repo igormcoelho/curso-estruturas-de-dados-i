@@ -1,0 +1,36 @@
+MDFILE=1-en-intro-types.md
+OUTHTML=index.html
+OUTPDF=1-en-intro-types.pdf
+
+all: deps
+	/usr/bin/pandoc -s -V revealjs-url=./reveal.js --standalone --lua-filter div-shortcuts.lua --lua-filter fonts-and-alignment.lua -V theme=beige -s -t revealjs \
+         --filter pandoc-katex --css katex.min.css \
+	$(MDFILE) -o $(OUTHTML) --slide-level 2 # --toc
+	# sed -i 's|//dist/|/dist/|g' index.html
+	#
+	#
+	# -F pandoc-crossref
+	/usr/bin/pandoc --toc -s --embed-resources --standalone --lua-filter div-shortcuts.lua --lua-filter fonts-and-alignment.lua --filter pandoc-latex-fontsize -V theme:Warsaw -t beamer \
+	 -H header.tex \
+		$(MDFILE) -o $(OUTPDF) --slide-level 2
+# $(OUTPDF)
+
+#--filter pandoc-source-exec
+
+run:
+	python3 -m http.server 8081
+	#python2 -m SimpleHTTPServer 8081
+
+env:
+	source ~/.cargo/env
+	conda activate
+
+deps: reveal.js
+	wget -nc https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css
+	# wget -nc https://github.com/hakimel/reveal.js/archive/refs/tags/5.2.1.tar.gz
+	# tar -xzvf 5.2.1.tar.gz && mv reveal.js-5.2.1 reveal.js
+
+reveal.js:
+	wget -nc https://github.com/hakimel/reveal.js/archive/refs/tags/5.2.1.tar.gz
+	tar -xzvf 5.2.1.tar.gz
+	[ -d reveal.js ] || mv reveal.js-5.2.1 reveal.js

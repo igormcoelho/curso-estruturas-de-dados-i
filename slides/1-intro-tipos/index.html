@@ -168,9 +168,9 @@ href="https://godbolt.org">https://godbolt.org</a></li>
 </div>
 </section></section>
 <section>
-<section id="parte-1-tipos-primitivos-compostos-e-genéricos-em-cc"
+<section id="parte-1-tipos-primitivos-em-cc"
 class="title-slide slide level1">
-<h1>Parte 1: Tipos Primitivos, Compostos e Genéricos em C/C++</h1>
+<h1>Parte 1: Tipos Primitivos em C/C++</h1>
 
 </section>
 <section id="conceitos-de-tipos-em-cc" class="slide level2">
@@ -486,8 +486,9 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// z==9: i=5 j=5..9 [5 passos]; i=6 j=6..9 [4 passos]</span></span></code></pre></div>
 </section></section>
 <section>
-<section id="prática-programas-em-cc" class="title-slide slide level1">
-<h1>Prática: Programas em C/C++</h1>
+<section id="parte-2---prática-programas-em-cc"
+class="title-slide slide level1">
+<h1>Parte 2 - Prática: Programas em C/C++</h1>
 
 </section>
 <section id="ambiente-de-programação-detalhes" class="slide level2">
@@ -649,8 +650,136 @@ build --cxxopt=-std=c++23</code></pre>
 </div>
 </section></section>
 <section>
-<section id="tipos-agregados-triviais" class="title-slide slide level1">
-<h1>Tipos Agregados Triviais</h1>
+<section id="parte-3-introdução-a-análise-de-algoritmos-e-notação-big-o"
+class="title-slide slide level1">
+<h1>Parte 3: Introdução a Análise de Algoritmos e Notação Big-O</h1>
+
+</section>
+<section id="análise-de-algoritmos" class="slide level2">
+<h2>Análise de Algoritmos</h2>
+<ul>
+<li>A análise de algoritmos (ou análise de complexidade de algoritmos)
+trata da eficiência de algoritmos
+<ul>
+<li>também se trata de determinar os recursos (tempo/espaço) necessários
+para executar um dado algoritmo</li>
+</ul></li>
+<li>Mas como medir a eficiência de algoritmos?</li>
+<li>Não confundir com a área de Complexidade Computacional, que inclui
+outros tópicos de análise da complexidade de problemas
+computacionais</li>
+<li>Termo cunhado por Donald Knuth (<em>Analysis of Algorithms</em>),
+mas historicamente já explorado por outros pensadores (próximo
+slide!)</li>
+</ul>
+</section>
+<section id="máquina-analítica-de-charles-babbage" class="slide level2">
+<h2>Máquina Analítica de Charles Babbage</h2>
+<ul>
+<li>Charles Babbage foi um pensador da computação e que tentou construir
+um computador, na época Mecânico, chamado de <em>máquina analítica</em>
+<ul>
+<li>só foi possível nos anos 2000, com avanços na tecnologia de produção
+de engrenagens</li>
+<li>Veja na Wiki a <a
+href="https://pt.wikipedia.org/wiki/M%C3%A1quina_anal%C3%ADtica">Máquina
+Analítica</a></li>
+</ul></li>
+</ul>
+<p>Charles Babbage (1864) diz: &gt; “As soon as analytic engine exists,
+it will necessarily guide the future course of science. Whenever any
+result is sought by its aid, the question will raise ? By what means of
+calculation can these results be arrived at by this machine in the
+shortest time?”</p>
+<ul>
+<li>Figura Babbage <a
+href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Charles_Babbage_-_1860.jpg/250px-Charles_Babbage_-_1860.jpg?utm_source=pt.wikipedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail">veja
+link</a></li>
+</ul>
+</section>
+<section id="métrica-de-eficiência" class="slide level2">
+<h2>Métrica de Eficiência</h2>
+<ul>
+<li>Considere a seguinte métrica de eficiência: em qualquer execução, o
+algoritmo deve responder em menos de
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span>
+unidades de tempo.</li>
+<li>Exemplo: sistemas do Google são notáveis por manterem tempo de
+resposta tolerável em qualquer interação.</li>
+<li>O Google é eficiente? As IAs de chat são eficientes?</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Métrica inadequada, pois tempo de execução varia com o
+hardware!</li>
+<li>Por exemplo, o que seria da análise de complexidade se o hardware
+fosse infinitamente rápido e sem restrições de quantidade?</li>
+</ul>
+</div>
+</section>
+<section id="máquina-de-turing---alan-turing" class="slide level2">
+<h2>Máquina de Turing - Alan Turing</h2>
+<ul>
+<li>Alan Turing foi outro pensador importante da computação, e mesmo sem
+uma máquina eletrônica moderna como temos nos dias de hoje, ele já
+levantava aspectos teóricos que, ainda hoje, são fundamentais para a
+área</li>
+<li>Alan Turing (1947) diz: &gt; “It is convenient to have a measure of
+the amount of work involved in a computing process, even if it has to be
+a very crude one. We may count up the number of things that various
+times at various elementary operations are applied in the whole
+process.”</li>
+<li>Foto Turing <a
+href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Alan_turing_header.jpg/250px-Alan_turing_header.jpg?utm_source=en.wikipedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail">veja
+link</a></li>
+</ul>
+</section>
+<section id="contando-passos" class="slide level2">
+<h2>Contando Passos</h2>
+<ul>
+<li>Consideremos, portanto, outra métrica: assumindo que cada instrução
+leva tempo constante, a eficiência é dada pelo número de passos de uma
+execução</li>
+<li>Podemos estudar eficiência para complexidades de <strong>pior
+caso</strong>, <strong>médias</strong>, de <strong>melhor caso</strong>,
+também <strong>análises amortizadas</strong> ou mesmo para instâncias de
+execução particulares.</li>
+</ul>
+</section>
+<section id="modelo-de-random-access-machine-ram" class="slide level2">
+<h2>Modelo de Random Access Machine (RAM)</h2>
+<ul>
+<li>Assume-se, portanto, o modelo Random-Access Machine de computação
+com um único processador.
+<ul>
+<li>Adotamos a RAM de Aho-Hopcroft-Ullman, aplicada diretamente a C/C++:
+como o modelo não possui registradores, toda variável reside em memória
+e toda referência a ela é um acesso.</li>
+</ul></li>
+<li>Não se leva em conta hierarquia de memória (cache, memória virtual,
+etc.)</li>
+<li>Instruções cujo custo não dependa do tamanho do dado sendo
+processado contam como um passo; caso contrário, contam como uma função
+desse tamanho.</li>
+<li>Naturalmente, uma linha de código pode incluir diversas instruções,
+e não apenas uma, por exemplo, aritméticas, leituras de memória,
+escritas em memória, acesso a índice de vetores, etc.
+<ul>
+<li>Constantes literais são operandos imediatos e não custam
+acesso.</li>
+<li>Consideramos a tradução ingênua dirigida pela sintaxe para cada
+expressão, sem alocação de registradores e sem eliminação de
+subexpressões comuns (otimizações típicas de um compilador).</li>
+</ul></li>
+</ul>
+</section>
+<section id="a-continuar" class="slide level2">
+<h2>A continuar…</h2>
+</section></section>
+<section>
+<section id="parte-4-tipos-agregados-triviais-e-genéricos"
+class="title-slide slide level1">
+<h1>Parte 4: Tipos Agregados Triviais e Genéricos</h1>
 
 </section>
 <section id="tipos-agregados-i" class="slide level2">
@@ -850,9 +979,9 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="
 </ul>
 </section></section>
 <section>
-<section id="parte-2-rotinas-ponteiros-e-conceitos-em-cc"
+<section id="parte-4-ponteiros-rotinas-e-alocação-dinâmica-em-cc"
 class="title-slide slide level1">
-<h1>Parte 2: Rotinas, Ponteiros e Conceitos em C/C++</h1>
+<h1>Parte 4: Ponteiros, Rotinas e Alocação Dinâmica em C/C++</h1>
 
 </section>
 <section id="rotinas-i" class="slide level2">
@@ -1153,9 +1282,9 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb56-1"><a href="
 </div>
 </section></section>
 <section>
-<section id="parte-3-tipos-abstratos-e-conceitos"
+<section id="parte-5-tipos-abstratos-e-conceitos"
 class="title-slide slide level1">
-<h1>Parte 3: Tipos Abstratos e Conceitos</h1>
+<h1>Parte 5: Tipos Abstratos e Conceitos</h1>
 
 </section>
 <section id="conceitos-i" class="slide level2">
@@ -1197,9 +1326,9 @@ fundamental para a compreensão de <em>tipos abstratos</em>, central no
 curso de estruturas de dados.</p>
 </section></section>
 <section>
-<section id="parte-4-ponteiros-inteligentes-e-stdmove-em-c"
+<section id="parte-6-ponteiros-inteligentes-e-stdmove-em-c"
 class="title-slide slide level1">
-<h1>Parte 4: Ponteiros Inteligentes e <code>std::move</code> em C++</h1>
+<h1>Parte 6: Ponteiros Inteligentes e <code>std::move</code> em C++</h1>
 
 </section>
 <section id="ponteiros-iii" class="slide level2">
@@ -1305,9 +1434,9 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb65-1"><a href="
 <span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p2<span class="op">-&gt;</span>x<span class="op">);</span> <span class="co">// imprime x (valor 10)</span></span></code></pre></div>
 </section></section>
 <section>
-<section id="parte-5-corrotinas-tópico-avançado"
+<section id="parte-7-corrotinas-tópico-avançado"
 class="title-slide slide level1">
-<h1>Parte 5: Corrotinas (tópico avançado)</h1>
+<h1>Parte 7: Corrotinas (tópico avançado)</h1>
 
 </section>
 <section id="corrotinas-i-coroutines" class="slide level2">
@@ -1347,9 +1476,9 @@ foge um pouco do escopo desse curso, mas verifique outras aplicações de
 corrotinas e <code>co_await</code>.</p>
 </section></section>
 <section>
-<section id="parte-6-referências-em-c-tópico-avançado"
+<section id="parte-8-referências-em-c-tópico-avançado"
 class="title-slide slide level1">
-<h1>Parte 6: Referências em C++ (tópico avançado)</h1>
+<h1>Parte 8: Referências em C++ (tópico avançado)</h1>
 
 </section>
 <section id="passagem-de-parâmetros-por-referência-ii"
@@ -1451,9 +1580,9 @@ class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb72-1"><a href="
 </div>
 </section></section>
 <section>
-<section id="parte-7-bibliotecas-experimentais-e-avançadas-em-c"
+<section id="parte-9-bibliotecas-experimentais-e-avançadas-em-c"
 class="title-slide slide level1">
-<h1>Parte 7: Bibliotecas experimentais e avançadas em C++</h1>
+<h1>Parte 9: Bibliotecas experimentais e avançadas em C++</h1>
 
 </section>
 <section id="o-que-é-biblioteca-padrão-stl" class="slide level2">
@@ -1630,7 +1759,7 @@ facilitar o uso básico (como <code>std::print</code>,
 <code>std::array</code>, <code>std::string</code>,
 <code>std::vector</code>, smart pointers, …) e evitar que a linguagem C
 seja necessária para a escrita de programas básicos.</p>
-<p>Hoje (2023) ainda existem problemas, como:</p>
+<p>Hoje (2023 no padrão C++20) ainda existem problemas, como:</p>
 <ul>
 <li>necessidade de usar bibliotecas externas (estamos precisando do
 <code>fmt::print</code> e <code>scn::scan</code>)</li>
@@ -1685,7 +1814,7 @@ implementações em arquivo <code>.cpp</code> (ou juntas como
 <p>Quando utilizando o GCC e um <em>entrypoint</em> no arquivo
 <code>main.cpp</code>:</p>
 <p><strong><em>Para compilar:</em></strong>
-<code>g++ -fconcepts -O3 main.cpp -o appMain</code></p>
+<code>g++ -std=c++23 -O3 main.cpp -o appMain</code></p>
 <p><strong><em>Para executar código:</em></strong>
 <code>./appMain</code></p>
 <p><strong>Importante:</strong> consideramos um sistema GNU/Linux, mas

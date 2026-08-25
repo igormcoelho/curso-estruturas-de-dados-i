@@ -590,29 +590,30 @@ caractere.</p>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> PilhaSeq1 <span class="op">{</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> v<span class="op">[</span>MAX_N<span class="op">];</span>          <span class="co">// elementos na pilha</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                  <span class="co">// num. de elementos na pilha</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> cria<span class="op">()</span>   <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span>  <span class="co">// inicializa agregado</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span>  <span class="co">// finaliza agregado</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> topo<span class="op">()</span>             <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> empilha<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> desempilha<span class="op">()</span>       <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> tamanho<span class="op">()</span>          <span class="op">-&gt;</span> <span class="dt">int</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> cria<span class="op">();</span>            <span class="co">// inicializa agregado</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> libera<span class="op">();</span>          <span class="co">// finaliza agregado</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> topo<span class="op">();</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> empilha<span class="op">(</span><span class="dt">char</span> dado<span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> desempilha<span class="op">();</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> tamanho<span class="op">();</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
 <section id="utilização-da-pilha" class="slide level2">
 <h2>Utilização da Pilha</h2>
 <p>Antes de completar as funções pendentes, utilizaremos a
 <code>PilhaSeq1</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   PilhaSeq1 p<span class="op">;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>cria<span class="op">();</span>        <span class="co">// nosso contrato no curso!</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">);</span>  p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span>  p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;C&#39;</span><span class="op">);</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>topo<span class="op">());</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>desempilha<span class="op">());</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;D&#39;</span><span class="op">);</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span>p<span class="op">.</span>tamanho<span class="op">()</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span>  println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>desempilha<span class="op">());</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>libera<span class="op">();</span>     <span class="co">// nosso contrato no curso!</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   PilhaSeq1 p<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>cria<span class="op">();</span>        <span class="co">// nosso contrato no curso!</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">);</span>  p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span>  p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;C&#39;</span><span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>topo<span class="op">());</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>desempilha<span class="op">());</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>empilha<span class="op">(</span><span class="ch">&#39;D&#39;</span><span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span>p<span class="op">.</span>tamanho<span class="op">()</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span>  println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> p<span class="op">.</span>desempilha<span class="op">());</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>   p<span class="op">.</span>libera<span class="op">();</span>     <span class="co">// nosso contrato no curso!</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p><strong><em>Verifique as impressões em tela:</em></strong></p>
 <div class="fragment">
 <p><em>C C D B A</em></p>
@@ -622,11 +623,11 @@ caractere.</p>
 <h2>Implementação: Cria e Libera</h2>
 <p>A operação <code>cria</code> inicializa a pilha para uso, e a função
 <code>libera</code> desaloca os recursos dinâmicos.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaSeq1<span class="op">::</span>cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> PilhaSeq1<span class="op">::</span>cria<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>     <span class="co">// this-&gt;N = 0;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaSeq1<span class="op">::</span>libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> PilhaSeq1<span class="op">::</span>libera<span class="op">()</span> <span class="op">{</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">// nenhum recurso dinâmico para desalocar</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
@@ -635,25 +636,25 @@ caractere.</p>
 <p>A operação <code>empilha</code> em uma pilha sequencial adiciona um
 novo elemento ao topo da pilha. A operação <code>desempilha</code> em
 uma pilha sequencial remove e retorna o último elemento da pilha.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaSeq1<span class="op">::</span>empilha<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>v<span class="op">[</span><span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">]</span> <span class="op">=</span> dado<span class="op">;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">++;</span>                 <span class="co">// N = N + 1</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> PilhaSeq1<span class="op">::</span>empilha<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   v<span class="op">[</span>N<span class="op">]</span> <span class="op">=</span> dado<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   N<span class="op">++;</span>                 <span class="co">// N = N + 1</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaSeq1<span class="op">::</span>desempilha<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">--;</span>                 <span class="co">// N = N - 1</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> v<span class="op">[</span><span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">];</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> PilhaSeq1<span class="op">::</span>desempilha<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>   N<span class="op">--;</span>                 <span class="co">// N = N - 1</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> v<span class="op">[</span>N<span class="op">];</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="implementação-topo" class="slide level2">
 <h2>Implementação: Topo</h2>
 <p>A operação de topo em uma pilha sequencial retorna o último elemento
 empilhado.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaSeq1<span class="op">::</span>topo<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>v<span class="op">[</span><span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">-</span><span class="dv">1</span><span class="op">];</span> </span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> PilhaSeq1<span class="op">::</span>topo<span class="op">()</span> <span class="op">{</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> v<span class="op">[</span>N<span class="op">-</span><span class="dv">1</span><span class="op">];</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaSeq1<span class="op">::</span>tamanho<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> PilhaSeq1<span class="op">::</span>tamanho<span class="op">()</span> <span class="op">{</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> N<span class="op">;</span> </span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p><strong><em>Desafio:</em></strong> <em>O que aconteceria se a pilha
 estivesse vazia e o <code>topo()</code> fosse invocado? Como permitir
@@ -728,21 +729,21 @@ implementações ligeiramente mais complexas.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> PilhaEnc1 <span class="op">{</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  NoPilha1<span class="op">*</span> inicio<span class="op">;</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>                      </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> cria<span class="op">()</span>   <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> topo<span class="op">()</span>             <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> empilha<span class="op">(</span><span class="dt">char</span> dado<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span><span class="op">;</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> desempilha<span class="op">()</span>       <span class="op">-&gt;</span> <span class="dt">char</span><span class="op">;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> tamanho<span class="op">()</span>          <span class="op">-&gt;</span> <span class="dt">int</span><span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> cria<span class="op">();</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> libera<span class="op">();</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> topo<span class="op">();</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> empilha<span class="op">(</span><span class="dt">char</span> dado<span class="op">);</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> desempilha<span class="op">();</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>  tamanho<span class="op">();</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div>
 </div>
 </section>
 <section id="implementação-cria" class="slide level2">
 <h2>Implementação: Cria</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaEnc1<span class="op">::</span>cria<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>      <span class="co">// zero elementos na pilha</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// endereço zero de memória</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> PilhaEnc1<span class="op">::</span>cria<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>      <span class="co">// zero elementos na pilha</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   inicio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// endereço zero de memória</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="exemplo-de-uso-1" class="slide level2">
@@ -761,10 +762,10 @@ p.inicio: 0
 </section>
 <section id="implementação-empilha" class="slide level2">
 <h2>Implementação: Empilha</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaEnc1<span class="op">::</span>empilha<span class="op">(</span><span class="dt">char</span> v<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> no <span class="op">=</span> <span class="kw">new</span> NoPilha1<span class="op">{.</span>dado <span class="op">=</span> v<span class="op">,</span> <span class="op">.</span>prox <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">};</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> no<span class="op">;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">++;</span>              <span class="co">// N = N + 1</span></span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> PilhaEnc1<span class="op">::</span>empilha<span class="op">(</span><span class="dt">char</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> no <span class="op">=</span> <span class="kw">new</span> NoPilha1<span class="op">{.</span>dado <span class="op">=</span> v<span class="op">,</span> <span class="op">.</span>prox <span class="op">=</span> inicio<span class="op">};</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  inicio <span class="op">=</span> no<span class="op">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  N<span class="op">++;</span>              <span class="co">// N = N + 1</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="na-memória-p.empilhaa-p.empilhab">Na memória:
 <code>p.empilha(&#39;A&#39;); p.empilha(&#39;B&#39;);</code></h3>
@@ -792,12 +793,11 @@ p.inicio: 100
 </section>
 <section id="implementação-topo-1" class="slide level2">
 <h2>Implementação: Topo</h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaEnc1<span class="op">::</span>topo<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> no <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no<span class="op">-&gt;</span>dado<span class="op">;</span>            <span class="co">// return (*no).dado;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ou simplesmente...</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">// return this-&gt;inicio-&gt;dado;   </span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> PilhaEnc1<span class="op">::</span>topo<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> inicio<span class="op">-&gt;</span>dado<span class="op">;</span>      <span class="co">// (*inicio).dado;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ou simplesmente...</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>   <span class="co">// return this-&gt;inicio-&gt;dado;   </span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="na-memória-p.topo">Na memória: <code>p.topo();</code></h3>
 <p><strong>p.N: 2
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="1em"></mspace></mrow><annotation encoding="application/x-tex">\quad</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;"></span><span class="mspace" style="margin-right:1em;"></span></span></span></span>
@@ -811,14 +811,15 @@ p.inicio: 100
 <h2>Implementação: Desempilha</h2>
 <div class="columns">
 <div class="column" style="width:65%;">
-<div class="sourceCode" id="cb22"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaEnc1<span class="op">::</span>desempilha<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">char</span> <span class="op">{</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   NoPilha1<span class="op">*</span> p <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>prox<span class="op">;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> r <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>dado<span class="op">;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">delete</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">;</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> p<span class="op">;</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">--;</span>           <span class="co">//N=N-1</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> r<span class="op">;</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> PilhaEnc1<span class="op">::</span>desempilha<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   NoPilha1<span class="op">*</span> p <span class="op">=</span> inicio<span class="op">-&gt;</span>prox<span class="op">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> r <span class="op">=</span> inicio<span class="op">-&gt;</span>dado<span class="op">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">delete</span> inicio<span class="op">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> inicio<span class="op">);</span> <span class="co">// qual valor?</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>   inicio <span class="op">=</span> p<span class="op">;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>   N<span class="op">--;</span>           <span class="co">// N=N-1</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> r<span class="op">;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div><div class="column" style="width:35%;">
 <div class="sourceCode" id="cb23"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// relembrando...</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoPilha1 <span class="op">{</span></span>
@@ -846,10 +847,10 @@ p.inicio: 112
 </section>
 <section id="implementação-libera" class="slide level2">
 <h2>Implementação: Libera</h2>
-<div class="sourceCode" id="cb26"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> PilhaEnc1<span class="op">::</span>libera<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">void</span> <span class="op">{</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> <span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>N <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>      NoPilha1<span class="op">*</span> p <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">-&gt;</span>prox<span class="op">;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">delete</span> <span class="kw">this</span><span class="op">-&gt;</span>inicio<span class="op">;</span>   <span class="kw">this</span><span class="op">-&gt;</span>inicio <span class="op">=</span> p<span class="op">;</span>    <span class="kw">this</span><span class="op">-&gt;</span>N<span class="op">--;</span> </span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> PilhaEnc1<span class="op">::</span>libera<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> <span class="op">(</span>N <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>      NoPilha1<span class="op">*</span> p <span class="op">=</span> inicio<span class="op">-&gt;</span>prox<span class="op">;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">delete</span> inicio<span class="op">;</span>   inicio <span class="op">=</span> p<span class="op">;</span>    N<span class="op">--;</span> </span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="na-memória-p.libera">Na memória: <code>p.libera();</code></h3>
@@ -874,6 +875,11 @@ p.inicio: 0
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>o</mi><mi>p</mi><mi>o</mi><mo>←</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">topo \leftarrow \epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8095em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">p</span><span class="mord mathnormal">o</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ϵ</span></span></span></span></strong></p>
 <pre><code>|     |     |     |     |     |     |     |     |     |    |    
    0     4    ...   100   104   108   112   116   ...  8GiB</code></pre>
+</section></section>
+<section>
+<section id="implementação-avançada-com-ponteiros-inteligentes" class="title-slide slide level1">
+<h1>Implementação Avançada com Ponteiros Inteligentes</h1>
+
 </section>
 <section id="implementação-com-ponteiros-inteligentes" class="slide level2">
 <h2>Implementação com ponteiros inteligentes</h2>
