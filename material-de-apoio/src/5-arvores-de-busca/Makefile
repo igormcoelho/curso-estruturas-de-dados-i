@@ -8,8 +8,8 @@ app_avl:
 .PHONY: app_avl
 
 app_abb:
-	g++-16 -std=c++26 -fcontracts -fmodules -fmodule-only --compile-std-module
-	g++-16  -std=c++26 -fcontracts -fmodules --compile-std-module ../arvores.cppm ../abb.cppm main_abb.cpp -o app_abb
+	g++-16 -g -std=c++26 -fcontracts -fmodules -fmodule-only --compile-std-module
+	g++-16 -g -std=c++26 -fcontracts -fmodules --compile-std-module ../arvores.cppm ../abb.cppm main_abb.cpp -o app_abb
 # g++-16  -std=c++23 -fmodules -fsearch-include-path bits/std.cc main_abb.cpp -o app_abb
 # 	g++-16 -std=c++26 -fcontracts -fmodules -fmodule-only --compile-std-module
 #	g++-16 -std=c++26 -fcontracts -fmodules -fmodule-only arvores.cppm

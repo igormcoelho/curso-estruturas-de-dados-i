@@ -2,6 +2,7 @@
 //#include "abb.hpp"
 
 import abb;
+import arvores; // for heap-like 
 
 import std;
 
@@ -69,6 +70,24 @@ int main() {
     imprime_vertical(abb.raiz);
 
     abb.libera();
+
+    int MAXN = 10;
+    int v[MAXN];
+    for(int i=0;i<MAXN;i++)
+        v[i] = 0;
+    int N = 0;
+
+    ::insereBin(v, MAXN, N, 2);
+    N++;
+    ::insereBin(v, MAXN, N, 1);
+    N++;
+    ::insereBin(v, MAXN, N, 4);
+    N++;
+    ::printv(v, N);
+    // V: 2 1 4 
+    ::insereBin(v, MAXN, N, 6);
+    N++;
+    ::printv(v, N);
 
     return 0; 
 }
