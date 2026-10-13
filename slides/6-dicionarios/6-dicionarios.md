@@ -453,7 +453,7 @@ Isso indica uma Rotação Simples à Esquerda, no nó D.
 
 ::::::::::
 
-Qual o final após a rotação? F substitui D, tornando E seu filho à esquerda, seguido de D à esquerda, sendo que o filho à direita de F se torna L.
+Qual o final após a rotação? F substitui D, tornando D seu filho à esquerda e E à direita de D, sendo que o filho à direita de F permanece L.
 A árvore se torna balanceada.
 
 # Rotações em AVL (Exercícios Práticos)
@@ -558,6 +558,30 @@ NoEnc7* balanceia(NoEnc7* const raiz)
 ::::::::
 :::
 
+## Algoritmo `rebalanceia` até a raiz em O(h)
+
+::: -
+
+```{.cpp}
+auto* rebalanceia(auto* p)          
+// pre(p)
+{
+  auto* raiz = p;
+  while (p) {
+    auto* avo = p->pai;
+    bool era_esq = avo && avo->esq == p;
+    p->h = calc_altura(p);
+    auto* nova = balanceia(p);      // rotação já ajusta nova->pai
+    if (avo) { if (era_esq) avo->esq = nova; else avo->dir = nova; }
+    raiz = nova;
+    p = avo;
+  }
+  return raiz;
+}
+```
+
+:::
+
 # Implementação de AVL
 
 ## Estrutura de AVL
@@ -606,6 +630,41 @@ NoEnc7* upsertAVL(char c, float d, NoEnc7* const raiz)
 }
 ```
 :::
+
+## Algoritmo de Remoção em AVL
+
+::: -
+
+```{.cpp}
+auto removeAVL(char c, auto* raiz) {
+  if(!raiz) return std::tuple{false, raiz};    // árvore vazia
+  auto* no = ::buscaABB(raiz, c);    if(!no)   return std::tuple{false, raiz};
+  auto* alvo = tem_dois_filhos(no) ? sucessor(no) : no;  // nó a desligar
+  no->chave = alvo->chave;  no->dado = alvo->dado;       // se no==alvo, nada muda
+  auto [pai, filho] = extrai(alvo);  // 'alvo' tem no máximo um filho
+  delete alvo;
+  auto* inicio = pai ? pai : filho;  // de onde subir rebalanceando
+  return std::tuple{true, inicio ? rebalanceia(inicio) : inicio};
+}
+```
+
+:::
+
+## Exemplo de Remoção
+
+Remova o `A`:
+
+```
+              E                    FB:  E = -1
+           /     \                      B = -1,  C = -1
+         B         H                    H = -1,  G = +1
+        / \       / \                   J = -1,  K = -1
+       A   C     G   J
+            \   /   / \
+             D F   I   K
+                        \
+                         L
+```       
 
 
 ---------

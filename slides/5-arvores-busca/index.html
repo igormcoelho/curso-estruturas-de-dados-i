@@ -794,8 +794,8 @@ e
 <section id="exercício-encontre-o-sucessor-de-um-elemento-numa-abb" class="slide level2">
 <h2>Exercício: Encontre o sucessor de um elemento numa ABB</h2>
 <p>Dado um nó do tipo <code>NoEnc5</code>, calcule o elemento sucessor
-na árvore, com método:</p>
-<p><code>NoEnc5* sucessor(NoEnc5* const no)  { ... }</code></p>
+na árvore de um nó existente (não-nulo). Caso não exista sucessor,
+retorna <code>nullptr</code>.</p>
 <div class="columns">
 <div class="column" style="width:30%;">
 <div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc5 <span class="op">{</span></span>
@@ -820,6 +820,117 @@ na árvore, com método:</p>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="implementação-de-árvore-binária-de-busca" class="title-slide slide level1">
+<h1>Implementação de Árvore Binária de Busca</h1>
+
+</section>
+<section id="estrutura-de-árvore-binária-de-busca-com-pai" class="slide level2">
+<h2>Estrutura de Árvore Binária de Busca com Pai</h2>
+<p>Relembrando (aula de Árvores) a estrutura de árvore binária com pai
+considerada:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc5 <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>     <span class="co">// dado armazenado</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   NoEnc5<span class="op">*</span> esq<span class="op">;</span>    <span class="co">// filho esquerdo</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   NoEnc5<span class="op">*</span> dir<span class="op">;</span>    <span class="co">// filho direito</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   NoEnc5<span class="op">*</span> pai<span class="op">;</span>    <span class="co">// pai</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> ABB <span class="op">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  NoEnc5<span class="op">*</span> raiz<span class="op">;</span>    <span class="co">// raiz da árvore</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>           <span class="co">// número de nós</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span>              <span class="co">// métodos típicos: busca, insere, remove, ...</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</section>
+<section id="implementação-insereabb" class="slide level2">
+<h2>Implementação: <code>insereABB</code></h2>
+<p>Implementação de inserção em árvore binária de busca não-vazia:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insereABB<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> NoEnc5<span class="op">*</span> no<span class="op">)</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(no)   // C++26</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>c <span class="op">&lt;=</span> no<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span><span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">)</span> insereABB<span class="op">(</span>c<span class="op">,</span> no<span class="op">-&gt;</span>esq<span class="op">);</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span> no<span class="op">-&gt;</span>esq <span class="op">=</span> <span class="kw">new</span> NoEnc5<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,</span> <span class="op">.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>pai<span class="op">=</span>no<span class="op">};</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span><span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">)</span> insereABB<span class="op">(</span>c<span class="op">,</span> no<span class="op">-&gt;</span>dir<span class="op">);</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span> no<span class="op">-&gt;</span>dir <span class="op">=</span> <span class="kw">new</span> NoEnc5<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,</span> <span class="op">.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>pai<span class="op">=</span>no<span class="op">};</span> </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Pergunta:</strong> <em>Quantos chamadas recursivas esse
+algoritmo pode precisar?</em> R: O(h).</p>
+</section>
+<section id="implementação-removeabb" class="slide level2">
+<h2>Implementação: <code>removeABB</code></h2>
+<p>Implementação de remoção em árvore binária de busca (retorna nova
+raiz):</p>
+<div class="small">
+<div class="sourceCode" id="cb9"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> removeABB<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="kw">auto</span><span class="op">*</span> raiz<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(!</span>raiz<span class="op">)</span> <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">false</span><span class="op">,</span> raiz<span class="op">};</span>    <span class="co">// raiz inalterada</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> no <span class="op">=</span> <span class="op">::</span>buscaABB<span class="op">(</span>raiz<span class="op">,</span> c<span class="op">);</span>    <span class="cf">if</span><span class="op">(!</span>no<span class="op">)</span>   <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">false</span><span class="op">,</span> raiz<span class="op">};</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>tem_dois_filhos<span class="op">(</span>no<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> removido <span class="op">=</span> sucessor<span class="op">(</span>no<span class="op">);</span>   <span class="co">// &#39;removido&#39; sempre existe: minimo(no-&gt;dir)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    extrai<span class="op">(</span>removido<span class="op">);</span>                <span class="co">// &#39;removido&#39; não tem filho esquerdo!</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    no<span class="op">-&gt;</span>chave <span class="op">=</span> removido<span class="op">-&gt;</span>chave<span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> removido<span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">true</span><span class="op">,</span> raiz<span class="op">};</span>   <span class="co">// raiz inalterada</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> <span class="op">[</span>pai<span class="op">,</span> filho<span class="op">]</span>  <span class="op">=</span> extrai<span class="op">(</span>no<span class="op">);</span> <span class="co">// &#39;no&#39; tem no máximo um filho</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> no<span class="op">;</span>    </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>pai<span class="op">)</span> <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">true</span><span class="op">,</span> filho<span class="op">};</span> <span class="co">// &#39;no&#39; era raiz, &#39;filho&#39; é nova raiz</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">true</span><span class="op">,</span> raiz<span class="op">};</span>   <span class="co">// raiz inalterada</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// Exercicio: entenda cada caso e cada tipo de retorno!</span></span></code></pre></div>
+</div>
+</section>
+<section id="exemplo-de-remoção" class="slide level2">
+<h2>Exemplo de Remoção</h2>
+<p>Remova o <code>A</code>:</p>
+<pre><code>              E    
+           /     \     
+         B         H    
+        / \       / \     
+       A   C     G   J
+            \   /   / \
+             D F   I   K
+                        \
+                         L</code></pre>
+</section>
+<section id="implementação-árvore-binária-de-busca-abb" class="slide level2">
+<h2>Implementação: Árvore Binária de Busca (ABB)</h2>
+<p>Finalmente, temos uma ABB completa:</p>
+<div class="small">
+<div class="sourceCode" id="cb11"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">export</span> <span class="kw">struct</span> ABB <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  NoEnc5<span class="op">*</span> raiz<span class="op">;</span>    <span class="co">// raiz da árvore</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> cria<span class="op">()</span> <span class="op">{</span> N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> raiz <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> libera<span class="op">()</span> <span class="op">{</span> <span class="cf">if</span><span class="op">(</span>raiz<span class="op">)</span> <span class="op">::</span>destroi_bin<span class="op">(</span>raiz<span class="op">);</span> raiz <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  NoEnc5<span class="op">*</span> busca<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> <span class="op">::</span>buscaABB<span class="op">(</span>raiz<span class="op">,</span> c<span class="op">);</span>   <span class="op">}</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> insere<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(!</span>raiz<span class="op">)</span> raiz <span class="op">=</span> <span class="kw">new</span> NoEnc5<span class="op">{.</span>chave <span class="op">=</span> c<span class="op">,</span> <span class="op">.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>pai<span class="op">=</span><span class="dv">0</span><span class="op">};</span>  </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="op">::</span>insereABB<span class="op">(</span>c<span class="op">,</span> raiz<span class="op">);</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    N<span class="op">++;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> remove<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> <span class="op">[</span>b<span class="op">,</span> nraiz<span class="op">]</span> <span class="op">=</span> <span class="op">::</span>removeABB<span class="op">(</span>c<span class="op">,</span> raiz<span class="op">);</span>  raiz <span class="op">=</span> nraiz<span class="op">;</span>   <span class="cf">if</span><span class="op">(</span>b<span class="op">)</span> N<span class="op">--;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> b<span class="op">;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="op">};</span> <span class="co">// fim</span></span></code></pre></div>
+</div>
+</section>
+<section id="fim-árvores-de-busca" class="slide level2">
+<h2>Fim Árvores de Busca</h2>
+<p>Conclusão:</p>
+<p>Árvores Binárias de Busca (ABB) são muito úteis para busca e
+organização da informação.</p>
+<p>Porém, elas podem se degenerar! Para isso precisaremos estudar as
+Árvores Balanceadas.</p>
+</section></section>
+<section>
+<section id="aquecimento-para-dicionários" class="title-slide slide level1">
+<h1>Aquecimento para Dicionários!</h1>
+
 </section>
 <section id="exercício-adicione-novo-elemento-na-árvore-ou-atualize-seu-valor" class="slide level2">
 <h2>Exercício: Adicione novo elemento na árvore ou atualize seu
@@ -832,122 +943,29 @@ não exista:</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:15%;">
-<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc6 <span class="op">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   NoEnc6<span class="op">*</span> esq<span class="op">;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   NoEnc6<span class="op">*</span> dir<span class="op">;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>   NoEnc6<span class="op">*</span> pai<span class="op">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc6 <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>   NoEnc6<span class="op">*</span> esq<span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   NoEnc6<span class="op">*</span> dir<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>   NoEnc6<span class="op">*</span> pai<span class="op">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><p>. . .</p><div class="column" style="width:70%;">
-<div class="sourceCode" id="cb8"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> upsertABB<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="dt">float</span> v<span class="op">,</span> NoEnc6<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span>       <span class="co">// pre(no)</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">==</span> no<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span> no<span class="op">-&gt;</span>dado <span class="op">=</span> v<span class="op">;</span> <span class="cf">return</span><span class="op">;</span> <span class="op">}</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">&lt;</span> no<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">)</span> upsertABB<span class="op">(</span>c<span class="op">,</span> v<span class="op">,</span> no<span class="op">-&gt;</span>esq<span class="op">);</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span> no<span class="op">-&gt;</span>esq <span class="op">=</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="kw">new</span> NoEnc6<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>v<span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>no<span class="op">};</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">)</span> upsertABB<span class="op">(</span>c<span class="op">,</span> v<span class="op">,</span> no<span class="op">-&gt;</span>dir<span class="op">);</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span> no<span class="op">-&gt;</span>dir <span class="op">=</span> </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            <span class="kw">new</span> NoEnc6<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>v<span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>no<span class="op">};</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> upsertABB<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="dt">float</span> v<span class="op">,</span> NoEnc6<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span>       <span class="co">// pre(no)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">==</span> no<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span> no<span class="op">-&gt;</span>dado <span class="op">=</span> v<span class="op">;</span> <span class="cf">return</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">&lt;</span> no<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">)</span> upsertABB<span class="op">(</span>c<span class="op">,</span> v<span class="op">,</span> no<span class="op">-&gt;</span>esq<span class="op">);</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span> no<span class="op">-&gt;</span>esq <span class="op">=</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="kw">new</span> NoEnc6<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>v<span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>no<span class="op">};</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">)</span> upsertABB<span class="op">(</span>c<span class="op">,</span> v<span class="op">,</span> no<span class="op">-&gt;</span>dir<span class="op">);</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span> no<span class="op">-&gt;</span>dir <span class="op">=</span> </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="kw">new</span> NoEnc6<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>v<span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>no<span class="op">};</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="implementação-de-árvore-binária-de-busca" class="title-slide slide level1">
-<h1>Implementação de Árvore Binária de Busca</h1>
-
-</section>
-<section id="estrutura-de-árvore-binária-de-busca-com-pai" class="slide level2">
-<h2>Estrutura de Árvore Binária de Busca com Pai</h2>
-<p>Relembrando (aula de Árvores) a estrutura de árvore binária com pai
-considerada:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc5 <span class="op">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>     <span class="co">// dado armazenado</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>   NoEnc5<span class="op">*</span> esq<span class="op">;</span>    <span class="co">// filho esquerdo</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   NoEnc5<span class="op">*</span> dir<span class="op">;</span>    <span class="co">// filho direito</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>   NoEnc5<span class="op">*</span> pai<span class="op">;</span>    <span class="co">// pai</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> ABB <span class="op">{</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  NoEnc5<span class="op">*</span> raiz<span class="op">;</span>    <span class="co">// raiz da árvore</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>           <span class="co">// número de nós</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span>              <span class="co">// métodos típicos: busca, insere, remove, ...</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
-</section>
-<section id="implementação-insereabb" class="slide level2">
-<h2>Implementação: <code>insereABB</code></h2>
-<p>Implementação de inserção em árvore binária de busca não-vazia:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insereABB<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> NoEnc5<span class="op">*</span> no<span class="op">)</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(no)   // C++26</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>c <span class="op">&lt;=</span> no<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span><span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">)</span> insereABB<span class="op">(</span>c<span class="op">,</span> no<span class="op">-&gt;</span>esq<span class="op">);</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span> no<span class="op">-&gt;</span>esq <span class="op">=</span> <span class="kw">new</span> NoEnc5<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,</span> <span class="op">.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>pai<span class="op">=</span>no<span class="op">};</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span><span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">)</span> insereABB<span class="op">(</span>c<span class="op">,</span> no<span class="op">-&gt;</span>dir<span class="op">);</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span> no<span class="op">-&gt;</span>dir <span class="op">=</span> <span class="kw">new</span> NoEnc5<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,</span> <span class="op">.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>pai<span class="op">=</span>no<span class="op">};</span> </span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p><strong>Pergunta:</strong> <em>Quantos chamadas recursivas esse
-algoritmo pode precisar?</em> R: O(N).</p>
-</section>
-<section id="implementação-removeabb" class="slide level2">
-<h2>Implementação: <code>removeABB</code></h2>
-<p>Implementação de remoção em árvore binária de busca (retorna nova
-raiz):</p>
-<div class="small">
-<div class="sourceCode" id="cb11"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> removeABB<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="kw">auto</span><span class="op">*</span> raiz<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(!</span>raiz<span class="op">)</span> <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">false</span><span class="op">,</span> raiz<span class="op">};</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> no <span class="op">=</span> <span class="op">::</span>buscaABB<span class="op">(</span>raiz<span class="op">,</span> c<span class="op">);</span>    <span class="cf">if</span><span class="op">(!</span>no<span class="op">)</span>   <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">false</span><span class="op">,</span> raiz<span class="op">};</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>tem_dois_filhos<span class="op">(</span>no<span class="op">))</span> <span class="op">{</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> removido <span class="op">=</span> sucessor<span class="op">(</span>no<span class="op">);</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    extrai<span class="op">(</span>removido<span class="op">);</span>                <span class="co">// &#39;removido&#39; não tem filho esquerdo</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    no<span class="op">-&gt;</span>chave <span class="op">=</span> removido<span class="op">-&gt;</span>chave<span class="op">;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> removido<span class="op">;</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">true</span><span class="op">,</span> raiz<span class="op">};</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> <span class="op">[</span>pai<span class="op">,</span> filho<span class="op">]</span>  <span class="op">=</span> extrai<span class="op">(</span>no<span class="op">);</span> <span class="co">// &#39;no&#39; tem no máximo um filho</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> no<span class="op">;</span>    </span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>pai<span class="op">)</span> <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">true</span><span class="op">,</span> filho<span class="op">};</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">true</span><span class="op">,</span> raiz<span class="op">};</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// Exercicio: entenda cada caso e cada tipo de retorno!</span></span></code></pre></div>
-</div>
-</section>
-<section id="implementação-árvore-binária-de-busca-abb" class="slide level2">
-<h2>Implementação: Árvore Binária de Busca (ABB)</h2>
-<p>Finalmente, temos uma ABB completa:</p>
-<div class="small">
-<div class="sourceCode" id="cb12"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">export</span> <span class="kw">struct</span> ABB <span class="op">{</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  NoEnc5<span class="op">*</span> raiz<span class="op">;</span>    <span class="co">// raiz da árvore</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> cria<span class="op">()</span> <span class="op">{</span> N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> raiz <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> libera<span class="op">()</span> <span class="op">{</span> <span class="cf">if</span><span class="op">(</span>raiz<span class="op">)</span> <span class="op">::</span>destroi_bin<span class="op">(</span>raiz<span class="op">);</span> raiz <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  NoEnc5<span class="op">*</span> busca<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> <span class="op">::</span>buscaABB<span class="op">(</span>raiz<span class="op">,</span> c<span class="op">);</span>   <span class="op">}</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> insere<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(!</span>raiz<span class="op">)</span> raiz <span class="op">=</span> <span class="kw">new</span> NoEnc5<span class="op">{.</span>chave <span class="op">=</span> c<span class="op">,</span> <span class="op">.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,</span> <span class="op">.</span>pai<span class="op">=</span><span class="dv">0</span><span class="op">};</span>  </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="op">::</span>insereABB<span class="op">(</span>c<span class="op">,</span> raiz<span class="op">);</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    N<span class="op">++;</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> remove<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> <span class="op">[</span>b<span class="op">,</span> nraiz<span class="op">]</span> <span class="op">=</span> <span class="op">::</span>removeABB<span class="op">(</span>c<span class="op">,</span> raiz<span class="op">);</span>  raiz <span class="op">=</span> nraiz<span class="op">;</span>   <span class="cf">if</span><span class="op">(</span>b<span class="op">)</span> N<span class="op">--;</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> b<span class="op">;</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="op">};</span> <span class="co">// fim</span></span></code></pre></div>
-</div>
-</section>
-<section id="fim-árvores-de-busca" class="slide level2">
-<h2>Fim Árvores de Busca</h2>
-<p>Conclusão:</p>
-<p>Árvores Binárias de Busca (ABB) são muito úteis para busca e
-organização da informação.</p>
-<p>Porém, elas podem se degenerar! Para isso precisaremos estudar as
-Árvores Balanceadas.</p>
 </section>
 <section id="bibliografia-recomendada" class="slide level2">
 <h2>Bibliografia Recomendada</h2>

@@ -268,9 +268,8 @@ NoEnc5* minimo(NoEnc5* const no)
 
 ## Exercício: Encontre o sucessor de um elemento numa ABB
 
-Dado um nó do tipo `NoEnc5`, calcule o elemento sucessor na árvore, com método:
-
-`NoEnc5* sucessor(NoEnc5* const no)  { ... }`
+Dado um nó do tipo `NoEnc5`, calcule o elemento sucessor na árvore de um nó existente (não-nulo).
+Caso não exista sucessor, retorna `nullptr`.
 
 :::::::: ||
 ::::: |{30%}
@@ -308,6 +307,128 @@ NoEnc5* sucessor(NoEnc5* const no)
 
 :::::
 ::::::::
+
+# Implementação de Árvore Binária de Busca
+
+
+## Estrutura de Árvore Binária de Busca com Pai
+
+Relembrando (aula de Árvores) a estrutura de árvore binária com pai considerada:
+
+```.cpp
+struct NoEnc5 {
+   char chave;     // dado armazenado
+   NoEnc5* esq;    // filho esquerdo
+   NoEnc5* dir;    // filho direito
+   NoEnc5* pai;    // pai
+};
+
+struct ABB {
+  NoEnc5* raiz;    // raiz da árvore
+  int N;           // número de nós
+  ...              // métodos típicos: busca, insere, remove, ...
+};
+```
+
+
+## Implementação: `insereABB`
+
+Implementação de inserção em árvore binária de busca não-vazia:
+
+```.cpp
+void insereABB(char c, NoEnc5* no) 
+// pre(no)   // C++26
+{
+  if(c <= no->chave) {
+      if(no->esq) insereABB(c, no->esq);
+      else no->esq = new NoEnc5{.chave=c, .esq=0, .dir=0, .pai=no};
+  } 
+  else {
+      if(no->dir) insereABB(c, no->dir);
+      else no->dir = new NoEnc5{.chave=c, .esq=0, .dir=0, .pai=no}; 
+  }
+}
+```
+
+**Pergunta:** *Quantos chamadas recursivas esse algoritmo pode precisar?* R: O(h).
+
+
+## Implementação: `removeABB`
+
+Implementação de remoção em árvore binária de busca (retorna nova raiz):
+
+::: -
+```.cpp
+auto removeABB(char c, auto* raiz) {
+  if(!raiz) return std::tuple{false, raiz};    // raiz inalterada
+  auto* no = ::buscaABB(raiz, c);    if(!no)   return std::tuple{false, raiz};
+  if(tem_dois_filhos(no)) {
+    auto* removido = sucessor(no);   // 'removido' sempre existe: minimo(no->dir)
+    extrai(removido);                // 'removido' não tem filho esquerdo!
+    no->chave = removido->chave;
+    delete removido;
+    return std::tuple{true, raiz};   // raiz inalterada
+  } else {
+    auto [pai, filho]  = extrai(no); // 'no' tem no máximo um filho
+    delete no;    
+    if (!pai) return std::tuple{true, filho}; // 'no' era raiz, 'filho' é nova raiz
+    return std::tuple{true, raiz};   // raiz inalterada
+  }
+} // Exercicio: entenda cada caso e cada tipo de retorno!
+```
+:::
+
+## Exemplo de Remoção
+
+Remova o `A`:
+
+```
+              E    
+           /     \     
+         B         H    
+        / \       / \     
+       A   C     G   J
+            \   /   / \
+             D F   I   K
+                        \
+                         L
+```                         
+
+## Implementação: Árvore Binária de Busca (ABB)
+
+Finalmente, temos uma ABB completa:
+
+::: -
+```.cpp
+export struct ABB {
+  NoEnc5* raiz;    // raiz da árvore
+  int N;
+  void cria() { N = 0; raiz = 0; }
+  void libera() { if(raiz) ::destroi_bin(raiz); raiz = 0; }
+  NoEnc5* busca(char c) { return ::buscaABB(raiz, c);   }
+  void insere(char c) {
+    if(!raiz) raiz = new NoEnc5{.chave = c, .esq=0, .dir=0, .pai=0};  
+    else ::insereABB(c, raiz);
+    N++;
+  }
+  bool remove(char c) {
+    auto [b, nraiz] = ::removeABB(c, raiz);  raiz = nraiz;   if(b) N--;
+    return b;
+  }
+}; // fim
+```
+:::
+
+## Fim Árvores de Busca
+
+Conclusão:
+
+Árvores Binárias de Busca (ABB) são muito úteis para busca e organização da informação.
+
+Porém, elas podem se degenerar! Para isso precisaremos estudar as Árvores Balanceadas.
+
+# Aquecimento para Dicionários!
+
 
 ## Exercício: Adicione novo elemento na árvore ou atualize seu valor
 
@@ -355,108 +476,6 @@ void upsertABB(char c, float v, NoEnc6* no) {       // pre(no)
 ::::::::
 :::
 
-# Implementação de Árvore Binária de Busca
-
-
-## Estrutura de Árvore Binária de Busca com Pai
-
-Relembrando (aula de Árvores) a estrutura de árvore binária com pai considerada:
-
-```.cpp
-struct NoEnc5 {
-   char chave;     // dado armazenado
-   NoEnc5* esq;    // filho esquerdo
-   NoEnc5* dir;    // filho direito
-   NoEnc5* pai;    // pai
-};
-
-struct ABB {
-  NoEnc5* raiz;    // raiz da árvore
-  int N;           // número de nós
-  ...              // métodos típicos: busca, insere, remove, ...
-};
-```
-
-
-## Implementação: `insereABB`
-
-Implementação de inserção em árvore binária de busca não-vazia:
-
-```.cpp
-void insereABB(char c, NoEnc5* no) 
-// pre(no)   // C++26
-{
-  if(c <= no->chave) {
-      if(no->esq) insereABB(c, no->esq);
-      else no->esq = new NoEnc5{.chave=c, .esq=0, .dir=0, .pai=no};
-  } 
-  else {
-      if(no->dir) insereABB(c, no->dir);
-      else no->dir = new NoEnc5{.chave=c, .esq=0, .dir=0, .pai=no}; 
-  }
-}
-```
-
-**Pergunta:** *Quantos chamadas recursivas esse algoritmo pode precisar?* R: O(N).
-
-
-## Implementação: `removeABB`
-
-Implementação de remoção em árvore binária de busca (retorna nova raiz):
-
-::: -
-```.cpp
-auto removeABB(char c, auto* raiz) {
-  if(!raiz) return std::tuple{false, raiz};
-  auto* no = ::buscaABB(raiz, c);    if(!no)   return std::tuple{false, raiz};
-  if(tem_dois_filhos(no)) {
-    auto* removido = sucessor(no);
-    extrai(removido);                // 'removido' não tem filho esquerdo
-    no->chave = removido->chave;
-    delete removido;
-    return std::tuple{true, raiz};
-  } else {
-    auto [pai, filho]  = extrai(no); // 'no' tem no máximo um filho
-    delete no;    
-    if (!pai) return std::tuple{true, filho};
-    return std::tuple{true, raiz};
-  }
-} // Exercicio: entenda cada caso e cada tipo de retorno!
-```
-:::
-
-## Implementação: Árvore Binária de Busca (ABB)
-
-Finalmente, temos uma ABB completa:
-
-::: -
-```.cpp
-export struct ABB {
-  NoEnc5* raiz;    // raiz da árvore
-  int N;
-  void cria() { N = 0; raiz = 0; }
-  void libera() { if(raiz) ::destroi_bin(raiz); raiz = 0; }
-  NoEnc5* busca(char c) { return ::buscaABB(raiz, c);   }
-  void insere(char c) {
-    if(!raiz) raiz = new NoEnc5{.chave = c, .esq=0, .dir=0, .pai=0};  
-    else ::insereABB(c, raiz);
-    N++;
-  }
-  bool remove(char c) {
-    auto [b, nraiz] = ::removeABB(c, raiz);  raiz = nraiz;   if(b) N--;
-    return b;
-  }
-}; // fim
-```
-:::
-
-## Fim Árvores de Busca
-
-Conclusão:
-
-Árvores Binárias de Busca (ABB) são muito úteis para busca e organização da informação.
-
-Porém, elas podem se degenerar! Para isso precisaremos estudar as Árvores Balanceadas.
 
 ---------
 
