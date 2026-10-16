@@ -5,6 +5,7 @@ subtitle: Dicionários e Árvores Balanceadas
 date: 01/06/2025
 transition: cube
 fontsize: 10
+aspectratio: 169
 header-includes:
 - <link rel="stylesheet" type="text/css" href="general.css">
 - <link rel="stylesheet" type="text/css" href="reveal-beamer.css">
@@ -666,8 +667,126 @@ Remova o `A`:
                          L
 ```       
 
+# Análise da AVL
+
+## Exercício Prático: AVL é uma Árvore Balanceada
+
+Assuma que T é uma árvore AVL. Para cada nó X de T, afirmamos que $s(X) \geq \lceil h(X)/2\rceil$.
+
+Para árvores pequenas, a afirmação vale (base). Nó vazio: $h = 0$ e $s=0$. Nó folha: $h = 1$ e $s = 1$.
+Suponha que, para toda subárvore AVL de altura menor que $h$, a afirmação vale (hipótese de indução).
+
+Considere $h \geq 2$ (passo indutivo):
+
+Pela definição recursiva, os filhos de T também são AVL, com alturas $h-1$ e $h-2$, ou $h-1$ e $h-1$. 
+
+Ambas são menores que $h$, então a hipótese se aplica a eles: 
+cada filho X tem $s(X) \geq \lceil (h-2)/2\rceil = \lceil h/2\rceil - 1$. 
+Logo $s(T) = 1 + \min(s(T_E), s(T_D)) \geq 1 + \min(\lceil h/2\rceil - 1, \lceil h/2\rceil - 1) = \lceil h/2\rceil$.
+
+Assim, $h(X) \leq 2 \cdot s(X)$ em todo nó, ou seja, a AVL é balanceada. Lembrando que toda árvore balanceada tem altura logarítmica $h \leq 2\cdot lg(n+1)$.
 
 ---------
+
+## Sequência de Fibonacci (Revisão)
+
+A *sequência de Fibonacci* é definida por $F(0) = 0$, $F(1) = 1$ e $F(k) = F(k-1) + F(k-2)$, para $k \geq 2$:
+
+::: --
+
+| $k$ | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| $F(k)$ | 1 | 1 | 2 | 3 | 5 | 8 | 13 | 21 | 34 | 55 |
+| $\frac{F(k)}{F(k-1)}$ | - | 1 | 2 | 1,5 | 1,67 | 1,6 | 1,625 | 1,615 | 1,619 | 1,618 |
+
+:::
+
+**Intuição:** a razão entre termos consecutivos se estabiliza em torno de $1{,}618$. Ou seja, para $k$ grande, $F(k) \approx 1{,}618 \cdot F(k-1)$: a sequência se comporta quase como uma *progressão geométrica*, crescendo *exponencialmente*.
+
+Esse valor é o *número de ouro* (ou *razão áurea*), denotado por $\varphi$.
+
+--------
+
+## Número de Ouro: Calculando $F(k)$
+
+**Desafio:** se $F(k)$ se comporta como uma progressão geométrica $r^k$, quanto vale $r$?
+
+1. Substituindo $F(k) = r^k$ na recorrência: $r^k = r^{k-1} + r^{k-2}$
+2. Dividindo por $r^{k-2}$: $r^2 = r + 1$, ou seja, $r^2 - r - 1 = 0$
+3. Por Bhaskara: $\Delta = (-1)^2 - 4 \cdot 1 \cdot (-1) = 5$, logo $r = \frac{1 \pm \sqrt{5}}{2}$
+4. A raiz positiva é o número de ouro, $\varphi = \frac{1 + \sqrt{5}}{2} \approx 1{,}618$ (a outra é $\psi = \frac{1 - \sqrt{5}}{2} \approx -0{,}618$)
+
+**Propriedade fundamental:** $\varphi^2 = \varphi + 1$ (vem do passo 2).
+
+**Observação:** como a recorrência é linear, qualquer combinação $a\varphi^k + b\psi^k$ também a satisfaz. 
+
+Para que ela seja $F(k)$, usamos $F(0) = 0$ e $F(1) = 1$. Para $k=0$: $a\varphi^0 + b\psi^0 = a + b = 0$, ou seja, $b = -a$. Para $k=1$: $a\varphi + b\psi = 1$, e substituindo $b = -a$, temos $a\varphi - a\psi = 1$, ou seja, $a(\varphi - \psi) = 1$.
+
+Como $\varphi - \psi = \sqrt{5}$, temos $a = -b = \frac{1}{\sqrt{5}}$, obtendo a *fórmula de Binet*: $F(k) = \frac{\varphi^k - \psi^k}{\sqrt{5}} \approx \frac{\varphi^k}{\sqrt{5}}$ (pois $|\psi| < 1$).
+
+----------
+
+## Árvore de Fibonacci (AVL Mínima)
+
+Seja $N^*(h)$ o menor número de nós de uma AVL de altura $h$.
+
+**Desafio:** encontre $N^*(h)$.
+
+:::::::::: ||
+
+::::: |{60%}
+
+Uma subárvore mínima de altura $h-1$, e outra mínima com a menor altura permitida, $h-2$:
+
+$N^*(h) = 1 + N^*(h-1) + N^*(h-2)$, com $N^*(0) = 0$ e $N^*(1) = 1$
+
+Somando $1$ dos dois lados, $N^*(h) + 1 = (N^*(h-1) + 1) + (N^*(h-2) + 1)$ segue a recorrência de Fibonacci, começando em $1 = F(2)$ e $2 = F(3)$. Logo, $N^*(h) = F(h+2) - 1$.
+
+:::::
+
+::::: |{35%}
+
+```
+          E
+        /   \
+       C     G
+      / \   /
+     B   D F
+    /
+   A
+```
+
+Altura $4$: $F(6) - 1 = 7$ nós.
+
+:::::
+
+::::::::::
+
+Essas AVLs mínimas são as *árvores de Fibonacci*: raiz, com árvores de Fibonacci de alturas $h-1$ e $h-2$ como filhos. Em todo nó, as alturas dos filhos diferem de exatamente $1$, logo são AVL.
+
+--------
+
+## Altura da AVL
+
+Uma AVL com $n$ nós e altura $h$ tem pelo menos $N^*(h)$ nós. Pela fórmula de Binet:
+
+$n \geq N^*(h) = F(h+2) - 1 \approx \frac{\varphi^{h+2}}{\sqrt{5}} - 1$
+
+Ou seja, o número de nós cresce *exponencialmente* com a altura, como $\varphi^h$.
+
+Passando o $1$ para o outro lado: $\varphi^{h+2} \lesssim \sqrt{5} \cdot (n+1)$. Aplicando o logaritmo na base $\varphi$:
+
+$h + 2 \lesssim log_\varphi(\sqrt{5} \cdot (n+1)) = log_\varphi(n+1) + log_\varphi \sqrt{5}$
+
+Subtraindo $2$ dos dois lados:
+
+$h \lesssim log_\varphi(n+1) + log_\varphi \sqrt{5} - 2 \approx 1{,}44 \cdot lg(n+1) - 0{,}33$
+
+pois $log_\varphi\, x = \frac{lg\, x}{lg\, \varphi}$, com $\frac{1}{lg\, \varphi} \approx 1{,}44$, e $log_\varphi \sqrt{5} \approx 1{,}67$.
+
+**Exemplo:** com $n = 2^{20} - 1$, temos $h \lesssim 1{,}44 \cdot 20 - 0{,}33 \approx 28{,}5$, ou seja, $h \leq 28$, contra $40$ de uma árvore balanceada qualquer.
+
+----------
 
 ## Bibliografia Recomendada
 
