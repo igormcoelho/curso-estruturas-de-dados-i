@@ -768,21 +768,21 @@ Essas AVLs mínimas são as *árvores de Fibonacci*: raiz, com árvores de Fibon
 
 ## Altura da AVL
 
-Uma AVL com $n$ nós e altura $h$ tem pelo menos $N^*(h)$ nós. Pela fórmula de Binet:
+Uma AVL com altura $h$ tem pelo menos $n \geq N^*(h)$ nós. Somando $1$ dos dois lados e usando a fórmula de Binet:
 
-$n \geq N^*(h) = F(h+2) - 1 \approx \frac{\varphi^{h+2}}{\sqrt{5}} - 1$
+$n + 1 \geq N^*(h) + 1 = F(h+2) -1 +1 \approx \frac{\varphi^{h+2}}{\sqrt{5}}$
 
-Ou seja, o número de nós cresce *exponencialmente* com a altura, como $\varphi^h$.
+Ou seja, o número de nós cresce *exponencialmente* com a altura, como $\varphi^h$. 
 
-Passando o $1$ para o outro lado: $\varphi^{h+2} \lesssim \sqrt{5} \cdot (n+1)$. Aplicando o logaritmo na base $\varphi$:
+Multiplicando por $\sqrt{5}$: $\varphi^{h+2} \lesssim \sqrt{5} \cdot (n+1)$
 
-$h + 2 \lesssim log_\varphi(\sqrt{5} \cdot (n+1)) = log_\varphi(n+1) + log_\varphi \sqrt{5}$
+Aplicando o logaritmo na base $\varphi$: $h + 2 \lesssim log_\varphi(\sqrt{5} \cdot (n+1)) = log_\varphi(n+1) + log_\varphi \sqrt{5}$
 
 Subtraindo $2$ dos dois lados:
 
 $h \lesssim log_\varphi(n+1) + log_\varphi \sqrt{5} - 2 \approx 1{,}44 \cdot lg(n+1) - 0{,}33$
 
-pois $log_\varphi\, x = \frac{lg\, x}{lg\, \varphi}$, com $\frac{1}{lg\, \varphi} \approx 1{,}44$, e $log_\varphi \sqrt{5} \approx 1{,}67$.
+pois $log_\varphi\, x = \frac{lg\, x}{lg\, \varphi}$, com $\frac{1}{lg\, \varphi} \approx 1{,}44$, e $log_\varphi \sqrt{5} - 2 \approx 1{,}67 - 2 = -0{,}33$.
 
 **Exemplo:** com $n = 2^{20} - 1$, temos $h \lesssim 1{,}44 \cdot 20 - 0{,}33 \approx 28{,}5$, ou seja, $h \leq 28$, contra $40$ de uma árvore balanceada qualquer.
 
