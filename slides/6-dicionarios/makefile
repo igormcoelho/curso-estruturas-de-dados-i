@@ -25,6 +25,8 @@ env:
 	conda activate
 
 deps:
+	echo "wget... (1)"
 	wget -nc https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css
+	echo "wget... (2)"
 	wget -nc https://github.com/hakimel/reveal.js/archive/master.tar.gz
 	# tar -xzvf master.tar.gz && mv reveal.js-master reveal.js

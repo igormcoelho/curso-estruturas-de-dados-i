@@ -669,6 +669,23 @@ Remova o `A`:
 
 # Análise da AVL
 
+## Sobre Análise de Complexidade da AVL (revisão)
+
+Para analisar a AVL, retomaremos conceitos importantes apresentados em aulas anteriores (de Árvores binárias):
+
+- semifolha: nós com pelo menos uma subárvore vazia 
+   * obs: as folhas também são semifolhas!
+- distância: tamanho de um caminho entre um par de nós
+- rank (ou s-valor): menor distância do nó $X$ até uma semifolha descendente, denominado $s(X)$
+   * para semifolha vale 1, e para árvore vazia vale 0
+- altura: maior distância entre um nó $X$ e uma folha descendente, denominado $h(X)$
+   * para folha vale 1, e para árvore vazia vale 0
+- árvore balanceada: árvore com altura limitada $h \in O(\log n)$, via relação $h \leq c \cdot s$
+   * tipicamente $2$-balanceada, ou seja, que respeita a relação $h(X) \leq 2 \cdot s(X)$ para todo nó
+- Para uma altura $h$, $N_{min}(h) = h$ (um caminho) e $N_{max}(h)=2^h - 1$ (árvore perfeita)
+   * sempre vale $N_{min} \leq n \leq N_{max}$, e portanto, $n \geq N_{min}(h)$ 
+   * encontrando $N_{min}(h)$ você necessariamente encontra uma **altura máxima** para dada árvore!
+
 ## Exercício Prático: AVL é uma Árvore Balanceada
 
 Assuma que T é uma árvore AVL. Para cada nó X de T, afirmamos que $s(X) \geq \lceil h(X)/2\rceil$.
@@ -682,6 +699,7 @@ Pela definição recursiva, os filhos de T também são AVL, com alturas $h-1$ e
 
 Ambas são menores que $h$, então a hipótese se aplica a eles: 
 cada filho X tem $s(X) \geq \lceil (h-2)/2\rceil = \lceil h/2\rceil - 1$. 
+
 Logo $s(T) = 1 + \min(s(T_E), s(T_D)) \geq 1 + \min(\lceil h/2\rceil - 1, \lceil h/2\rceil - 1) = \lceil h/2\rceil$.
 
 Assim, $h(X) \leq 2 \cdot s(X)$ em todo nó, ou seja, a AVL é balanceada. Lembrando que toda árvore balanceada tem altura logarítmica $h \leq 2\cdot lg(n+1)$.
@@ -729,7 +747,6 @@ Como $\varphi - \psi = \sqrt{5}$, temos $a = -b = \frac{1}{\sqrt{5}}$, obtendo a
 ## Árvore de Fibonacci (AVL Mínima)
 
 Seja $N^*(h)$ o menor número de nós de uma AVL de altura $h$.
-
 **Desafio:** encontre $N^*(h)$.
 
 :::::::::: ||
@@ -768,23 +785,23 @@ Essas AVLs mínimas são as *árvores de Fibonacci*: raiz, com árvores de Fibon
 
 ## Altura da AVL
 
-Uma AVL com altura $h$ tem pelo menos $n \geq N^*(h)$ nós. Somando $1$ dos dois lados e usando a fórmula de Binet:
+Uma AVL com altura $h$ tem $n \geq N^*(h)$ nós. Somando $1$ dos dois lados e usando Binet:
 
-$n + 1 \geq N^*(h) + 1 = F(h+2) -1 +1 \approx \frac{\varphi^{h+2}}{\sqrt{5}}$
+$n + 1 \geq N^*(h) + 1 = F(h+2) \cancel{-1} \cancel{+1} \approx \frac{\varphi^{h+2}}{\sqrt{5}}$, ou seja, $\boxed{n+1 \gtrsim \frac{\varphi^{h+2}}{\sqrt{5}}}$
 
-Ou seja, o número de nós cresce *exponencialmente* com a altura, como $\varphi^h$. 
+Temos que o número de nós cresce *exponencialmente* com a altura, como $\varphi^h$. 
 
-Multiplicando por $\sqrt{5}$: $\varphi^{h+2} \lesssim \sqrt{5} \cdot (n+1)$
+Multiplicando por $\sqrt{5}$ e invertendo o lado: $\varphi^{h+2} \lesssim \sqrt{5} \cdot (n+1)$
 
 Aplicando o logaritmo na base $\varphi$: $h + 2 \lesssim log_\varphi(\sqrt{5} \cdot (n+1)) = log_\varphi(n+1) + log_\varphi \sqrt{5}$
 
 Subtraindo $2$ dos dois lados:
 
-$h \lesssim log_\varphi(n+1) + log_\varphi \sqrt{5} - 2 \approx 1{,}44 \cdot lg(n+1) - 0{,}33$
+$\boxed{h \lesssim log_\varphi(n+1) + (log_\varphi \sqrt{5} - 2) \approx 1{,}44 \cdot lg(n+1) - 0{,}33}$, ou seja, $h \in O(1{,}44 \lg n)$
 
 pois $log_\varphi\, x = \frac{lg\, x}{lg\, \varphi}$, com $\frac{1}{lg\, \varphi} \approx 1{,}44$, e $log_\varphi \sqrt{5} - 2 \approx 1{,}67 - 2 = -0{,}33$.
 
-**Exemplo:** com $n = 2^{20} - 1$, temos $h \lesssim 1{,}44 \cdot 20 - 0{,}33 \approx 28{,}5$, ou seja, $h \leq 28$, contra $40$ de uma árvore balanceada qualquer.
+**Exemplo:** com $n = 2^{20} - 1$, temos $h \lesssim 1{,}44 \cdot 20 - 0{,}33 \approx 28{,}5$, ou seja, $h \leq 28$, contra $40$ de uma árvore $2$-balanceada qualquer.
 
 ----------
 
