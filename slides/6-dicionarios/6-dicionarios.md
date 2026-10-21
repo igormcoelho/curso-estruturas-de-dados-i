@@ -803,6 +803,287 @@ pois $log_\varphi\, x = \frac{lg\, x}{lg\, \varphi}$, com $\frac{1}{lg\, \varphi
 
 **Exemplo:** com $n = 2^{20} - 1$, temos $h \lesssim 1{,}44 \cdot 20 - 0{,}33 \approx 28{,}5$, ou seja, $h \leq 28$, contra $40$ de uma árvore $2$-balanceada qualquer.
 
+# Árvores Rubro-Negras
+
+## Árvore Rubro-Negra: O que é?
+
+Uma *árvore rubro-negra* é uma ABB em que cada nó possui uma **cor** (vermelho ou preto), usada para controlar o balanceamento no lugar da altura.
+
+- Proposta por Bayer (1972) como *árvore B binária simétrica*; o nome rubro-negra vem de Guibas e Sedgewick (1978)
+- Os ponteiros nulos são tratados como **nós nulos** (ou externos), todos pretos
+- Basta trocar o campo `int h` do `NoEnc7` por um `bool vermelho` (1 bit de informação!)
+- Usada em `std::map`/`std::set` (libstdc++), `TreeMap` (Java) e no kernel Linux
+
+**Ideia:** o balanceamento é *menos rígido* que na AVL (árvore um pouco mais alta), em troca de *menos rotações* nas atualizações.
+
+-------
+
+## Propriedades da Árvore Rubro-Negra
+
+Além das propriedades de ABB, uma árvore rubro-negra satisfaz:
+
+1. Todo nó é vermelho ou preto
+2. Todo nó nulo é considerado preto
+3. Um nó vermelho não possui filho vermelho (*não há vermelhos consecutivos*)
+4. Todo caminho de um nó $X$ até qualquer nó nulo descendente passa pelo mesmo número de nós pretos
+5. (Conclusão) Se um nó tem exatamente um filho, esse filho é vermelho (e é folha)
+
+**Exercício:** justifique a propriedade 5 usando as propriedades 2, 3 e 4.
+
+. . . 
+
+**Propriedade 5:** se N tem só o filho C, o lado vazio de N tem 0 pretos internos. 
+Se C fosse preto, os caminhos por C teriam pelo menos 1 preto interno, violando a propriedade 4. 
+Logo C é vermelho. 
+Pelo mesmo motivo, os filhos de C não podem ser nós internos pretos, e pela propriedade 3 também não podem ser vermelhos. 
+Então C é folha.
+
+## Altura Negra
+
+**Altura negra** $bh(X)$: número de nós pretos de um caminho de $X$ até um nó nulo, sem contar $X$ (bem definida pela propriedade 4).
+
+**Observações:**
+
+- Alguns autores (Cormen et al.) exigem *raiz preta*; outros não (Mehlhorn e Sanders, Sedgewick e Wayne). Pintar uma raiz vermelha de preto nunca quebra as propriedades, e sem essa regra *toda subárvore de uma rubro-negra também é rubro-negra*
+- Toda árvore binária perfeita só com nós pretos é rubro-negra
+
+-------
+
+## Exemplo: Árvore $A3$ Colorida
+
+:::::::: ||
+::::: |{55%}
+
+```
+                M(P)
+            /          \
+        D(V)            O(P)
+       /    \          /    \
+    B(P)    F(P)    N(V)    S(V)
+    /  \    /  \    /  \    /  \
+  []   [] E(V) L(V) []  []  []  []
+          / \  / \
+        []  [] [] []
+```
+
+:::::
+
+::::: |{40%}
+
+(P) preto, (V) vermelho, `[]` nó nulo (preto)
+
+- Vermelhos ($D$, $E$, $L$, $N$, $S$) só têm filhos pretos
+- $bh(M) = 2$ em todo caminho:
+   * $M \to D \to B \to$ `[]`: pretos $B$, `[]`
+   * $M \to D \to F \to E \to$ `[]`: pretos $F$, `[]`
+   * $M \to O \to N \to$ `[]`: pretos $O$, `[]`
+- $n = 9$ nós internos e $n + 1 = 10$ nulos
+- A subárvore de $D$ (raiz vermelha) também é rubro-negra
+
+:::::
+::::::::
+
+**Exercício:** pinte $M$ de vermelho. E se, em vez disso, pintar $D$ de preto? Quais propriedades deixam de valer?
+
+-------
+
+## Operações Básicas em Rubro-Negra
+
+Muito do que já foi visto se reaproveita:
+
+- **Busca, mínimo e sucessor:** idênticos aos da ABB (`buscaABB`, `minimo`, `sucessor`), pois a cor não interfere na ordem
+- **Rotações:** as mesmas `rotDir`/`rotEsq` da AVL, sem as linhas que atualizam `h`
+- **Recoloração:** trocar a cor de um nó, em $O(1)$
+
+```.cpp
+struct NoEnc8 {
+   char chave;      float dado;
+   bool vermelho;   // no lugar de 'int h'
+   NoEnc8* esq;     NoEnc8* dir;     NoEnc8* pai;
+};
+bool eh_vermelho(const NoEnc8* no) {
+   return no && no->vermelho;   // nó nulo é preto (propriedade 2)
+}
+```
+
+Compare com `get_altura` da AVL: lá o nó nulo tem altura 0; aqui, o nó nulo é preto.
+
+-------
+
+## Inserção em Rubro-Negra
+
+Insira como na ABB (`upsertABB`) e pinte o novo nó $N$ de **vermelho**: a propriedade 4 continua valendo, mas a 3 pode ser violada. Sejam $P$ o pai, $A$ o avô e $T$ o tio de $N$:
+
+1. $N$ é raiz, ou $P$ é preto: nada a fazer, fim
+2. $P$ é vermelho e é raiz: pinte $P$ de preto, fim
+3. $P$ e $T$ vermelhos: pinte $P$ e $T$ de preto e $A$ de vermelho; repita com $N := A$ (*sobe dois níveis*)
+4. $P$ vermelho e $T$ preto, com $N$ em *zigue-zague* (ex: $N$ à direita de $P$, $P$ à esquerda de $A$): rotacione em $P$, trocando os papéis de $N$ e $P$, e siga para o caso 5
+5. $P$ vermelho e $T$ preto, com $N$ *em linha* com $P$ e $A$: rotacione em $A$, pinte $P$ de preto e $A$ de vermelho, fim
+
+O caso 3 pode se repetir $O(\log n)$ vezes, mas só recolore. Rotações: **no máximo 2** (casos 4 e 5).
+
+**Observação:** os casos 4 e 5 juntos são exatamente a *rotação dupla* da AVL!
+
+-------
+
+## Exemplo: Inserção de $G$ na $A3$ Colorida (1/2)
+
+::: -
+:::::::: ||
+::::: |{48%}
+
+**Antes:** $G$ inserido como vermelho, à esquerda de $L$:
+
+```
+         M(P)
+       /      \
+    D(V)       O(P)
+   /    \      /  \
+ B(P)   F(P) N(V) S(V)
+       /   \
+     E(V)  L(V)
+           /
+         G(V)
+```
+
+$L$ e $G$ vermelhos: viola a propriedade 3!
+Pai $P=L$ e tio $T=E$ vermelhos, avô $A=F$.
+
+:::::
+
+::::: |{48%}
+
+**Caso 3:** $L$ e $E$ ficam pretos, $F$ fica vermelho:
+
+```
+         M(P)
+       /      \
+    D(V)       O(P)
+   /    \      /  \
+ B(P)   F(V) N(V) S(V)
+       /   \
+     E(P)  L(P)
+           /
+         G(V)
+```
+
+Agora $F$ e $D$ são vermelhos! Com $N := F$: pai $P=D$ vermelho, tio $T=O$ preto, em zigue-zague. 
+Próximo passo: **rotação à esquerda em $D$** (caso 4).
+
+:::::
+::::::::
+:::
+
+-------
+
+## Exemplo: Inserção de $G$ na $A3$ Colorida (2/2)
+
+::: -
+:::::::: ||
+::::: |{48%}
+
+**Caso 4:** rotação à esquerda em $D$:
+
+```
+            M(P)
+          /      \
+       F(V)       O(P)
+      /   \       /  \
+    D(V)  L(P)  N(V) S(V)
+   /  \    /
+ B(P) E(P) G(V)
+```
+
+Agora $D$, $F$ e $M$ estão em linha. Próximo passo: **rotação à direita em $M$** (caso 5).
+
+:::::
+
+::::: |{48%}
+
+**Caso 5:** rotação à direita em $M$; $F$ fica preto e $M$ fica vermelho:
+
+```
+          F(P)
+       /       \
+    D(V)        M(V)
+   /   \       /    \
+ B(P)  E(P)  L(P)   O(P)
+             /      /  \
+           G(V)   N(V) S(V)
+```
+
+Altura negra 2 em todo caminho. Fim!
+
+:::::
+::::::::
+:::
+
+-------
+
+## Remoção em Rubro-Negra
+
+Remova como na ABB (`removeABB`): se o nó tem dois filhos, troque pelo `sucessor`, recaindo em um nó $X$ com no máximo um filho.
+
+- $X$ tem um filho: pela propriedade 5, é uma folha vermelha; substitua $X$ por ele e pinte-o de preto, fim
+- $X$ é folha vermelha: remova, fim
+- $X$ é folha preta: os caminhos por $X$ perdem um preto (*caso difícil*). Sejam $P$ o pai e $I$ o irmão de $X$:
+   1. $X$ é raiz: todos os caminhos perderam um preto igualmente, fim
+   2. $I$ vermelho: rotacione em $P$ (para o lado de $X$) e troque as cores de $P$ e $I$; recai nos casos seguintes
+   3. $I$ preto com sobrinhos pretos: pinte $I$ de vermelho; se $P$ é vermelho, pinte-o de preto e fim; senão, repita com $X := P$ (*sobe um nível*)
+   4. $I$ preto, sobrinho próximo vermelho e distante preto: rotacione em $I$ (para longe de $X$), trocando as cores de $I$ e do sobrinho; recai no caso 5
+   5. $I$ preto com sobrinho distante vermelho: rotacione em $P$ (para o lado de $X$), $I$ assume a cor de $P$, e $P$ e o sobrinho distante ficam pretos, fim
+
+O caso 3 pode se repetir $O(\log n)$ vezes, mas só recolore. Rotações: **no máximo 3**.
+
+-------
+
+## Exercício Prático: Rubro-Negra é uma Árvore Balanceada
+
+Afirmamos que $h(X) \leq 2 \cdot s(X)$ para todo nó $X$ (contando nós internos, como na AVL).
+
+Seja $p(X)$ o número de nós pretos *internos* em um caminho de $X$ até um nó nulo (o mesmo para todos os caminhos, pela propriedade 4), e seja $\delta = 1$ se $X$ é vermelho, ou $\delta = 0$ se $X$ é preto.
+
+Considere qualquer caminho de $X$ até um nó nulo, com $k$ nós internos:
+
+- Ele contém os $p(X)$ pretos, e também $X$ se este for vermelho: $k \geq p(X) + \delta$
+- Todo vermelho diferente de $X$ tem pai preto no próprio caminho (propriedade 3), e pais distintos: há no máximo $p(X)$ vermelhos além de $X$, logo $k \leq 2 \cdot p(X) + \delta$
+
+Aplicando ao caminho mais curto e ao mais longo:
+
+$s(X) \geq p(X) + \delta \quad$ e $\quad h(X) \leq 2 \cdot p(X) + \delta \leq 2 \cdot (p(X) + \delta) \leq 2 \cdot s(X)$
+
+Assim, a rubro-negra é $2$-balanceada e, portanto, $h \leq 2 \cdot lg(n+1)$. $\blacksquare$
+
+*Alternativa (Cormen et al.): por indução, uma subárvore com altura negra $bh$ possui pelo menos $2^{bh} - 1$ nós internos.*
+
+-------
+
+## AVL $\times$ Rubro-Negra
+
+::: --
+
+| | AVL | Rubro-Negra |
+|---|---|---|
+| Informação por nó | altura (`int h`) | cor (1 bit) |
+| Altura máxima | $\approx 1{,}44 \cdot lg(n+1)$ | $2 \cdot lg(n+1)$ |
+| Rotações na inserção | no máximo 1 (simples ou dupla) | no máximo 2 |
+| Rotações na remoção | até $O(\log n)$ (exemplo anterior!) | no máximo 3 |
+| Melhor para | muitas buscas | muitas inserções/remoções |
+
+:::
+
+Ambas garantem busca, inserção e remoção em $O(\log n)$. Na rubro-negra, os ajustes ao subir na árvore são feitos majoritariamente por *recoloração*, que é $O(1)$ por nível.
+
+**Conexão com a próxima aula:** cada nó preto, junto com seus filhos vermelhos, equivale a um nó de uma *Árvore B de ordem 4* (árvore 2-3-4) com até 3 chaves, e $bh$ corresponde à altura dessa Árvore B.
+
+----------
+
+## Próximas aulas
+
+Veremos mais implementações de dicionários, com Tabelas Hash (sem árvores) e com Árvores B (multivias, não binárias!).
+
+Até breve!
+
 ----------
 
 ## Bibliografia Recomendada
