@@ -110,13 +110,13 @@ DicionarioTAD = requires(Agregado d, TChave c, TValor v) {
 ```.cpp
 struct DicionarioCF {
    // ... 
-   int consulta(char c) {
+   float consulta(char c) {
       // ...
    }
    void adiciona(char c, float v) {
       // ...
    }
-   int remove(char c) {
+   float remove(char c) {
       // ...
    }
 };
@@ -126,7 +126,7 @@ static_assert(DicionarioTAD<DicionarioCF, char, float>);
 
 ---------
 
-## Exemplo de Uso com `DicionarioCI`
+## Exemplo de Uso com `DicionarioCF`
 
 Adiciona pares chave-valor `('A', 100.0)` e `('B', 200.0)`. Depois faz consultas e remove chave `'B'`.
 
@@ -178,15 +178,18 @@ Exemplos de ABB, contendo nós D, E, F, L, M, N e O.
 
 ::::::::::
 
-# Árvores Balanceadas
+# Árvores Auto-Balanceadas
 
 -------
 
-## Árvores Balanceadas
+## Árvores Auto-Balanceadas
 
-Um tipo importante de Árvore Binária de Busca é a *balanceada*, que resolve o problema de degeneração da árvore pelo controle de sua altura.
+Um tipo importante de Árvore Binária de Busca é a *auto-balanceada*, que resolve o problema de degeneração da árvore pelo controle de sua altura.
 
-Tal controle é conseguido pelo cálculo de um **fator de balanceamento (FB)** para cada nó, definido por: altura do filho esquerdo - altura do filho direito. Observe que se o filho não existe, então sua altura será 0 (zero).
+Já vimos que, nesse curso, uma árvore T é *$c$-balanceada* se todo nó X de T respeita $h(X) \leq c \cdot s(X)$: daí temos que $h(T) \in O(\lg n)$.
+Veremos dois tipos de árvores auto-balanceadas para $c=2$: a AVL e Rubro-Negra.
+
+Na AVL, tal controle é conseguido pelo cálculo de um **fator de balanceamento (FB)** para cada nó, definido por: altura do filho esquerdo - altura do filho direito. Observe que se o filho não existe, então sua altura será 0 (zero).
 
 ---------
 
@@ -351,7 +354,7 @@ bool eh_regulado(auto* no)
 
 ## Dicionário com AVL
 
-Existem duas implementações populares de árvores balanceadas para dicionários: AVL e rubro-negra.
+Existem duas implementações populares de árvores auto-balanceadas para dicionários: AVL e rubro-negra.
 
 Iremos explorar a árvore AVL, por sua simplicidade.
 
@@ -804,6 +807,20 @@ pois $log_\varphi\, x = \frac{lg\, x}{lg\, \varphi}$, com $\frac{1}{lg\, \varphi
 **Exemplo:** com $n = 2^{20} - 1$, temos $h \lesssim 1{,}44 \cdot 20 - 0{,}33 \approx 28{,}5$, ou seja, $h \leq 28$, contra $40$ de uma árvore $2$-balanceada qualquer.
 
 # Árvores Rubro-Negras
+
+## Conceito: Nós Externos (ou *Folhas Externas*)
+
+Uma subárvore vazia será chamada Nó Externo (ou Folha Externa).
+
+**Desafio:** quantas folhas externas existem em uma árvore binária com $n$ nós?
+
+. . .
+
+**Solução:** $n+1$ (são $2n$ arestas, e $n-1$ deles apontam para nós).
+
+
+**Observação:** O termo *nó externo* segue [Knuth97] (árvore binária estendida).
+
 
 ## Árvore Rubro-Negra: O que é?
 
