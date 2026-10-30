@@ -140,15 +140,23 @@ Em *árvores binárias ordenadas* de raiz R, a primeira subárvore de cada nó �
 
 --------
 
-## Folha Externa, Semifolha e Nó Cheio
+## Nó Incompleto (ou *Semifolha*) e Nó Cheio
 
 Em uma árvore $m$-ária, cada nó possui $m$ subárvores (algumas possivelmente vazias):
 
-- uma subárvore vazia é chamada de *folha externa* (ou *nó externo*)
-- um nó com alguma folha externa é chamado de *semifolha*
-- um nó sem folha externa (isto é, com exatamente $m$ filhos) é chamado de *nó cheio*
+- um nó sem subárvore vazia (isto é, com exatamente $m$ filhos) é chamado de *nó cheio*
+- um nó com alguma subárvore vazia é chamado de *nó incompleto* ou *semifolha*
+
 
 ::::::: ||
+
+::: |{45%}
+
+**Exemplo em $A2$:** $M$ é nó cheio; $D$ e $O$ são semifolhas.
+$E$, $L$ e $N$ são folhas, portanto também semifolhas.
+Todo nó é *ou* cheio *ou* semifolha (incompleto).
+
+:::
 
 ::: |{45%}
 
@@ -156,53 +164,10 @@ Em uma árvore $m$-ária, cada nó possui $m$ subárvores (algumas possivelmente
 
 :::
 
-::: |{45%}
-
-**Exemplo:** $M$ é nó cheio; $D$ e $O$ são semifolhas.
-$E$, $L$ e $N$ são folhas, portanto também semifolhas.
-Toda folha é semifolha (com $m$ folhas externas), e todo nó é *ou* cheio *ou* semifolha.
-
-**Desafio:** quantas folhas externas existem em uma árvore binária com $n$ nós?
-
-. . .
-
-**Solução:** $n+1$ (são $2n$ arestas, e $n-1$ deles apontam para nós).
-
-:::
-
 :::::::
 
 
-**Observação:** O termo *nó externo* segue [Knuth97] (árvore binária estendida).
-
-
---------
-
-## S-valor (ou Rank)
-
-O *s-valor* (ou *rank*) de um nó $X$ é o tamanho do menor caminho que conecta $X$ a uma *semifolha* descendente. Denotamos o s-valor de $X$ por $s(X)$.
-
-::::::::::{.columns}
-
-:::::{.column width=45%}
-
-![Árvore $A2$ com três folhas](./img-pratica/curso-ed-i-A2.png){height=30%}
-
-:::::
-
-:::::{.column  width=50%}
-
-![Árvore $A3$ com cinco folhas](./img-pratica/curso-ed-i-A3.png){height=30%}
-
-:::::
-
-::::::::::
-
-**S-valores de D, O e M:** $A2$: 1, 1 e 2; $A3$: 2, 2 e 3.
-
-Toda semifolha (ou folha) tem s-valor $1$, e uma folha externa tem s-valor $0$. Note que $h(M) = 4$ em ambas, e em geral, $s(X) \leq h(X)$.
-
-**Observação:** Também chamado de *s-value*, *dist* [Knuth97] ou *null path length*. É utilizado em *heaps esquerdistas* (do inglês, *leftist heaps*).
+**Observação:** O termo *semifolha* é autoral desse curso e segue a lógica de definições relaxadas na matemática, como matrizes semidefinidas, etc (ou seja, uma restrição relaxada sobre o conceito de folha).
 
 
 --------
@@ -234,9 +199,9 @@ Uma árvore *estritamente $m$-ária* é aquela na qual cada nó possui *exatamen
 
 --------
 
-## Árvore Perfeita (ou Cheia)
+## Árvore Perfeita
 
-Uma *árvore $m$-ária perfeita* (ou *cheia*) é aquela na qual todo nó com alguma subárvore vazia está no *último nível*.
+Uma *árvore $m$-ária perfeita* (evitamos usar o termo *cheia*) é aquela na qual toda semifolha (nó com alguma subárvore vazia) está no *último nível*.
 
 ![Árvore $A5$ perfeita](./img-pratica/curso-ed-i-A5.png){height=50%}
 
@@ -244,39 +209,39 @@ Uma *árvore $m$-ária perfeita* (ou *cheia*) é aquela na qual todo nó com alg
 
 --------
 
-## Árvore Completa (ou Quase-Completa)
+## Árvore Completa
 
-Uma *árvore $m$-ária completa* é aquela na qual todo nó com alguma subárvore vazia está no *último ou penúltimo níveis, estando os nós do último nível completamente preenchidos da esquerda para a direita*.
+Uma *árvore $m$-ária completa* é tipicamente definida como aquela em que toda semifolha (nó com subárvore vazia) está no *último ou penúltimo nível*. Nesse curso, *completa* será um sinônimo de *árvore completa à esquerda*, que segue a definição anterior mas que tem os *nós do último nível completamente preenchidos da esquerda para a direita*.
 
-![Árvore $A4$ completa com três folhas](./img-pratica/curso-ed-i-A4.png){height=40%}
+![Árvore $A4$ completa com três folhas](./img-pratica/curso-ed-i-A4.png){height=30%}
 
 
-**Observação:** Chamada pelo NIST de [complete binary tree](https://xlinux.nist.gov/dads/HTML/completeBinaryTree.html). Note que alguns autores consideram essa mesma definição para árvores cheias ou perfeitas.
+**Observação:** Chamada pelo NIST de [complete binary tree](https://xlinux.nist.gov/dads/HTML/completeBinaryTree.html). Cuidado que alguns autores chamam de *quase completa* e reservam *completa* para a *árvore perfeita*.
 *O ponto fundamental é a facilidade de implementação em vetores (vide próximos slides).* [Knuth97][^1]
 
 [^1]: [Knuth97] Donald E. Knuth, The Art of Computer Programming, Addison-Wesley, volumes 1 and 2, 2nd edition, 1997. 
 
 --------
 
-## Número Mínimo e Máximo de Nós
+## Número Mínimo e Máximo de Nós em Árvore Binária
 
-Seja $N_{min}(h)$ o *menor* e $N_{max}(h)$ o *maior* número de nós de uma árvore binária de altura $h$. Assim, $N_{min}(h) \leq n \leq N_{max}(h)$.
+Seja $N_{min}(h)$ o *menor* e $N_{max}(h)$ o *maior* número de nós de uma **árvore binária de altura $h$**. Assim, $N_{min}(h) \leq n \leq N_{max}(h)$.
 
-**Desafio:** defina-os recursivamente e encontre suas fórmulas fechadas.
+**Desafio:** defina-os recursivamente e encontre suas fórmulas fechadas (note que $N_{min}(0) = N_{max}(0) = 0$).
 
 . . .
 
-**Mínimo:** uma subárvore mínima de altura $h-1$ e outra vazia: $N_{min}(h) = 1 + N_{min}(h-1)$, logo $N_{min}(h) = h$ (um *caminho*).
+**Mínimo:** pense em um **caminho** (ou *árvore unária*).
+Uma subárvore mínima de altura $h-1$ e outra vazia: $N_{min}(h) = 1 + N_{min}(h-1)$, logo $N_{min}(h) = h$.
 
-**Máximo:** duas subárvores máximas de altura $h-1$: $N_{max}(h) = 1 + 2 \cdot N_{max}(h-1)$, logo $N_{max}(h) = 2^h - 1$ (árvore *perfeita*).
-
-Em ambos os casos, a árvore vazia tem $N_{min}(0) = N_{max}(0) = 0$.
+**Máximo:** pense em uma **árvore perfeita**.
+São duas subárvores máximas de altura $h-1$: $N_{max}(h) = 1 + 2 \cdot N_{max}(h-1)$, logo $N_{max}(h) = 2^h - 1$.
 
 --------
 
-## Número Mínimo de Nós: Estritamente Binária
+## Exercício: Número Mínimo de Nós na Estritamente Binária
 
-Seja $N'_{min}(h)$ o menor número de nós de uma árvore estritamente binária de altura $h \geq 1$.
+Seja $N'_{min}(h)$ o menor número de nós de uma **árvore estritamente binária de altura $h \geq 1$**.
 
 **Desafio:** encontre $N'_{min}(h)$. E o máximo?
 
@@ -285,6 +250,40 @@ Seja $N'_{min}(h)$ o menor número de nós de uma árvore estritamente binária 
 Para $h \geq 2$, a raiz precisa de dois filhos: uma subárvore mínima de altura $h-1$ e uma folha. Logo, $N'_{min}(h) = 2 + N'_{min}(h-1)$, com $N'_{min}(1) = 1$, e $N'_{min}(h) = 2h - 1$.
 
 O máximo não muda: a árvore perfeita é estritamente binária, com $2^h - 1$ nós.
+
+
+--------
+
+## S-valor
+
+O *s-valor* (ou *rank*) de um nó $X$ é o tamanho do menor caminho que conecta $X$ a uma *semifolha* descendente. Denotamos o s-valor de $X$ por $s(X)$.
+
+:::::::::: ||
+
+::::: |{55%}
+
+Toda semifolha (ou folha) tem s-valor $1$, e uma árvore vazia tem s-valor $0$. Assim como altura, o rank $s$ da árvore é o rank $s(X)$ da raiz $X$ da árvore.
+
+$\;$
+
+Note que $s$ cresce pouco, e na verdade, $s \in O(\lg n)$.
+**Prova:** não há semifolha acima do nível $s$, logo os níveis $1$ a $s$ estão cheios: $n \geq N_{max}(s) = 2^{s} - 1$, ou seja, $s \leq lg(n+1)$
+
+Note que $h(M)=4$ e que, necessariamente, $s \leq h$.
+
+:::::
+
+::::: |{45%}
+
+![Árvore $A2$ com três folhas. S-valores em $A2$: s(D)=1, s(O)=1 e s(M)=2.](./img-pratica/curso-ed-i-A2.png){height=40%}
+
+:::::
+
+::::::::::
+
+
+**Observação:** Também chamado de *s-value*, *dist* [Knuth97] ou *null path length*. É utilizado em *heaps esquerdistas* (do inglês, *leftist heaps*).
+
 
 --------
 
@@ -317,23 +316,23 @@ Dado um fator $c$ (tipicamente $c=2$ ou $>= 2$), uma árvore é *$c$-balanceada*
 
 :::::{.column width=45%}
 
-![Árvore $A2$ com três folhas](./img-pratica/curso-ed-i-A2.png){height=30%}
+![Árvore $A2$ com três folhas (não balanceada): a raiz satisfaz $h(M) = 4 \leq 2 \cdot 2$, mas $h(D)=3 > 2 \cdot 1$](./img-pratica/curso-ed-i-A2.png){height=40%}
 
 :::::
 
 :::::{.column  width=50%}
 
-![Árvore $A3$ com cinco folhas](./img-pratica/curso-ed-i-A3.png){height=30%}
+![Árvore $A3$ com cinco folhas (balanceada)](./img-pratica/curso-ed-i-A3.png){height=40%}
 
 :::::
 
 ::::::::::
 
-**Exemplo:** $A3$ é balanceada. $A2$ não é: a raiz satisfaz $h(M) = 4 \leq 2 \cdot 2$, mas $h(D)=3 > 2 \cdot 1$.
-
 Árvores AVL e rubro-negras são balanceadas com $c=2$ (veremos a seguir nesse curso).
 
-**Observação:** com $c < 2$, um nó com um único filho tem $s = 1$ e $h >= 2$. Com $c < 2$, a árvore seria estritamente binária, com $n$ sempre ímpar: impossível inserir um elemento por vez!
+**Observação:** esse é um conceito autoral do curso, que ajuda em provas nos slides futuros.
+
+**Observação 2:** com $c < 2$, um nó com um único filho tem $s = 1$ e $h >= 2$. Com $c < 2$, a árvore seria estritamente binária, com $n$ sempre ímpar: impossível inserir um elemento por vez!
 
 --------
 
@@ -343,7 +342,7 @@ Veremos que uma árvore $c$-balanceada com $n$ nós tem altura $h \leq c \cdot l
 
 Seja $R$ a raiz da árvore.
 
-1. Não há semifolha acima do nível $s(R)$, logo os níveis $1$ a $s(R)$ estão cheios: $n \geq N_{max}(s(R)) = 2^{s(R)} - 1$, ou seja, $s(R) \leq lg(n+1)$
+1. Sabemos que o rank $s(R)$ não cresce muito (slides anteriores): $s(R) \leq lg(n+1)$
 2. Como a árvore é balanceada, $h(R) \leq c \cdot s(R)$
 3. Logo, $h(R) \leq c \cdot lg(n+1)$ $\blacksquare$
 
@@ -523,7 +522,7 @@ struct ArvoreSeq1 {
 };
 ```
 
-**Desafio:** Quantos níveis *cabem* nessa árvore? $\lceil log_2(50+1) \rceil = 6$
+**Desafio:** Quantos níveis completos *cabem* nessa árvore? $\lfloor log_2(50+1) \rfloor = 5$
 
 ------
 
@@ -815,7 +814,8 @@ int nivel(auto* no, auto* raiz) {
 
 ## Exercício: Calcule o rank (s-valor) de um nó em árvore encadeada
 
-O **rank** (ou **s-valor**) de um nó é a distância até a **folha externa** (subárvore vazia) mais próxima. Uma folha externa tem rank 0.
+O **rank** (ou **s-valor**) de um nó é o tamanho do caminho até a semifolha mais próxima.
+O s-valor de uma árvore vazia é 0.
 
 Dado um nó do tipo `NoEnc3`, calcule seu rank com o método:
 
@@ -840,7 +840,7 @@ struct NoEnc3 {
 
 ```.cpp
 int svalor(auto* no) {
-    if (!no) return 0; // folha externa
+    if (!no) return 0; // árvore vazia
     int esq = svalor(no->esq);
     int dir = svalor(no->dir);
     return 1 + std::min(esq, dir);
@@ -891,12 +891,14 @@ bool eh_filho_direito(auto* f)
 
 ::::::::
 
+**Desafio:** defina `eh_filho_esquerdo`.
+
 ---------
 
 
-## Exercício: Propriedade de ter no máximo zero ou um filho
+## Exercício: Propriedade de folha e semifolha (no máximo zero ou um filho)
 
-Dado um nó do tipo `NoEnc5` com pai, escreva sa propriedades:
+Dado um nó binário do tipo `NoEnc5` com pai, escreva as propriedades *folha* e *semifolha*:
 
 `bool tem_zero_filhos(auto* no) { ... }`
 
