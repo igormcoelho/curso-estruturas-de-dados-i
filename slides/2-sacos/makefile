@@ -1,17 +1,18 @@
 MDFILE=2-sacos.md
 OUTHTML=index.html
 OUTPDF=2-sacos.pdf
+LUA_FILTERS=--lua-filter div-shortcuts.lua --lua-filter fonts-and-alignment.lua
 
 all: deps
-	/usr/bin/pandoc -s --self-contained -V theme=beige -s -t revealjs \
-        --filter pandoc-source-exec --filter pandoc-katex --css katex.min.css \
-	$(MDFILE) -o $(OUTHTML) --slide-level 2 # --toc
+	/usr/bin/pandoc -s --embed-resources --standalone $(LUA_FILTERS) -V theme=beige -s -t revealjs \
+     --filter pandoc-katex --css katex.min.css \
+		$(MDFILE) -o $(OUTHTML) --slide-level 2 # --toc
 	#
 	#
 	# -F pandoc-crossref
-	/usr/bin/pandoc --toc -s --self-contained -V theme:Warsaw -t beamer \
-	    --filter pandoc-latex-color --filter pandoc-source-exec  -H header.tex \
-			$(MDFILE) -o $(OUTPDF) --slide-level 2
+	/usr/bin/pandoc --toc -s --embed-resources --standalone $(LUA_FILTERS) -V theme:Warsaw -t beamer \
+	 -H header.tex \
+		$(MDFILE) -o $(OUTPDF) --slide-level 2
 
 #--filter pandoc-source-exec
 

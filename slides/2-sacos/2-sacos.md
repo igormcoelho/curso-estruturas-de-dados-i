@@ -5,6 +5,7 @@ subtitle: Sacos
 date: 29/03/2021
 transition: linear
 fontsize: 10
+aspectratio: 169
 header-includes:
 - <link rel="stylesheet" type="text/css" href="general.css">
 - <link rel="stylesheet" type="text/css" href="reveal-beamer.css">
@@ -57,18 +58,248 @@ Sacos são estruturas fundamentais na própria computação, como o conceito de 
 
 Em Python, a classe `Counter` representa um tipo de saco. Em `Java`, a interface Bag representa um saco. Em C++, pode-se considerar containers como `std::list` e `std::vector`.
 
+Mas antes de definir um Saco, precisamos definir outros componentes básicos: Vista, Iterador e Percorrível.
+
+--------
+
+## Conceito: Vista
+
+Uma *Vista* (do inglês *View*) é um TAD que **referencia** um valor guardado em outro lugar (a *origem*), com três propriedades:
+**não-posse:** alterações na origem são percebidas pela vista; **leve:** custo constante $O(1)$; **validade:** dura enquanto a origem existir.
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
+
+```.cpp
+template <typename V>
+concept VistaTAD = requires(V v) {
+   { v.le() };         // leitura origem
+};
+
+struct VistaInt {
+   using Tipo = int;
+   const Tipo* origem; // não muda origem
+   Tipo le() { return *origem; }
+};
+static_assert(VistaTAD<VistaInt>);
+```
+
+:::::
+
+::::: |{45%}
+
+```.cpp
+// Exemplo de uso
+int x = 10;
+VistaInt y{.origem = &x};
+println("{}", y.le()); // 10
+
+x = 30;
+println("{}", y.le()); // 30 (não-posse)
+```
+
+:::::
+
+::::::::::
+
+:::
+
+**Desafio:** por que `origem` é do tipo `const int*` e não `int*`?
+
+-------
+
+## Conceito: Vista Mutável
+
+Uma *Vista Mutável* é uma Vista que também possui `altera(v)`, que modifica o valor **na origem**.
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
+
+```.cpp
+template <typename V>
+concept VistaMutavelTAD = VistaTAD<V> &&
+   requires(V v, typename V::Tipo t) {
+   { v.altera(t) };  // escrita na origem
+};
+
+struct VistaMutavelInt {
+   using Tipo = int;
+   Tipo* origem;
+   Tipo  le()          { return *origem; }
+   void altera(Tipo v) { *origem = v; }
+};
+static_assert(VistaMutavelTAD<VistaMutavelInt>);
+```
+
+:::::
+
+::::: |{45%}
+
+```.cpp
+// Exemplo de uso
+int x = 10;
+VistaMutavelInt y{.origem = &x};
+
+y.altera(20);
+println("{}", x);      // 20
+
+x = 30;
+println("{}", y.le()); // 30 (não-posse)
+```
+
+
+:::::
+
+::::::::::
+
+:::
+
+**Desafio:** `VistaMutavelInt` satisfaz `VistaTAD`? E `VistaInt` satisfaz `VistaMutavelTAD`?
+
+-------
+
+## Conceito: Iterador
+
+Um *Iterador* (do inglês *Iterator*) é uma **Vista** do elemento atual que **pode se mover**: além de `le()`, possui `proximo()` e `terminou()`.
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
+
+```.cpp
+template <typename It>
+concept IteradorTAD = VistaTAD<It> &&
+   requires(It it) {
+   { it.terminou() };  // fim da origem?
+   { it.proximo() };   // avança
+};
+struct IteradorVetorInt {
+   using Tipo = int;
+   const Tipo* atual;  // posição atual
+   const Tipo* fim;    // após o último
+   Tipo le()       { return *atual; }
+   bool terminou() { return atual == fim; }
+   void proximo()  { atual++; }
+};
+static_assert(IteradorTAD<IteradorVetorInt>);
+```
+
+:::::
+
+::::: |{45%}
+
+```.cpp
+// Exemplo de uso
+int v[3] = {10, 20, 30};
+IteradorVetorInt it{.atual = v,
+                    .fim = v + 3};
+while (!it.terminou()) {
+   println("{}", it.le()); // 10 20 30
+   it.proximo();
+}
+```
+
+:::::
+
+::::::::::
+
+:::
+
+**Desafio:** o que acontece se chamarmos `le()` quando `terminou()` é verdadeiro?
+
+-------
+
+## Conceito: Percorrível
+
+Um *Percorrível* (do inglês *Iterable* ou *Range*) é um TAD com uma única operação: `iterador()`, que retorna um **Iterador** posicionado no primeiro elemento e permite visitar os demais.
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
+
+```.cpp
+template <typename P>
+concept PercorrivelTAD = requires(P p) {
+   { p.iterador() } -> IteradorTAD;
+};
+struct TrioInt {
+   using Tipo = int;
+   Tipo dados[3];
+   IteradorVetorInt iterador() {
+      return {.atual = dados,
+              .fim = dados + 3};
+   }
+};
+static_assert(PercorrivelTAD<TrioInt>);
+```
+
+:::::
+
+::::: |{45%}
+
+```.cpp
+// Exemplo de busca no trio
+auto buscaTrio(auto it, int x) {
+   while(!it.terminou() && it.le() != x)
+      it.proximo();
+   return it; // terminou() se não achou
+}
+// Exemplo de uso
+TrioInt t{.dados = {10, 20, 30}};
+println("{}", 
+    buscaTrio(t.iterador(), 20).le());
+println("{}", 
+    buscaTrio(t.iterador(), 99).terminou());
+```
+
+:::::
+
+::::::::::
+
+:::
+
+**Desafio:** qual o custo de `busca`? Seria possível fazer melhor?
+
+-------
+
+## Exercício (para casa) / reflexão
+
+Implemente um Iterador Mutável.
+
+```.cpp
+template <typename It>
+concept IteradorMutavelTAD = IteradorTAD<It> && VistaMutavelTAD<It>;
+```
+
+Quais métodos ele teria? Para que serviria?
+
+Outra reflexão: Vistas são TAD muito simples e não carregam recursos dinâmicos (*non-owning*), portanto **não terão** métodos `cria()` e `libera()` nesse curso.
+
 --------
 
 ## Operações de um Saco (TAD)
 
-Um Saco é um tipo abstrato de dado (TAD) que
+Um Saco é um tipo abstrato de dado (TAD) **Percorrível** que carrega seus elementos e
 consiste de 4 operações básicas: 
 
 - adicionar (*add*)
-- iterar (*iterate*)
 - buscar (*find*)
 - remover (*remove*)
+- tamanho (*size*): retorna o número de elementos
 
+Também inclui sua operação **Percorrível** (de *range*/iterador):
+
+- iterador (*begin/first/iterate*)
 
 Note que o Saco não tem conceito de *indexação* nem uma ordem específica de percurso / ordenação dos elementos. Elementos podem ser repetidos.
 
@@ -91,18 +322,13 @@ Apresentaremos inicialmente a implementação do TAD Saco através de Listas Enc
 O *conceito* de saco somente requer suas operações básicas. Como consideramos um *saco genérica* (saco de inteiro, char, etc), definimos um *conceito genérico* chamado `SacoTAD`:
 
 ```.cpp
-template <typename Agregado>
-concept bool
-SacoTAD = requires(Agregado a, typename Agregado::Tipo t,
-                     typename Agregado::ItTipo it) {
-   // requer operação 'adiciona' sobre tipo 't'
-   {a.adiciona(t)};
-   // requer operação 'itera' (retorna 'it')
-   {a.itera()};
-   // requer operação 'busca' sobre tipo 't' (retorna 'it')
-   {a.busca(t)};
-   // requer operação 'remove'
-   {a.remove(it)};
+template <typename S>
+concept SacoTAD = PercorrivelTAD<S> &&
+   requires(S s, typename S::Tipo t, typename S::ItTipo it) {
+   { s.adiciona(t) };  // insere elemento
+   { s.busca(t) };     // posição de 't' (ou terminado)
+   { s.remove(it) };   // remove da posição 'it'
+   { s.tamanho() };    // número de elementos
 };
 ```
 
@@ -114,19 +340,20 @@ Antes de completar as funções pendentes, utilizaremos um `SacoTAD`:
 
 ```.cpp
 int main () {
-   SacoTAD s = ...; // alguma implementação
+   SacoTAD auto s = ...; // alguma implementação
    s.cria();
    s.adiciona('c'); 
    s.adiciona('a');
    s.adiciona('b'); 
    s.adiciona('a');
-   printf("%d\n", s.busca('a').terminou()); // 0
-   printf("%d\n", s.busca('d').terminou()); // 1
-   for (auto it = s.itera(); !it.terminou(); it.proximo())
-      printf("%c\n", it.atual()); // a b a c (em qual ordem?)
+   println("{}", s.busca('a').terminou()); // 0
+   println("{}", s.busca('d').terminou()); // 1
+   for (auto it = s.iterador(); !it.terminou(); it.proximo())
+      println("{}", it.le()); // a b a c (em qual ordem?)
    s.remove(s.busca('b'));
    s.libera();   
    ...
+}
 ``` 
 
 # Lista Encadeada
@@ -150,20 +377,16 @@ Consideraremos uma lista encadeada de caracteres.
 Para tal, definimos um agregado que contenha elementos, e outro que represente um iterador.
 
 ```.cpp
-class NoEnc1
-{
-public:
+struct NoEnc1 {
    char dado;
    NoEnc1* proximo;
 };
 ```
 
 ```.cpp
-class IteradorNoEnc1
-{
-public:
+struct IteradorNoEnc1 {
    NoEnc1* no;      // no atual
-   char atual();    // inglês 'current'
+   char le();       // da Vista (inglês 'current')
    bool terminou(); // inglês 'isDone'
    void proximo();  // inglês 'next'
 };
@@ -174,20 +397,19 @@ public:
 ## Implementação (II)
 
 ```.cpp
-class ListaEnc1
-{
-public:
-   typedef char Tipo;
-   typedef IteradorNoEnc1 ItTipo;
+struct ListaEnc1 {
+   using Tipo = char;
+   using ItTipo = IteradorNoEnc1;
    
    NoEnc1* inicio; // inicio da lista
    int N;          // num. de elementos na lista
    void cria();    // inicializa agregado
    void libera();  // finaliza agregado
    void adiciona(Tipo dado);
-   ItTipo itera();
+   ItTipo iterador();
    ItTipo busca(Tipo dado);
    void remove(ItTipo it);
+   int tamanho();
 };
 // verifica se agregado ListaEnc1 satisfaz conceito SacoTAD
 static_assert(SacoTAD<ListaEnc1>);
@@ -207,14 +429,14 @@ int main () {
    l.adiciona('a');
    l.adiciona('b');
    l.adiciona('a');
-   printf("%d\n", l.busca('a').terminou());
-   printf("%d\n", l.busca('d').terminou());
-   for(auto it = l.itera(); !it.terminou(); it.proximo()) {
-      printf("%c\n", it.atual());
+   println("{}", l.busca('a').terminou());
+   println("{}", l.busca('d').terminou());
+   for(auto it = l.iterador(); !it.terminou(); it.proximo()) {
+      println("{}", it.le());
    }
    l.libera();
-
    ...
+}
 ``` 
 ***Verifique as impressões em tela:*** *0 1 A B A C*
 
@@ -224,24 +446,29 @@ int main () {
 
 A operação `cria` inicializa a estrutura para uso, e a função `libera` desaloca os recursos dinâmicos.
 
+::: -
+
 ```.cpp
-class ListaEnc1 {
+struct ListaEnc1 {
 ...
 void cria() {
-   this->N = 0;
+   N = 0;
+   inicio = 0;
 }
 
 void libera() {
-   while (this->inicio != 0) {
-      auto* prox = this->inicio->proximo;
-      delete this->inicio;
-      this->inicio = prox;
+   while (inicio != 0) {
+      auto* prox = inicio->proximo;
+      delete inicio;   inicio = prox;
    }
-   this->N = 0;
+   N = 0;
 }
 ...
-}
+};
 ```
+
+:::
+
 ---------
 
 ## Implementação: Adiciona
@@ -249,37 +476,19 @@ void libera() {
 A operação `adiciona` em uma lista encadeada adiciona um novo elemento na "cabeça" da lista (no início).
 
 ```.cpp
-class ListaEnc1 {
+struct ListaEnc1 {
+...
+int tamanho() { return N; }
 ...
 void adiciona(char dado) {
    auto* no = new NoEnc1{.dado = dado, .proximo = inicio};
-   this->inicio = no;
-   this->N++; // N = N + 1
+   inicio = no;
+   N++; // N = N + 1
 }
 ...
-}
-```
--------
-
-## Conceito: IteradorTAD
-
-Podemos definir um tipo abstrato para o iterador, denominado `IteradorTAD`.
-
-```.cpp
-template <typename Agregado>
-concept bool
-#endif
-        IteradorTAD = requires(Agregado a)
-{
-   // requer operação 'terminou' (retorna booleano)
-   {a.terminou()};
-   // requer operação 'atual' (retorna elemento)
-   {a.atual()};
-   // requer operação 'proximo'
-   {a.proximo()};
 };
 ```
----------
+-------
 
 
 ## Implementação: Iterador
@@ -287,18 +496,18 @@ concept bool
 As operações do iterador utilizam um marcador/sentinela onde o ponteiro atual vale zero quando não existe mais um próximo.
 
 ```.cpp
-class IteradorNoEnc1 {
+struct IteradorNoEnc1 {
    NoEnc1* no;
-   char atual() {
-      return this->no->dado;
+   char le() {
+      return no->dado;
    }
    bool terminou() {
-      return this->no == 0;
+      return no == 0;
    }
    void proximo() {
-      this->no = this->no->proximo;
+      no = no->proximo;
    }
-}
+};
 // verifica se agregado IteradorNoEnc1 satisfaz conceito IteradorTAD
 static_assert(IteradorTAD<IteradorNoEnc1>);
 ```
@@ -311,14 +520,14 @@ static_assert(IteradorTAD<IteradorNoEnc1>);
 A operação itera em uma lista encadeada retorna o iterador da lista, posicionado no começo.
 
 ```.cpp
-class ListaEnc1 {
+struct ListaEnc1 {
 ...
-IteradorNoEnc1 itera() {
-   IteradorNoEnc1 it{.no = this->inicio};
+IteradorNoEnc1 iterador() {
+   IteradorNoEnc1 it{.no = inicio};
    return it;
 }
 ...
-}
+};
 ```
 
 -------
@@ -328,20 +537,20 @@ IteradorNoEnc1 itera() {
 A operação busca em uma lista encadeada utiliza o iterador da lista, posicionado no começo, para encontrar o elemento, retornando o iterador atualizado na posição correspondente.
 
 ```.cpp
-class ListaEnc1 {
+struct ListaEnc1 {
 ...
 IteradorNoEnc1 busca(char dado) {
-   auto it = this->itera();
+   auto it = iterador();
    while (!it.terminou()) 
    {
-      if (it.atual() == dado)
+      if (it.le() == dado)
          return it;
       it.proximo();
    }
    return it;
 }
 ...
-}
+};
 ```
 
 ***Questão:*** *O que acontece quando nenhum elemento é encontrado? Qual o valor de 'it' correspondente?*
@@ -355,7 +564,7 @@ A busca pode ser feita de forma recursiva também:
 ```.cpp
 IteradorNoEnc1 buscarec(IteradorNoEnc1 it, char dado)
 {
-   if(it.terminou() || it.atual() == dado)
+   if(it.terminou() || it.le() == dado)
       return it;
    else
    {
@@ -372,17 +581,17 @@ IteradorNoEnc1 buscarec(IteradorNoEnc1 it, char dado)
 A remoção de um elemento ocorre a partir de um iterador.
 
 ```.cpp
-class ListaEnc1 {
+struct ListaEnc1 {
 ...
 void remove(IteradorNoEnc1 it)
 {
-   auto *prox = it.no->proximo;
+   auto* prox = it.no->proximo;
    (*it.no) = (*it.no->proximo); // sobrescrita
    delete prox;
-   this->N--; // N = N - 1
+   N--; // N = N - 1
 }
 ...
-}
+};
 ```
 
 # Extensões de Listas Encadeadas
