@@ -1,7 +1,7 @@
 ---
 author: Igor Machado Coelho
 title: Estruturas de Dados I
-subtitle: Conjuntos Simples, Busca e Ordenação
+subtitle: Conjuntos Simples, Busca e Ordenação (Slide ainda em revisão! Não use!)
 date: 01/09/2026
 transition: cube
 fontsize: 10
