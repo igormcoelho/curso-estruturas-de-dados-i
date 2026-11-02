@@ -76,11 +76,12 @@ Uma *Vista* (do inglês *View*) é um TAD que **referencia** um valor guardado e
 ```.cpp
 template <typename V>
 concept VistaTAD = requires(V v) {
+   typename V::Tipo;   // tipo associado
    { v.le() };         // leitura origem
 };
 
 struct VistaInt {
-   using Tipo = int;
+   using Tipo = int;   // tipo associado
    const Tipo* origem; // não muda origem
    Tipo le() { return *origem; }
 };
@@ -129,7 +130,7 @@ concept VistaMutavelTAD = VistaTAD<V> &&
 };
 
 struct VistaMutavelInt {
-   using Tipo = int;
+   using Tipo = int;  // tipo associado
    Tipo* origem;
    Tipo  le()          { return *origem; }
    void altera(Tipo v) { *origem = v; }
@@ -175,8 +176,9 @@ Um *Iterador* (do inglês *Iterator*) é uma **Vista** do elemento atual que **p
 ::::: |{50%}
 
 ```.cpp
-template <typename It>
+template <typename It, typename T>
 concept IteradorTAD = VistaTAD<It> &&
+   std::same_as<typename It::Tipo, T> &&
    requires(It it) {
    { it.terminou() };  // fim da origem?
    { it.proximo() };   // avança
@@ -189,7 +191,7 @@ struct IteradorVetorInt {
    bool terminou() { return atual == fim; }
    void proximo()  { atual++; }
 };
-static_assert(IteradorTAD<IteradorVetorInt>);
+static_assert(IteradorTAD<IteradorVetorInt, int>);
 ```
 
 :::::
@@ -228,9 +230,9 @@ Um *Percorrível* (do inglês *Iterable* ou *Range*) é um TAD com uma única op
 ::::: |{50%}
 
 ```.cpp
-template <typename P>
+template <typename P, typename T>
 concept PercorrivelTAD = requires(P p) {
-   { p.iterador() } -> IteradorTAD;
+   { p.iterador() } -> IteradorTAD<T>;
 };
 struct TrioInt {
    using Tipo = int;
@@ -240,7 +242,7 @@ struct TrioInt {
               .fim = dados + 3};
    }
 };
-static_assert(PercorrivelTAD<TrioInt>);
+static_assert(PercorrivelTAD<TrioInt, int>);
 ```
 
 :::::
@@ -277,8 +279,8 @@ println("{}",
 Implemente um Iterador Mutável.
 
 ```.cpp
-template <typename It>
-concept IteradorMutavelTAD = IteradorTAD<It> && VistaMutavelTAD<It>;
+template <typename It, typename T>
+concept IteradorMutavelTAD = IteradorTAD<It, T> && VistaMutavelTAD<It>;
 ```
 
 Quais métodos ele teria? Para que serviria?
@@ -383,12 +385,12 @@ Apresentaremos inicialmente a implementação do TAD Saco através de Listas Enc
 O *conceito* de saco somente requer suas operações básicas. Como consideramos um *saco genérica* (saco de inteiro, char, etc), definimos um *conceito genérico* chamado `SacoTAD`:
 
 ```.cpp
-template <typename S>
-concept SacoTAD = PercorrivelTAD<S> &&
-   requires(S s, typename S::Tipo t, typename S::ItTipo it) {
+template <typename S, typename T>
+concept SacoTAD = PercorrivelTAD<S, T> &&
+   requires(S s, T t) {
    { s.adiciona(t) };  // insere elemento
    { s.busca(t) };     // posição de 't' (ou terminado)
-   { s.remove(it) } -> IteradorTAD; // remove da posição 'it'
+   { s.remove(s.iterador()) } -> IteradorTAD<T>; // remove da posição 'it'
    { s.tamanho() };    // número de elementos
 };
 ```
@@ -401,7 +403,7 @@ Antes de completar as funções pendentes, utilizaremos um `SacoTAD`:
 
 ```.cpp
 int main () {
-   SacoTAD auto s = ...; // alguma implementação
+   SacoTAD<char> auto s = ...; // alguma implementação
    s.cria();
    s.adiciona('c'); 
    s.adiciona('a');
@@ -447,6 +449,7 @@ struct NoEnc1 {
 
 ```.cpp
 struct IteradorNoEnc1 {
+   using Tipo = char;  // tipo associado
    NoEnc1* no;      // no atual
    char le();       // da Vista (inglês 'current')
    bool terminou(); // inglês 'isDone'
@@ -460,21 +463,18 @@ struct IteradorNoEnc1 {
 
 ```.cpp
 struct ListaEnc1 {
-   using Tipo = char;
-   using ItTipo = IteradorNoEnc1;
-   
    NoEnc1* inicio; // inicio da lista
    int N;          // num. de elementos na lista
    void cria();    // inicializa agregado
    void libera();  // finaliza agregado
-   void adiciona(Tipo dado);
-   ItTipo iterador();
-   ItTipo busca(Tipo dado);
-   ItTipo remove(ItTipo it);
+   void adiciona(char dado);
+   IteradorNoEnc1 iterador();
+   IteradorNoEnc1 busca(char dado);
+   IteradorNoEnc1 remove(IteradorNoEnc1 it);
    int tamanho();
 };
 // verifica se agregado ListaEnc1 satisfaz conceito SacoTAD
-static_assert(SacoTAD<ListaEnc1>);
+static_assert(SacoTAD<ListaEnc1, char>);
 ```
 
 -------
@@ -559,6 +559,7 @@ O iterador terminou quando chega à **sentinela**, o único nó sem próximo.
 
 ```.cpp
 struct IteradorNoEnc1 {
+   using Tipo = char;  // tipo associado
    NoEnc1* no;
    char le() {
       return no->dado;
@@ -571,7 +572,7 @@ struct IteradorNoEnc1 {
    }
 };
 // verifica se agregado IteradorNoEnc1 satisfaz conceito IteradorTAD
-static_assert(IteradorTAD<IteradorNoEnc1>);
+static_assert(IteradorTAD<IteradorNoEnc1, char>);
 ```
 
 
@@ -735,7 +736,7 @@ struct NoDuploEnc1 {
 ```.cpp
 
 int main() {
-   SacoTAD auto s = ListaEnc1();
+   auto s = ListaEnc1();
    s.cria();
    s.adiciona('c');
    s.adiciona('a');
@@ -822,21 +823,18 @@ Consideraremos um vetor de caracteres pré-alocado com capacidade `MAX_N`.
 ```.cpp
 constexpr int MAX_N = 10000;
 struct SacoVetor1 {
-   using Tipo = char;
-   using ItTipo = IteradorVetor1; // definido adiante
-
-   Tipo elementos[MAX_N]; // elementos
+   char elementos[MAX_N]; // elementos
    int N;                 // num. de elementos
    void cria();           // inicializa agregado
    void libera();         // finaliza agregado
-   void adiciona(Tipo dado);
-   ItTipo iterador();
-   ItTipo busca(Tipo dado);
-   ItTipo remove(ItTipo it);
+   void adiciona(char dado);
+   IteradorVetor1 iterador();
+   IteradorVetor1 busca(char dado);
+   IteradorVetor1 remove(IteradorVetor1 it);
    int tamanho();
 };
 // verifica se agregado SacoVetor1 satisfaz conceito SacoTAD
-static_assert(SacoTAD<SacoVetor1>);
+static_assert(SacoTAD<SacoVetor1, char>);
 ```
 
 -------
@@ -847,7 +845,7 @@ Antes de completar as funções pendentes, utilizaremos a `SacoVetor1`:
 
 ```.cpp
 int main () {
-   SacoTAD auto s = SacoVetor1();
+   auto s = SacoVetor1();
    s.cria();
    s.adiciona('c');
    s.adiciona('a');
@@ -904,6 +902,7 @@ O iterador do vetor é o mesmo `IteradorVetorInt` dos conceitos, agora para `cha
 
 ```.cpp
 struct IteradorVetor1 {
+   using Tipo = char;  // tipo associado
    const char* atual;  // posição atual
    const char* fim;    // após o último
    char le()       { return *atual; }
@@ -911,7 +910,7 @@ struct IteradorVetor1 {
    void proximo()  { atual++; }
 };
 // verifica se agregado IteradorVetor1 satisfaz conceito IteradorTAD
-static_assert(IteradorTAD<IteradorVetor1>);
+static_assert(IteradorTAD<IteradorVetor1, char>);
 ```
 
 ---------

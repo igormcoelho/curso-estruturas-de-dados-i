@@ -575,15 +575,16 @@ custo constante
 <div class="column" style="width:50%;">
 <div class="sourceCode" id="cb1"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> V<span class="op">&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> VistaTAD <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>V v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> v<span class="op">.</span>le<span class="op">()</span> <span class="op">};</span>         <span class="co">// leitura origem</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> VistaInt <span class="op">{</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">int</span><span class="op">;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> Tipo<span class="op">*</span> origem<span class="op">;</span> <span class="co">// não muda origem</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>   Tipo le<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>origem<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>VistaTAD<span class="op">&lt;</span>VistaInt<span class="op">&gt;);</span></span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">typename</span> V<span class="op">::</span>Tipo<span class="op">;</span>   <span class="co">// tipo associado</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> v<span class="op">.</span>le<span class="op">()</span> <span class="op">};</span>         <span class="co">// leitura origem</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> VistaInt <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">int</span><span class="op">;</span>   <span class="co">// tipo associado</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> Tipo<span class="op">*</span> origem<span class="op">;</span> <span class="co">// não muda origem</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>   Tipo le<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>origem<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>VistaTAD<span class="op">&lt;</span>VistaInt<span class="op">&gt;);</span></span></code></pre></div>
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb2"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
@@ -613,7 +614,7 @@ origem</strong>.</p>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> VistaMutavelInt <span class="op">{</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">int</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">int</span><span class="op">;</span>  <span class="co">// tipo associado</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   Tipo<span class="op">*</span> origem<span class="op">;</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   Tipo  le<span class="op">()</span>          <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>origem<span class="op">;</span> <span class="op">}</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> altera<span class="op">(</span>Tipo v<span class="op">)</span> <span class="op">{</span> <span class="op">*</span>origem <span class="op">=</span> v<span class="op">;</span> <span class="op">}</span></span>
@@ -645,21 +646,22 @@ e <code>terminou()</code>.</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> It<span class="op">&gt;</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> It<span class="op">,</span> <span class="kw">typename</span> T<span class="op">&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> IteradorTAD <span class="op">=</span> VistaTAD<span class="op">&lt;</span>It<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">requires</span><span class="op">(</span>It it<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> it<span class="op">.</span>terminou<span class="op">()</span> <span class="op">};</span>  <span class="co">// fim da origem?</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> it<span class="op">.</span>proximo<span class="op">()</span> <span class="op">};</span>   <span class="co">// avança</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> IteradorVetorInt <span class="op">{</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">int</span><span class="op">;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> Tipo<span class="op">*</span> atual<span class="op">;</span>  <span class="co">// posição atual</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> Tipo<span class="op">*</span> fim<span class="op">;</span>    <span class="co">// após o último</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>   Tipo le<span class="op">()</span>       <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>atual<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> atual <span class="op">==</span> fim<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">()</span>  <span class="op">{</span> atual<span class="op">++;</span> <span class="op">}</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>IteradorTAD<span class="op">&lt;</span>IteradorVetorInt<span class="op">&gt;);</span></span></code></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>same_as<span class="op">&lt;</span><span class="kw">typename</span> It<span class="op">::</span>Tipo<span class="op">,</span> T<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">requires</span><span class="op">(</span>It it<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> it<span class="op">.</span>terminou<span class="op">()</span> <span class="op">};</span>  <span class="co">// fim da origem?</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> it<span class="op">.</span>proximo<span class="op">()</span> <span class="op">};</span>   <span class="co">// avança</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> IteradorVetorInt <span class="op">{</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">int</span><span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> Tipo<span class="op">*</span> atual<span class="op">;</span>  <span class="co">// posição atual</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> Tipo<span class="op">*</span> fim<span class="op">;</span>    <span class="co">// após o último</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>   Tipo le<span class="op">()</span>       <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>atual<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> atual <span class="op">==</span> fim<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">()</span>  <span class="op">{</span> atual<span class="op">++;</span> <span class="op">}</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>IteradorTAD<span class="op">&lt;</span>IteradorVetorInt<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;);</span></span></code></pre></div>
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb6"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> v<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">30</span><span class="op">};</span></span>
@@ -684,9 +686,9 @@ posicionado no primeiro elemento e permite visitar os demais.</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> P<span class="op">&gt;</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> P<span class="op">,</span> <span class="kw">typename</span> T<span class="op">&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> PercorrivelTAD <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>P p<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> p<span class="op">.</span>iterador<span class="op">()</span> <span class="op">}</span> <span class="op">-&gt;</span> IteradorTAD<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> p<span class="op">.</span>iterador<span class="op">()</span> <span class="op">}</span> <span class="op">-&gt;</span> IteradorTAD<span class="op">&lt;</span>T<span class="op">&gt;;</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> TrioInt <span class="op">{</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">int</span><span class="op">;</span></span>
@@ -696,7 +698,7 @@ posicionado no primeiro elemento e permite visitar os demais.</p>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>              <span class="op">.</span>fim <span class="op">=</span> dados <span class="op">+</span> <span class="dv">3</span><span class="op">};</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>PercorrivelTAD<span class="op">&lt;</span>TrioInt<span class="op">&gt;);</span></span></code></pre></div>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>PercorrivelTAD<span class="op">&lt;</span>TrioInt<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;);</span></span></code></pre></div>
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb8"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de busca no trio</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> buscaTrio<span class="op">(</span><span class="kw">auto</span> it<span class="op">,</span> <span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
@@ -719,8 +721,8 @@ possível fazer melhor?</p>
 <section id="exercício-para-casa-reflexão" class="slide level2">
 <h2>Exercício (para casa) / reflexão</h2>
 <p>Implemente um Iterador Mutável.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> It<span class="op">&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> IteradorMutavelTAD <span class="op">=</span> IteradorTAD<span class="op">&lt;</span>It<span class="op">&gt;</span> <span class="op">&amp;&amp;</span> VistaMutavelTAD<span class="op">&lt;</span>It<span class="op">&gt;;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> It<span class="op">,</span> <span class="kw">typename</span> T<span class="op">&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> IteradorMutavelTAD <span class="op">=</span> IteradorTAD<span class="op">&lt;</span>It<span class="op">,</span> T<span class="op">&gt;</span> <span class="op">&amp;&amp;</span> VistaMutavelTAD<span class="op">&lt;</span>It<span class="op">&gt;;</span></span></code></pre></div>
 <p>Quais métodos ele teria? Para que serviria?</p>
 <p>Outra reflexão: Vistas são TAD muito simples e não carregam recursos
 dinâmicos (<em>non-owning</em>), portanto <strong>não terão</strong>
@@ -807,12 +809,12 @@ Listas Encadeadas, embora também possa ser feito através de Arrays.</p>
 Como consideramos um <em>saco genérica</em> (saco de inteiro, char,
 etc), definimos um <em>conceito genérico</em> chamado
 <code>SacoTAD</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> S<span class="op">&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> SacoTAD <span class="op">=</span> PercorrivelTAD<span class="op">&lt;</span>S<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">requires</span><span class="op">(</span>S s<span class="op">,</span> <span class="kw">typename</span> S<span class="op">::</span>Tipo t<span class="op">,</span> <span class="kw">typename</span> S<span class="op">::</span>ItTipo it<span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> S<span class="op">,</span> <span class="kw">typename</span> T<span class="op">&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> SacoTAD <span class="op">=</span> PercorrivelTAD<span class="op">&lt;</span>S<span class="op">,</span> T<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">requires</span><span class="op">(</span>S s<span class="op">,</span> T t<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> s<span class="op">.</span>adiciona<span class="op">(</span>t<span class="op">)</span> <span class="op">};</span>  <span class="co">// insere elemento</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> s<span class="op">.</span>busca<span class="op">(</span>t<span class="op">)</span> <span class="op">};</span>     <span class="co">// posição de &#39;t&#39; (ou terminado)</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> s<span class="op">.</span>remove<span class="op">(</span>it<span class="op">)</span> <span class="op">}</span> <span class="op">-&gt;</span> IteradorTAD<span class="op">;</span> <span class="co">// remove da posição &#39;it&#39;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> s<span class="op">.</span>remove<span class="op">(</span>s<span class="op">.</span>iterador<span class="op">())</span> <span class="op">}</span> <span class="op">-&gt;</span> IteradorTAD<span class="op">&lt;</span>T<span class="op">&gt;;</span> <span class="co">// remove da posição &#39;it&#39;</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> s<span class="op">.</span>tamanho<span class="op">()</span> <span class="op">};</span>    <span class="co">// número de elementos</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
@@ -821,7 +823,7 @@ etc), definimos um <em>conceito genérico</em> chamado
 <p>Antes de completar as funções pendentes, utilizaremos um
 <code>SacoTAD</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main <span class="op">()</span> <span class="op">{</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   SacoTAD <span class="kw">auto</span> s <span class="op">=</span> <span class="op">...;</span> <span class="co">// alguma implementação</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   SacoTAD<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> <span class="kw">auto</span> s <span class="op">=</span> <span class="op">...;</span> <span class="co">// alguma implementação</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>cria<span class="op">();</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;c&#39;</span><span class="op">);</span> </span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;a&#39;</span><span class="op">);</span></span>
@@ -864,30 +866,28 @@ iterador.</p>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>   NoEnc1<span class="op">*</span> proximo<span class="op">;</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> IteradorNoEnc1 <span class="op">{</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>   NoEnc1<span class="op">*</span> no<span class="op">;</span>      <span class="co">// no atual</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> le<span class="op">();</span>       <span class="co">// da Vista (inglês &#39;current&#39;)</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">();</span> <span class="co">// inglês &#39;isDone&#39;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">();</span>  <span class="co">// inglês &#39;next&#39;</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">char</span><span class="op">;</span>  <span class="co">// tipo associado</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>   NoEnc1<span class="op">*</span> no<span class="op">;</span>      <span class="co">// no atual</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> le<span class="op">();</span>       <span class="co">// da Vista (inglês &#39;current&#39;)</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">();</span> <span class="co">// inglês &#39;isDone&#39;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">();</span>  <span class="co">// inglês &#39;next&#39;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
 <section id="implementação-ii" class="slide level2">
 <h2>Implementação (II)</h2>
 <div class="sourceCode" id="cb17"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> ListaEnc1 <span class="op">{</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">char</span><span class="op">;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> ItTipo <span class="op">=</span> IteradorNoEnc1<span class="op">;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>   NoEnc1<span class="op">*</span> inicio<span class="op">;</span> <span class="co">// inicio da lista</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> N<span class="op">;</span>          <span class="co">// num. de elementos na lista</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> cria<span class="op">();</span>    <span class="co">// inicializa agregado</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> libera<span class="op">();</span>  <span class="co">// finaliza agregado</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> adiciona<span class="op">(</span>Tipo dado<span class="op">);</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>   ItTipo iterador<span class="op">();</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>   ItTipo busca<span class="op">(</span>Tipo dado<span class="op">);</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>   ItTipo remove<span class="op">(</span>ItTipo it<span class="op">);</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> tamanho<span class="op">();</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se agregado ListaEnc1 satisfaz conceito SacoTAD</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>SacoTAD<span class="op">&lt;</span>ListaEnc1<span class="op">&gt;);</span></span></code></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>   NoEnc1<span class="op">*</span> inicio<span class="op">;</span> <span class="co">// inicio da lista</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> N<span class="op">;</span>          <span class="co">// num. de elementos na lista</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> cria<span class="op">();</span>    <span class="co">// inicializa agregado</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> libera<span class="op">();</span>  <span class="co">// finaliza agregado</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> adiciona<span class="op">(</span><span class="dt">char</span> dado<span class="op">);</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>   IteradorNoEnc1 iterador<span class="op">();</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>   IteradorNoEnc1 busca<span class="op">(</span><span class="dt">char</span> dado<span class="op">);</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>   IteradorNoEnc1 remove<span class="op">(</span>IteradorNoEnc1 it<span class="op">);</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> tamanho<span class="op">();</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se agregado ListaEnc1 satisfaz conceito SacoTAD</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>SacoTAD<span class="op">&lt;</span>ListaEnc1<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
 </section>
 <section id="utilização-da-listaenc1" class="slide level2">
 <h2>Utilização da ListaEnc1</h2>
@@ -955,19 +955,20 @@ novo elemento na “cabeça” da lista (no início).</p>
 <p>O iterador terminou quando chega à <strong>sentinela</strong>, o
 único nó sem próximo.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> IteradorNoEnc1 <span class="op">{</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>   NoEnc1<span class="op">*</span> no<span class="op">;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> le<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> no<span class="op">-&gt;</span>dado<span class="op">;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> no<span class="op">-&gt;</span>proximo <span class="op">==</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>      no <span class="op">=</span> no<span class="op">-&gt;</span>proximo<span class="op">;</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se agregado IteradorNoEnc1 satisfaz conceito IteradorTAD</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>IteradorTAD<span class="op">&lt;</span>IteradorNoEnc1<span class="op">&gt;);</span></span></code></pre></div>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">char</span><span class="op">;</span>  <span class="co">// tipo associado</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   NoEnc1<span class="op">*</span> no<span class="op">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> le<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> no<span class="op">-&gt;</span>dado<span class="op">;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> no<span class="op">-&gt;</span>proximo <span class="op">==</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>      no <span class="op">=</span> no<span class="op">-&gt;</span>proximo<span class="op">;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se agregado IteradorNoEnc1 satisfaz conceito IteradorTAD</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>IteradorTAD<span class="op">&lt;</span>IteradorNoEnc1<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
 </section>
 <section id="implementação-iterador-na-lista" class="slide level2">
 <h2>Implementação: Iterador na Lista</h2>
@@ -1094,7 +1095,7 @@ lista, pode-se utilizar um nó sentinela de Cabeça e Cauda.</p>
 uso em <em>for</em> do tipo <em>range</em>, em C++. Exemplo:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   SacoTAD <span class="kw">auto</span> s <span class="op">=</span> ListaEnc1<span class="op">();</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> s <span class="op">=</span> ListaEnc1<span class="op">();</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>cria<span class="op">();</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;c&#39;</span><span class="op">);</span></span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;a&#39;</span><span class="op">);</span></span>
@@ -1171,28 +1172,25 @@ elementos sequencialmente à medida que forem adicionados.</p>
 <code>MAX_N</code>.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">int</span> MAX_N <span class="op">=</span> <span class="dv">10000</span><span class="op">;</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> SacoVetor1 <span class="op">{</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">char</span><span class="op">;</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> ItTipo <span class="op">=</span> IteradorVetor1<span class="op">;</span> <span class="co">// definido adiante</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>   Tipo elementos<span class="op">[</span>MAX_N<span class="op">];</span> <span class="co">// elementos</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> N<span class="op">;</span>                 <span class="co">// num. de elementos</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> cria<span class="op">();</span>           <span class="co">// inicializa agregado</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> libera<span class="op">();</span>         <span class="co">// finaliza agregado</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> adiciona<span class="op">(</span>Tipo dado<span class="op">);</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>   ItTipo iterador<span class="op">();</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>   ItTipo busca<span class="op">(</span>Tipo dado<span class="op">);</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>   ItTipo remove<span class="op">(</span>ItTipo it<span class="op">);</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> tamanho<span class="op">();</span></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se agregado SacoVetor1 satisfaz conceito SacoTAD</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>SacoTAD<span class="op">&lt;</span>SacoVetor1<span class="op">&gt;);</span></span></code></pre></div>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> elementos<span class="op">[</span>MAX_N<span class="op">];</span> <span class="co">// elementos</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> N<span class="op">;</span>                 <span class="co">// num. de elementos</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> cria<span class="op">();</span>           <span class="co">// inicializa agregado</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> libera<span class="op">();</span>         <span class="co">// finaliza agregado</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> adiciona<span class="op">(</span><span class="dt">char</span> dado<span class="op">);</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>   IteradorVetor1 iterador<span class="op">();</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>   IteradorVetor1 busca<span class="op">(</span><span class="dt">char</span> dado<span class="op">);</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>   IteradorVetor1 remove<span class="op">(</span>IteradorVetor1 it<span class="op">);</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> tamanho<span class="op">();</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se agregado SacoVetor1 satisfaz conceito SacoTAD</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>SacoTAD<span class="op">&lt;</span>SacoVetor1<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
 </section>
 <section id="utilização-da-sacovetor1" class="slide level2">
 <h2>Utilização da SacoVetor1</h2>
 <p>Antes de completar as funções pendentes, utilizaremos a
 <code>SacoVetor1</code>:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main <span class="op">()</span> <span class="op">{</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   SacoTAD <span class="kw">auto</span> s <span class="op">=</span> SacoVetor1<span class="op">();</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> s <span class="op">=</span> SacoVetor1<span class="op">();</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>cria<span class="op">();</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;c&#39;</span><span class="op">);</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>   s<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;a&#39;</span><span class="op">);</span></span>
@@ -1236,14 +1234,15 @@ função <code>libera</code> não desaloca nada.</p>
 <p>O iterador do vetor é o mesmo <code>IteradorVetorInt</code> dos
 conceitos, agora para <code>char</code>.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> IteradorVetor1 <span class="op">{</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> atual<span class="op">;</span>  <span class="co">// posição atual</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> fim<span class="op">;</span>    <span class="co">// após o último</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> le<span class="op">()</span>       <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>atual<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> atual <span class="op">==</span> fim<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">()</span>  <span class="op">{</span> atual<span class="op">++;</span> <span class="op">}</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se agregado IteradorVetor1 satisfaz conceito IteradorTAD</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>IteradorTAD<span class="op">&lt;</span>IteradorVetor1<span class="op">&gt;);</span></span></code></pre></div>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> <span class="dt">char</span><span class="op">;</span>  <span class="co">// tipo associado</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> atual<span class="op">;</span>  <span class="co">// posição atual</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> fim<span class="op">;</span>    <span class="co">// após o último</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> le<span class="op">()</span>       <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>atual<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> atual <span class="op">==</span> fim<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">()</span>  <span class="op">{</span> atual<span class="op">++;</span> <span class="op">}</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica se agregado IteradorVetor1 satisfaz conceito IteradorTAD</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>IteradorTAD<span class="op">&lt;</span>IteradorVetor1<span class="op">,</span> <span class="dt">char</span><span class="op">&gt;);</span></span></code></pre></div>
 </section>
 <section id="implementação-iterador-no-vetor" class="slide level2">
 <h2>Implementação: Iterador no Vetor</h2>
