@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Sacos
-date: 29/03/2021
+date: 29/03/2021-02/11/2026
 transition: linear
 fontsize: 10
 aspectratio: 169
@@ -56,7 +56,7 @@ O *Saco* é também conhecido como *multiset* e alguns autores não consideram o
 
 Sacos são estruturas fundamentais na própria computação, como o conceito de `multiset`. Diferente de um `set`, não se exige que elementos sejam únicos. 
 
-Em Python, a classe `Counter` representa um tipo de saco. Em `Java`, a interface Bag representa um saco. Em C++, pode-se considerar containers como `std::list` e `std::vector`.
+Em Python, a classe `Counter` representa um tipo de saco. Em `Java`, a interface Bag (da *Apache Commons Collections*) representa um saco. Em C++, pode-se considerar containers como `std::list` e `std::vector`, que são *sequências*, e também em `std::unordered_multiset` (saco sem ordem específica, com repetições).
 
 Mas antes de definir um Saco, precisamos definir outros componentes básicos: Vista, Iterador e Percorrível.
 
@@ -285,6 +285,67 @@ Quais métodos ele teria? Para que serviria?
 
 Outra reflexão: Vistas são TAD muito simples e não carregam recursos dinâmicos (*non-owning*), portanto **não terão** métodos `cria()` e `libera()` nesse curso.
 
+-------
+
+## Tópico Avançado: Vista Verificável
+
+A validade da Vista pode ser verificada pelo compilador (Clang 23+) com **construtor** cujo parâmetro seja anotado com `lifetimebound`, ligando a vida da Vista à vida da origem.
+
+::: --
+
+:::::::::: ||
+
+::::: |{50%}
+
+```.cpp
+#if __has_cpp_attribute(clang::lifetimebound)
+#define LFTM [[clang::lifetimebound]]
+#else
+#define LFTM  // outros compiladores: ignora
+#endif
+
+struct VistaVerificavelInt {
+   using Tipo = int;
+   const Tipo* origem;
+   VistaVerificavelInt(const Tipo* x LFTM)
+      : origem(x) {}
+   Tipo le() { return *origem; }
+};
+static_assert(VistaTAD<VistaVerificavelInt>);
+```
+
+:::::
+
+::::: |{45%}
+
+```.cpp
+// Exemplo de uso (com erro!)
+int z = 0;
+VistaVerificavelInt y{&z};
+{
+   int x = 10;
+   y = VistaVerificavelInt(&x);
+}  // x morre aqui...
+println("{}", y.le()); // ... y ainda usa
+```
+
+```
+
+$ clang++ -std=c++20 -Wlifetime-safety ...
+warning: local variable ‘x’ does not
+live long enough
+note: local variable ‘x’ is destroyed here
+note: later used here
+```
+
+:::::
+
+::::::::::
+
+:::
+
+**Desafio:** e com a `VistaInt` (sem construtor), o compilador avisa? Por quê?
+
 --------
 
 ## Operações de um Saco (TAD)
@@ -294,7 +355,7 @@ consiste de 4 operações básicas:
 
 - adicionar (*add*)
 - buscar (*find*)
-- remover (*remove*)
+- remover (*remove*): remove o elemento de uma posição (iterador) e retorna um iterador para o seguinte (*todos os demais iteradores do saco ficam inválidos*)
 - tamanho (*size*): retorna o número de elementos
 
 Também inclui sua operação **Percorrível** (de *range*/iterador):
@@ -327,7 +388,7 @@ concept SacoTAD = PercorrivelTAD<S> &&
    requires(S s, typename S::Tipo t, typename S::ItTipo it) {
    { s.adiciona(t) };  // insere elemento
    { s.busca(t) };     // posição de 't' (ou terminado)
-   { s.remove(it) };   // remove da posição 'it'
+   { s.remove(it) } -> IteradorTAD; // remove da posição 'it'
    { s.tamanho() };    // número de elementos
 };
 ```
@@ -366,8 +427,9 @@ As listas encadeadas possibilitam a inclusão de elementos em quantidade arbitr�
 
 Veja operações: `adiciona('c'); adiciona('a'); adiciona('b'); adiciona('a');`
 
-$$ [inicio \rightarrow] [ a | \rightarrow ] \;\; [ b |  \rightarrow ] \;\; [ a | \rightarrow ] \;\; [ c | \rightarrow 0 ] $$
+$$ [inicio \rightarrow] [ a | \rightarrow ] \;\; [ b | \rightarrow ] \;\; [ a | \rightarrow ] \;\; [ c | \rightarrow ] \;\; [ S | \rightarrow 0 ] $$
 
+O nó $S$ é uma **sentinela**: marca o fim da lista e sempre existe, mesmo com a lista vazia.
 
 -------
 
@@ -408,7 +470,7 @@ struct ListaEnc1 {
    void adiciona(Tipo dado);
    ItTipo iterador();
    ItTipo busca(Tipo dado);
-   void remove(ItTipo it);
+   ItTipo remove(ItTipo it);
    int tamanho();
 };
 // verifica se agregado ListaEnc1 satisfaz conceito SacoTAD
@@ -452,8 +514,8 @@ A operação `cria` inicializa a estrutura para uso, e a função `libera` desal
 struct ListaEnc1 {
 ...
 void cria() {
+   inicio = new NoEnc1{}; // sentinela: dado = 0, proximo = 0
    N = 0;
-   inicio = 0;
 }
 
 void libera() {
@@ -491,9 +553,9 @@ void adiciona(char dado) {
 -------
 
 
-## Implementação: Iterador
+## Implementação: Iterador de Lista
 
-As operações do iterador utilizam um marcador/sentinela onde o ponteiro atual vale zero quando não existe mais um próximo.
+O iterador terminou quando chega à **sentinela**, o único nó sem próximo.
 
 ```.cpp
 struct IteradorNoEnc1 {
@@ -502,7 +564,7 @@ struct IteradorNoEnc1 {
       return no->dado;
    }
    bool terminou() {
-      return no == 0;
+      return no->proximo == 0;
    }
    void proximo() {
       no = no->proximo;
@@ -515,9 +577,9 @@ static_assert(IteradorTAD<IteradorNoEnc1>);
 
 ---------
 
-## Implementação: Itera
+## Implementação: Iterador na Lista
 
-A operação itera em uma lista encadeada retorna o iterador da lista, posicionado no começo.
+A operação `iterador` em uma lista encadeada retorna o iterador da lista, posicionado no começo.
 
 ```.cpp
 struct ListaEnc1 {
@@ -583,16 +645,65 @@ A remoção de um elemento ocorre a partir de um iterador.
 ```.cpp
 struct ListaEnc1 {
 ...
-void remove(IteradorNoEnc1 it)
-{
-   auto* prox = it.no->proximo;
-   (*it.no) = (*it.no->proximo); // sobrescrita
+IteradorNoEnc1 remove(IteradorNoEnc1 it) {
+   auto* prox = it.no->proximo; // sempre existe (no máximo, a sentinela)
+   *it.no = *prox;              // copia o seguinte
    delete prox;
-   N--; // N = N - 1
+   N--;
+   return it;                   // mesma posição, novo elemento
 }
 ...
 };
 ```
+
+-------
+
+## Removendo Durante o Percurso
+
+Após `remove`, **todos** os iteradores do saco ficam inválidos, **exceto o retornado**, que aponta para o elemento seguinte. Assim, para remover todas as ocorrências de um elemento, continuamos a partir dele:
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
+
+```.cpp
+// Exemplo de uso
+ListaEnc1 s;
+s.cria();
+s.adiciona('x'); s.adiciona('c');
+s.adiciona('x'); s.adiciona('a');
+s.adiciona('b'); s.adiciona('x');
+// remove todos os 'x' do saco 's'
+auto it = s.iterador();
+// lista: x b a x c x
+```
+
+:::::
+
+::::: |{45%}
+
+```.cpp
+while (!it.terminou()) {
+   if (it.le() == 'x')
+      // segue do retornado
+      it = s.remove(it); 
+   else
+      // só avança se manteve
+      it.proximo();
+}
+// lista: b a c
+s.libera();
+```
+
+:::::
+
+::::::::::
+
+:::
+
+**Desafio:** qual o custo desse laço na lista encadeada? E se `remove` não retornasse um iterador?
 
 # Extensões de Listas Encadeadas
 
@@ -604,9 +715,7 @@ A implementação de listas encadeadas tipicamente permite acesso bidirecional, 
 Este tipo de lista é chamado de *Lista Duplamente Encadeada*.
 
 ```.cpp
-class NoDuploEnc1
-{
-public:
+struct NoDuploEnc1 {
    char dado;
    NoDuploEnc1* anterior;
    NoDuploEnc1* proximo;
@@ -619,73 +728,71 @@ public:
 
 --------
 
-## Iteradores de *Range* em C++
+## Avançado: Iteradores de *Range* em C++
 
 É possível transformar a implementação da `ListaEnc1` para uso em *for* do tipo *range*, em C++. Exemplo:
 
 ```.cpp
 
 int main() {
-   SacoTAD s = ListaEnc1();
+   SacoTAD auto s = ListaEnc1();
    s.cria();
    s.adiciona('c');
    s.adiciona('a');
    s.adiciona('b');
    s.adiciona('a');
-   printf("%d\n", s.busca('a').terminou()); // 0
-   printf("%d\n", s.busca('d').terminou()); // 1
-   printf("%d\n", buscarec(s.itera(), 'd').terminou()); // 1
+   println("{}", s.busca('a').terminou()); // 0
+   println("{}", s.busca('d').terminou()); // 1
+   println("{}", buscarec(s.iterador(), 'd').terminou()); // 1
    for (auto x : s)
-      printf("%c\n", x); // a b a c
+      println("{}", x); // a b a c
    ...
+}
 ```
-
 
 --------
 
-## Implementação: Iterador de *Range*
+## Avançado: Implementação: Iterador de *Range* em C++
 
-Por padrão, a linguagem C++ exige os métodos `begin()` e `end()` para inicio e fim do processo de iteração, no agregado `ListaEnc1`.
-Por outro lado, os métodos `terminou()`, `proximo()` e `atual()` são substituídos pelos operadores `==`, `++` e `*`, no agregado `IteradorNoEnc1`.
+Por padrão, a linguagem C++ exige os métodos `begin()` e `end()` para início e fim do processo de iteração, no agregado `ListaEnc1`.
+Como nosso iterador sabe sozinho quando terminou, o `end()` retorna apenas um **marcador de fim** (`std::default_sentinel`, do C++20).
 
 ```.cpp
-class ListaEnc1
-{
+struct ListaEnc1 {
 ...
    // iterador de início
    IteradorNoEnc1 begin() {
-      return itera();
+      return iterador();
    }
 
-   // sentinela de final da iteração
-   IteradorNoEnc1 end() {
-      return IteradorNoEnc1{.no = 0};
+   // marcador de final da iteração
+   std::default_sentinel_t end() {
+      return {};
    }
 };
 ```
 
 --------
 
-## Implementação de Operadores no Iterador 
+## Avançado: Implementação de Operadores no Iterador
 
-**Tópico Avançado**: os métodos `terminou()`, `proximo()` e `atual()` são substituídos pelos operadores `==`, `++` e `*`, no agregado `IteradorNoEnc1`.
+**Tópico Avançado**: os métodos `terminou()`, `proximo()` e `le()` são substituídos pelos operadores `==`, `++` e `*`, no agregado `IteradorNoEnc1`.
 
 ```.cpp
-class IteradorNoEnc1
-{
-public:
+struct IteradorNoEnc1 {
    NoEnc1* no;    // elemento atual
    ...            // demais métodos omitidos
-   
-   char operator*() { return atual(); }
-   
-   bool operator!=(const IteradorNoEnc1& other) {
-      return no != other.no;
+
+   char operator*() { return le(); }
+
+   bool operator==(std::default_sentinel_t s) {
+      return terminou();  // chegou ao fim?
    }
-   
+
    void operator++() { proximo(); }
 };
 ```
+
 
 ## Fim implementações (listas)
 
@@ -710,28 +817,29 @@ $$  0 \; 1 \; 2 \; 3 $$
 
 ## Implementação
 
-Consideraremos um vetor de caracteres pré-alocado com capacidade `MAX_N`. 
+Consideraremos um vetor de caracteres pré-alocado com capacidade `MAX_N`.
 
 ```.cpp
 constexpr int MAX_N = 10000;
-class SacoVetor1 {
-public:
-   typedef char Tipo;
-   typedef IteradorVetor1 ItTipo;
+struct SacoVetor1 {
+   using Tipo = char;
+   using ItTipo = IteradorVetor1; // definido adiante
 
    Tipo elementos[MAX_N]; // elementos
-   int N;                 // num. de elementos na lista
+   int N;                 // num. de elementos
    void cria();           // inicializa agregado
    void libera();         // finaliza agregado
    void adiciona(Tipo dado);
-   ItTipo itera();
+   ItTipo iterador();
    ItTipo busca(Tipo dado);
-   void remove(ItTipo it);
+   ItTipo remove(ItTipo it);
+   int tamanho();
 };
+// verifica se agregado SacoVetor1 satisfaz conceito SacoTAD
+static_assert(SacoTAD<SacoVetor1>);
 ```
 
 -------
-
 
 ## Utilização da SacoVetor1
 
@@ -739,21 +847,20 @@ Antes de completar as funções pendentes, utilizaremos a `SacoVetor1`:
 
 ```.cpp
 int main () {
-   SacoTAD s = SacoVetor1();
+   SacoTAD auto s = SacoVetor1();
    s.cria();
    s.adiciona('c');
    s.adiciona('a');
    s.adiciona('b');
    s.adiciona('a');
-   printf("%d\n", s.busca('a').terminou());
-   printf("%d\n", s.busca('d').terminou());
-   for(auto it = s.itera(); !it.terminou(); it.proximo()) {
-      printf("%c\n", it.atual()); // c a b a (nesta ordem)
-   }
-   l.libera();
-
+   println("{}", s.busca('a').terminou());
+   println("{}", s.busca('d').terminou());
+   for (auto it = s.iterador(); !it.terminou(); it.proximo())
+      println("{}", it.le()); // c a b a (nesta ordem)
+   s.libera();
    ...
-``` 
+}
+```
 
 ---------
 
@@ -762,138 +869,106 @@ int main () {
 A operação `cria` inicializa a estrutura para uso, e a função `libera` não desaloca nada.
 
 ```.cpp
-class SacoVetor1 {
+struct SacoVetor1 {
 ...
-void cria() {
-   this->N = 0;
-}
-
-void libera() {
-   this->N = 0;
-}
+void cria()   { N = 0; }
+void libera() { N = 0; }
 ...
-}
+};
 ```
+
 ---------
 
 ## Implementação: Adiciona
 
-A operação `adiciona` no final do vetor.
+A operação `adiciona` insere no final do vetor.
 
 ```.cpp
-class SacoVetor1 {
+struct SacoVetor1 {
+...
+int tamanho() { return N; }
 ...
 void adiciona(char dado) {
-   this->elementos[N] = dado;
-   this->N++; // N = N + 1
+   elementos[N] = dado;
+   N++; // N = N + 1
 }
 ...
-}
+};
 ```
 
 -------
 
-## Implementação do Iterador
+## Implementação: Iterador de Vetor
 
-Precisamos ainda de uma definição de iterador.
+O iterador do vetor é o mesmo `IteradorVetorInt` dos conceitos, agora para `char`.
+
 ```.cpp
-class IteradorVetor1
-{
-public:
-   char* elemento;  // elemento atual
-   char* sentinela; // elemento sentinela "final"
-   char atual() { return *this->elemento };
-   bool terminou() { return elemento == sentinela; }
-   void proximo() { this->elemento++; }
+struct IteradorVetor1 {
+   const char* atual;  // posição atual
+   const char* fim;    // após o último
+   char le()       { return *atual; }
+   bool terminou() { return atual == fim; }
+   void proximo()  { atual++; }
 };
-// verifica se agregado satisfaz conceito IteradorTAD
+// verifica se agregado IteradorVetor1 satisfaz conceito IteradorTAD
 static_assert(IteradorTAD<IteradorVetor1>);
-// verifica se agregado SacoVetor1 satisfaz conceito SacoTAD
-static_assert(SacoTAD<SacoVetor1>);
 ```
 
 ---------
 
-## Implementação: Itera
+## Implementação: Iterador no Vetor
 
-A operação itera adiciona a posição atual (vetor decai a um ponteiro), bem como uma posição sentinela final.
+A operação `iterador` retorna o início do vetor e a posição logo após o último elemento.
 
 ```.cpp
-class SacoVetor1 {
+struct SacoVetor1 {
 ...
-IteradorVetor1 itera() {
-   IteradorVetor1 it{
-       .elemento = this->elementos,
-       .sentinela = this->elementos + N};
-   return it;
+IteradorVetor1 iterador() {
+   return {.atual = elementos, .fim = elementos + N};
 }
 ...
-}
+};
 ```
 
 -------
 
 ## Implementação: Busca
 
-A operação busca em um vetor faz um percurso direto (alternativa sem utilizar o iterador).
+A busca no vetor é idêntica à da lista: só usa o iterador!
 
 ```.cpp
-class SacoVetor1 {
+struct SacoVetor1 {
 ...
 IteradorVetor1 busca(char dado) {
-   for (int i = 0; i < N; i++)
-      if (elementos[i] == dado)
-         return IteradorVetor1{
-             .elemento = this->elementos + i,
-             .sentinela = this->elementos + N};
-   return IteradorVetor1{
-       .elemento = this->elementos + N,
-       .sentinela = this->elementos + N};
+   auto it = iterador();
+   while (!it.terminou() && it.le() != dado)
+      it.proximo();
+   return it;
 }
 ...
-}
-```
-
--------
-
-## Implementação: Busca Recursiva
-
-A busca pode ser feita de forma recursiva também (utilizando o iterador):
-
-```.cpp
-IteradorVetor1 buscarec(IteradorVetor1 it, char dado)
-{
-   if(it.terminou() || it.atual() == dado)
-      return it;
-   else
-   {
-      it.proximo();
-      return buscarec(it, dado);
-   }
-}
+};
 ```
 
 -------
 
 ## Implementação: Remoção
 
-A remoção de um elemento exige realocação/cópia dos elementos posteriores.
+Como o Saco **não tem ordem**, basta trazer o último elemento para a posição removida: custo $O(1)$!
 
 ```.cpp
-class SacoVetor1 {
+struct SacoVetor1 {
 ...
-void remove(IteradorVetor1 it)
-{
-   auto* i = it.elemento;
-   while (i != (this->elementos + N)) {
-      (*i) = *(i + 1);
-      i++;
-   }
-   this->N--; // N = N - 1
+IteradorVetor1 remove(IteradorVetor1 it) {
+   int i = it.atual - elementos;  // posição removida
+   elementos[i] = elementos[N-1]; // traz o último para cá
+   N--;
+   return {.atual = elementos + i, .fim = elementos + N};
 }
 ...
-}
+};
 ```
+
+**Desafio:** por que o iterador retornado aponta para a **mesma** posição? E por que precisa de um novo `fim`?
 
 
 ## Fim implementações
@@ -903,14 +978,30 @@ Fim parte de implementações.
 
 # Análise de Complexidade
 
---------
-
 ## Saco: Revisão Geral
 
-- Para que serve um saco?
-- Quais são os métodos de uma saco?
-- Qual é a complexidade de cada método de uma Lista Encadeada?
-- Quais recursos são desejáveis para estender a funcionalidade de uma lista?
+- Para que serve um saco? Por que ele é **Percorrível**?
+- O que o contrato de `remove` garante sobre os iteradores?
+- Qual é a complexidade de cada operação em cada implementação?
+
+. . .
+
+::: -
+
+| Operação | Lista (sentinela) | Vetor (`MAX_N`) |
+|---|---|---|
+| `cria` | $O(1)$ (aloca a sentinela) | $O(1)$ |
+| `libera` | $O(n)$ (libera cada nó) | $O(1)$ |
+| `adiciona` | $O(1)$ (no início) | $O(1)$ (no fim, se houver espaço) |
+| `iterador`, `tamanho` | $O(1)$ | $O(1)$ |
+| `busca` | $O(n)$ | $O(n)$ |
+| `remove` | $O(1)$ (copia o seguinte) | $O(1)$ (traz o último) |
+| remover todos os `x` | $O(n)$ | $O(n)$ |
+| espaço | $n+1$ nós | $MAX\_N$ fixo |
+
+:::
+
+**Reflexão:** as duas remoções são $O(1)$ por caminhos diferentes, e ambas só funcionam porque o Saco **não tem ordem**. A busca é $O(n)$ nas duas: nas próximas aulas faremos melhor!
 
 ---------
 
