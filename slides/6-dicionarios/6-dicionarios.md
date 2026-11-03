@@ -2,7 +2,7 @@
 author: Igor Machado Coelho
 title: Estruturas de Dados I
 subtitle: Dicionários Ordenados e Árvores Balanceadas
-date: 01/06/2025
+date: 01/06/2025-03/11/2026
 transition: cube
 fontsize: 10
 aspectratio: 169
@@ -93,13 +93,61 @@ Exemplo com as chaves `B D E F L M N O S`:
 
 Com elas, construímos as demais perguntas: **mínimo** (primeira do percurso), **intervalo** $[a, b]$ (de `buscaMaiorIgual(a)` até passar de $b$), **sucessor** de uma chave, etc.
 
-Na STL: `lower_bound` e `upper_bound` do `std::map`. No Java: `ceilingKey` e `higherKey` do `TreeMap`.
+Na STL: `lower_bound` (buscaMaiorIgual) e `upper_bound` (buscaMaior) do `std::map`. No Java: `ceilingKey` e `higherKey` do `TreeMap`.
+
+------
+
+## O Tipo Entrada
+
+Ao percorrer um dicionário, o iterador lê a **entrada atual**: uma **vista** da chave e uma **vista mutável** do valor, que ficam *dentro* do dicionário.
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
+
+```.cpp
+template <typename T> struct Vista {
+   using Tipo = T;
+   const T* origem;
+   T le() { return *origem; }
+};
+template <typename T> struct VistaMutavel {
+   using Tipo = T;
+   T* origem;
+   T le() { return *origem; }
+   void altera(T v) { *origem = v; }
+};
+template <typename K, typename V>
+struct Entrada {
+   Vista<K>        chave;  // só leitura!
+   VistaMutavel<V> valor;  // leitura e escrita
+};
+```
+
+:::::
+
+::::: |{45%}
+
+São as Vistas da aula de Sacos, agora **genéricas** (`Vista<int>` é a nossa `VistaInt`).
+
+- a **chave** é só uma `Vista`: alterá-la quebraria a **ordem** da estrutura!
+- o **valor** é uma `VistaMutavel`: pode ser alterado **no próprio dicionário**
+
+Na STL: `std::pair<const K, V>&`. No Java: `Map.Entry<K, V>` (tem `setValue`, mas não `setKey`).
+
+:::::
+
+::::::::::
+
+:::
 
 ------
 
 ## Conceito: Dicionário Ordenado
 
-Um Dicionário Ordenado é um Dicionário **e** um Percorrível (de chaves), com as duas buscas por ordem:
+Um Dicionário Ordenado é um Dicionário **e** um Percorrível de **entradas** (em ordem de chave), com as duas buscas por ordem:
 
 ::: -
 
@@ -111,13 +159,15 @@ Um Dicionário Ordenado é um Dicionário **e** um Percorrível (de chaves), com
 template <typename D, typename K, typename V>
 concept DicionarioOrdenadoTAD =
    DicionarioTAD<D, K, V> &&
-   PercorrivelTAD<D, K> &&    // chaves em ordem
-   std::totally_ordered<K> && // comparáveis
+   PercorrivelTAD<D, Entrada<K, V>> &&
+   std::totally_ordered<K> &&  // comparáveis
    requires(D d, K k) {
-   // 1a posição com chave >= k
-   { d.buscaMaiorIgual(k) } -> IteradorTAD<K>;
-   // 1a posição com chave > k
-   { d.buscaMaior(k) }      -> IteradorTAD<K>;
+   // 1a entrada com chave >= k
+   { d.buscaMaiorIgual(k) }
+         -> IteradorTAD<Entrada<K, V>>;
+   // 1a entrada com chave > k
+   { d.buscaMaior(k) }
+         -> IteradorTAD<Entrada<K, V>>;
 };
 ```
 
@@ -127,10 +177,15 @@ concept DicionarioOrdenadoTAD =
 
 O iterador é uma **Vista** da entrada atual:
 
-- `le()`: lê a **chave**
-- `valor()`: lê o **valor** associado
-- `proximo()`: vai para a **próxima chave em ordem**
-- `terminou()`: passou da maior chave?
+```.cpp
+struct IteradorDicCF {
+   using Tipo = Entrada<char, float>;
+   ...
+   Tipo le();       // vistas {chave, valor}
+   bool terminou();
+   void proximo();  // próxima chave
+};
+```
 
 :::::
 
@@ -138,7 +193,7 @@ O iterador é uma **Vista** da entrada atual:
 
 :::
 
-***Atenção:*** como no Saco Ordenado, o conceito verifica que as operações **existem**, mas não que o percurso está **em ordem**: essa invariante o compilador não verifica!
+***Atenção:*** o conceito verifica que as operações **existem**, mas não que o percurso está **em ordem**: essa invariante o compilador não verifica!
 
 ------
 
@@ -155,13 +210,16 @@ O iterador é uma **Vista** da entrada atual:
 DicionarioOrdenadoTAD<char, float> auto d = ...;
 
 // mínimo: primeira chave do percurso
-println("{}", d.iterador().le());     // B
+println("{}",
+    d.iterador().le().chave.le());           // B
 
 // primeira chave >= 'G'
-println("{}", d.buscaMaiorIgual('G').le()); // L
+println("{}",
+    d.buscaMaiorIgual('G').le().chave.le()); // L
 
 // primeira chave > 'F'
-println("{}", d.buscaMaior('F').le());      // L
+println("{}",
+    d.buscaMaior('F').le().chave.le());      // L
 ```
 
 :::::
@@ -169,15 +227,17 @@ println("{}", d.buscaMaior('F').le());      // L
 ::::: |{45%}
 
 ```.cpp
-// todas as chaves em [D, M]
+// todas as entradas em [D, M]
 auto it = d.buscaMaiorIgual('D');
-while (!it.terminou() && it.le() <= 'M') {
-   println("{} -> {}", it.le(), it.valor());
+while (!it.terminou() &&
+       it.le().chave.le() <= 'M') {
+   auto [c, v] = it.le();
+   println("{} -> {}", c.le(), v.le());
    it.proximo();   // D E F L M
 }
 ```
 
-Custo: $O(\log n)$ para achar o início, mais $O(k)$ para visitar as $k$ chaves do intervalo.
+Custo: $O(\log n)$ para achar o início, mais $O(k)$ para visitar as $k$ entradas do intervalo.
 
 :::::
 
@@ -186,6 +246,55 @@ Custo: $O(\log n)$ para achar o início, mais $O(k)$ para visitar as $k$ chaves 
 :::
 
 **Desafio:** escreva `buscaMaior(c)` usando apenas `buscaMaiorIgual` e o iterador.
+
+------
+
+## Modificando Durante o Percurso
+
+**Alterar valores** não muda a estrutura: basta usar a vista mutável do valor, sem invalidar nada.
+
+**Inserir ou remover chaves** invalida os iteradores (como no Saco). Mas podemos **continuar pela chave**: `buscaMaior(c)` encontra a entrada seguinte!
+
+::: -
+
+:::::::::: ||
+
+::::: |{48%}
+
+```.cpp
+// dobra os valores em [D, M]
+auto it = d.buscaMaiorIgual('D');
+while (!it.terminou() &&
+       it.le().chave.le() <= 'M') {
+   auto [c, v] = it.le();
+   v.altera(2 * v.le()); // no lugar!
+   it.proximo();
+}
+```
+
+:::::
+
+::::: |{48%}
+
+```.cpp
+// remove as chaves de valor ímpar
+auto it = d.buscaMaiorIgual('D');
+while (!it.terminou() &&
+       it.le().chave.le() <= 'M') {
+   char c = it.le().chave.le();
+   if ((int)it.le().valor.le() % 2 == 1)
+      d.remove(c);       // invalida 'it'
+   it = d.buscaMaior(c); // continua pela CHAVE
+}
+```
+
+:::::
+
+::::::::::
+
+:::
+
+`buscaMaior(c)` custa $O(\log n)$, o mesmo que o `remove`: retomar o percurso sai **de graça** (assintoticamente)!
 
 ------
 

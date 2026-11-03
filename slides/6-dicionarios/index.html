@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Igor Machado Coelho">
-  <meta name="dcterms.date" content="2025-01-06">
   <title>Estruturas de Dados I</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -498,7 +497,7 @@ font-size: 1em;
   <h1 class="title">Estruturas de Dados I</h1>
   <p class="subtitle">Dicionários Ordenados e Árvores Balanceadas</p>
   <p class="author">Igor Machado Coelho</p>
-  <p class="date">01/06/2025</p>
+  <p class="date">01/06/2025-03/11/2026</p>
 </section>
 
 <section>
@@ -596,80 +595,165 @@ ser <strong>comparadas</strong>, e que oferece:</p>
 (de <code>buscaMaiorIgual(a)</code> até passar de
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>),
 <strong>sucessor</strong> de uma chave, etc.</p>
-<p>Na STL: <code>lower_bound</code> e <code>upper_bound</code> do
-<code>std::map</code>. No Java: <code>ceilingKey</code> e
-<code>higherKey</code> do <code>TreeMap</code>.</p>
+<p>Na STL: <code>lower_bound</code> (buscaMaiorIgual) e
+<code>upper_bound</code> (buscaMaior) do <code>std::map</code>. No Java:
+<code>ceilingKey</code> e <code>higherKey</code> do
+<code>TreeMap</code>.</p>
+</section>
+<section id="o-tipo-entrada" class="slide level2">
+<h2>O Tipo Entrada</h2>
+<p>Ao percorrer um dicionário, o iterador lê a <strong>entrada
+atual</strong>: uma <strong>vista</strong> da chave e uma <strong>vista
+mutável</strong> do valor, que ficam <em>dentro</em> do dicionário.</p>
+<div class="small">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb3"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> T<span class="op">&gt;</span> <span class="kw">struct</span> Vista <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> T<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">const</span> T<span class="op">*</span> origem<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   T le<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>origem<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> T<span class="op">&gt;</span> <span class="kw">struct</span> VistaMutavel <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> T<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   T<span class="op">*</span> origem<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   T le<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span>origem<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> altera<span class="op">(</span>T v<span class="op">)</span> <span class="op">{</span> <span class="op">*</span>origem <span class="op">=</span> v<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> K<span class="op">,</span> <span class="kw">typename</span> V<span class="op">&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Entrada <span class="op">{</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>   Vista<span class="op">&lt;</span>K<span class="op">&gt;</span>        chave<span class="op">;</span>  <span class="co">// só leitura!</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>   VistaMutavel<span class="op">&lt;</span>V<span class="op">&gt;</span> valor<span class="op">;</span>  <span class="co">// leitura e escrita</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</div><div class="column" style="width:45%;">
+<p>São as Vistas da aula de Sacos, agora <strong>genéricas</strong>
+(<code>Vista&lt;int&gt;</code> é a nossa <code>VistaInt</code>).</p>
+<ul>
+<li>a <strong>chave</strong> é só uma <code>Vista</code>: alterá-la
+quebraria a <strong>ordem</strong> da estrutura!</li>
+<li>o <strong>valor</strong> é uma <code>VistaMutavel</code>: pode ser
+alterado <strong>no próprio dicionário</strong></li>
+</ul>
+<p>Na STL: <code>std::pair&lt;const K, V&gt;&amp;</code>. No Java:
+<code>Map.Entry&lt;K, V&gt;</code> (tem <code>setValue</code>, mas não
+<code>setKey</code>).</p>
+</div>
+</div>
+</div>
 </section>
 <section id="conceito-dicionário-ordenado" class="slide level2">
 <h2>Conceito: Dicionário Ordenado</h2>
 <p>Um Dicionário Ordenado é um Dicionário <strong>e</strong> um
-Percorrível (de chaves), com as duas buscas por ordem:</p>
+Percorrível de <strong>entradas</strong> (em ordem de chave), com as
+duas buscas por ordem:</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb3"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> D<span class="op">,</span> <span class="kw">typename</span> K<span class="op">,</span> <span class="kw">typename</span> V<span class="op">&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> DicionarioOrdenadoTAD <span class="op">=</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>   DicionarioTAD<span class="op">&lt;</span>D<span class="op">,</span> K<span class="op">,</span> V<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   PercorrivelTAD<span class="op">&lt;</span>D<span class="op">,</span> K<span class="op">&gt;</span> <span class="op">&amp;&amp;</span>    <span class="co">// chaves em ordem</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>totally_ordered<span class="op">&lt;</span>K<span class="op">&gt;</span> <span class="op">&amp;&amp;</span> <span class="co">// comparáveis</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">requires</span><span class="op">(</span>D d<span class="op">,</span> K k<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   <span class="co">// 1a posição com chave &gt;= k</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span> <span class="op">-&gt;</span> IteradorTAD<span class="op">&lt;</span>K<span class="op">&gt;;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// 1a posição com chave &gt; k</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>buscaMaior<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span>      <span class="op">-&gt;</span> IteradorTAD<span class="op">&lt;</span>K<span class="op">&gt;;</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> D<span class="op">,</span> <span class="kw">typename</span> K<span class="op">,</span> <span class="kw">typename</span> V<span class="op">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> DicionarioOrdenadoTAD <span class="op">=</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   DicionarioTAD<span class="op">&lt;</span>D<span class="op">,</span> K<span class="op">,</span> V<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   PercorrivelTAD<span class="op">&lt;</span>D<span class="op">,</span> Entrada<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;&gt;</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>totally_ordered<span class="op">&lt;</span>K<span class="op">&gt;</span> <span class="op">&amp;&amp;</span>  <span class="co">// comparáveis</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">requires</span><span class="op">(</span>D d<span class="op">,</span> K k<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>   <span class="co">// 1a entrada com chave &gt;= k</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="op">-&gt;</span> IteradorTAD<span class="op">&lt;</span>Entrada<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;&gt;;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>   <span class="co">// 1a entrada com chave &gt; k</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>buscaMaior<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>         <span class="op">-&gt;</span> IteradorTAD<span class="op">&lt;</span>Entrada<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;&gt;;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
 <p>O iterador é uma <strong>Vista</strong> da entrada atual:</p>
-<ul>
-<li><code>le()</code>: lê a <strong>chave</strong></li>
-<li><code>valor()</code>: lê o <strong>valor</strong> associado</li>
-<li><code>proximo()</code>: vai para a <strong>próxima chave em
-ordem</strong></li>
-<li><code>terminou()</code>: passou da maior chave?</li>
-</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> IteradorDicCF <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">using</span> Tipo <span class="op">=</span> Entrada<span class="op">&lt;</span><span class="dt">char</span><span class="op">,</span> <span class="dt">float</span><span class="op">&gt;;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   <span class="op">...</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   Tipo le<span class="op">();</span>       <span class="co">// vistas {chave, valor}</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> terminou<span class="op">();</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> proximo<span class="op">();</span>  <span class="co">// próxima chave</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div>
 </div>
 </div>
-<p><strong><em>Atenção:</em></strong> como no Saco Ordenado, o conceito
-verifica que as operações <strong>existem</strong>, mas não que o
-percurso está <strong>em ordem</strong>: essa invariante o compilador
-não verifica!</p>
+<p><strong><em>Atenção:</em></strong> o conceito verifica que as
+operações <strong>existem</strong>, mas não que o percurso está
+<strong>em ordem</strong>: essa invariante o compilador não
+verifica!</p>
 </section>
 <section id="exemplo-de-uso" class="slide level2">
 <h2>Exemplo de Uso</h2>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// chaves: B D E F L M N O S</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>DicionarioOrdenadoTAD<span class="op">&lt;</span><span class="dt">char</span><span class="op">,</span> <span class="dt">float</span><span class="op">&gt;</span> <span class="kw">auto</span> d <span class="op">=</span> <span class="op">...;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">// mínimo: primeira chave do percurso</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>iterador<span class="op">().</span>le<span class="op">());</span>     <span class="co">// B</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">// primeira chave &gt;= &#39;G&#39;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span><span class="ch">&#39;G&#39;</span><span class="op">).</span>le<span class="op">());</span> <span class="co">// L</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">// primeira chave &gt; &#39;F&#39;</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>buscaMaior<span class="op">(</span><span class="ch">&#39;F&#39;</span><span class="op">).</span>le<span class="op">());</span>      <span class="co">// L</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// chaves: B D E F L M N O S</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>DicionarioOrdenadoTAD<span class="op">&lt;</span><span class="dt">char</span><span class="op">,</span> <span class="dt">float</span><span class="op">&gt;</span> <span class="kw">auto</span> d <span class="op">=</span> <span class="op">...;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">// mínimo: primeira chave do percurso</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    d<span class="op">.</span>iterador<span class="op">().</span>le<span class="op">().</span>chave<span class="op">.</span>le<span class="op">());</span>           <span class="co">// B</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">// primeira chave &gt;= &#39;G&#39;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span><span class="ch">&#39;G&#39;</span><span class="op">).</span>le<span class="op">().</span>chave<span class="op">.</span>le<span class="op">());</span> <span class="co">// L</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">// primeira chave &gt; &#39;F&#39;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    d<span class="op">.</span>buscaMaior<span class="op">(</span><span class="ch">&#39;F&#39;</span><span class="op">).</span>le<span class="op">().</span>chave<span class="op">.</span>le<span class="op">());</span>      <span class="co">// L</span></span></code></pre></div>
 </div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// todas as chaves em [D, M]</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span><span class="ch">&#39;D&#39;</span><span class="op">);</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(!</span>it<span class="op">.</span>terminou<span class="op">()</span> <span class="op">&amp;&amp;</span> it<span class="op">.</span>le<span class="op">()</span> <span class="op">&lt;=</span> <span class="ch">&#39;M&#39;</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st"> -&gt; </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> it<span class="op">.</span>le<span class="op">(),</span> it<span class="op">.</span>valor<span class="op">());</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   it<span class="op">.</span>proximo<span class="op">();</span>   <span class="co">// D E F L M</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// todas as entradas em [D, M]</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span><span class="ch">&#39;D&#39;</span><span class="op">);</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(!</span>it<span class="op">.</span>terminou<span class="op">()</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       it<span class="op">.</span>le<span class="op">().</span>chave<span class="op">.</span>le<span class="op">()</span> <span class="op">&lt;=</span> <span class="ch">&#39;M&#39;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> <span class="op">[</span>c<span class="op">,</span> v<span class="op">]</span> <span class="op">=</span> it<span class="op">.</span>le<span class="op">();</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st"> -&gt; </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> c<span class="op">.</span>le<span class="op">(),</span> v<span class="op">.</span>le<span class="op">());</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>   it<span class="op">.</span>proximo<span class="op">();</span>   <span class="co">// D E F L M</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Custo:
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>
 para achar o início, mais
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span>
 para visitar as
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>
-chaves do intervalo.</p>
+entradas do intervalo.</p>
 </div>
 </div>
 </div>
 <p><strong>Desafio:</strong> escreva <code>buscaMaior(c)</code> usando
 apenas <code>buscaMaiorIgual</code> e o iterador.</p>
+</section>
+<section id="modificando-durante-o-percurso" class="slide level2">
+<h2>Modificando Durante o Percurso</h2>
+<p><strong>Alterar valores</strong> não muda a estrutura: basta usar a
+vista mutável do valor, sem invalidar nada.</p>
+<p><strong>Inserir ou remover chaves</strong> invalida os iteradores
+(como no Saco). Mas podemos <strong>continuar pela chave</strong>:
+<code>buscaMaior(c)</code> encontra a entrada seguinte!</p>
+<div class="small">
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="sourceCode" id="cb8"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// dobra os valores em [D, M]</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span><span class="ch">&#39;D&#39;</span><span class="op">);</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(!</span>it<span class="op">.</span>terminou<span class="op">()</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>       it<span class="op">.</span>le<span class="op">().</span>chave<span class="op">.</span>le<span class="op">()</span> <span class="op">&lt;=</span> <span class="ch">&#39;M&#39;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> <span class="op">[</span>c<span class="op">,</span> v<span class="op">]</span> <span class="op">=</span> it<span class="op">.</span>le<span class="op">();</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   v<span class="op">.</span>altera<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v<span class="op">.</span>le<span class="op">());</span> <span class="co">// no lugar!</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   it<span class="op">.</span>proximo<span class="op">();</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div><div class="column" style="width:48%;">
+<div class="sourceCode" id="cb9"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// remove as chaves de valor ímpar</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span><span class="ch">&#39;D&#39;</span><span class="op">);</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(!</span>it<span class="op">.</span>terminou<span class="op">()</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       it<span class="op">.</span>le<span class="op">().</span>chave<span class="op">.</span>le<span class="op">()</span> <span class="op">&lt;=</span> <span class="ch">&#39;M&#39;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> c <span class="op">=</span> it<span class="op">.</span>le<span class="op">().</span>chave<span class="op">.</span>le<span class="op">();</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">((</span><span class="dt">int</span><span class="op">)</span>it<span class="op">.</span>le<span class="op">().</span>valor<span class="op">.</span>le<span class="op">()</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      d<span class="op">.</span>remove<span class="op">(</span>c<span class="op">);</span>       <span class="co">// invalida &#39;it&#39;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>   it <span class="op">=</span> d<span class="op">.</span>buscaMaior<span class="op">(</span>c<span class="op">);</span> <span class="co">// continua pela CHAVE</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<p><code>buscaMaior(c)</code> custa
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>,
+o mesmo que o <code>remove</code>: retomar o percurso sai <strong>de
+graça</strong> (assintoticamente)!</p>
 </section>
 <section id="como-implementar-um-dicionário-ordenado" class="slide level2">
 <h2>Como implementar um Dicionário Ordenado?</h2>
@@ -830,24 +914,24 @@ base na altura dos filhos. Faça um método auxiliar
 <p><code>int calc_altura(const NoEnc7* no)  { ... }</code></p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<div class="sourceCode" id="cb6"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><p>. . .</p><div class="column" style="width:55%;">
-<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> get_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no <span class="op">?</span> no<span class="op">-&gt;</span>h <span class="op">:</span> <span class="dv">0</span><span class="op">;</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> calc_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                      <span class="co">// pre(no)</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> he <span class="op">=</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">);</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> hd <span class="op">=</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">);</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="op">(</span>he <span class="op">&gt;</span> hd<span class="op">?</span> he <span class="op">:</span> hd<span class="op">);</span> </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> get_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no <span class="op">?</span> no<span class="op">-&gt;</span>h <span class="op">:</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> calc_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                      <span class="co">// pre(no)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> he <span class="op">=</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">);</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> hd <span class="op">=</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">);</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="op">(</span>he <span class="op">&gt;</span> hd<span class="op">?</span> he <span class="op">:</span> hd<span class="op">);</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 </section>
@@ -860,25 +944,25 @@ previamente:</p>
 <p><code>int fb(const NoEnc7* no)  { ... }</code></p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<div class="sourceCode" id="cb8"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><p>. . .</p><div class="column" style="width:55%;">
-<div class="sourceCode" id="cb9"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> get_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no <span class="op">?</span> no<span class="op">-&gt;</span>h <span class="op">:</span> <span class="dv">0</span><span class="op">;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fb<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(no)               // C++26</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">)</span> <span class="op">-</span> </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>          get_altura<span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">);</span> </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> get_altura<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no <span class="op">?</span> no<span class="op">-&gt;</span>h <span class="op">:</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fb<span class="op">(</span><span class="at">const</span> NoEnc7<span class="op">*</span> no<span class="op">)</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(no)               // C++26</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> get_altura<span class="op">(</span>no<span class="op">-&gt;</span>esq<span class="op">)</span> <span class="op">-</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>          get_altura<span class="op">(</span>no<span class="op">-&gt;</span>dir<span class="op">);</span> </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 </section>
@@ -890,22 +974,22 @@ balanceamento seja no máximo 1 em módulo:</p>
 <p><code>bool eh_regulado(auto* no) { ... }</code></p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<div class="sourceCode" id="cb10"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><p>. . .</p><div class="column" style="width:55%;">
-<div class="sourceCode" id="cb11"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> eh_regulado<span class="op">(</span><span class="kw">auto</span><span class="op">*</span> no<span class="op">)</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(no)        // C++26</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">||</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>           fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>           fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> eh_regulado<span class="op">(</span><span class="kw">auto</span><span class="op">*</span> no<span class="op">)</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(no)        // C++26</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">||</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>           fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>           fb<span class="op">(</span>no<span class="op">)</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code></pre></div>
 </div>
 </div>
 </section></section>
@@ -1032,28 +1116,28 @@ a nova raiz da subárvore:</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:30%;">
-<div class="sourceCode" id="cb12"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><p>. . .</p><div class="column" style="width:55%;">
-<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> rotDir<span class="op">(</span>NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)             // C++26</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> x <span class="op">=</span> raiz<span class="op">-&gt;</span>esq<span class="op">;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>esq <span class="op">=</span> x<span class="op">-&gt;</span>dir<span class="op">;</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>x<span class="op">-&gt;</span>dir<span class="op">)</span> x<span class="op">-&gt;</span>dir<span class="op">-&gt;</span>pai <span class="op">=</span> raiz<span class="op">;</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>dir <span class="op">=</span> raiz<span class="op">;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>pai <span class="op">=</span> raiz<span class="op">-&gt;</span>pai<span class="op">;</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>pai <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>h <span class="op">=</span> calc_altura<span class="op">(</span>raiz<span class="op">);</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>h    <span class="op">=</span> calc_altura<span class="op">(</span>x<span class="op">);</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x<span class="op">;</span>  <span class="co">// nova raiz</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> rotDir<span class="op">(</span>NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)             // C++26</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> x <span class="op">=</span> raiz<span class="op">-&gt;</span>esq<span class="op">;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>esq <span class="op">=</span> x<span class="op">-&gt;</span>dir<span class="op">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>x<span class="op">-&gt;</span>dir<span class="op">)</span> x<span class="op">-&gt;</span>dir<span class="op">-&gt;</span>pai <span class="op">=</span> raiz<span class="op">;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>dir <span class="op">=</span> raiz<span class="op">;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>pai <span class="op">=</span> raiz<span class="op">-&gt;</span>pai<span class="op">;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>pai <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    raiz<span class="op">-&gt;</span>h <span class="op">=</span> calc_altura<span class="op">(</span>raiz<span class="op">);</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    x<span class="op">-&gt;</span>h    <span class="op">=</span> calc_altura<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x<span class="op">;</span>  <span class="co">// nova raiz</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -1067,30 +1151,30 @@ subárvore:</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:30%;">
-<div class="sourceCode" id="cb14"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>  </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>      </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>  </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><p>. . .</p><div class="column" style="width:55%;">
-<div class="sourceCode" id="cb15"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> balanceia<span class="op">(</span>NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)                   // C++26</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">// post(out: eh_regulado(out)) // C++26</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> f <span class="op">=</span> fb<span class="op">(</span>raiz<span class="op">);</span> <span class="cf">if</span> <span class="op">(</span>f <span class="op">&gt;</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>fb<span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">)</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        raiz<span class="op">-&gt;</span>esq <span class="op">=</span> rotEsq<span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">);</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rotDir<span class="op">(</span>raiz<span class="op">);</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span> <span class="cf">if</span> <span class="op">(</span>f <span class="op">&lt;</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>fb<span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">)</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        raiz<span class="op">-&gt;</span>dir <span class="op">=</span> rotDir<span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">);</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> rotEsq<span class="op">(</span>raiz<span class="op">);</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> raiz<span class="op">;</span> <span class="co">// sem rotação necessária!</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> balanceia<span class="op">(</span>NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)                   // C++26</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">// post(out: eh_regulado(out)) // C++26</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> f <span class="op">=</span> fb<span class="op">(</span>raiz<span class="op">);</span> <span class="cf">if</span> <span class="op">(</span>f <span class="op">&gt;</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>fb<span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">)</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        raiz<span class="op">-&gt;</span>esq <span class="op">=</span> rotEsq<span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">);</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rotDir<span class="op">(</span>raiz<span class="op">);</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span> <span class="cf">if</span> <span class="op">(</span>f <span class="op">&lt;</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>fb<span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">)</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        raiz<span class="op">-&gt;</span>dir <span class="op">=</span> rotDir<span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">);</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> rotEsq<span class="op">(</span>raiz<span class="op">);</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> raiz<span class="op">;</span> <span class="co">// sem rotação necessária!</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -1098,21 +1182,21 @@ subárvore:</p>
 <section id="algoritmo-rebalanceia-até-a-raiz-em-oh" class="slide level2">
 <h2>Algoritmo <code>rebalanceia</code> até a raiz em O(h)</h2>
 <div class="small">
-<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> rebalanceia<span class="op">(</span><span class="kw">auto</span><span class="op">*</span> p<span class="op">)</span>          </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(p)</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> raiz <span class="op">=</span> p<span class="op">;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>p<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> avo <span class="op">=</span> p<span class="op">-&gt;</span>pai<span class="op">;</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> era_esq <span class="op">=</span> avo <span class="op">&amp;&amp;</span> avo<span class="op">-&gt;</span>esq <span class="op">==</span> p<span class="op">;</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    p<span class="op">-&gt;</span>h <span class="op">=</span> calc_altura<span class="op">(</span>p<span class="op">);</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> nova <span class="op">=</span> balanceia<span class="op">(</span>p<span class="op">);</span>      <span class="co">// rotação já ajusta nova-&gt;pai</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>avo<span class="op">)</span> <span class="op">{</span> <span class="cf">if</span> <span class="op">(</span>era_esq<span class="op">)</span> avo<span class="op">-&gt;</span>esq <span class="op">=</span> nova<span class="op">;</span> <span class="cf">else</span> avo<span class="op">-&gt;</span>dir <span class="op">=</span> nova<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    raiz <span class="op">=</span> nova<span class="op">;</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> avo<span class="op">;</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> raiz<span class="op">;</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">*</span> rebalanceia<span class="op">(</span><span class="kw">auto</span><span class="op">*</span> p<span class="op">)</span>          </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(p)</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> raiz <span class="op">=</span> p<span class="op">;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>p<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> avo <span class="op">=</span> p<span class="op">-&gt;</span>pai<span class="op">;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> era_esq <span class="op">=</span> avo <span class="op">&amp;&amp;</span> avo<span class="op">-&gt;</span>esq <span class="op">==</span> p<span class="op">;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    p<span class="op">-&gt;</span>h <span class="op">=</span> calc_altura<span class="op">(</span>p<span class="op">);</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span><span class="op">*</span> nova <span class="op">=</span> balanceia<span class="op">(</span>p<span class="op">);</span>      <span class="co">// rotação já ajusta nova-&gt;pai</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>avo<span class="op">)</span> <span class="op">{</span> <span class="cf">if</span> <span class="op">(</span>era_esq<span class="op">)</span> avo<span class="op">-&gt;</span>esq <span class="op">=</span> nova<span class="op">;</span> <span class="cf">else</span> avo<span class="op">-&gt;</span>dir <span class="op">=</span> nova<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    raiz <span class="op">=</span> nova<span class="op">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> avo<span class="op">;</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> raiz<span class="op">;</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </section></section>
 <section>
@@ -1124,57 +1208,57 @@ subárvore:</p>
 <h2>Estrutura de AVL</h2>
 <p>Relembrando a estrutura de árvore binária com pai, chave-valor e
 alturas:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>     <span class="co">// chave de busca</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span>     <span class="co">// valor armazenado</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>          <span class="co">// altura</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span>    <span class="co">// filho esquerdo</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span>    <span class="co">// filho direito</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>    <span class="co">// pai</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> AVL <span class="op">{</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  NoEnc7<span class="op">*</span> raiz<span class="op">;</span>    <span class="co">// raiz da árvore</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>           <span class="co">// número de nós</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span>              <span class="co">// métodos típicos: busca, upsert, remove, ...</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc7 <span class="op">{</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>     <span class="co">// chave de busca</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> dado<span class="op">;</span>     <span class="co">// valor armazenado</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> h<span class="op">;</span>          <span class="co">// altura</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> esq<span class="op">;</span>    <span class="co">// filho esquerdo</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> dir<span class="op">;</span>    <span class="co">// filho direito</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>   NoEnc7<span class="op">*</span> pai<span class="op">;</span>    <span class="co">// pai</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> AVL <span class="op">{</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  NoEnc7<span class="op">*</span> raiz<span class="op">;</span>    <span class="co">// raiz da árvore</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N<span class="op">;</span>           <span class="co">// número de nós</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span>              <span class="co">// métodos típicos: busca, upsert, remove, ...</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
 <section id="implementação-upsertavl" class="slide level2">
 <h2>Implementação: <code>upsertAVL</code></h2>
 <p>Implementação de “upserção” (inserção, se chave nova, ou atualização,
 se chave já existe) em árvore binária de busca balanceada não-vazia:</p>
 <div class="small">
-<div class="sourceCode" id="cb18"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> upsertAVL<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="dt">float</span> d<span class="op">,</span> NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)                                  // C++26</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">==</span> raiz<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span> raiz<span class="op">-&gt;</span>dado <span class="op">=</span> d<span class="op">;</span> <span class="cf">return</span> raiz<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">&lt;</span> raiz<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">)</span> raiz<span class="op">-&gt;</span>esq <span class="op">=</span> upsertAVL<span class="op">(</span>c<span class="op">,</span> d<span class="op">,</span> raiz<span class="op">-&gt;</span>esq<span class="op">);</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> raiz<span class="op">-&gt;</span>esq <span class="op">=</span> </span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>      <span class="kw">new</span> NoEnc7<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>d<span class="op">,.</span>h<span class="op">=</span><span class="dv">1</span><span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>raiz<span class="op">};</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">)</span> raiz<span class="op">-&gt;</span>dir <span class="op">=</span> upsertAVL<span class="op">(</span>c<span class="op">,</span> d<span class="op">,</span> raiz<span class="op">-&gt;</span>dir<span class="op">);</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> raiz<span class="op">-&gt;</span>dir <span class="op">=</span> </span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">new</span> NoEnc7<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>d<span class="op">,.</span>h<span class="op">=</span><span class="dv">1</span><span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>raiz<span class="op">};</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  raiz<span class="op">-&gt;</span>h <span class="op">=</span> calc_altura<span class="op">(</span>raiz<span class="op">);</span> <span class="co">// sempre muda altura até raiz!</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> balanceia<span class="op">(</span>raiz<span class="op">);</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>NoEnc7<span class="op">*</span> upsertAVL<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="dt">float</span> d<span class="op">,</span> NoEnc7<span class="op">*</span> <span class="at">const</span> raiz<span class="op">)</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pre(raiz)                                  // C++26</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">==</span> raiz<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span> raiz<span class="op">-&gt;</span>dado <span class="op">=</span> d<span class="op">;</span> <span class="cf">return</span> raiz<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">&lt;</span> raiz<span class="op">-&gt;</span>chave<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>raiz<span class="op">-&gt;</span>esq<span class="op">)</span> raiz<span class="op">-&gt;</span>esq <span class="op">=</span> upsertAVL<span class="op">(</span>c<span class="op">,</span> d<span class="op">,</span> raiz<span class="op">-&gt;</span>esq<span class="op">);</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> raiz<span class="op">-&gt;</span>esq <span class="op">=</span> </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>      <span class="kw">new</span> NoEnc7<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>d<span class="op">,.</span>h<span class="op">=</span><span class="dv">1</span><span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>raiz<span class="op">};</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>raiz<span class="op">-&gt;</span>dir<span class="op">)</span> raiz<span class="op">-&gt;</span>dir <span class="op">=</span> upsertAVL<span class="op">(</span>c<span class="op">,</span> d<span class="op">,</span> raiz<span class="op">-&gt;</span>dir<span class="op">);</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> raiz<span class="op">-&gt;</span>dir <span class="op">=</span> </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">new</span> NoEnc7<span class="op">{.</span>chave<span class="op">=</span>c<span class="op">,.</span>dado<span class="op">=</span>d<span class="op">,.</span>h<span class="op">=</span><span class="dv">1</span><span class="op">,.</span>esq<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>dir<span class="op">=</span><span class="dv">0</span><span class="op">,.</span>pai<span class="op">=</span>raiz<span class="op">};</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  raiz<span class="op">-&gt;</span>h <span class="op">=</span> calc_altura<span class="op">(</span>raiz<span class="op">);</span> <span class="co">// sempre muda altura até raiz!</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> balanceia<span class="op">(</span>raiz<span class="op">);</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </section>
 <section id="algoritmo-de-remoção-em-avl" class="slide level2">
 <h2>Algoritmo de Remoção em AVL</h2>
 <div class="small">
-<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> removeAVL<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="kw">auto</span><span class="op">*</span> raiz<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(!</span>raiz<span class="op">)</span> <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">false</span><span class="op">,</span> raiz<span class="op">};</span>    <span class="co">// árvore vazia</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> no <span class="op">=</span> <span class="op">::</span>buscaABB<span class="op">(</span>raiz<span class="op">,</span> c<span class="op">);</span>    <span class="cf">if</span><span class="op">(!</span>no<span class="op">)</span>   <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">false</span><span class="op">,</span> raiz<span class="op">};</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> alvo <span class="op">=</span> tem_dois_filhos<span class="op">(</span>no<span class="op">)</span> <span class="op">?</span> sucessor<span class="op">(</span>no<span class="op">)</span> <span class="op">:</span> no<span class="op">;</span>  <span class="co">// nó a desligar</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  no<span class="op">-&gt;</span>chave <span class="op">=</span> alvo<span class="op">-&gt;</span>chave<span class="op">;</span>  no<span class="op">-&gt;</span>dado <span class="op">=</span> alvo<span class="op">-&gt;</span>dado<span class="op">;</span>       <span class="co">// se no==alvo, nada muda</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="op">[</span>pai<span class="op">,</span> filho<span class="op">]</span> <span class="op">=</span> extrai<span class="op">(</span>alvo<span class="op">);</span>  <span class="co">// &#39;alvo&#39; tem no máximo um filho</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">delete</span> alvo<span class="op">;</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> inicio <span class="op">=</span> pai <span class="op">?</span> pai <span class="op">:</span> filho<span class="op">;</span>  <span class="co">// de onde subir rebalanceando</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">true</span><span class="op">,</span> inicio <span class="op">?</span> rebalanceia<span class="op">(</span>inicio<span class="op">)</span> <span class="op">:</span> inicio<span class="op">};</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> removeAVL<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="kw">auto</span><span class="op">*</span> raiz<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(!</span>raiz<span class="op">)</span> <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">false</span><span class="op">,</span> raiz<span class="op">};</span>    <span class="co">// árvore vazia</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> no <span class="op">=</span> <span class="op">::</span>buscaABB<span class="op">(</span>raiz<span class="op">,</span> c<span class="op">);</span>    <span class="cf">if</span><span class="op">(!</span>no<span class="op">)</span>   <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">false</span><span class="op">,</span> raiz<span class="op">};</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> alvo <span class="op">=</span> tem_dois_filhos<span class="op">(</span>no<span class="op">)</span> <span class="op">?</span> sucessor<span class="op">(</span>no<span class="op">)</span> <span class="op">:</span> no<span class="op">;</span>  <span class="co">// nó a desligar</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  no<span class="op">-&gt;</span>chave <span class="op">=</span> alvo<span class="op">-&gt;</span>chave<span class="op">;</span>  no<span class="op">-&gt;</span>dado <span class="op">=</span> alvo<span class="op">-&gt;</span>dado<span class="op">;</span>       <span class="co">// se no==alvo, nada muda</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="op">[</span>pai<span class="op">,</span> filho<span class="op">]</span> <span class="op">=</span> extrai<span class="op">(</span>alvo<span class="op">);</span>  <span class="co">// &#39;alvo&#39; tem no máximo um filho</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">delete</span> alvo<span class="op">;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">*</span> inicio <span class="op">=</span> pai <span class="op">?</span> pai <span class="op">:</span> filho<span class="op">;</span>  <span class="co">// de onde subir rebalanceando</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">{</span><span class="kw">true</span><span class="op">,</span> inicio <span class="op">?</span> rebalanceia<span class="op">(</span>inicio<span class="op">)</span> <span class="op">:</span> inicio<span class="op">};</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div>
 </section>
 <section id="exemplo-de-remoção" class="slide level2">
@@ -1853,14 +1937,14 @@ atualizam <code>h</code></li>
 <li><strong>Recoloração:</strong> trocar a cor de um nó, em
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc8 <span class="op">{</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>      <span class="dt">float</span> dado<span class="op">;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> vermelho<span class="op">;</span>   <span class="co">// no lugar de &#39;int h&#39;</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>   NoEnc8<span class="op">*</span> esq<span class="op">;</span>     NoEnc8<span class="op">*</span> dir<span class="op">;</span>     NoEnc8<span class="op">*</span> pai<span class="op">;</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> eh_vermelho<span class="op">(</span><span class="at">const</span> NoEnc8<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no <span class="op">&amp;&amp;</span> no<span class="op">-&gt;</span>vermelho<span class="op">;</span>   <span class="co">// nó nulo é preto (propriedade 2)</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> NoEnc8 <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">char</span> chave<span class="op">;</span>      <span class="dt">float</span> dado<span class="op">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> vermelho<span class="op">;</span>   <span class="co">// no lugar de &#39;int h&#39;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>   NoEnc8<span class="op">*</span> esq<span class="op">;</span>     NoEnc8<span class="op">*</span> dir<span class="op">;</span>     NoEnc8<span class="op">*</span> pai<span class="op">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> eh_vermelho<span class="op">(</span><span class="at">const</span> NoEnc8<span class="op">*</span> no<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> no <span class="op">&amp;&amp;</span> no<span class="op">-&gt;</span>vermelho<span class="op">;</span>   <span class="co">// nó nulo é preto (propriedade 2)</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Compare com <code>get_altura</code> da AVL: lá o nó nulo tem altura
 0; aqui, o nó nulo é preto.</p>
 </section>

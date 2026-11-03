@@ -45,6 +45,7 @@ Materiais PDF-HTML:
       * `VistaTAD`: `le()`  (com tipo associado `Tipo`)
       * `VistaMutavelTAD`: `le()`, `altera(t)`
       * `IteradorTAD<T>`: `le()`, `proximo()`, `terminou()` (satisfaz `VistaTAD`)
+      * `PercorrivelTAD<T>`: `iterador()`
       * `SacoTAD<T>`: `adiciona(t)`, `busca(t)`, `remove(it)`, `tamanho()`
    - Tópico Avançado: [Sacos Ordenados](slides/2-sacos-ordenados/2-sacos-ordenados.md): [PDF](slides/2-sacos-ordenados/2-sacos-ordenados.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos-ordenados/index.html)
    - Novos conceitos: 
@@ -57,7 +58,9 @@ Materiais PDF-HTML:
    - [Dicionários e Tabelas de Dispersão](slides/6-dicionarios-hash/6-dicionarios-hash.md): [PDF](slides/6-dicionarios-hash/6-dicionarios-hash.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios-hash/index.html)
       * Conceito `DicionarioTAD<K, V>`: `tem(c)`, `consulta(c)`, `adiciona(c, v)`, `remove(c)`, `tamanho()`
    - [Dicionários Ordenados e Árvores Balanceadas](slides/6-dicionarios/6-dicionarios.md): [PDF](slides/6-dicionarios/6-dicionarios.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios/index.html)
-      * Conceito `DicionarioOrdenadoTAD<K, V>`: `buscaMaiorIgual(c)`, `buscaMaior(c)` (satisfaz `DicionarioTAD<K, V>` e `PercorrivelTAD<K>`)
+      * Tipos `Vista<T>` e `VistaMutavel<T>` (versões genéricas das vistas)
+      * Tipo `Entrada<K, V>`: `chave` (`Vista<K>`) e `valor` (`VistaMutavel<V>`)
+      * Conceito `DicionarioOrdenadoTAD<K, V>`: `buscaMaiorIgual(c)`, `buscaMaior(c)` (satisfaz `DicionarioTAD<K, V>` e `PercorrivelTAD<Entrada<K, V>>`)
    - Vídeos YouTube: [Dicionários e Árvores de Busca Parte 1/2](https://youtu.be/Y_jx6sMQyf8) 
    - Material Fábio Protti: [Arvores de Busca 1](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-1.pdf)
    - Material Fábio Protti: [Arvores de Busca 2](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-2.pdf)
