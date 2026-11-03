@@ -496,14 +496,14 @@ font-size: 1em;
 
 <section id="title-slide">
   <h1 class="title">Estruturas de Dados I</h1>
-  <p class="subtitle">Dicionários e Árvores Balanceadas</p>
+  <p class="subtitle">Dicionários Ordenados e Árvores Balanceadas</p>
   <p class="author">Igor Machado Coelho</p>
   <p class="date">01/06/2025</p>
 </section>
 
 <section>
-<section id="dicionários" class="title-slide slide level1">
-<h1>Dicionários</h1>
+<section id="dicionários-ordenados" class="title-slide slide level1">
+<h1>Dicionários Ordenados</h1>
 
 </section>
 <section id="pré-requisitos" class="slide level2">
@@ -514,124 +514,227 @@ font-size: 1em;
 programação)</li>
 <li>Interesse em aprender C/C++</li>
 <li>Noções de recursividade</li>
-<li>Noções de tipos de dados</li>
 <li>Noções de listas e encadeamento</li>
-<li>Aula de Árvores</li>
+<li>Aula de Árvores (e Árvores de Busca)</li>
+<li>Aula de Dicionários e Tabelas de Dispersão</li>
+<li>Tópico avançado de Sacos Ordenados (recomendado)</li>
 </ul>
 <p><em>Agradecimentos especiais ao prof. Fabiano Oliveira e prof. Fábio
 Protti, cujo conteúdo didático forma a base desses slides</em></p>
-</section></section>
-<section>
-<section id="tipo-abstrato-dicionário" class="title-slide slide level1">
-<h1>Tipo Abstrato: Dicionário</h1>
-
 </section>
-<section id="dicionários-1" class="slide level2">
-<h2>Dicionários</h2>
-<p>O Dicionário (do inglês <em>Dictionary</em>) ou Mapa (do inglês
-<em>Map</em>) é um Tipo Abstrato de Dado (TAD) que visa oferecer
-operações de <em>chave-valor</em>. Também é conhecido como
-<em>mapeamento</em>.</p>
-<p>Supondo um mapeamento M do tipo <em>caractere para float</em>, por
-exemplo:</p>
+<section id="revisão-dicionário" class="slide level2">
+<h2>Revisão: Dicionário</h2>
+<p>Na aula anterior, definimos o <strong>Dicionário</strong>: um TAD que
+associa <strong>chaves</strong> (sem repetição) a
+<strong>valores</strong>.</p>
+<div class="small">
+<div class="sourceCode" id="cb1"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> D<span class="op">,</span> <span class="kw">typename</span> K<span class="op">,</span> <span class="kw">typename</span> V<span class="op">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> DicionarioTAD <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>D d<span class="op">,</span> K k<span class="op">,</span> V v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>tem<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span>      <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;;</span>  <span class="co">// chave existe?</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>consulta<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span> <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span>V<span class="op">&gt;;</span>     <span class="co">// valor (pre: tem(k))</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>adiciona<span class="op">(</span>k<span class="op">,</span> v<span class="op">)</span> <span class="op">};</span>                     <span class="co">// insere ou atualiza</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>remove<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span>   <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;;</span>  <span class="co">// removeu?</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>tamanho<span class="op">()</span> <span class="op">}</span>   <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;;</span>   <span class="co">// num. de chaves</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</div>
+<p>Com <strong>Tabelas de Dispersão</strong>, todas essas operações
+custam
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>
+<strong>em média</strong>. Excelente!</p>
+<p>Mas vimos também uma <strong>limitação importante</strong>…</p>
+</section>
+<section id="motivação-perguntas-sobre-a-ordem" class="slide level2">
+<h2>Motivação: Perguntas sobre a Ordem</h2>
+<p>Uma tabela de dispersão <strong>espalha</strong> as chaves de
+propósito. Perguntas sobre a <strong>ordem</strong> ficam caras:</p>
 <ul>
-<li>Podemos <em>adicionar</em> uma chave B com valor 100.0</li>
-<li>Podemos <em>adicionar</em> uma chave C com valor 150.0</li>
-<li>Podemos <em>adicionar</em> uma chave D com valor 200.0</li>
-<li>Podemos <em>buscar</em> a chave B, recebendo o valor 100.0</li>
-<li>Podemos <em>remover</em> a chave D</li>
-<li>Podemos <em>atualizar</em> o valor da chave B para 120.0</li>
+<li>qual a <strong>menor</strong> chave? E a
+<strong>maior</strong>?</li>
+<li>qual a <strong>primeira chave
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">\geq x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></strong>?
+(ex: o próximo horário livre a partir das 14h)</li>
+<li>quais chaves estão <strong>entre
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>
+e
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></strong>?
+(ex: todas as vendas entre duas datas)</li>
+<li>percorrer as chaves <strong>em ordem crescente</strong></li>
 </ul>
-<pre><code>M:
-B -&gt; 120.0
-C -&gt; 150.0
-...</code></pre>
+<p>Na tabela de dispersão, todas custam
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>M</mi><mo>+</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(M + n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>:
+é preciso olhar tudo!</p>
+<p><strong>Lembra do Saco Ordenado?</strong> Com o vetor ordenado, essas
+perguntas custavam
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>,
+com <code>buscaMaiorIgual</code> e <code>buscaMaior</code>… mas inserir
+e remover custavam
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>.</p>
+<p><strong><em>Objetivo desta aula:</em></strong> <em>responder às
+perguntas sobre a ordem <strong>e</strong> atualizar em
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>.</em></p>
 </section>
-<section id="dicionários-na-computação" class="slide level2">
-<h2>Dicionários na computação</h2>
-<p>Dicionários são estruturas fundamentais na própria computação.</p>
-<p>Por exemplo, algumas linguagens de programação (como Python) oferecem
-suporte nativo a dicionários:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> M <span class="op">=</span> <span class="bu">dict</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> M[<span class="st">&#39;A&#39;</span>] <span class="op">=</span> <span class="fl">100.0</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> M[<span class="st">&#39;A&#39;</span>]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fl">100.0</span></span></code></pre></div>
-<p>Assim como <em>arrays</em>, servem para armazenar um conjunto de
-dados de certo tipo (estrutura homogênea). Uma diferença em relação a
-vetores, é que permitem indexação da <em>chave de busca</em> por tipos
-arbitrários.</p>
-</section>
-<section id="operações-de-um-dicionário" class="slide level2">
-<h2>Operações de um Dicionário</h2>
-<p>Um Dicionário requer 3 operações básicas:</p>
+<section id="dicionário-ordenado" class="slide level2">
+<h2>Dicionário Ordenado</h2>
+<p>Um <em>Dicionário Ordenado</em> é um Dicionário cujas chaves podem
+ser <strong>comparadas</strong>, e que oferece:</p>
 <ul>
-<li>consultar <em>chave</em> (do inglês <em>at</em>)</li>
-<li>adicionar <em>chave-valor</em> (do inglês <em>add</em>)</li>
-<li>remover <em>chave</em> (do inglês <em>remove</em>)</li>
+<li><strong>percurso em ordem:</strong> o iterador visita as chaves em
+<strong>ordem crescente</strong></li>
+<li><code>buscaMaiorIgual(c)</code>: posição da <strong>primeira chave
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\geq c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span></strong></li>
+<li><code>buscaMaior(c)</code>: posição da <strong>primeira chave
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>&gt;</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">&gt; c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span></strong></li>
 </ul>
+<p>Exemplo com as chaves <code>B D E F L M N O S</code>:</p>
+<pre><code> B   D   E   F   L   M   N   O   S
+             ^   ^
+   buscaMaiorIgual(&#39;F&#39;)   buscaMaior(&#39;F&#39;)
+   buscaMaiorIgual(&#39;G&#39;) = buscaMaiorIgual(&#39;H&#39;) = ... = posição de L</code></pre>
+<p>Com elas, construímos as demais perguntas: <strong>mínimo</strong>
+(primeira do percurso), <strong>intervalo</strong>
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[a, b]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">]</span></span></span></span>
+(de <code>buscaMaiorIgual(a)</code> até passar de
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>),
+<strong>sucessor</strong> de uma chave, etc.</p>
+<p>Na STL: <code>lower_bound</code> e <code>upper_bound</code> do
+<code>std::map</code>. No Java: <code>ceilingKey</code> e
+<code>higherKey</code> do <code>TreeMap</code>.</p>
 </section>
-<section id="definição-do-conceito-dicionário-em-c" class="slide level2">
-<h2>Definição do <em>Conceito</em> Dicionário em C++</h2>
-<p>O <em>conceito</em> de dicionário somente requer suas três operações
-básicas. Como consideramos um <em>dicionário genérico</em> (mapa de
-inteiro, char, etc), definimos um <em>conceito genérico</em> chamado
-<code>DicionarioTAD</code> (note que precisamos de <em>dois tipos
-genéricos</em>, para <em>chave</em> e <em>valor</em>):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">typename</span> Agregado<span class="op">,</span> <span class="kw">typename</span> TChave<span class="op">,</span> <span class="kw">typename</span> TValor<span class="op">&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>DicionarioTAD <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>Agregado d<span class="op">,</span> TChave c<span class="op">,</span> TValor v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   <span class="co">// requer operação &#39;consulta&#39;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>consulta<span class="op">(</span>c<span class="op">)</span> <span class="op">};</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">// requer operação &#39;adiciona&#39;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>adiciona<span class="op">(</span>c<span class="op">,</span> v<span class="op">)</span> <span class="op">};</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="co">// requer operação &#39;remove&#39;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>remove<span class="op">(</span>c<span class="op">)</span> <span class="op">};</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
-</section>
-<section id="exemplo-dicionário-de-char-para-float" class="slide level2">
-<h2>Exemplo: Dicionário de <code>char</code> para
-<code>float</code></h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> DicionarioCF <span class="op">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ... </span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> consulta<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="co">// ...</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> adiciona<span class="op">(</span><span class="dt">char</span> c<span class="op">,</span> <span class="dt">float</span> v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="co">// ...</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">float</span> remove<span class="op">(</span><span class="dt">char</span> c<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="co">// ...</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">// verifica estrutura do DicionarioTAD</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>DicionarioTAD<span class="op">&lt;</span>DicionarioCF<span class="op">,</span> <span class="dt">char</span><span class="op">,</span> <span class="dt">float</span><span class="op">&gt;);</span></span></code></pre></div>
-</section>
-<section id="exemplo-de-uso-com-dicionariocf" class="slide level2">
-<h2>Exemplo de Uso com <code>DicionarioCF</code></h2>
-<p>Adiciona pares chave-valor <code>(&#39;A&#39;, 100.0)</code> e
-<code>(&#39;B&#39;, 200.0)</code>. Depois faz consultas e remove chave
-<code>&#39;B&#39;</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> main<span class="op">()</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   DicionarioCF d<span class="op">;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>cria<span class="op">();</span>                            <span class="co">// inicializa</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">,</span> <span class="fl">100.0</span><span class="op">);</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>adiciona<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">,</span> <span class="fl">200.0</span><span class="op">);</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>consulta<span class="op">(</span><span class="ch">&#39;A&#39;</span><span class="op">));</span> <span class="co">// 100.0</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>consulta<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">));</span> <span class="co">// 200.0</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>remove<span class="op">(</span><span class="ch">&#39;B&#39;</span><span class="op">);</span>                       <span class="co">// 200.0</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ...</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   d<span class="op">.</span>libera<span class="op">();</span>                          <span class="co">// libera estrutura</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-</section>
-<section id="como-implementar-dicionários-de-forma-eficiente" class="slide level2">
-<h2>Como implementar dicionários de forma eficiente?</h2>
-<p>Existem duas formas eficientes de implementação de dicionários:</p>
+<section id="conceito-dicionário-ordenado" class="slide level2">
+<h2>Conceito: Dicionário Ordenado</h2>
+<p>Um Dicionário Ordenado é um Dicionário <strong>e</strong> um
+Percorrível (de chaves), com as duas buscas por ordem:</p>
+<div class="small">
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="sourceCode" id="cb3"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> D<span class="op">,</span> <span class="kw">typename</span> K<span class="op">,</span> <span class="kw">typename</span> V<span class="op">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> DicionarioOrdenadoTAD <span class="op">=</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>   DicionarioTAD<span class="op">&lt;</span>D<span class="op">,</span> K<span class="op">,</span> V<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   PercorrivelTAD<span class="op">&lt;</span>D<span class="op">,</span> K<span class="op">&gt;</span> <span class="op">&amp;&amp;</span>    <span class="co">// chaves em ordem</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>totally_ordered<span class="op">&lt;</span>K<span class="op">&gt;</span> <span class="op">&amp;&amp;</span> <span class="co">// comparáveis</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">requires</span><span class="op">(</span>D d<span class="op">,</span> K k<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   <span class="co">// 1a posição com chave &gt;= k</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span> <span class="op">-&gt;</span> IteradorTAD<span class="op">&lt;</span>K<span class="op">&gt;;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// 1a posição com chave &gt; k</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> d<span class="op">.</span>buscaMaior<span class="op">(</span>k<span class="op">)</span> <span class="op">}</span>      <span class="op">-&gt;</span> IteradorTAD<span class="op">&lt;</span>K<span class="op">&gt;;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+</div><div class="column" style="width:40%;">
+<p>O iterador é uma <strong>Vista</strong> da entrada atual:</p>
 <ul>
-<li>Árvores de Busca (aula anterior) + Balanceamento (essa aula!)</li>
-<li>Tabelas de Dispersão/<em>Hash</em> (aula futura)</li>
+<li><code>le()</code>: lê a <strong>chave</strong></li>
+<li><code>valor()</code>: lê o <strong>valor</strong> associado</li>
+<li><code>proximo()</code>: vai para a <strong>próxima chave em
+ordem</strong></li>
+<li><code>terminou()</code>: passou da maior chave?</li>
 </ul>
+</div>
+</div>
+</div>
+<p><strong><em>Atenção:</em></strong> como no Saco Ordenado, o conceito
+verifica que as operações <strong>existem</strong>, mas não que o
+percurso está <strong>em ordem</strong>: essa invariante o compilador
+não verifica!</p>
+</section>
+<section id="exemplo-de-uso" class="slide level2">
+<h2>Exemplo de Uso</h2>
+<div class="small">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// chaves: B D E F L M N O S</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>DicionarioOrdenadoTAD<span class="op">&lt;</span><span class="dt">char</span><span class="op">,</span> <span class="dt">float</span><span class="op">&gt;</span> <span class="kw">auto</span> d <span class="op">=</span> <span class="op">...;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">// mínimo: primeira chave do percurso</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>iterador<span class="op">().</span>le<span class="op">());</span>     <span class="co">// B</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">// primeira chave &gt;= &#39;G&#39;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span><span class="ch">&#39;G&#39;</span><span class="op">).</span>le<span class="op">());</span> <span class="co">// L</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">// primeira chave &gt; &#39;F&#39;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> d<span class="op">.</span>buscaMaior<span class="op">(</span><span class="ch">&#39;F&#39;</span><span class="op">).</span>le<span class="op">());</span>      <span class="co">// L</span></span></code></pre></div>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb5"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// todas as chaves em [D, M]</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> d<span class="op">.</span>buscaMaiorIgual<span class="op">(</span><span class="ch">&#39;D&#39;</span><span class="op">);</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(!</span>it<span class="op">.</span>terminou<span class="op">()</span> <span class="op">&amp;&amp;</span> it<span class="op">.</span>le<span class="op">()</span> <span class="op">&lt;=</span> <span class="ch">&#39;M&#39;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st"> -&gt; </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> it<span class="op">.</span>le<span class="op">(),</span> it<span class="op">.</span>valor<span class="op">());</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   it<span class="op">.</span>proximo<span class="op">();</span>   <span class="co">// D E F L M</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Custo:
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>
+para achar o início, mais
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span>
+para visitar as
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>
+chaves do intervalo.</p>
+</div>
+</div>
+</div>
+<p><strong>Desafio:</strong> escreva <code>buscaMaior(c)</code> usando
+apenas <code>buscaMaiorIgual</code> e o iterador.</p>
+</section>
+<section id="como-implementar-um-dicionário-ordenado" class="slide level2">
+<h2>Como implementar um Dicionário Ordenado?</h2>
+<div class="small">
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Implementação</th>
+<th><code>adiciona</code>, <code>remove</code></th>
+<th><code>consulta</code></th>
+<th><code>buscaMaiorIgual</code></th>
+<th>percurso em ordem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tabela de dispersão</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>
+médio</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>
+médio</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>M</mi><mo>+</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(M + n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></td>
+<td>ordenar:
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n \log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></td>
+</tr>
+<tr>
+<td>vetor ordenado (Saco Ordenado)</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></td>
+</tr>
+<tr>
+<td>árvore de busca (ABB)</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>h</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">h</span><span class="mclose">)</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>h</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">h</span><span class="mclose">)</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>h</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">h</span><span class="mclose">)</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></td>
+</tr>
+<tr>
+<td><strong>árvore balanceada</strong> (esta aula!)</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi mathvariant="bold">n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{O(\log n)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathbf">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathbf">n</span><span class="mclose">)</span></span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi mathvariant="bold">n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{O(\log n)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathbf">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathbf">n</span><span class="mclose">)</span></span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi mathvariant="bold">n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{O(\log n)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathbf">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathbf">n</span><span class="mclose">)</span></span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>A Árvore Binária de Busca (ABB) já mantém as chaves <strong>em
+ordem</strong>: o percurso em-ordem visita as chaves de forma crescente,
+e as buscas por ordem descem um caminho da raiz. O problema é a altura
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi></mrow><annotation encoding="application/x-tex">h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">h</span></span></span></span>,
+que pode chegar a
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>…</p>
+<p><strong>A solução desta aula:</strong> manter a árvore
+<strong>balanceada</strong>, com
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h = O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>!</p>
 </section></section>
 <section>
 <section id="árvores-binárias-de-busca-breve-revisão" class="title-slide slide level1">

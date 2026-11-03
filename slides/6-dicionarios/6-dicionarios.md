@@ -1,7 +1,7 @@
 ---
 author: Igor Machado Coelho
 title: Estruturas de Dados I
-subtitle: Dicionários e Árvores Balanceadas
+subtitle: Dicionários Ordenados e Árvores Balanceadas
 date: 01/06/2025
 transition: cube
 fontsize: 10
@@ -12,9 +12,7 @@ header-includes:
 ---
 
 
-
-
-# Dicionários
+# Dicionários Ordenados
 
 ------
 
@@ -25,135 +23,188 @@ São requisitos para essa aula:
 - Introdução/Fundamentos de Programação (em alguma linguagem de programação)
 - Interesse em aprender C/C++
 - Noções de recursividade
-- Noções de tipos de dados
 - Noções de listas e encadeamento
-- Aula de Árvores
+- Aula de Árvores (e Árvores de Busca)
+- Aula de Dicionários e Tabelas de Dispersão
+- Tópico avançado de Sacos Ordenados (recomendado)
 
 *Agradecimentos especiais ao prof. Fabiano Oliveira e prof. Fábio Protti, cujo conteúdo didático forma a base desses slides*
 
-# Tipo Abstrato: Dicionário
+------
+
+## Revisão: Dicionário
+
+Na aula anterior, definimos o **Dicionário**: um TAD que associa **chaves** (sem repetição) a **valores**.
+
+::: -
+
+```.cpp
+template <typename D, typename K, typename V>
+concept DicionarioTAD = requires(D d, K k, V v) {
+   { d.tem(k) }      -> std::same_as<bool>;  // chave existe?
+   { d.consulta(k) } -> std::same_as<V>;     // valor (pre: tem(k))
+   { d.adiciona(k, v) };                     // insere ou atualiza
+   { d.remove(k) }   -> std::same_as<bool>;  // removeu?
+   { d.tamanho() }   -> std::same_as<int>;   // num. de chaves
+};
+```
+
+:::
+
+Com **Tabelas de Dispersão**, todas essas operações custam $O(1)$ **em média**. Excelente!
+
+Mas vimos também uma **limitação importante**...
 
 ------
 
-## Dicionários 
+## Motivação: Perguntas sobre a Ordem
 
-O Dicionário (do inglês *Dictionary*) ou Mapa (do inglês *Map*) é um Tipo Abstrato de Dado (TAD) que visa oferecer operações de *chave-valor*. Também é conhecido como *mapeamento*.
+Uma tabela de dispersão **espalha** as chaves de propósito. Perguntas sobre a **ordem** ficam caras:
 
-Supondo um mapeamento M do tipo *caractere para float*, por exemplo:
+- qual a **menor** chave? E a **maior**?
+- qual a **primeira chave $\geq x$**? (ex: o próximo horário livre a partir das 14h)
+- quais chaves estão **entre $a$ e $b$**? (ex: todas as vendas entre duas datas)
+- percorrer as chaves **em ordem crescente**
 
-- Podemos *adicionar* uma chave B com valor 100.0
-- Podemos *adicionar* uma chave C com valor 150.0
-- Podemos *adicionar* uma chave D com valor 200.0
-- Podemos *buscar* a chave B, recebendo o valor 100.0
-- Podemos *remover* a chave D
-- Podemos *atualizar* o valor da chave B para 120.0
+Na tabela de dispersão, todas custam $O(M + n)$: é preciso olhar tudo!
+
+**Lembra do Saco Ordenado?** Com o vetor ordenado, essas perguntas custavam $O(\log n)$, com `buscaMaiorIgual` e `buscaMaior`... mas inserir e remover custavam $O(n)$.
+
+***Objetivo desta aula:*** *responder às perguntas sobre a ordem **e** atualizar em $O(\log n)$.*
+
+------
+
+## Dicionário Ordenado
+
+Um *Dicionário Ordenado* é um Dicionário cujas chaves podem ser **comparadas**, e que oferece:
+
+- **percurso em ordem:** o iterador visita as chaves em **ordem crescente**
+- `buscaMaiorIgual(c)`: posição da **primeira chave $\geq c$**
+- `buscaMaior(c)`: posição da **primeira chave $> c$**
+
+Exemplo com as chaves `B D E F L M N O S`:
 
 ```
-M:
-B -> 120.0
-C -> 150.0
-...
+ B   D   E   F   L   M   N   O   S
+             ^   ^
+   buscaMaiorIgual('F')   buscaMaior('F')
+   buscaMaiorIgual('G') = buscaMaiorIgual('H') = ... = posição de L
 ```
 
+Com elas, construímos as demais perguntas: **mínimo** (primeira do percurso), **intervalo** $[a, b]$ (de `buscaMaiorIgual(a)` até passar de $b$), **sucessor** de uma chave, etc.
 
--------
+Na STL: `lower_bound` e `upper_bound` do `std::map`. No Java: `ceilingKey` e `higherKey` do `TreeMap`.
 
-## Dicionários na computação
+------
 
-Dicionários são estruturas fundamentais na própria computação. 
+## Conceito: Dicionário Ordenado
 
-Por exemplo, algumas linguagens de programação (como Python) oferecem suporte nativo a dicionários:
+Um Dicionário Ordenado é um Dicionário **e** um Percorrível (de chaves), com as duas buscas por ordem:
 
-```{.python}
->>> M = dict()
->>> M['A'] = 100.0
->>> M['A']
-100.0
-```
+::: -
 
-Assim como *arrays*, servem para armazenar um conjunto de dados de certo tipo (estrutura homogênea). Uma diferença em relação a vetores, é que permitem indexação da *chave de busca* por tipos arbitrários.
+:::::::::: ||
 
---------
-
-## Operações de um Dicionário
-
-Um Dicionário requer 3 operações básicas: 
-
-- consultar *chave* (do inglês *at*)
-- adicionar *chave-valor* (do inglês *add*)
-- remover *chave* (do inglês *remove*)
-
-
---------
-
-## Definição do *Conceito* Dicionário em C++
-
-O *conceito* de dicionário somente requer suas três operações básicas. Como consideramos um *dicionário genérico* (mapa de inteiro, char, etc), definimos um *conceito genérico* chamado `DicionarioTAD` (note que precisamos de *dois tipos genéricos*, para *chave* e *valor*):
+::::: |{55%}
 
 ```.cpp
-template<typename Agregado, typename TChave, typename TValor>
-concept 
-DicionarioTAD = requires(Agregado d, TChave c, TValor v) {
-   // requer operação 'consulta'
-   { d.consulta(c) };
-   // requer operação 'adiciona'
-   { d.adiciona(c, v) };
-   // requer operação 'remove'
-   { d.remove(c) };
+template <typename D, typename K, typename V>
+concept DicionarioOrdenadoTAD =
+   DicionarioTAD<D, K, V> &&
+   PercorrivelTAD<D, K> &&    // chaves em ordem
+   std::totally_ordered<K> && // comparáveis
+   requires(D d, K k) {
+   // 1a posição com chave >= k
+   { d.buscaMaiorIgual(k) } -> IteradorTAD<K>;
+   // 1a posição com chave > k
+   { d.buscaMaior(k) }      -> IteradorTAD<K>;
 };
 ```
 
----------
+:::::
 
-## Exemplo: Dicionário de `char` para `float`
+::::: |{40%}
+
+O iterador é uma **Vista** da entrada atual:
+
+- `le()`: lê a **chave**
+- `valor()`: lê o **valor** associado
+- `proximo()`: vai para a **próxima chave em ordem**
+- `terminou()`: passou da maior chave?
+
+:::::
+
+::::::::::
+
+:::
+
+***Atenção:*** como no Saco Ordenado, o conceito verifica que as operações **existem**, mas não que o percurso está **em ordem**: essa invariante o compilador não verifica!
+
+------
+
+## Exemplo de Uso
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
 
 ```.cpp
-struct DicionarioCF {
-   // ... 
-   float consulta(char c) {
-      // ...
-   }
-   void adiciona(char c, float v) {
-      // ...
-   }
-   float remove(char c) {
-      // ...
-   }
-};
-// verifica estrutura do DicionarioTAD
-static_assert(DicionarioTAD<DicionarioCF, char, float>);
+// chaves: B D E F L M N O S
+DicionarioOrdenadoTAD<char, float> auto d = ...;
+
+// mínimo: primeira chave do percurso
+println("{}", d.iterador().le());     // B
+
+// primeira chave >= 'G'
+println("{}", d.buscaMaiorIgual('G').le()); // L
+
+// primeira chave > 'F'
+println("{}", d.buscaMaior('F').le());      // L
 ```
 
----------
+:::::
 
-## Exemplo de Uso com `DicionarioCF`
-
-Adiciona pares chave-valor `('A', 100.0)` e `('B', 200.0)`. Depois faz consultas e remove chave `'B'`.
+::::: |{45%}
 
 ```.cpp
-auto main() -> int {
-   DicionarioCF d;
-   d.cria();                            // inicializa
-   d.adiciona('A', 100.0);
-   d.adiciona('B', 200.0);
-   std::println("{}", d.consulta('A')); // 100.0
-   std::println("{}", d.consulta('B')); // 200.0
-   d.remove('B');                       // 200.0
-   // ...
-   d.libera();                          // libera estrutura
-   
-   return 0;
+// todas as chaves em [D, M]
+auto it = d.buscaMaiorIgual('D');
+while (!it.terminou() && it.le() <= 'M') {
+   println("{} -> {}", it.le(), it.valor());
+   it.proximo();   // D E F L M
 }
 ```
 
----------
+Custo: $O(\log n)$ para achar o início, mais $O(k)$ para visitar as $k$ chaves do intervalo.
 
-## Como implementar dicionários de forma eficiente?
+:::::
 
-Existem duas formas eficientes de implementação de dicionários:
+::::::::::
 
-- Árvores de Busca (aula anterior) + Balanceamento (essa aula!)
-- Tabelas de Dispersão/*Hash* (aula futura)
+:::
+
+**Desafio:** escreva `buscaMaior(c)` usando apenas `buscaMaiorIgual` e o iterador.
+
+------
+
+## Como implementar um Dicionário Ordenado?
+
+::: -
+
+| Implementação | `adiciona`, `remove` | `consulta` | `buscaMaiorIgual` | percurso em ordem |
+|---|---|---|---|---|
+| tabela de dispersão | $O(1)$ médio | $O(1)$ médio | $O(M + n)$ | ordenar: $O(n \log n)$ |
+| vetor ordenado (Saco Ordenado) | $O(n)$ | $O(\log n)$ | $O(\log n)$ | $O(n)$ |
+| árvore de busca (ABB) | $O(h)$ | $O(h)$ | $O(h)$ | $O(n)$ |
+| **árvore balanceada** (esta aula!) | $\mathbf{O(\log n)}$ | $\mathbf{O(\log n)}$ | $\mathbf{O(\log n)}$ | $O(n)$ |
+
+:::
+
+A Árvore Binária de Busca (ABB) já mantém as chaves **em ordem**: o percurso em-ordem visita as chaves de forma crescente, e as buscas por ordem descem um caminho da raiz. O problema é a altura $h$, que pode chegar a $n$...
+
+**A solução desta aula:** manter a árvore **balanceada**, com $h = O(\log n)$!
 
 
 # Árvores Binárias de Busca (breve revisão)

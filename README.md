@@ -53,11 +53,17 @@ Materiais PDF-HTML:
    - [Árvores](slides/5-arvores/5-arvores.md): [PDF](slides/5-arvores/5-arvores.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/5-arvores/index.html)
    - [Árvores de Busca](slides/5-arvores-busca/5-arvores-busca.md): [PDF](slides/5-arvores-busca/5-arvores-busca.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/5-arvores-busca/index.html)
    - Vídeos YouTube: [Árvores Parte 1/2](https://youtu.be/Yd6Wda879Q4) 
-1. Dicionários e Árvores Balanceadas: [Dicionários e Árvores Balanceadas](slides/6-dicionarios/6-dicionarios.md): [PDF](slides/6-dicionarios/6-dicionarios.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios/index.html)
+1. Dicionários: 
+   - [Dicionários e Tabelas de Dispersão](slides/6-dicionarios-hash/6-dicionarios-hash.md): [PDF](slides/6-dicionarios-hash/6-dicionarios-hash.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios-hash/index.html)
+      * Conceito `DicionarioTAD<K, V>`: `tem(c)`, `consulta(c)`, `adiciona(c, v)`, `remove(c)`, `tamanho()`
+   - [Dicionários Ordenados e Árvores Balanceadas](slides/6-dicionarios/6-dicionarios.md): [PDF](slides/6-dicionarios/6-dicionarios.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios/index.html)
+      * Conceito `DicionarioOrdenadoTAD<K, V>`: `buscaMaiorIgual(c)`, `buscaMaior(c)` (satisfaz `DicionarioTAD<K, V>` e `PercorrivelTAD<K>`)
    - Vídeos YouTube: [Dicionários e Árvores de Busca Parte 1/2](https://youtu.be/Y_jx6sMQyf8) 
    - Material Fábio Protti: [Arvores de Busca 1](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-1.pdf)
    - Material Fábio Protti: [Arvores de Busca 2](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-2.pdf)
 1. [Filas de Prioridade](slides/7-filas-prioridade/7-filas-prioridade.md): [PDF](slides/7-filas-prioridade/7-filas-prioridade.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/7-filas-prioridade/index.html)
+   - Novos conceitos:
+      * `FilaPrioridadeTAD<T>`: `frente()`, `insere(t)`, `remove()`, `tamanho()`
    - Vídeos YouTube (2020): [Filas de Prioridade Parte 1/2](https://youtu.be/SA-RgtmLWkM) 
    - Vídeos YouTube (2021):  [Filas de Prioridade Parte 2/2](https://youtu.be/q0kRz4oz_7A)
 
