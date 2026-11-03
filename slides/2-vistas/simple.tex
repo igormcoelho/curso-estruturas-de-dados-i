@@ -1,0 +1,34 @@
+
+%\documentclass[10pt]{article}
+\documentclass{standalone}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+
+%\renewcommand{\thealgorithm}{}
+\renewcommand{\thealgocf}{}  % no number on algorithm2e
+
+
+\begin{document}
+\pagestyle{empty}
+
+
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\KwResult{Write here the result}
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\Input{Write here the input}
+\Output{Write here the output}
+\BlankLine
+\While{While condition}{
+    instructions\;
+    \eIf{condition}{
+        instructions1\;
+        instructions2\;
+    }{
+        instructions3\;
+    }
+}
+\caption{While loop with If/Else condition}
+\end{algorithm}
+
+\end{document}

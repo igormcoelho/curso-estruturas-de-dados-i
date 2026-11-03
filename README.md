@@ -13,6 +13,7 @@ Lista completa de módulos no repositório (sequência de estudos *sugerida*):
 - Pilhas
 - Filas
 - Conjuntos Simples (útil para revisar algoritmos clássicos de ordenação!)
+- Vistas, Iteradores e Percorríveis
 - Sacos e Listas
 - Árvores
 - Árvores de Busca
@@ -48,16 +49,19 @@ Materiais PDF-HTML:
    - Vídeos YouTube: [Filas e Implementações](https://youtu.be/pZ36rzfSxYs) - Análise de Complexidade *(nas próximas semanas)*
    - Novos conceitos:
       * `FilaTAD<T>`: `enfileira(t)`, `desenfileira()`, `frente()`, `tamanho()`
-1. Revisão/Treino TAD Sequencial: [Conjunto Simples](slides/2-conjunto-simples/2-conjunto-simples.md): [PDF](slides/2-conjunto-simples/2-conjunto-simples.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-conjunto-simples/index.html)
+1. Revisão/Treino TAD Sequencial e Vistas: 
+   - [Conjunto Simples](slides/2-conjunto-simples/2-conjunto-simples.md): [PDF](slides/2-conjunto-simples/2-conjunto-simples.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-conjunto-simples/index.html)
    - Novos conceitos:
       * `ConjuntoSimplesTAD<T>`: `pertence(x)`, `insere(x)`, `remove(x)`, `tamanho()`
-1. [Sacos e Listas](slides/2-sacos/2-sacos.md): [PDF](slides/2-sacos/2-sacos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos/index.html)
-   - Exemplo de implementação: [main.cpp](./slides/2-sacos/impl/main.cpp) [ListaEncadeada.hpp](./slides/2-sacos/impl/ListaEncadeada.hpp) [SacoTAD.hpp](./slides/2-sacos/impl/SacoTAD.hpp) [SacoVetor.hpp](./slides/2-sacos/impl/SacoVetor.hpp) [makefile (GNU c++17)](./slides/2-sacos/impl/makefile)
-   - Novos conceitos: 
+   - [Vistas, Iteradores e Percorríveis](slides/2-vistas/2-vistas.md): [PDF](slides/2-vistas/2-vistas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-vistas/index.html)
+   - Novos conceitos:
       * `VistaTAD`: `le()`  (com tipo associado `Tipo`)
       * `VistaMutavelTAD`: `le()`, `altera(t)`
       * `IteradorTAD<T>`: `le()`, `proximo()`, `terminou()` (satisfaz `VistaTAD`)
       * `PercorrivelTAD<T>`: `iterador()`
+1. [Sacos e Listas](slides/2-sacos/2-sacos.md): [PDF](slides/2-sacos/2-sacos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos/index.html)
+   - Exemplo de implementação: [main.cpp](./slides/2-sacos/impl/main.cpp) [ListaEncadeada.hpp](./slides/2-sacos/impl/ListaEncadeada.hpp) [SacoTAD.hpp](./slides/2-sacos/impl/SacoTAD.hpp) [SacoVetor.hpp](./slides/2-sacos/impl/SacoVetor.hpp) [makefile (GNU c++17)](./slides/2-sacos/impl/makefile)
+   - Novos conceitos: 
       * `SacoTAD<T>`: `adiciona(t)`, `busca(t)`, `remove(it)`, `tamanho()`
    - Tópico Avançado: [Sacos Ordenados](slides/2-sacos-ordenados/2-sacos-ordenados.md): [PDF](slides/2-sacos-ordenados/2-sacos-ordenados.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos-ordenados/index.html)
    - Novos conceitos: 
