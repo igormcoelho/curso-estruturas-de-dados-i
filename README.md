@@ -6,12 +6,13 @@ Materiais gerais de Estruturas de Dados I do [Prof. Igor Machado Coelho](https:/
 
 Lista completa de cursos: [igormcoelho/cursos](https://github.com/igormcoelho/cursos/)
 
-Lista completa de módulos no repositório:
+Lista completa de módulos no repositório (sequência de estudos *sugerida*):
 
 - Revisão/Tipos
-- Análise de Complexidade
+- Análise de Complexidade (ainda a finalizar!)
 - Pilhas
 - Filas
+- Conjuntos Simples (útil para revisar algoritmos clássicos de ordenação!)
 - Sacos e Listas
 - Árvores
 - Árvores de Busca
@@ -22,7 +23,7 @@ Lista completa de módulos no repositório:
 
 O curso também inclui conceitos abstratos como:
 
-- Vista e VistaMutavel (o conceito de *lightweight view* de linguagens modernas)
+- Vista e Vista Mutavel (o conceito de *lightweight view* de linguagens modernas)
 - Iteradores (similares aos conceitos de Java, mas compatíveis com os de C++)
 - Percorrivel (o conceito de *range* em C++, ou `Iterable` em Java, ou `iterable` em Python)
 
