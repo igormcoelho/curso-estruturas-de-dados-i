@@ -14,7 +14,7 @@ Lista completa de módulos no repositório:
 - Filas
 - Sacos e Listas
 - Árvores
-- Árvores de Busca e Mapas
+- Árvores de Busca e Dicionários
 - Filas de Prioridade
 - Grafos
 
@@ -29,13 +29,26 @@ Materiais PDF-HTML:
 1. [Pilhas](slides/3-pilhas/3-pilhas.md): [PDF](slides/3-pilhas/3-pilhas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/3-pilhas/index.html)
    - Exemplo de pilha na STL: [main_pilha.cpp](./material/3-pilhas/main_pilha.cpp)
    - Vídeos YouTube: [Pilhas e Implementações](https://youtu.be/2J1EdzSZ1NQ) - Análise de Complexidade *(nas próximas semanas)*
+   - Novos conceitos:
+      * `PilhaTAD<T>`: `empilha(t)`, `desempilha()`, `topo()`, `tamanho()`
 1. [Filas](slides/4-filas/4-filas.md): [PDF](slides/4-filas/4-filas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-filas/index.html)
    - Exemplo de fila na STL: [main_fila.cpp](./material/4-filas/main_fila.cpp)
    - Vídeos YouTube: [Filas e Implementações](https://youtu.be/pZ36rzfSxYs) - Análise de Complexidade *(nas próximas semanas)*
-1. Revisão/Treino TAD Sequencial: [Conjuntos Simples](slides/2-conjuntos-simples/2-conjuntos-simples.md): [PDF](slides/2-conjuntos-simples/2-conjuntos-simples.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-conjuntos-simples/index.html)
+   - Novos conceitos:
+      * `FilaTAD<T>`: `enfileira(t)`, `desenfileira()`, `frente()`, `tamanho()`
+1. Revisão/Treino TAD Sequencial: [Conjunto Simples](slides/2-conjunto-simples/2-conjunto-simples.md): [PDF](slides/2-conjunto-simples/2-conjunto-simples.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-conjunto-simples/index.html)
+   - Novos conceitos:
+      * `ConjuntoSimplesTAD<T>`: `pertence(x)`, `insere(x)`, `remove(x)`, `tamanho()`
 1. [Sacos e Listas](slides/2-sacos/2-sacos.md): [PDF](slides/2-sacos/2-sacos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos/index.html)
    - Exemplo de implementação: [main.cpp](./slides/2-sacos/impl/main.cpp) [ListaEncadeada.hpp](./slides/2-sacos/impl/ListaEncadeada.hpp) [SacoTAD.hpp](./slides/2-sacos/impl/SacoTAD.hpp) [SacoVetor.hpp](./slides/2-sacos/impl/SacoVetor.hpp) [makefile (GNU c++17)](./slides/2-sacos/impl/makefile)
+   - Novos conceitos: 
+      * `VistaTAD`: `le()`  (com tipo associado `Tipo`)
+      * `VistaMutavelTAD`: `le()`, `altera(t)`
+      * `IteradorTAD<T>`: `le()`, `proximo()`, `terminou()` (satisfaz `VistaTAD`)
+      * `SacoTAD<T>`: `adiciona(t)`, `busca(t)`, `remove(it)`, `tamanho()`
    - Tópico Avançado: [Sacos Ordenados](slides/2-sacos-ordenados/2-sacos-ordenados.md): [PDF](slides/2-sacos-ordenados/2-sacos-ordenados.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos-ordenados/index.html)
+   - Novos conceitos: 
+      * `SacoOrdenadoTAD<T>`: `buscaMaiorIgual(t)`, `buscaMaior(t)` (satisfaz `SacoTAD<T>`)
 1. Árvores e Árvores de Busca
    - [Árvores](slides/5-arvores/5-arvores.md): [PDF](slides/5-arvores/5-arvores.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/5-arvores/index.html)
    - [Árvores de Busca](slides/5-arvores-busca/5-arvores-busca.md): [PDF](slides/5-arvores-busca/5-arvores-busca.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/5-arvores-busca/index.html)
@@ -46,7 +59,7 @@ Materiais PDF-HTML:
    - Material Fábio Protti: [Arvores de Busca 2](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-2.pdf)
 1. [Filas de Prioridade](slides/7-filas-prioridade/7-filas-prioridade.md): [PDF](slides/7-filas-prioridade/7-filas-prioridade.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/7-filas-prioridade/index.html)
    - Vídeos YouTube (2020): [Filas de Prioridade Parte 1/2](https://youtu.be/SA-RgtmLWkM) 
-   - Vídeos YoutTube (2021):  [Filas de Prioridade Parte 2/2](https://youtu.be/q0kRz4oz_7A)
+   - Vídeos YouTube (2021):  [Filas de Prioridade Parte 2/2](https://youtu.be/q0kRz4oz_7A)
 
 
 ***Observação:*** **alguns módulos só são oferecidos para cursos específicos.*
