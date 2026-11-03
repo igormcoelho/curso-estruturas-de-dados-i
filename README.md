@@ -14,9 +14,20 @@ Lista completa de módulos no repositório:
 - Filas
 - Sacos e Listas
 - Árvores
-- Árvores de Busca e Dicionários
+- Árvores de Busca
+- Dicionários e Tabelas de Dispersão
+- Dicionários Ordenados e Árvores Auto-balanceadas (AVL e Rubro-Negra)
 - Filas de Prioridade
-- Grafos
+- Árvores B
+
+O curso também inclui conceitos abstratos como:
+
+- Vista e VistaMutavel (o conceito de *lightweight view* de linguagens modernas)
+- Iteradores (similares aos conceitos de Java, mas compatíveis com os de C++)
+- Percorrivel (o conceito de *range* em C++, ou `Iterable` em Java, ou `iterable` em Python)
+
+Tópicos mais avançados como Grafos em geral são explorados como trabalho no curso.
+
 
 Materiais PDF-HTML:
 
