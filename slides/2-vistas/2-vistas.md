@@ -145,6 +145,62 @@ println("{}", y.le()); // 30 (não-posse)
 
 -------
 
+## Conceito: Vista de Vetor
+
+Uma *Vista de Vetor* é uma vista de **vários** elementos consecutivos, lidos pela posição `i`. A *Vista Mutável de Vetor* também altera o elemento, **na origem**.
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
+
+```.cpp
+template <typename V, typename T>
+concept VistaVetorTAD = requires(V v, int i) {
+   { v.tamanho() } -> std::same_as<int>;
+   { v.le(i) }     -> std::same_as<T>;
+};
+template <typename V, typename T>
+concept VistaMutavelVetorTAD =
+   VistaVetorTAD<V, T> &&
+   requires(V v, int i, T t) {
+   { v.altera(i, t) };
+};  // le e altera: pre(0 <= i < tamanho())
+
+// o SpanInt da introdução já serve!
+static_assert(VistaMutavelVetorTAD<SpanInt, int>);
+```
+
+:::::
+
+::::: |{45%}
+
+```.cpp
+// dobra os elementos, na origem
+void dobra(
+   VistaMutavelVetorTAD<int> auto v) {
+   for (int i = 0; i < v.tamanho(); i++)
+      v.altera(i, 2 * v.le(i));
+}
+// Exemplo de uso
+int a[] = {1, 2, 3};
+SpanInt s{.inicio = a, .n = 3};
+dobra(s);              // cópia leve
+println("{} {} {}",
+   a[0], a[1], a[2]);  // 2 4 6
+```
+
+:::::
+
+::::::::::
+
+:::
+
+**Importante:** a vista é passada **por valor** (é leve!), mas `altera` muda o vetor original. É assim que receberemos vetores nos algoritmos de ordenação.
+
+-------
+
 ## Conceito: Iterador
 
 Um *Iterador* (do inglês *Iterator*) é uma **Vista** do elemento atual que **pode se mover**: além de `le()`, possui `proximo()` e `terminou()`.

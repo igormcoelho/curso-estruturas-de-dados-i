@@ -59,6 +59,8 @@ Materiais PDF-HTML:
    - Novos conceitos:
       * `VistaTAD`: `le()`  (com tipo associado `Tipo`)
       * `VistaMutavelTAD`: `le()`, `altera(t)`
+      * `VistaVetorTAD<T>`: `tamanho()`, `le(i)`
+      * `VistaMutavelVetorTAD<T>`: `tamanho()`, `le(i)`, `altera(i, t)` (satisfaz `VistaVetorTAD<T>`; ex: `SpanInt`)
       * `IteradorTAD<T>`: `le()`, `proximo()`, `terminou()` (satisfaz `VistaTAD`)
       * `PercorrivelTAD<T>`: `iterador()`
 1. [Sacos e Listas](slides/2-sacos/2-sacos.md): [PDF](slides/2-sacos/2-sacos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos/index.html)
