@@ -22,11 +22,11 @@ Lista completa de módulos no repositório (sequência de estudos *sugerida*):
 - Filas de Prioridade
 - Árvores B
 
-O curso também inclui conceitos abstratos como:
+O curso também inclui conceitos abstratos de programação estruturada como:
 
 - Vista e Vista Mutavel (o conceito de *lightweight view* de linguagens modernas)
-- Iteradores (similares aos conceitos de Java, mas compatíveis com os de C++)
-- Percorrivel (o conceito de *range* em C++, ou `Iterable` em Java, ou `iterable` em Python)
+- Iteradores (ou *vistas que podem se mover*) similares ao conceito de Java, mas compatíveis com os de C++
+- Percorrivel (o conceito de `range` em C++, ou `Iterable` em Java, ou `iterable` em Python)
 
 Tópicos mais avançados como Grafos em geral são explorados como trabalho no curso.
 
