@@ -8,8 +8,7 @@ Lista completa de cursos: [igormcoelho/cursos](https://github.com/igormcoelho/cu
 
 Lista completa de módulos no repositório (sequência de estudos *sugerida*):
 
-- Revisão/Tipos
-- Análise de Complexidade (ainda a finalizar!)
+- Introdução/Revisão Tipos e Análise de Complexidade
 - Pilhas
 - Filas
 - Conjuntos Simples (útil para revisar algoritmos clássicos de ordenação!)
@@ -33,8 +32,8 @@ Tópicos mais avançados como Grafos em geral são explorados como trabalho no c
 
 Materiais PDF-HTML:
 
-1. Introdução
-   - [Introdução NOVO](slides/1-intro-tipos/1-intro-tipos.md): [PDF](slides/1-intro-tipos/1-intro-tipos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-intro-tipos/index.html)
+1. Introdução (Tipos e Análise de Complexidade)
+   - [Introdução: Tipos e Análise de Complexidade](slides/1-intro-tipos/1-intro-tipos.md): [PDF](slides/1-intro-tipos/1-intro-tipos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-intro-tipos/index.html)
    - [ENGLISH - Introduction - Translated](slides/1-en-intro-types/1-en-intro-types.md): [PDF](slides/1-en-intro-types/1-en-intro-types.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-en-intro-types/index.html)
    - [Revisão/Tipos ANTIGO](slides/1-revisao-tipos/1-revisao-tipos.md): [PDF](slides/1-revisao-tipos/1-revisao-tipos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-revisao-tipos/index.html)
    - Vídeos YouTube: [Parte 1](https://youtu.be/byZLHu4kTb0) [Parte 2](https://youtu.be/2Bo7MYFCJ0o)

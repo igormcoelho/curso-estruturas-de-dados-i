@@ -711,7 +711,286 @@ quantidade?
     de registradores e sem eliminação de subexpressões comuns (otimizações típicas de um compilador).
 
 
-## A continuar...
+## Vantagens do Modelo RAM
+
+- **Independência de arquitetura:** o mesmo algoritmo tem a mesma contagem em qualquer máquina
+- **Abstrai razoavelmente bem** o comportamento geral de uma máquina real
+- Diferentes formas de contar (por linha, por instrução, por acesso à memória) mudam apenas as **constantes**, e veremos que elas não importam para a comparação de algoritmos
+
+**Simplificação para os exemplos:** contaremos **quantas vezes cada linha executa**. A linha de um `for` conta uma vez por **teste** da condição (inclusive o último teste, que falha).
+
+-------
+
+## Exemplo: Ordenação por Bolha (*Bubble Sort*)
+
+**Problema:** ordenar um vetor `B` com `N` elementos, em ordem crescente.
+
+**Ideia:** comparar vizinhos e trocá-los se estiverem fora de ordem. A cada passada, o maior elemento restante "borbulha" até o fim.
+
+::: -
+
+:::::::::: ||
+
+::::: |{55%}
+
+```.cpp
+int B[] = {5, 2, 4, 1, 3};
+int N = 5;
+// i: quantos elementos ainda não ordenados
+for (int i = N; i > 0; i--)
+   for (int j = 0; j < i - 1; j++)
+      if (B[j] > B[j + 1]) {
+         int t = B[j];      // troca B[j]
+         B[j] = B[j + 1];   //   e B[j+1]
+         B[j + 1] = t;
+      }
+// B: {1, 2, 3, 4, 5}
+```
+
+:::::
+
+::::: |{40%}
+
+```
+  i=5: | 2 | 4 | 1 | 3 | 5 |
+  i=4: | 2 | 1 | 3 | 4 | 5 |
+  i=3: | 1 | 2 | 3 | 4 | 5 |
+  i=2: | 1 | 2 | 3 | 4 | 5 |
+  i=1: | 1 | 2 | 3 | 4 | 5 |
+```
+
+Vetor ao fim de cada passada: o final do vetor (à direita) já está ordenado.
+
+:::::
+
+::::::::::
+
+:::
+
+-------
+
+## Contando Passos: Bubble Sort (pior caso)
+
+O **pior caso** ocorre quando toda comparação gera troca (vetor em ordem **decrescente**):
+
+::: -
+
+| Linha | Execuções |
+|---|---|
+| `for (int i = N; i > 0; i--)` | $N + 1$ |
+| `for (int j = 0; j < i - 1; j++)` | $\sum_{i=1}^{N} i = N(N+1)/2$ |
+| `if (B[j] > B[j + 1])` | $\sum_{i=1}^{N} (i-1) = N(N-1)/2$ |
+| `int t = B[j];` | $\leq N(N-1)/2$ |
+| `B[j] = B[j + 1];` | $\leq N(N-1)/2$ |
+| `B[j + 1] = t;` | $\leq N(N-1)/2$ |
+| **Total** | $\leq \frac{5}{2}N^2 - \frac{1}{2}N + 1$ |
+
+:::
+
+**Exercício:** verifique a soma! Para cada `i`, quantas vezes a condição `j < i - 1` é testada?
+
+-------
+
+## Contando Passos: Bubble Sort (melhor caso)
+
+E se o vetor **já estiver ordenado**? Nenhuma troca acontece, mas todas as comparações continuam sendo feitas:
+
+$$ (N + 1) + \frac{N(N+1)}{2} + \frac{N(N-1)}{2} = N^2 + N + 1 \text{ passos} $$
+
+Para qualquer entrada de tamanho $N$, o algoritmo executa entre $N^2 + N + 1$ e $\frac{5}{2}N^2 - \frac{1}{2}N + 1$ passos.
+
+**Pergunta:** faz sentido percorrer um vetor já ordenado $N$ vezes? Como evitar isso? (Veremos adiante!)
+
+-------
+
+## Comparando Algoritmos
+
+Suponha outro algoritmo de ordenação, que execute em $T_2(N) = 10 N \lg N + 1000 N + 1000000$ passos, e que só possamos executá-lo em uma máquina **100 vezes mais lenta**:
+
+::: -
+
+| $N$ | Bubble Sort ($\frac{5}{2}N^2$, 1000 passos/ms) | $T_2(N)$ (10 passos/ms) |
+|---|---|---|
+| 1 | $\sim$ 0,003 ms | $\sim$ 2 min |
+| 100 | $\sim$ 25 ms | $\sim$ 2 min |
+| 1000 | $\sim$ 2,5 s | $\sim$ 3,5 min |
+| 10000 | $\sim$ 4 min | $\sim$ 20 min |
+| 100000 | $\sim$ 7 h | $\sim$ 3 h |
+| 1000000 | $\sim$ 29 dias | $\sim$ 1,4 dia |
+| 10000000 | $\sim$ 8 anos | $\sim$ 14 dias |
+
+:::
+
+**Pergunta:** qual dos dois você escolheria? Depende do tamanho $N$ da entrada!
+
+-------
+
+## Complexidade Assintótica
+
+Note que, à medida que $N$ cresce, o que realmente conta é o **termo de maior crescimento**: $N^2$ contra $N \lg N$. As constantes ($\frac{5}{2}$, $10$, $1000$) e a velocidade da máquina importam cada vez menos!
+
+Essa é a **complexidade assintótica**: um dos critérios mais utilizados para comparar a eficiência de algoritmos.
+
+Para expressá-la, existe uma notação especial que evidencia a essência da complexidade, descartando constantes multiplicativas e termos de menor crescimento: a **notação $O$** (e família).
+
+**Intuição:** para $T(N) = \frac{5}{2}N^2 - \frac{1}{2}N + 1$, o termo de maior crescimento é $N^2$:
+
+::: -
+
+| Termo de maior crescimento | Notação | Satisfazem | **Não** satisfazem |
+|---|---|---|---|
+| Igual a $N^2$ | $\Theta(N^2)$ | $\frac{1}{2}N^2 + 10N$; $100N^2$ | $10N$; $N^3 + 2N^2$; $N \lg N$ |
+| No máximo $N^2$ | $O(N^2)$ | $100N^2$; $100$; $N \lg N$ | $N^3 + 2N^2$; $N^2 \lg N$ |
+| No mínimo $N^2$ | $\Omega(N^2)$ | $100N^2$; $N^3 + 2$; $N^2 \lg N$ | $10N$; $100$; $N \lg N$ |
+
+:::
+
+-------
+
+## Notações $O$, $\Omega$ e $\Theta$
+
+**Notação $O$ (limite superior):**
+$O(g(n)) = \{ f(n) \mid \exists$ constantes positivas $c, n_0$ tais que $0 \leq f(n) \leq c\, g(n),\ \forall n \geq n_0 \}$
+
+**Notação $\Omega$ (limite inferior):**
+$\Omega(g(n)) = \{ f(n) \mid \exists$ constantes positivas $c, n_0$ tais que $0 \leq c\, g(n) \leq f(n),\ \forall n \geq n_0 \}$
+
+**Notação $\Theta$ (limite justo):**
+$\Theta(g(n)) = \{ f(n) \mid \exists$ constantes positivas $c_1, c_2, n_0$ tais que $0 \leq c_1 g(n) \leq f(n) \leq c_2 g(n),\ \forall n \geq n_0 \}$
+
+Escrevemos $f(n) = O(g(n))$ no lugar de $f(n) \in O(g(n))$. Note que $f(n) = \Theta(g(n))$ se, e somente se, $f(n) = O(g(n))$ **e** $f(n) = \Omega(g(n))$.
+
+**Exemplo:** $\frac{5}{2}N^2 - \frac{1}{2}N + 1 = \Theta(N^2)$, pois $2N^2 \leq \frac{5}{2}N^2 - \frac{1}{2}N + 1 \leq 3N^2$ para todo $N \geq 1$. **Verifique!**
+
+-------
+
+## Notações $o$ e $\omega$ (estritas)
+
+**Notação $o$:** $o(g(n)) = \{ f(n) \mid \forall c > 0,\ \exists n_0 > 0$ tal que $0 \leq f(n) < c\, g(n),\ \forall n \geq n_0 \}$
+
+**Notação $\omega$:** $\omega(g(n)) = \{ f(n) \mid \forall c > 0,\ \exists n_0 > 0$ tal que $0 \leq c\, g(n) < f(n),\ \forall n \geq n_0 \}$
+
+São as versões **estritas** de $O$ e $\Omega$: "cresce **estritamente** mais devagar (ou mais rápido) que $g$".
+
+::: -
+
+| Termo de maior crescimento | Notação | Satisfazem | **Não** satisfazem |
+|---|---|---|---|
+| Menor que $N^2$ | $o(N^2)$ | $10N$; $100$; $N \lg N$ | $100N^2$; $N^3 + 2N^2$; $N^2 \lg N$ |
+| Maior que $N^2$ | $\omega(N^2)$ | $N^3 + 2N^2$; $N^2 \lg N$ | $100N^2$; $10N$; $100$; $N \lg N$ |
+
+:::
+
+**Analogia:** $O$, $\Omega$, $\Theta$, $o$ e $\omega$ estão para funções como $\leq$, $\geq$, $=$, $<$ e $>$ estão para números.
+
+-------
+
+## Processo Prático para a Notação $\Theta$
+
+1. Elimine as constantes multiplicativas: $10n^2 = \Theta(n^2)$
+2. Para cada variável, mantenha só o termo de maior crescimento:
+   * $3n^2 + 100n = \Theta(n^2)$
+   * $10n + 100 \lg n + \frac{1}{2} n \lg n = \Theta(n \lg n)$
+   * $3n^2 - 90n + 2m^2 = \Theta(n^2 + m^2)$
+3. Elimine um termo positivo se existe outro de maior crescimento: $3n^2 + 4mn + 2m^2 = \Theta(n^2 + m^2)$
+
+**Para as demais notações:** se $f(n) = \Theta(g(n))$, então:
+
+- $f(n) = O(g(n))$, e também $O(h(n))$ para $h$ de maior crescimento: $n^2 + n = O(n^2) = O(n^3)$
+- $f(n) = \Omega(g(n))$, e também $\Omega(h(n))$ para $h$ de menor crescimento: $n^2 + n = \Omega(n^2) = \Omega(n)$
+
+**Exercício:** classifique $2N^2 + 1000N + 100000$; $10N + N \lg N + 20M - 10$; $(5/3)\, 2^{N/2} + (3/4) N^{100}$; $(N + M)^2$.
+
+-------
+
+## Pior Caso, Melhor Caso e Caso Médio
+
+Seja $U$ o conjunto das entradas de tamanho $N$, e $T(E)$ o número de passos do algoritmo para a entrada $E \in U$:
+
+- **Pior caso:** $\max \{ T(E) : E \in U \}$
+- **Melhor caso:** $\min \{ T(E) : E \in U \}$
+- **Caso médio:** $\sum_{E \in U} p(E)\, T(E)$, onde $p(E)$ é a probabilidade da entrada $E$
+
+No Bubble Sort, o pior caso é o vetor em ordem decrescente, e o melhor caso, o vetor já ordenado:
+
+- **Pior caso:** $\frac{5}{2}N^2 - \frac{1}{2}N + 1 = \Theta(N^2)$
+- **Melhor caso:** $N^2 + N + 1 = \Theta(N^2)$
+
+Os dois são $\Theta(N^2)$: o Bubble Sort clássico é **sempre** quadrático. Podemos melhorar o melhor caso?
+
+-------
+
+## Bubble Sort Otimizado
+
+**Ideia:** se uma passada inteira não fizer nenhuma troca, o vetor já está ordenado. Basta parar!
+
+::: -
+
+:::::::::: ||
+
+::::: |{55%}
+
+```.cpp
+for (int i = N; i > 0; i--) {
+   bool trocou = false;
+   for (int j = 0; j < i - 1; j++)
+      if (B[j] > B[j + 1]) {
+         int t = B[j];
+         B[j] = B[j + 1];
+         B[j + 1] = t;
+         trocou = true;
+      }
+   if (!trocou)
+      break;  // já está ordenado!
+}
+```
+
+:::::
+
+::::: |{40%}
+
+**Melhor caso** (já ordenado): uma única passada, com $N - 1$ comparações:
+
+$$ 2N + 3 = \Theta(N) $$
+
+**Pior caso** (decrescente): nunca para antes, e ainda executa as linhas extras:
+
+$$ 3N^2 + N + 1 = \Theta(N^2) $$
+
+:::::
+
+::::::::::
+
+:::
+
+**Observação:** a otimização melhora o **melhor caso**, mas **piora a constante** do pior caso ($3N^2$ contra $\frac{5}{2}N^2$). Assintoticamente, o pior caso não muda!
+
+-------
+
+## Afirmações Precisas sobre Complexidade
+
+Para o Bubble Sort **otimizado**, cujo pior caso é $3N^2 + N + 1$ e cujo melhor caso é $2N + 3$:
+
+- **Qualquer entrada** executa em $O(N^2)$ e em $\Omega(N)$ passos; dizer $\Theta(N^2)$ ou $\Theta(N)$ é **errado**!
+- **No pior caso**, executa em $\Theta(N^2)$ passos; dizer só $O(N^2)$ é correto, mas **pouco preciso**
+- **No melhor caso**, executa em $\Theta(N)$ passos; dizer só $\Omega(N)$ é correto, mas **pouco preciso**
+- **No caso médio**, executa em $\Theta(N^2)$ passos (cada troca corrige exatamente um par fora de ordem, e um vetor aleatório tem, em média, $N(N-1)/4$ pares fora de ordem)
+
+**Dicas para analisar um algoritmo:**
+
+- tenha em mente **qual caso** está analisando
+- descreva um **exemplo** de entrada para seguir (ex: vetor decrescente)
+- analise a complexidade de cada **bloco** do algoritmo separadamente, e depois some
+
+-------
+
+## Exercícios: Complexidade
+
+1. Conte os passos do Bubble Sort otimizado no pior e no melhor caso, linha a linha, e confira os valores $3N^2 + N + 1$ e $2N + 3$.
+2. Mostre que $N^2 + N + 1 = \Theta(N^2)$, encontrando constantes $c_1$, $c_2$ e $n_0$.
+3. O *Selection Sort* encontra o menor elemento e o coloca na primeira posição; depois o segundo menor, e assim por diante. Escreva-o com um vetor nativo e analise seu melhor e pior caso.
+4. O *Insertion Sort* insere cada elemento na posição correta da parte já ordenada. Escreva-o e analise seu melhor e pior caso. Qual se parece mais com o Bubble Sort otimizado?
+5. Verdadeiro ou falso: (a) $n^2 + n = O(n^3)$; (b) $n \lg n = \Omega(n^2)$; (c) $2^{n+1} = \Theta(2^n)$; (d) $2^{2n} = \Theta(2^n)$.
 
 # Parte 4: Tipos Agregados Triviais e Genéricos
 
