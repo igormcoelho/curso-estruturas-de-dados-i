@@ -73,7 +73,7 @@ O primeiro conceito a ser revisado é de variável. Uma variável consiste
 de um identificador válido (mesmo para outras linguagens populares como Python) e armazena algum
 tipo de dado da memória do computador.
 
-A linguagem C/C++ é **fortemente tipada**, portando o programador
+A linguagem C/C++ é **fortemente tipada**, portanto o programador
 deve dizer explicitamente qual o tipo de dado deseja armazenar em
 cada variável ou deixar **auto** deduzir automaticamente.
 
@@ -98,7 +98,11 @@ auto s = "abcd"; // cadeia de caracteres, ainda veremos tipo
 
 ## Tipos de Variáveis
 
-**Pergunta/Resposta**: Cuidado com tipos. Quais são os valores armazenados nas variáveis abaixo (C++23 e C23)?
+**Pergunta**: Cuidado com tipos. Quais são os valores das variáveis abaixo (C++23 e C23)?
+
+::::::::: ||
+
+::: |{50%}
 
 ```{.cpp}
 int    x1 = 5;        // => 5
@@ -111,7 +115,17 @@ auto   x7 = x2 / 2;   // => 7
 auto   x8 = x2 / 2.0; // => 7.5
 ```
 
-Verifiquem essas operações de variáveis, escrevendo na saída padrão (tela do computador).
+:::
+
+::: |{50%}
+
+![`$ clang-repl-23 --Xcc=-std=c++23`](./img/clang-repl-23.png){height=50%}
+
+:::
+
+::::::::: 
+
+Verifiquem essas operações de variáveis, escrevendo na saída padrão (dica: usem `clang-repl`).
 
 -------
 
@@ -1200,6 +1214,61 @@ println("{}", f.fatorial(5)); // 120
 ```
 
 :::
+
+-------
+
+## Exercício Prático: agregado `SpanInt`
+
+Crie um agregado `SpanInt`, que representa um trecho de vetor de `int` (sem posse), com os métodos `tamanho()`, `le(i)`, `altera(i, v)` e `fatia(a, b)`, que retorna outro `SpanInt` com os elementos de `a` até `b-1` (como *slice* popular `v[a:b]` em Python).
+
+. . .
+
+::: -
+
+:::::::::: ||
+
+::::: |{55%}
+
+```.cpp
+struct SpanInt {
+  int* inicio;  // primeiro elemento
+  int  n;       // número de elementos
+  int  tamanho()         { return n; }
+  int  le(int i)         { return inicio[i]; }
+  void altera(int i, int v) { inicio[i] = v; }
+  // pre: 0 <= a <= b <= n
+  SpanInt fatia(int a, int b) {
+    return {.inicio = inicio + a, .n = b - a};
+  }
+};  // le e altera: pre(0 <= i < n)
+```
+
+:::::
+
+::::: |{40%}
+
+```.cpp
+int v[] = {10, 20, 30, 40, 50};
+SpanInt s{.inicio = v, .n = 5};
+SpanInt meio = s.fatia(1, 4);
+// meio: {20, 30, 40}
+meio.altera(0, 99);
+println("{}", v[1]); // 99 (sem cópia!)
+
+int soma(SpanInt s) {  // recursiva!
+   if (s.tamanho() == 0) return 0;
+   return s.le(0) +
+      soma(s.fatia(1, s.tamanho()));
+}
+```
+
+:::::
+
+::::::::::
+
+:::
+
+**Importante:** a aritmética de ponteiros (`inicio + a`) fica escondida **dentro** do `SpanInt`.
 
 -------
 

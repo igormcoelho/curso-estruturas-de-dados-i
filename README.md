@@ -39,6 +39,8 @@ Materiais PDF-HTML:
    - [Revisão/Tipos ANTIGO](slides/1-revisao-tipos/1-revisao-tipos.md): [PDF](slides/1-revisao-tipos/1-revisao-tipos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-revisao-tipos/index.html)
    - Vídeos YouTube: [Parte 1](https://youtu.be/byZLHu4kTb0) [Parte 2](https://youtu.be/2Bo7MYFCJ0o)
    - Observação: a Parte 2 contém algumas falhas no áudio, que pretendo corrigir no futuro. Como é uma etapa extra (prática), não compromete o conteúdo em si da aula.  
+   - Novos tipos:
+      * `SpanInt`: `tamanho()`, `le(i)`, `altera(i, v)`, `fatia(a, b)` (vista de um trecho de vetor, sem posse)
 1. [Pilhas](slides/3-pilhas/3-pilhas.md): [PDF](slides/3-pilhas/3-pilhas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/3-pilhas/index.html)
    - Exemplo de pilha na STL: [main_pilha.cpp](./material/3-pilhas/main_pilha.cpp)
    - Vídeos YouTube: [Pilhas e Implementações](https://youtu.be/2J1EdzSZ1NQ) - Análise de Complexidade *(nas próximas semanas)*
