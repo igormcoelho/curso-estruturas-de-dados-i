@@ -19,7 +19,7 @@ Lista completa de módulos no repositório (sequência de estudos *sugerida*):
 - Dicionários e Tabelas de Dispersão
 - Dicionários Ordenados e Árvores Auto-balanceadas (AVL e Rubro-Negra)
 - Filas de Prioridade
-- Árvores B
+- Árvores B e B+
 
 O curso também inclui conceitos abstratos de programação estruturada como:
 
@@ -88,7 +88,7 @@ Materiais PDF-HTML:
       * `FilaPrioridadeTAD<T>`: `frente()`, `insere(t)`, `remove()`, `tamanho()`
    - Vídeos YouTube (2020): [Filas de Prioridade Parte 1/2](https://youtu.be/SA-RgtmLWkM) 
    - Vídeos YouTube (2021):  [Filas de Prioridade Parte 2/2](https://youtu.be/q0kRz4oz_7A)
-
+1. [Árvores B e B+](slides/8-arvores-b/8-arvores-b.md): [PDF](slides/8-arvores-b/8-arvores-b.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/8-arvores-b/index.html)
 
 ***Observação:*** **alguns módulos só são oferecidos para cursos específicos.*
 
