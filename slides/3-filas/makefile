@@ -1,6 +1,6 @@
-MDFILE=4-filas.md
+MDFILE=3-filas.md
 OUTHTML=index.html
-OUTPDF=4-filas.pdf
+OUTPDF=3-filas.pdf
 
 all: deps
 	/usr/bin/pandoc -s -V revealjs-url=./reveal.js --standalone -V theme=beige -s -t revealjs \

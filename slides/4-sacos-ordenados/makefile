@@ -1,6 +1,6 @@
-MDFILE=2-vistas.md
+MDFILE=4-sacos-ordenados.md
 OUTHTML=index.html
-OUTPDF=2-vistas.pdf
+OUTPDF=4-sacos-ordenados.pdf
 LUA_FILTERS=--lua-filter div-shortcuts.lua --lua-filter fonts-and-alignment.lua
 
 all: deps

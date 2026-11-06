@@ -8,27 +8,25 @@ Lista completa de cursos: [igormcoelho/cursos](https://github.com/igormcoelho/cu
 
 Lista completa de módulos no repositório (sequência de estudos *sugerida*):
 
-- Introdução/Revisão Tipos e Análise de Complexidade
-- Pilhas
-- Filas
-- Conjuntos Simples (útil para revisar algoritmos clássicos de ordenação!)
-- Vistas, Iteradores e Percorríveis
-- Sacos e Listas
-- Árvores
-- Árvores de Busca
-- Dicionários e Tabelas de Dispersão
-- Dicionários Ordenados e Árvores Auto-balanceadas (AVL e Rubro-Negra)
-- Filas de Prioridade
-- Árvores B e B+
+1. Introdução a Tipos e Análise de Complexidade
+2. Pilhas
+3. Filas
+4. Coleções Lineares e Iteração
+   - Conjuntos Simples
+   - Vistas, Iteradores e Percorríveis
+   - Sacos e Listas
+5. Árvores 
+   - Conceitos de Árvores 
+   - Árvores de Busca
+6. Dicionários
+   - Dicionários com Tabelas de Dispersão
+   - Dicionários Ordenados e Árvores Auto-balanceadas (AVL e Rubro-Negra)
+7. Filas de Prioridade
+8. Árvores B e B+
 
-O curso também inclui conceitos abstratos de programação estruturada como:
-
-- Vista e Vista Mutavel (o conceito de *lightweight view* de linguagens modernas)
-- Iteradores (ou *vistas que podem se mover*) similares ao conceito de Java, mas compatíveis com os de C++
-- Percorrivel (o conceito de `range` em C++, ou `Iterable` em Java, ou `iterable` em Python)
+**Cuidado com o Módulo 4:** *ele pode ser bastante avançado, dependendo da sua base prévia em programação estruturada: algoritmos clássicos de ordenação, listas encadeadas, vistas e iteradores.*
 
 Tópicos mais avançados como Grafos em geral são explorados como trabalho no curso.
-
 
 Materiais PDF-HTML:
 
@@ -40,21 +38,21 @@ Materiais PDF-HTML:
    - Observação: a Parte 2 contém algumas falhas no áudio, que pretendo corrigir no futuro. Como é uma etapa extra (prática), não compromete o conteúdo em si da aula.  
    - Novos tipos:
       * `SpanInt`: `tamanho()`, `le(i)`, `altera(i, v)`, `fatia(a, b)` (vista de um trecho de vetor, sem posse)
-1. [Pilhas](slides/3-pilhas/3-pilhas.md): [PDF](slides/3-pilhas/3-pilhas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/3-pilhas/index.html)
-   - Exemplo de pilha na STL: [main_pilha.cpp](./material/3-pilhas/main_pilha.cpp)
+2. [Pilhas](slides/2-pilhas/2-pilhas.md): [PDF](slides/2-pilhas/2-pilhas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-pilhas/index.html)
+   - Exemplo de pilha na STL: [main_pilha.cpp](./material/2-pilhas/main_pilha.cpp)
    - Vídeos YouTube: [Pilhas e Implementações](https://youtu.be/2J1EdzSZ1NQ) - Análise de Complexidade *(nas próximas semanas)*
    - Novos conceitos:
       * `PilhaTAD<T>`: `empilha(t)`, `desempilha()`, `topo()`, `tamanho()`
-1. [Filas](slides/4-filas/4-filas.md): [PDF](slides/4-filas/4-filas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-filas/index.html)
-   - Exemplo de fila na STL: [main_fila.cpp](./material/4-filas/main_fila.cpp)
+3. [Filas](slides/3-filas/3-filas.md): [PDF](slides/3-filas/3-filas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/3-filas/index.html)
+   - Exemplo de fila na STL: [main_fila.cpp](./material/3-filas/main_fila.cpp)
    - Vídeos YouTube: [Filas e Implementações](https://youtu.be/pZ36rzfSxYs) - Análise de Complexidade *(nas próximas semanas)*
    - Novos conceitos:
       * `FilaTAD<T>`: `enfileira(t)`, `desenfileira()`, `frente()`, `tamanho()`
-1. Revisão/Treino TAD Sequencial e Vistas: 
-   - [Conjunto Simples](slides/2-conjunto-simples/2-conjunto-simples.md): [PDF](slides/2-conjunto-simples/2-conjunto-simples.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-conjunto-simples/index.html)
+4. Coleções Lineares e Iteração: Conjuntos Simples, Vistas e Sacos
+   - [Conjunto Simples](slides/4-conjunto-simples/4-conjunto-simples.md): [PDF](slides/4-conjunto-simples/4-conjunto-simples.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-conjunto-simples/index.html)
    - Novos conceitos:
       * `ConjuntoSimplesTAD<T>`: `pertence(x)`, `insere(x)`, `remove(x)`, `tamanho()`
-   - [Vistas, Iteradores e Percorríveis](slides/2-vistas/2-vistas.md): [PDF](slides/2-vistas/2-vistas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-vistas/index.html)
+   - [Vistas, Iteradores e Percorríveis](slides/4-vistas/4-vistas.md): [PDF](slides/4-vistas/4-vistas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-vistas/index.html)
    - Novos conceitos:
       * `VistaTAD`: `le()`  (com tipo associado `Tipo`)
       * `VistaMutavelTAD`: `le()`, `altera(t)`
@@ -62,18 +60,18 @@ Materiais PDF-HTML:
       * `VistaMutavelVetorTAD<T>`: `tamanho()`, `le(i)`, `altera(i, t)` (satisfaz `VistaVetorTAD<T>`; ex: `SpanInt`)
       * `IteradorTAD<T>`: `le()`, `proximo()`, `terminou()` (satisfaz `VistaTAD`)
       * `PercorrivelTAD<T>`: `iterador()`
-1. [Sacos e Listas](slides/2-sacos/2-sacos.md): [PDF](slides/2-sacos/2-sacos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos/index.html)
-   - Exemplo de implementação: [main.cpp](./slides/2-sacos/impl/main.cpp) [ListaEncadeada.hpp](./slides/2-sacos/impl/ListaEncadeada.hpp) [SacoTAD.hpp](./slides/2-sacos/impl/SacoTAD.hpp) [SacoVetor.hpp](./slides/2-sacos/impl/SacoVetor.hpp) [makefile (GNU c++17)](./slides/2-sacos/impl/makefile)
+   - [Sacos e Listas](slides/4-sacos/4-sacos.md): [PDF](slides/4-sacos/4-sacos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-sacos/index.html)
+   - Exemplo de implementação: [main.cpp](./slides/4-sacos/impl/main.cpp) [ListaEncadeada.hpp](./slides/4-sacos/impl/ListaEncadeada.hpp) [SacoTAD.hpp](./slides/4-sacos/impl/SacoTAD.hpp) [SacoVetor.hpp](./slides/4-sacos/impl/SacoVetor.hpp) [makefile (GNU c++17)](./slides/4-sacos/impl/makefile)
    - Novos conceitos: 
       * `SacoTAD<T>`: `adiciona(t)`, `busca(t)`, `remove(it)`, `tamanho()`
-   - Tópico Avançado: [Sacos Ordenados](slides/2-sacos-ordenados/2-sacos-ordenados.md): [PDF](slides/2-sacos-ordenados/2-sacos-ordenados.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-sacos-ordenados/index.html)
+   - Tópico Avançado: [Sacos Ordenados](slides/4-sacos-ordenados/4-sacos-ordenados.md): [PDF](slides/4-sacos-ordenados/4-sacos-ordenados.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-sacos-ordenados/index.html)
    - Novos conceitos: 
       * `SacoOrdenadoTAD<T>`: `buscaMaiorIgual(t)`, `buscaMaior(t)` (satisfaz `SacoTAD<T>`)
-1. Árvores e Árvores de Busca
+5. Árvores e Árvores de Busca
    - [Árvores](slides/5-arvores/5-arvores.md): [PDF](slides/5-arvores/5-arvores.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/5-arvores/index.html)
    - [Árvores de Busca](slides/5-arvores-busca/5-arvores-busca.md): [PDF](slides/5-arvores-busca/5-arvores-busca.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/5-arvores-busca/index.html)
    - Vídeos YouTube: [Árvores Parte 1/2](https://youtu.be/Yd6Wda879Q4) 
-1. Dicionários: 
+6. Dicionários: 
    - [Dicionários e Tabelas de Dispersão](slides/6-dicionarios-hash/6-dicionarios-hash.md): [PDF](slides/6-dicionarios-hash/6-dicionarios-hash.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios-hash/index.html)
       * Conceito `DicionarioTAD<K, V>`: `tem(c)`, `consulta(c)`, `adiciona(c, v)`, `remove(c)`, `tamanho()`
    - [Dicionários Ordenados e Árvores Balanceadas](slides/6-dicionarios/6-dicionarios.md): [PDF](slides/6-dicionarios/6-dicionarios.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/6-dicionarios/index.html)
@@ -83,14 +81,14 @@ Materiais PDF-HTML:
    - Vídeos YouTube: [Dicionários e Árvores de Busca Parte 1/2](https://youtu.be/Y_jx6sMQyf8) 
    - Material Fábio Protti: [Arvores de Busca 1](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-1.pdf)
    - Material Fábio Protti: [Arvores de Busca 2](http://www.ic.uff.br/~fabio/Aula-arvores-binarias-de-busca-2.pdf)
-1. [Filas de Prioridade](slides/7-filas-prioridade/7-filas-prioridade.md): [PDF](slides/7-filas-prioridade/7-filas-prioridade.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/7-filas-prioridade/index.html)
+7. [Filas de Prioridade e Heaps](slides/7-filas-prioridade/7-filas-prioridade.md): [PDF](slides/7-filas-prioridade/7-filas-prioridade.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/7-filas-prioridade/index.html)
    - Novos conceitos:
       * `FilaPrioridadeTAD<T>`: `frente()`, `insere(t)`, `remove()`, `tamanho()`
    - Vídeos YouTube (2020): [Filas de Prioridade Parte 1/2](https://youtu.be/SA-RgtmLWkM) 
    - Vídeos YouTube (2021):  [Filas de Prioridade Parte 2/2](https://youtu.be/q0kRz4oz_7A)
-1. [Árvores B e B+](slides/8-arvores-b/8-arvores-b.md): [PDF](slides/8-arvores-b/8-arvores-b.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/8-arvores-b/index.html)
+8. [Árvores B e B+](slides/8-arvores-b/8-arvores-b.md): [PDF](slides/8-arvores-b/8-arvores-b.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/8-arvores-b/index.html)
 
-***Observação:*** **alguns módulos só são oferecidos para cursos específicos.*
+***Observação:*** *alguns módulos só são oferecidos para cursos específicos.*
 
 -------
 
