@@ -1,0 +1,73 @@
+% nothing here
+
+\useoutertheme{infolines}
+
+% https://tex.stackexchange.com/questions/56860/how-to-modify-outer-theme-infolines-to-include-the-title-and-section-in-the-head
+\setbeamertemplate{headline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right,rightskip=1em]{section in head/foot}%
+    \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left,leftskip=1em]{subsection in head/foot}%
+    \usebeamerfont{section in head/foot}\insertsectionhead\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\usepackage{xcolor}
+
+%\usepackage[3D]{movie15}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks = true,
+    linkbordercolor = {white},
+    linkcolor = {orange}
+}
+\usepackage[UKenglish]{babel}
+
+\usepackage{media9}[2015/11/02]
+
+\newcommand{\columnsbegin}{\begin{columns}}
+\newcommand{\columnsend}{\end{columns}}
+
+\newcommand{\col}[1]{\column{#1\textwidth}}
+
+%\usepackage[nameinlink]{cleveref} % nameInLink used on pandoc-crossref too (see cref option too)
+
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+
+
+
+
+%write file with 7 predefined 3D views
+\usepackage{filecontents}
+\begin{filecontents*}{3Dviews.txt}
+VIEW=Front
+  ROO=27
+END
+VIEW=Back
+  ROO=27
+  C2C=0 1 0
+END
+VIEW=Left
+  ROO=27
+  C2C=-1 0 0
+END
+VIEW=Right
+  ROO=27
+  C2C=1 0 0
+END
+VIEW=Top
+  ROO=27
+  C2C=0 0 1
+END
+VIEW=Bottom
+  ROO=27
+  C2C=0 0 -1
+END
+VIEW=Fish Eye at Centre
+  AAC=130
+END
+\end{filecontents*}

@@ -1,7 +1,7 @@
 ---
 author: Igor Machado Coelho
 title: Estruturas de Dados I
-subtitle: Vistas, Iteradores e Percorríveis
+subtitle: Iteradores e Percorríveis (Revisão Vistas)
 date: 03/11/2026
 transition: linear
 fontsize: 10
@@ -12,7 +12,7 @@ header-includes:
 ---
 
 
-# Vistas, Iteradores e Percorríveis
+# Iteradores e Percorríveis (Revisão Vistas)
 
 ------
 
@@ -35,13 +35,17 @@ Mas como **olhar** para os elementos de uma estrutura, um por um, sem copiá-los
 
 Nesta aula, definiremos três componentes básicos, que usaremos em todas as próximas estruturas:
 
-- **Vista:** uma referência leve a um valor guardado em outro lugar
+- **Vista:** uma referência leve a um valor guardado em outro lugar (**aula anterior de TAD**)
 - **Iterador:** uma vista que **pode se mover** pelos elementos
 - **Percorrível:** algo que fornece um iterador para seus elementos
 
 Eles existem, com outros nomes, em todas as linguagens modernas!
 
 --------
+
+## Vista (Revisão)
+
+Já vimos Vistas na aula de TADs, porém passaremos por uma breve revisão aqui!
 
 ## Conceito: Vista
 

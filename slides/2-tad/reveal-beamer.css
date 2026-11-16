@@ -1,0 +1,37 @@
+.reveal section p {
+  display: block;
+  text-align: justify;
+  font-size: 0.68em;
+  line-height: 1.2em;
+  vertical-align: top;
+  margin-left: 1em;
+  margin-right: 0.5em;
+}
+.reveal column p {
+  margin-top: 0em;
+  vertical-align: top;
+}
+.reveal section pre {
+    font-size: 0.68em;
+}
+.reveal section code {
+    font-size: 0.72em;
+}
+.reveal td,
+.reveal th,
+.reveal figcaption {
+    font-size: 0.68em;
+}
+.reveal h2 {font-size: 1.5em; }
+.reveal h3 {font-size: 1.0em; }
+.reveal ol,
+.reveal dl,
+.reveal ul {
+	display: block;
+  text-align: left;
+  font-size: 0.6em;
+	margin: 0 0 0 3em;
+}
+.reveal ul ul {
+  font-size: 1em;
+}

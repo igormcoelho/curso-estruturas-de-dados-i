@@ -9,6 +9,7 @@ Lista completa de cursos: [igormcoelho/cursos](https://github.com/igormcoelho/cu
 Lista completa de módulos no repositório (sequência de estudos *sugerida*):
 
 1. Introdução a Tipos e Análise de Complexidade
+   - Tipos Abstrados de Dados (TAD), Vistas e Ordenação
 2. Pilhas
 3. Filas
 4. Coleções Lineares e Iteração
@@ -36,8 +37,17 @@ Materiais PDF-HTML:
    - [Revisão/Tipos ANTIGO](slides/1-revisao-tipos/1-revisao-tipos.md): [PDF](slides/1-revisao-tipos/1-revisao-tipos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/1-revisao-tipos/index.html)
    - Vídeos YouTube: [Parte 1](https://youtu.be/byZLHu4kTb0) [Parte 2](https://youtu.be/2Bo7MYFCJ0o)
    - Observação: a Parte 2 contém algumas falhas no áudio, que pretendo corrigir no futuro. Como é uma etapa extra (prática), não compromete o conteúdo em si da aula.  
+   - [Tipos Abstratos de Dados (TAD), Vistas e Ordenação](slides/2-tad/2-tad.md): [PDF](slides/2-tad/2-tad.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-tad/index.html)
+   - Novos conceitos:
+      * `RacionalTAD`: `soma(r)`, `multiplica(r)`, `igual(r)`, `imprime()` (implementações `Racional1`, canônica, e `Racional2`, preguiçosa)
+      * `VistaTAD`: `le()` (com tipo associado `Tipo`; ex: `VistaInt`)
+      * `VistaMutavelTAD`: `le()`, `altera(t)` (ex: `VistaMutavelInt`)
+      * `VistaVetorTAD<T>`: `tamanho()`, `le(i)`
+      * `VistaMutavelVetorTAD<T>`: `tamanho()`, `le(i)`, `altera(i, t)` (satisfaz `VistaVetorTAD<T>`)
    - Novos tipos:
       * `SpanInt`: `tamanho()`, `le(i)`, `altera(i, v)`, `fatia(a, b)` (vista de um trecho de vetor, sem posse)
+      * `VistaContadora`: vista de vetor que conta leituras e escritas
+   - Algoritmos: `mdc` (Euclides), `bubble_sort`, `selection_sort`, `insertion_sort`
 2. [Pilhas](slides/2-pilhas/2-pilhas.md): [PDF](slides/2-pilhas/2-pilhas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/2-pilhas/index.html)
    - Exemplo de pilha na STL: [main_pilha.cpp](./material/2-pilhas/main_pilha.cpp)
    - Vídeos YouTube: [Pilhas e Implementações](https://youtu.be/2J1EdzSZ1NQ) - Análise de Complexidade *(nas próximas semanas)*
@@ -48,16 +58,12 @@ Materiais PDF-HTML:
    - Vídeos YouTube: [Filas e Implementações](https://youtu.be/pZ36rzfSxYs) - Análise de Complexidade *(nas próximas semanas)*
    - Novos conceitos:
       * `FilaTAD<T>`: `enfileira(t)`, `desenfileira()`, `frente()`, `tamanho()`
-4. Coleções Lineares e Iteração: Conjuntos Simples, Vistas e Sacos
+4. Coleções Lineares: Conjuntos Simples, Iteradores e Sacos
    - [Conjunto Simples](slides/4-conjunto-simples/4-conjunto-simples.md): [PDF](slides/4-conjunto-simples/4-conjunto-simples.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-conjunto-simples/index.html)
    - Novos conceitos:
       * `ConjuntoSimplesTAD<T>`: `pertence(x)`, `insere(x)`, `remove(x)`, `tamanho()`
-   - [Vistas, Iteradores e Percorríveis](slides/4-vistas/4-vistas.md): [PDF](slides/4-vistas/4-vistas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-vistas/index.html)
-   - Novos conceitos:
-      * `VistaTAD`: `le()`  (com tipo associado `Tipo`)
-      * `VistaMutavelTAD`: `le()`, `altera(t)`
-      * `VistaVetorTAD<T>`: `tamanho()`, `le(i)`
-      * `VistaMutavelVetorTAD<T>`: `tamanho()`, `le(i)`, `altera(i, t)` (satisfaz `VistaVetorTAD<T>`; ex: `SpanInt`)
+   - [Iteradores e Percorríveis (Revisão Vistas)](slides/4-vistas/4-vistas.md): [PDF](slides/4-vistas/4-vistas.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-vistas/index.html)
+   - Novos conceitos (as Vistas são revisão da aula de TAD):
       * `IteradorTAD<T>`: `le()`, `proximo()`, `terminou()` (satisfaz `VistaTAD`)
       * `PercorrivelTAD<T>`: `iterador()`
    - [Sacos e Listas](slides/4-sacos/4-sacos.md): [PDF](slides/4-sacos/4-sacos.pdf) [Online](https://igormcoelho.github.io/curso-estruturas-de-dados-i/slides/4-sacos/index.html)
