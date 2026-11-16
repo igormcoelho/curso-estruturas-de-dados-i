@@ -545,9 +545,7 @@ desnecessários</li>
 possível incluir rotinas dentro de agregados (<code>struct</code>), que
 automaticamente são organizados como ponteiros de função. Em C puro isso
 precisa ser feito manualmente, ou usar funções livres globais. Nesse
-curso, adotamos essa estratégia dos métodos de C++, mas é sempre
-possível converter para uma solução puro C, caso necessário (<em>com
-alguns ponteiros a mais</em>, justo o que nós evitamos!).</p>
+curso, sempre que possível evitaremos ponteiros!</p>
 </section>
 <section id="tipo-abstrato-de-dados-tad" class="slide level2">
 <h2>Tipo Abstrato de Dados (TAD)</h2>
@@ -570,6 +568,9 @@ operações e o contrato: os detalhes internos são da
 <li>No curso, todo TAD poderá ter duas funções extras, chamadas
 <code>cria()</code> e <code>libera()</code>, para inicializar os dados e
 finalizar a memória corretamente.</li>
+<li>Como vimos na Introdução, toda variável <strong>deve ser
+sempre</strong> inicializada <strong>OU</strong> a inicialização deve
+ser feita pelo <code>cria()</code></li>
 </ul></li>
 </ul>
 <p><strong>Exemplo cotidiano:</strong> você usa um elevador apertando
@@ -611,11 +612,9 @@ número</strong> (note que
 e
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>2</mn><mn>4</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{2}{4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>
 são o mesmo racional? E o mesmo <strong>agregado</strong>?</p>
-<div class="fragment">
 <p>O modelo de dados é simples (<code>int num, den;</code>), mas
 <strong>onde reduzir a fração</strong> é uma decisão de
 implementação!</p>
-</div>
 </section>
 <section id="algoritmo-máximo-divisor-comum-euclides" class="slide level2">
 <h2>Algoritmo: Máximo Divisor Comum (Euclides)</h2>
@@ -667,10 +666,10 @@ reduzido.</p>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      num <span class="op">=</span> n <span class="op">/</span> g<span class="op">;</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      den <span class="op">=</span> d <span class="op">/</span> g<span class="op">;</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   Racional1 soma<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   Racional1 multiplica<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span> println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> num<span class="op">,</span> den<span class="op">);</span> <span class="op">}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   Racional1 soma<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>   Racional1 multiplica<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
 
@@ -689,18 +688,18 @@ reduzido.</p>
 <div class="column" style="width:55%;">
 <div class="sourceCode" id="cb4"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Racional1 <span class="op">{</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ...</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   Racional1 soma<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      Racional1 s<span class="op">;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      s<span class="op">.</span>cria<span class="op">(</span>num <span class="op">*</span> r<span class="op">.</span>den <span class="op">+</span> r<span class="op">.</span>num <span class="op">*</span> den<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">);</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> s<span class="op">;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   Racional1 multiplica<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      Racional1 m<span class="op">;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      m<span class="op">.</span>cria<span class="op">(</span>num <span class="op">*</span> r<span class="op">.</span>num<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">);</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> m<span class="op">;</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> num <span class="op">==</span> r<span class="op">.</span>num <span class="op">&amp;&amp;</span> den <span class="op">==</span> r<span class="op">.</span>den<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span> println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> num<span class="op">,</span> den<span class="op">);</span> <span class="op">}</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span> println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> num<span class="op">,</span> den<span class="op">);</span> <span class="op">}</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   Racional1 soma<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      Racional1 s<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      s<span class="op">.</span>cria<span class="op">(</span>num <span class="op">*</span> r<span class="op">.</span>den <span class="op">+</span> r<span class="op">.</span>num <span class="op">*</span> den<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">);</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> s<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>   Racional1 multiplica<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      Racional1 m<span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      m<span class="op">.</span>cria<span class="op">(</span>num <span class="op">*</span> r<span class="op">.</span>num<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">);</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> m<span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>Racional1 r<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> num <span class="op">==</span> r<span class="op">.</span>num <span class="op">&amp;&amp;</span> den <span class="op">==</span> r<span class="op">.</span>den<span class="op">;</span> <span class="op">}</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
 <p><strong>Invariante forte:</strong> existe <strong>uma única</strong>
@@ -725,10 +724,10 @@ aritméticas. Só reduzimos quando for inevitável (na impressão).</p>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      num <span class="op">=</span> n<span class="op">;</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      den <span class="op">=</span> d<span class="op">;</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>   Racional2 soma<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span>  <span class="op">}</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   Racional2 multiplica<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span>   <span class="op">}</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span>  <span class="op">...</span>   <span class="op">}</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span> <span class="op">...</span>  <span class="op">}</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span> <span class="op">...</span>  <span class="op">}</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   Racional2 soma<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span>  <span class="op">}</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   Racional2 multiplica<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span> <span class="op">...</span>   <span class="op">}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span>  <span class="op">...</span>   <span class="op">}</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
 
@@ -745,18 +744,18 @@ aritméticas. Só reduzimos quando for inevitável (na impressão).</p>
 <div class="column" style="width:55%;">
 <div class="sourceCode" id="cb6"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Racional2 <span class="op">{</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="co">// ...</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   Racional2 soma<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="op">{</span>num <span class="op">*</span> r<span class="op">.</span>den <span class="op">+</span> r<span class="op">.</span>num <span class="op">*</span> den<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">};</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   Racional2 multiplica<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="op">{</span>num <span class="op">*</span> r<span class="op">.</span>num<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">};</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> num <span class="op">*</span> r<span class="op">.</span>den <span class="op">==</span> r<span class="op">.</span>num <span class="op">*</span> den<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> g <span class="op">=</span> mdc<span class="op">(</span>num<span class="op">,</span> den<span class="op">);</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>den <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> g <span class="op">=</span> <span class="op">-</span>g<span class="op">;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> num <span class="op">/</span> g<span class="op">,</span> den <span class="op">/</span> g<span class="op">);</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> g <span class="op">=</span> mdc<span class="op">(</span>num<span class="op">,</span> den<span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>den <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> g <span class="op">=</span> <span class="op">-</span>g<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> num <span class="op">/</span> g<span class="op">,</span> den <span class="op">/</span> g<span class="op">);</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>   Racional2 soma<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="op">{</span>num <span class="op">*</span> r<span class="op">.</span>den <span class="op">+</span> r<span class="op">.</span>num <span class="op">*</span> den<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">};</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>   Racional2 multiplica<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="op">{</span>num <span class="op">*</span> r<span class="op">.</span>num<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">};</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>Racional2 r<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> num <span class="op">*</span> r<span class="op">.</span>den <span class="op">==</span> r<span class="op">.</span>num <span class="op">*</span> den<span class="op">;</span> <span class="op">}</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
 <p><strong>Invariante fraca:</strong>
@@ -780,19 +779,17 @@ implementações:</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Racional1 a<span class="op">,</span> b<span class="op">;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>cria<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>b<span class="op">.</span>cria<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">.</span>igual<span class="op">(</span>b<span class="op">));</span>   <span class="co">// true</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>soma<span class="op">(</span>b<span class="op">).</span>imprime<span class="op">();</span>         <span class="co">// 1/1</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>multiplica<span class="op">(</span>b<span class="op">).</span>imprime<span class="op">();</span>   <span class="co">// 1/4</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Racional1 a<span class="op">;</span> a<span class="op">.</span>cria<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Racional1 b<span class="op">;</span> b<span class="op">.</span>cria<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">.</span>igual<span class="op">(</span>b<span class="op">));</span>   <span class="co">// true</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>soma<span class="op">(</span>b<span class="op">).</span>imprime<span class="op">();</span>         <span class="co">// 1/1</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>multiplica<span class="op">(</span>b<span class="op">).</span>imprime<span class="op">();</span>   <span class="co">// 1/4</span></span></code></pre></div>
 </div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb8"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Racional2 a<span class="op">,</span> b<span class="op">;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>cria<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>b<span class="op">.</span>cria<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">.</span>igual<span class="op">(</span>b<span class="op">));</span>   <span class="co">// true</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>soma<span class="op">(</span>b<span class="op">).</span>imprime<span class="op">();</span>         <span class="co">// 1/1</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>multiplica<span class="op">(</span>b<span class="op">).</span>imprime<span class="op">();</span>   <span class="co">// 1/4</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Racional2 a<span class="op">;</span> a<span class="op">.</span>cria<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Racional2 b<span class="op">;</span> b<span class="op">.</span>cria<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">.</span>igual<span class="op">(</span>b<span class="op">));</span>   <span class="co">// true</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>soma<span class="op">(</span>b<span class="op">).</span>imprime<span class="op">();</span>         <span class="co">// 1/1</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span>multiplica<span class="op">(</span>b<span class="op">).</span>imprime<span class="op">();</span>   <span class="co">// 1/4</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -800,24 +797,26 @@ implementações:</p>
 <pre><code>Racional1 b:  | num: 1 | den: 2 |     (reduzido em cria)
 Racional2 b:  | num: 2 | den: 4 |     (guardado como veio)</code></pre>
 <p><strong>Observação:</strong> o TAD Racional não carrega recursos
-dinâmicos, então não precisa de <code>libera()</code>. Os TADs que
-alocarem memória (como as Pilhas) terão <code>cria()</code>
-<strong>e</strong> <code>libera()</code>.</p>
+dinâmicos, então não precisa de <code>libera()</code>! Todo TAD
+<strong>com</strong> função <code>libera()</code> significará
+<em>não-copiável</em> como <em>convenção</em> nesse curso, ou seja, sem
+<code>operator=</code> válido. Assim, o <code>Racional</code> é
+copiável.</p>
 </section></section>
 <section>
-<section id="parte-2-conceitos-em-c" class="title-slide slide level1">
-<h1>Parte 2: Conceitos em C++</h1>
+<section id="parte-2-conceitos-em-cc" class="title-slide slide level1">
+<h1>Parte 2: Conceitos em C/C++</h1>
 
 </section>
 <section id="conceitos-i" class="slide level2">
 <h2>Conceitos I</h2>
-<p>C++ permite definir <em>conceitos</em> (ou <em>concepts</em>). Esse
+<p>C/C++ permite definir <em>conceitos</em> (ou <em>concepts</em>). Esse
 recurso permite <em>definições genéricas</em> sobre algum tipo,
 exigindo, por exemplo, que um agregado possua certos métodos. Exemplo
 prático para o TAD Racional (não incluímos o <code>cria()</code> e
 <code>libera()</code>):</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> R<span class="op">&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> RacionalTAD <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>R a<span class="op">,</span> R b<span class="op">,</span> <span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> d<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> RacionalTAD <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>R a<span class="op">,</span> R b<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> a<span class="op">.</span>soma<span class="op">(</span>b<span class="op">)</span> <span class="op">}</span>       <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span>R<span class="op">&gt;;</span>   <span class="co">// devolve outro R</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> a<span class="op">.</span>multiplica<span class="op">(</span>b<span class="op">)</span> <span class="op">}</span> <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span>R<span class="op">&gt;;</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> a<span class="op">.</span>igual<span class="op">(</span>b<span class="op">)</span> <span class="op">}</span>      <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;;</span></span>
@@ -845,35 +844,36 @@ restringindo o <code>auto</code>:</p>
 <section id="algoritmos-genéricos-sobre-um-tad" class="slide level2">
 <h2>Algoritmos Genéricos sobre um TAD</h2>
 <p>Com o conceito, escrevemos o algoritmo <strong>uma vez</strong>, para
-<strong>qualquer</strong> implementação. Exemplo: o número harmônico
-<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mi>n</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>1</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>+</mo><mo>⋯</mo><mo>+</mo><mfrac><mn>1</mn><mi>n</mi></mfrac></mrow><annotation encoding="application/x-tex">H_n = \frac{1}{1} + \frac{1}{2} + \cdots + \frac{1}{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0813em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>.</p>
+<strong>qualquer</strong> implementação. Exemplo: a potência
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>r</mi><mi>k</mi></msup><mo>=</mo><mi>r</mi><mo>⋅</mo><mi>r</mi><mo>⋯</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">r^k = r \cdot r \cdots r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span></span></span></span>
+(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>
+vezes).</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span>RacionalTAD R<span class="op">&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>R harmonico<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   R h<span class="op">;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   h<span class="op">.</span>cria<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> k <span class="op">&lt;=</span> n<span class="op">;</span> k<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>      R t<span class="op">;</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>      t<span class="op">.</span>cria<span class="op">(</span><span class="dv">1</span><span class="op">,</span> k<span class="op">);</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>      h <span class="op">=</span> h<span class="op">.</span>soma<span class="op">(</span>t<span class="op">);</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> h<span class="op">;</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">// pre: k &gt;= 1</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> potencia<span class="op">(</span>RacionalTAD <span class="kw">auto</span> r<span class="op">,</span> <span class="dt">int</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">auto</span> p <span class="op">=</span> r<span class="op">;</span>           <span class="co">// cópia de r</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> k<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      p <span class="op">=</span> p<span class="op">.</span>multiplica<span class="op">(</span>r<span class="op">);</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Usa <strong>apenas</strong> operações do conceito: não sabe se é
+<code>Racional1</code> ou <code>Racional2</code>!</p>
 </div><div class="column" style="width:40%;">
 <div class="sourceCode" id="cb14"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>harmonico<span class="op">&lt;</span>Racional1<span class="op">&gt;(</span><span class="dv">10</span><span class="op">).</span>imprime<span class="op">();</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 7381/2520</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>harmonico<span class="op">&lt;</span>Racional2<span class="op">&gt;(</span><span class="dv">10</span><span class="op">).</span>imprime<span class="op">();</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">// 7381/2520</span></span></code></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Racional1 a<span class="op">;</span> a<span class="op">.</span>cria<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>potencia<span class="op">(</span>a<span class="op">,</span> <span class="dv">3</span><span class="op">).</span>imprime<span class="op">();</span> <span class="co">// 1/8</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>Racional2 b<span class="op">;</span> b<span class="op">.</span>cria<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>potencia<span class="op">(</span>b<span class="op">,</span> <span class="dv">3</span><span class="op">).</span>imprime<span class="op">();</span> <span class="co">// 1/8</span></span></code></pre></div>
+<p>Na memória, a primeira guarda <code>1/8</code> e a segunda guarda
+<code>8/64</code>!</p>
 </div>
 </div>
 </div>
-<p>O algoritmo <strong>não sabe</strong> (e nem precisa saber) quando a
-fração é reduzida.</p>
 <p><strong>Desafio:</strong> aumente
-<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>.
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>.
 Qual das duas versões imprime um valor errado primeiro? Por quê?</p>
 </section>
 <section id="conceitos-verificam-sintaxe-não-semântica" class="slide level2">
@@ -886,7 +886,7 @@ tipos</strong>, mas <strong>não</strong> verifica o contrato:</p>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>   RacionalErrado soma<span class="op">(</span>RacionalErrado r<span class="op">)</span> <span class="op">{</span>         <span class="co">// subtrai!</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="op">{</span>num <span class="op">*</span> r<span class="op">.</span>den <span class="op">-</span> r<span class="op">.</span>num <span class="op">*</span> den<span class="op">,</span> den <span class="op">*</span> r<span class="op">.</span>den<span class="op">};</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>   RacionalErrado multiplica<span class="op">(</span>RacionalErrado r<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>   RacionalErrado multiplica<span class="op">(</span>RacionalErrado r<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> r<span class="op">;</span> <span class="op">}</span></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>   <span class="dt">bool</span> igual<span class="op">(</span>RacionalErrado r<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span> <span class="op">}</span></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> imprime<span class="op">()</span> <span class="op">{</span> println<span class="op">(</span><span class="st">&quot;?&quot;</span><span class="op">);</span> <span class="op">}</span></span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
@@ -971,12 +971,16 @@ o tempo todo?</p>
 <p>No modelo RAM (aula de Introdução), uma operação aritmética custa um
 passo <strong>porque o dado tem tamanho fixo</strong>. A Racional2 viola
 essa hipótese silenciosamente:</p>
-<pre><code>H_n com Racional2 (sem reduzir):  den = 1 * 2 * 3 * ... * n = n!
-H_n com Racional1 (reduzindo):    den divide mmc(1, 2, ..., n)</code></pre>
+<pre><code>(2/4)^k com Racional2 (sem reduzir):  num = 2^k,  den = 4^k = 2^(2k)
+(2/4)^k com Racional1 (reduzindo):    num = 1,    den = 2^k</code></pre>
 <ul>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>13</mn><mo stretchy="false">!</mo><mo>≈</mo><mn>6</mn><mo separator="true" lspace="0em" rspace="0em">,</mo><mn>2</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">13! \approx 6{,}2 \times 10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord">13</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">6</span><span class="mord"><span class="mpunct">,</span></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span>
-já <strong>não cabe</strong> em um <code>int</code> de 32 bits
-(<em>overflow</em>)</li>
+<li>com <code>int</code> de 32 bits (ou <code>int32_t</code>),
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>4</mn><mn>16</mn></msup><mo>=</mo><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">4^{16} = 2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span></span></span></span>
+já <strong>não cabe</strong> (<em>overflow</em>): a Racional2 erra em
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">k = 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">16</span></span></span></span></li>
+<li>a Racional1 só estoura em
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>31</mn></mrow><annotation encoding="application/x-tex">k = 31</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">31</span></span></span></span>,
+quase o <strong>dobro</strong> de multiplicações</li>
 <li><code>igual</code> faz produtos cruzados
 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">ad</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">d</span></span></span></span>
 e
@@ -1140,24 +1144,28 @@ origem</strong>.</p>
 </section>
 <section id="conceito-vista-mutável-de-vetor" class="slide level2">
 <h2>Conceito: Vista (Mutável) de Vetor</h2>
-<p>A interface de uma vista de vetor, escrita como conceito:</p>
-<div class="small">
-<div class="columns">
-<div class="column" style="width:55%;">
+<p>As operações de uma vista de vetor, escritas como conceito:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> V<span class="op">,</span> <span class="kw">typename</span> T<span class="op">&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> VistaVetorTAD <span class="op">=</span> <span class="kw">requires</span><span class="op">(</span>V v<span class="op">,</span> <span class="dt">int</span> i<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> v<span class="op">.</span>tamanho<span class="op">()</span> <span class="op">}</span> <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;;</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> v<span class="op">.</span>le<span class="op">(</span>i<span class="op">)</span> <span class="op">}</span>     <span class="op">-&gt;</span> <span class="bu">std::</span>same_as<span class="op">&lt;</span>T<span class="op">&gt;;</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> V<span class="op">,</span> <span class="kw">typename</span> T<span class="op">&gt;</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> VistaMutavelVetorTAD <span class="op">=</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>   VistaVetorTAD<span class="op">&lt;</span>V<span class="op">,</span> T<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> V<span class="op">,</span> <span class="kw">typename</span> T<span class="op">&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> VistaMutavelVetorTAD <span class="op">=</span> VistaVetorTAD<span class="op">&lt;</span>V<span class="op">,</span> T<span class="op">&gt;</span> <span class="op">&amp;&amp;</span></span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>   <span class="kw">requires</span><span class="op">(</span>V v<span class="op">,</span> <span class="dt">int</span> i<span class="op">,</span> T t<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span> v<span class="op">.</span>altera<span class="op">(</span>i<span class="op">,</span> t<span class="op">)</span> <span class="op">};</span></span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span>  <span class="co">// le e altera: pre(0 &lt;= i &lt; tamanho())</span></span>
 <span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span>VistaMutavelVetorTAD<span class="op">&lt;</span>SpanInt<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;);</span></span></code></pre></div>
-</div><div class="column" style="width:40%;">
+<p>Note que <code>fatia</code> <strong>não</strong> é exigida: nem toda
+vista precisa sabê-la.</p>
+</section>
+<section id="exemplo-trocando-elementos-com-uma-vista" class="slide level2">
+<h2>Exemplo: Trocando Elementos com uma Vista</h2>
+<div class="small">
+<div class="columns">
+<div class="column" style="width:50%;">
 <div class="sourceCode" id="cb25"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// troca dois elementos, na origem</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> troca<span class="op">(</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>   VistaMutavelVetorTAD<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="kw">auto</span> v<span class="op">,</span></span>
@@ -1165,21 +1173,24 @@ origem</strong>.</p>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> t <span class="op">=</span> v<span class="op">.</span>le<span class="op">(</span>i<span class="op">);</span></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>   v<span class="op">.</span>altera<span class="op">(</span>i<span class="op">,</span> v<span class="op">.</span>le<span class="op">(</span>j<span class="op">));</span></span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>   v<span class="op">.</span>altera<span class="op">(</span>j<span class="op">,</span> t<span class="op">);</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>SpanInt s<span class="op">{.</span>inicio <span class="op">=</span> a<span class="op">,</span> <span class="op">.</span>n <span class="op">=</span> <span class="dv">3</span><span class="op">};</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>troca<span class="op">(</span>s<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span>       <span class="co">// cópia leve</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st"> </span><span class="sc">{}</span><span class="st"> </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>   a<span class="op">[</span><span class="dv">0</span><span class="op">],</span> a<span class="op">[</span><span class="dv">1</span><span class="op">],</span> a<span class="op">[</span><span class="dv">2</span><span class="op">]);</span> <span class="co">// 3 2 1</span></span></code></pre></div>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb26"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>SpanInt s<span class="op">{.</span>inicio <span class="op">=</span> a<span class="op">,</span> <span class="op">.</span>n <span class="op">=</span> <span class="dv">3</span><span class="op">};</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>troca<span class="op">(</span>s<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span>       <span class="co">// cópia leve</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st"> </span><span class="sc">{}</span><span class="st"> </span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>   a<span class="op">[</span><span class="dv">0</span><span class="op">],</span> a<span class="op">[</span><span class="dv">1</span><span class="op">],</span> a<span class="op">[</span><span class="dv">2</span><span class="op">]);</span> <span class="co">// 3 2 1</span></span></code></pre></div>
 </div>
 </div>
 </div>
 <p><strong>Importante:</strong> a vista é passada <strong>por
 valor</strong> (copia só um ponteiro e um <code>int</code>!), mas
-<code>altera</code> muda o vetor <strong>original</strong>. Note que
-<code>fatia</code> <strong>não</strong> é exigida: nem toda vista
-precisa sabê-la.</p>
+<code>altera</code> muda o vetor <strong>original</strong>.</p>
+<p><strong>Desafio:</strong> por que
+<code>VistaMutavelVetorTAD&lt;int&gt; auto</code> tem só
+<strong>um</strong> parâmetro, se o conceito tem
+<strong>dois</strong>?</p>
 </section></section>
 <section>
 <section id="parte-5-ordenação-sobre-vistas" class="title-slide slide level1">
@@ -1206,7 +1217,7 @@ pós-condição 1 e viole a 2. É fácil?</p>
 <p><em>Basta <code>for (i...) v.altera(i, 0);</code>. Por isso as duas
 condições são necessárias!</em></p>
 <p>Veremos três algoritmos clássicos, todos usando
-<strong>apenas</strong> a interface da vista: <code>tamanho</code>,
+<strong>apenas</strong> as operações da vista: <code>tamanho</code>,
 <code>le</code> e <code>altera</code>.</p>
 </div>
 </section>
@@ -1217,30 +1228,30 @@ ele recebe uma <strong>vista</strong>:</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb26"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> bubble_sort<span class="op">(</span>SpanInt v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> v<span class="op">.</span>tamanho<span class="op">();</span> i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">--)</span> <span class="op">{</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">bool</span> trocou <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> <span class="op">(</span>v<span class="op">.</span>le<span class="op">(</span>j<span class="op">)</span> <span class="op">&gt;</span> v<span class="op">.</span>le<span class="op">(</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">))</span> <span class="op">{</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>            troca<span class="op">(</span>v<span class="op">,</span> j<span class="op">,</span> j <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>            trocou <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>         <span class="op">}</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(!</span>trocou<span class="op">)</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>         <span class="cf">break</span><span class="op">;</span>  <span class="co">// já está ordenado!</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> bubble_sort<span class="op">(</span>SpanInt v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> v<span class="op">.</span>tamanho<span class="op">();</span> i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">--)</span> <span class="op">{</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">bool</span> trocou <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> <span class="op">(</span>v<span class="op">.</span>le<span class="op">(</span>j<span class="op">)</span> <span class="op">&gt;</span> v<span class="op">.</span>le<span class="op">(</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">))</span> <span class="op">{</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>            troca<span class="op">(</span>v<span class="op">,</span> j<span class="op">,</span> j <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>            trocou <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>         <span class="op">}</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(!</span>trocou<span class="op">)</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>         <span class="cf">break</span><span class="op">;</span>  <span class="co">// já está ordenado!</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
-<div class="sourceCode" id="cb27"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>SpanInt s<span class="op">{.</span>inicio <span class="op">=</span> a<span class="op">,</span> <span class="op">.</span>n <span class="op">=</span> <span class="dv">5</span><span class="op">};</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>bubble_sort<span class="op">(</span>s<span class="op">);</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">// a: {1, 2, 3, 4, 5}</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">// ordena só o meio!</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> b<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">9</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">0</span><span class="op">};</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>bubble_sort<span class="op">(</span>SpanInt<span class="op">{.</span>inicio <span class="op">=</span> b<span class="op">,</span> <span class="op">.</span>n <span class="op">=</span> <span class="dv">5</span><span class="op">}</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>              <span class="op">.</span>fatia<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">4</span><span class="op">));</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">// b: {9, 2, 4, 5, 0}</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>SpanInt s<span class="op">{.</span>inicio <span class="op">=</span> a<span class="op">,</span> <span class="op">.</span>n <span class="op">=</span> <span class="dv">5</span><span class="op">};</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>bubble_sort<span class="op">(</span>s<span class="op">);</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">// a: {1, 2, 3, 4, 5}</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">// ordena só o meio!</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> b<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">9</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">0</span><span class="op">};</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>bubble_sort<span class="op">(</span>SpanInt<span class="op">{.</span>inicio <span class="op">=</span> b<span class="op">,</span> <span class="op">.</span>n <span class="op">=</span> <span class="dv">5</span><span class="op">}</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>              <span class="op">.</span>fatia<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">4</span><span class="op">));</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">// b: {9, 2, 4, 5, 0}</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -1254,17 +1265,17 @@ restante e coloque-o na posição <code>i</code>.</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb28"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selection_sort<span class="op">(</span>SpanInt v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> n <span class="op">=</span> v<span class="op">.</span>tamanho<span class="op">();</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> menor <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> n<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> <span class="op">(</span>v<span class="op">.</span>le<span class="op">(</span>j<span class="op">)</span> <span class="op">&lt;</span> v<span class="op">.</span>le<span class="op">(</span>menor<span class="op">))</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>            menor <span class="op">=</span> j<span class="op">;</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>menor <span class="op">!=</span> i<span class="op">)</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>         troca<span class="op">(</span>v<span class="op">,</span> i<span class="op">,</span> menor<span class="op">);</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selection_sort<span class="op">(</span>SpanInt v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> n <span class="op">=</span> v<span class="op">.</span>tamanho<span class="op">();</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> menor <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> n<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> <span class="op">(</span>v<span class="op">.</span>le<span class="op">(</span>j<span class="op">)</span> <span class="op">&lt;</span> v<span class="op">.</span>le<span class="op">(</span>menor<span class="op">))</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>            menor <span class="op">=</span> j<span class="op">;</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>menor <span class="op">!=</span> i<span class="op">)</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>         troca<span class="op">(</span>v<span class="op">,</span> i<span class="op">,</span> menor<span class="op">);</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
 <pre><code>  i=0: | 1 | 2 | 4 | 5 | 3 |
   i=1: | 1 | 2 | 4 | 5 | 3 |
@@ -1295,17 +1306,17 @@ maiores para a direita.</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb30"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insertion_sort<span class="op">(</span>SpanInt v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> v<span class="op">.</span>tamanho<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> x <span class="op">=</span> v<span class="op">.</span>le<span class="op">(</span>i<span class="op">);</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> j <span class="op">=</span> i <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">while</span> <span class="op">(</span>j <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> v<span class="op">.</span>le<span class="op">(</span>j<span class="op">)</span> <span class="op">&gt;</span> x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>         v<span class="op">.</span>altera<span class="op">(</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> v<span class="op">.</span>le<span class="op">(</span>j<span class="op">));</span> <span class="co">// desloca</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>         j<span class="op">--;</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>      v<span class="op">.</span>altera<span class="op">(</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> x<span class="op">);</span>          <span class="co">// encaixa</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insertion_sort<span class="op">(</span>SpanInt v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> v<span class="op">.</span>tamanho<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> x <span class="op">=</span> v<span class="op">.</span>le<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> j <span class="op">=</span> i <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">while</span> <span class="op">(</span>j <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> v<span class="op">.</span>le<span class="op">(</span>j<span class="op">)</span> <span class="op">&gt;</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>         v<span class="op">.</span>altera<span class="op">(</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> v<span class="op">.</span>le<span class="op">(</span>j<span class="op">));</span> <span class="co">// desloca</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>         j<span class="op">--;</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>      v<span class="op">.</span>altera<span class="op">(</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> x<span class="op">);</span>          <span class="co">// encaixa</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
 <pre><code>  i=1: | 2 | 5 | 4 | 1 | 3 |
   i=2: | 2 | 4 | 5 | 1 | 3 |
@@ -1394,32 +1405,32 @@ executa!</p>
 <div class="small">
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="sourceCode" id="cb32"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> VistaContadora <span class="op">{</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>   SpanInt         s<span class="op">;</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>   VistaMutavelInt leituras<span class="op">;</span>  <span class="co">// contadores na origem</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>   VistaMutavelInt escritas<span class="op">;</span>  <span class="co">// (não-posse!)</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> tamanho<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> s<span class="op">.</span>tamanho<span class="op">();</span> <span class="op">}</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> le<span class="op">(</span><span class="dt">int</span> i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>      leituras<span class="op">.</span>altera<span class="op">(</span>leituras<span class="op">.</span>le<span class="op">()</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> s<span class="op">.</span>le<span class="op">(</span>i<span class="op">);</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> altera<span class="op">(</span><span class="dt">int</span> i<span class="op">,</span> <span class="dt">int</span> v<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>      escritas<span class="op">.</span>altera<span class="op">(</span>escritas<span class="op">.</span>le<span class="op">()</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>      s<span class="op">.</span>altera<span class="op">(</span>i<span class="op">,</span> v<span class="op">);</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>   VistaMutavelVetorTAD<span class="op">&lt;</span>VistaContadora<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;);</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> VistaContadora <span class="op">{</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   SpanInt         s<span class="op">;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>   VistaMutavelInt leituras<span class="op">;</span>  <span class="co">// contadores na origem</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>   VistaMutavelInt escritas<span class="op">;</span>  <span class="co">// (não-posse!)</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> tamanho<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> s<span class="op">.</span>tamanho<span class="op">();</span> <span class="op">}</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> le<span class="op">(</span><span class="dt">int</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>      leituras<span class="op">.</span>altera<span class="op">(</span>leituras<span class="op">.</span>le<span class="op">()</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> s<span class="op">.</span>le<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">void</span> altera<span class="op">(</span><span class="dt">int</span> i<span class="op">,</span> <span class="dt">int</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>      escritas<span class="op">.</span>altera<span class="op">(</span>escritas<span class="op">.</span>le<span class="op">()</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>      s<span class="op">.</span>altera<span class="op">(</span>i<span class="op">,</span> v<span class="op">);</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>   VistaMutavelVetorTAD<span class="op">&lt;</span>VistaContadora<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;);</span></span></code></pre></div>
 </div><div class="column" style="width:40%;">
-<div class="sourceCode" id="cb33"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">};</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> nle <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> nalt <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>selection_sort<span class="op">(</span>VistaContadora<span class="op">{</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">.</span>s        <span class="op">=</span> SpanInt<span class="op">{.</span>inicio <span class="op">=</span> a<span class="op">,</span> <span class="op">.</span>n <span class="op">=</span> <span class="dv">5</span><span class="op">},</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">.</span>leituras <span class="op">=</span> VistaMutavelInt<span class="op">{.</span>origem <span class="op">=</span> <span class="op">&amp;</span>nle<span class="op">},</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>   <span class="op">.</span>escritas <span class="op">=</span> VistaMutavelInt<span class="op">{.</span>origem <span class="op">=</span> <span class="op">&amp;</span>nalt<span class="op">}});</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;le=</span><span class="sc">{}</span><span class="st"> altera=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> nle<span class="op">,</span> nalt<span class="op">);</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co">// le=44 altera=4</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Exemplo de uso</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">};</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> nle <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> nalt <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>selection_sort<span class="op">(</span>VistaContadora<span class="op">{</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>   <span class="op">.</span>s        <span class="op">=</span> SpanInt<span class="op">{.</span>inicio <span class="op">=</span> a<span class="op">,</span> <span class="op">.</span>n <span class="op">=</span> <span class="dv">5</span><span class="op">},</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">.</span>leituras <span class="op">=</span> VistaMutavelInt<span class="op">{.</span>origem <span class="op">=</span> <span class="op">&amp;</span>nle<span class="op">},</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>   <span class="op">.</span>escritas <span class="op">=</span> VistaMutavelInt<span class="op">{.</span>origem <span class="op">=</span> <span class="op">&amp;</span>nalt<span class="op">}});</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>println<span class="op">(</span><span class="st">&quot;le=</span><span class="sc">{}</span><span class="st"> altera=</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> nle<span class="op">,</span> nalt<span class="op">);</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co">// le=44 altera=4</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -1489,17 +1500,17 @@ vezes mais que um <code>le</code>?</li>
 <p>Na STL, o <code>std::span</code> (que vimos na Introdução) cumpre o
 papel do nosso <code>SpanInt</code>, e o <code>std::ranges::sort</code>
 ordena qualquer vista:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> b<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">9</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">0</span><span class="op">};</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>span<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> s<span class="op">{</span>b<span class="op">};</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>ranges::sort<span class="op">(</span>s<span class="op">.</span>subspan<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">3</span><span class="op">));</span>       <span class="co">// como nossa fatia(1, 4)</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> b<span class="op">);</span>                         <span class="co">// [9, 2, 4, 5, 0]</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>ranges::sort<span class="op">(</span>s<span class="op">);</span>                     <span class="co">// O(n log n)</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> <span class="bu">std::</span>ranges::is_sorted<span class="op">(</span>s<span class="op">));</span> <span class="co">// true</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode .cpp"><code class="sourceCode cpp"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> std<span class="op">;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> b<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">9</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">0</span><span class="op">};</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>span<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> s<span class="op">{</span>b<span class="op">};</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>ranges::sort<span class="op">(</span>s<span class="op">.</span>subspan<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">3</span><span class="op">));</span>       <span class="co">// como nossa fatia(1, 4)</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> b<span class="op">);</span>                         <span class="co">// [9, 2, 4, 5, 0]</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>   <span class="bu">std::</span>ranges::sort<span class="op">(</span>s<span class="op">);</span>                     <span class="co">// O(n log n)</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>   println<span class="op">(</span><span class="st">&quot;</span><span class="sc">{}</span><span class="st">&quot;</span><span class="op">,</span> <span class="bu">std::</span>ranges::is_sorted<span class="op">(</span>s<span class="op">));</span> <span class="co">// true</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p><strong>Importante:</strong> nesse curso é permitido o uso de TADs e
 algoritmos prontos da STL, <em>desde que você <strong>saiba seu modelo
 de custos</strong></em>!</p>
@@ -1512,7 +1523,7 @@ essencial.</p>
 <section id="tad-vistas-e-ordenação-revisão-geral" class="slide level2">
 <h2>TAD, Vistas e Ordenação: Revisão Geral</h2>
 <ul>
-<li>O que compõe um TAD? Qual a diferença entre interface e
+<li>O que compõe um TAD? Qual a diferença entre TAD e
 implementação?</li>
 <li>O que é uma invariante? Qual a invariante de <code>Racional1</code>?
 E de <code>Racional2</code>?</li>

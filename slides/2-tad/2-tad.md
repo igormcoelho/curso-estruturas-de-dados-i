@@ -37,7 +37,7 @@ Nesta aula, veremos que:
 - em C/C++, os **conceitos** (`concept`) descrevem um TAD diretamente no código (ou *Protocol* em Python)
 - uma **Vista** (ou Vista de Vetor) é um TAD que **não é dono** dos dados, e é a forma como receberemos vetores nos algoritmos de **ordenação**, evitando ponteiros desnecessários
 
-**Importante:** na Introdução, vimos que em C++ é possível incluir rotinas dentro de agregados (`struct`), que automaticamente são organizados como ponteiros de função. Em C puro isso precisa ser feito manualmente, ou usar funções livres globais. Nesse curso, adotamos essa estratégia dos métodos de C++, mas é sempre possível converter para uma solução puro C, caso necessário (*com alguns ponteiros a mais*, justo o que nós evitamos!).
+**Importante:** na Introdução, vimos que em C++ é possível incluir rotinas dentro de agregados (`struct`), que automaticamente são organizados como ponteiros de função. Em C puro isso precisa ser feito manualmente, ou usar funções livres globais. Nesse curso, sempre que possível evitaremos ponteiros!
 
 ------
 
@@ -51,6 +51,7 @@ Um *Tipo Abstrato de Dados* (TAD), do inglês *Abstract Data Type* -- ADT, é co
 
 - O usuário de um TAD (chamado *cliente*) só conhece as operações e o contrato: os detalhes internos são da **implementação**.
     * No curso, todo TAD poderá ter duas funções extras, chamadas `cria()` e `libera()`, para inicializar os dados e finalizar a memória corretamente.
+    * Como vimos na Introdução, toda variável **deve ser sempre** inicializada **OU** a inicialização deve ser feita pelo `cria()`
 
 **Exemplo cotidiano:** você usa um elevador apertando botões (operações), confiando que ele não abre a porta entre andares (invariante). Não precisa saber como é o motor!
 
@@ -72,8 +73,6 @@ Um número *racional* é uma fração $\frac{a}{b}$, com $a, b$ inteiros e $b \n
 Além disso, um método `cria(n, d)` inicializa o racional $\frac{n}{d}$ (pré-condição: $d \neq 0$)
 
 **Desafio:** $\frac{1}{2}$ e $\frac{2}{4}$ são o mesmo racional? E o mesmo **agregado**?
-
-. . .
 
 O modelo de dados é simples (`int num, den;`), mas **onde reduzir a fração** é uma decisão de implementação!
 
@@ -142,10 +141,10 @@ struct Racional1 {
       num = n / g;
       den = d / g;
    }
+   void imprime() { ... }
    Racional1 soma(Racional1 r) { ... }
    Racional1 multiplica(Racional1 r) { ... }
    bool igual(Racional1 r) { ... }
-   void imprime() { println("{}/{}", num, den); }
 };
 ```
 
@@ -175,6 +174,7 @@ struct Racional1 {
 ```.cpp
 struct Racional1 {
    // ...
+   void imprime() { println("{}/{}", num, den); }
    Racional1 soma(Racional1 r) {
       Racional1 s;
       s.cria(num * r.den + r.num * den, den * r.den);
@@ -186,7 +186,6 @@ struct Racional1 {
       return m;
    }
    bool igual(Racional1 r) { return num == r.num && den == r.den; }
-   void imprime() { println("{}/{}", num, den); }
 };
 ```
 
@@ -225,10 +224,10 @@ struct Racional2 {
       num = n;
       den = d;
    }
+   void imprime() { ...  }
    Racional2 soma(Racional2 r) { ...  }
    Racional2 multiplica(Racional2 r) { ...   }
    bool igual(Racional2 r) {  ...   }
-   void imprime() { ...  }
 };
 ```
 
@@ -257,6 +256,11 @@ struct Racional2 {
 ```.cpp
 struct Racional2 {
    // ...
+   void imprime() {
+      int g = mdc(num, den);
+      if (den < 0) g = -g;
+      println("{}/{}", num / g, den / g);
+   }
    Racional2 soma(Racional2 r) {
       return {num * r.den + r.num * den, den * r.den};
    }
@@ -264,11 +268,6 @@ struct Racional2 {
       return {num * r.num, den * r.den};
    }
    bool igual(Racional2 r) { return num * r.den == r.num * den; }
-   void imprime() {
-      int g = mdc(num, den);
-      if (den < 0) g = -g;
-      println("{}/{}", num / g, den / g);
-   }
 };
 ```
 
@@ -302,9 +301,8 @@ O código cliente é **idêntico** para as duas implementações:
 ::::: |{50%}
 
 ```.cpp
-Racional1 a, b;
-a.cria(1, 2);
-b.cria(2, 4);
+Racional1 a; a.cria(1, 2);
+Racional1 b; b.cria(2, 4);
 println("{}", a.igual(b));   // true
 a.soma(b).imprime();         // 1/1
 a.multiplica(b).imprime();   // 1/4
@@ -315,9 +313,8 @@ a.multiplica(b).imprime();   // 1/4
 ::::: |{45%}
 
 ```.cpp
-Racional2 a, b;
-a.cria(1, 2);
-b.cria(2, 4);
+Racional2 a; a.cria(1, 2);
+Racional2 b; b.cria(2, 4);
 println("{}", a.igual(b));   // true
 a.soma(b).imprime();         // 1/1
 a.multiplica(b).imprime();   // 1/4
@@ -336,20 +333,20 @@ Racional1 b:  | num: 1 | den: 2 |     (reduzido em cria)
 Racional2 b:  | num: 2 | den: 4 |     (guardado como veio)
 ```
 
-**Observação:** o TAD Racional não carrega recursos dinâmicos, então não precisa de `libera()`. Os TADs que alocarem memória (como as Pilhas) terão `cria()` **e** `libera()`.
+**Observação:** o TAD Racional não carrega recursos dinâmicos, então não precisa de `libera()`! Todo TAD **com** função `libera()` significará *não-copiável* como *convenção* nesse curso, ou seja, sem `operator=` válido. Assim, o `Racional` é copiável.
 
-# Parte 2: Conceitos em C++
+# Parte 2: Conceitos em C/C++
 
 -------
 
 ## Conceitos I
 
-C++ permite definir *conceitos* (ou *concepts*). Esse recurso permite *definições genéricas* sobre algum tipo, exigindo, por exemplo, que um agregado possua certos métodos.
+C/C++ permite definir *conceitos* (ou *concepts*). Esse recurso permite *definições genéricas* sobre algum tipo, exigindo, por exemplo, que um agregado possua certos métodos.
 Exemplo prático para o TAD Racional (não incluímos o `cria()` e `libera()`):
 
 ```.cpp
 template <typename R>
-concept RacionalTAD = requires(R a, R b, int n, int d) {
+concept RacionalTAD = requires(R a, R b) {
    { a.soma(b) }       -> std::same_as<R>;   // devolve outro R
    { a.multiplica(b) } -> std::same_as<R>;
    { a.igual(b) }      -> std::same_as<bool>;
@@ -384,7 +381,7 @@ Racional1        r3 = Racional1{};   // tipo explícito
 
 ## Algoritmos Genéricos sobre um TAD
 
-Com o conceito, escrevemos o algoritmo **uma vez**, para **qualquer** implementação. Exemplo: o número harmônico $H_n = \frac{1}{1} + \frac{1}{2} + \cdots + \frac{1}{n}$.
+Com o conceito, escrevemos o algoritmo **uma vez**, para **qualquer** implementação. Exemplo: a potência $r^k = r \cdot r \cdots r$ ($k$ vezes).
 
 ::: -
 
@@ -393,18 +390,16 @@ Com o conceito, escrevemos o algoritmo **uma vez**, para **qualquer** implementa
 ::::: |{55%}
 
 ```.cpp
-template <RacionalTAD R>
-R harmonico(int n) {
-   R h;
-   h.cria(0, 1);
-   for (int k = 1; k <= n; k++) {
-      R t;
-      t.cria(1, k);
-      h = h.soma(t);
-   }
-   return h;
+// pre: k >= 1
+auto potencia(RacionalTAD auto r, int k) {
+   auto p = r;           // cópia de r
+   for (int i = 1; i < k; i++)
+      p = p.multiplica(r);
+   return p;
 }
 ```
+
+Usa **apenas** operações do conceito: não sabe se é `Racional1` ou `Racional2`!
 
 :::::
 
@@ -412,11 +407,14 @@ R harmonico(int n) {
 
 ```.cpp
 // Exemplo de uso
-harmonico<Racional1>(10).imprime();
-// 7381/2520
-harmonico<Racional2>(10).imprime();
-// 7381/2520
+Racional1 a; a.cria(2, 4);
+potencia(a, 3).imprime(); // 1/8
+
+Racional2 b; b.cria(2, 4);
+potencia(b, 3).imprime(); // 1/8
 ```
+
+Na memória, a primeira guarda `1/8` e a segunda guarda `8/64`!
 
 :::::
 
@@ -424,9 +422,8 @@ harmonico<Racional2>(10).imprime();
 
 :::
 
-O algoritmo **não sabe** (e nem precisa saber) quando a fração é reduzida.
+**Desafio:** aumente $k$. Qual das duas versões imprime um valor errado primeiro? Por quê?
 
-**Desafio:** aumente $n$. Qual das duas versões imprime um valor errado primeiro? Por quê?
 
 -------
 
@@ -441,7 +438,7 @@ struct RacionalErrado {
    RacionalErrado soma(RacionalErrado r) {         // subtrai!
       return {num * r.den - r.num * den, den * r.den};
    }
-   RacionalErrado multiplica(RacionalErrado r) { return *this; }
+   RacionalErrado multiplica(RacionalErrado r) { return r; }
    bool igual(RacionalErrado r) { return true; }
    void imprime() { println("?"); }
 };
@@ -482,11 +479,12 @@ Um **modelo de custos** é a tabela com o custo de **cada operação** de uma im
 No modelo RAM (aula de Introdução), uma operação aritmética custa um passo **porque o dado tem tamanho fixo**. A Racional2 viola essa hipótese silenciosamente:
 
 ```
-H_n com Racional2 (sem reduzir):  den = 1 * 2 * 3 * ... * n = n!
-H_n com Racional1 (reduzindo):    den divide mmc(1, 2, ..., n)
+(2/4)^k com Racional2 (sem reduzir):  num = 2^k,  den = 4^k = 2^(2k)
+(2/4)^k com Racional1 (reduzindo):    num = 1,    den = 2^k
 ```
 
-- $13! \approx 6{,}2 \times 10^9$ já **não cabe** em um `int` de 32 bits (*overflow*)
+- com `int` de 32 bits (ou `int32_t`), $4^{16} = 2^{32}$ já **não cabe** (*overflow*): a Racional2 erra em $k = 16$
+- a Racional1 só estoura em $k = 31$, quase o **dobro** de multiplicações
 - `igual` faz produtos cruzados ($ad$ e $cb$), que estouram **ainda antes**
 - reduzir sempre mantém os números pequenos, e é isso que o `mdc` "compra"
 
@@ -676,15 +674,10 @@ println("{}", y.le()); // 30 (não-posse)
 
 ------
 
+
 ## Conceito: Vista (Mutável) de Vetor
 
-A interface de uma vista de vetor, escrita como conceito:
-
-::: -
-
-:::::::::: ||
-
-::::: |{55%}
+As operações de uma vista de vetor, escritas como conceito:
 
 ```.cpp
 template <typename V, typename T>
@@ -692,9 +685,9 @@ concept VistaVetorTAD = requires(V v, int i) {
    { v.tamanho() } -> std::same_as<int>;
    { v.le(i) }     -> std::same_as<T>;
 };
+
 template <typename V, typename T>
-concept VistaMutavelVetorTAD =
-   VistaVetorTAD<V, T> &&
+concept VistaMutavelVetorTAD = VistaVetorTAD<V, T> &&
    requires(V v, int i, T t) {
    { v.altera(i, t) };
 };  // le e altera: pre(0 <= i < tamanho())
@@ -702,9 +695,17 @@ concept VistaMutavelVetorTAD =
 static_assert(VistaMutavelVetorTAD<SpanInt, int>);
 ```
 
-:::::
+Note que `fatia` **não** é exigida: nem toda vista precisa sabê-la.
 
-::::: |{40%}
+------
+
+## Exemplo: Trocando Elementos com uma Vista
+
+::: -
+
+:::::::::: ||
+
+::::: |{50%}
 
 ```.cpp
 // troca dois elementos, na origem
@@ -715,6 +716,13 @@ void troca(
    v.altera(i, v.le(j));
    v.altera(j, t);
 }
+```
+
+:::::
+
+::::: |{45%}
+
+```.cpp
 // Exemplo de uso
 int a[] = {1, 2, 3};
 SpanInt s{.inicio = a, .n = 3};
@@ -729,7 +737,9 @@ println("{} {} {}",
 
 :::
 
-**Importante:** a vista é passada **por valor** (copia só um ponteiro e um `int`!), mas `altera` muda o vetor **original**. Note que `fatia` **não** é exigida: nem toda vista precisa sabê-la.
+**Importante:** a vista é passada **por valor** (copia só um ponteiro e um `int`!), mas `altera` muda o vetor **original**.
+
+**Desafio:** por que `VistaMutavelVetorTAD<int> auto` tem só **um** parâmetro, se o conceito tem **dois**?
 
 # Parte 5: Ordenação sobre Vistas
 
@@ -751,7 +761,7 @@ O contrato de toda função `ordena(v)`:
 
 *Basta `for (i...) v.altera(i, 0);`. Por isso as duas condições são necessárias!*
 
-Veremos três algoritmos clássicos, todos usando **apenas** a interface da vista: `tamanho`, `le` e `altera`.
+Veremos três algoritmos clássicos, todos usando **apenas** as operações da vista: `tamanho`, `le` e `altera`.
 
 -------
 
@@ -1026,7 +1036,7 @@ int main() {
 
 ## TAD, Vistas e Ordenação: Revisão Geral
 
-- O que compõe um TAD? Qual a diferença entre interface e implementação?
+- O que compõe um TAD? Qual a diferença entre TAD e implementação?
 - O que é uma invariante? Qual a invariante de `Racional1`? E de `Racional2`?
 - Por que `igual` é diferente nas duas implementações do Racional?
 - O que é um modelo de custos? Por que nenhuma implementação do Racional é "a melhor"?
