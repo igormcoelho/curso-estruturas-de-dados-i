@@ -477,7 +477,7 @@ quanto para Windows, sendo necessário o CMake 4.0 com Ninja.
 No Windows/WSL ou Linux, instale o compilador Clang 19 (no Windows, use o Scoop com `scoop install main/llvm`).
 
 Também é possível praticar diretamente em um navegador web com
-plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler) ou [Godbolt](https://godbolt.org) (mais recomendada!).
+plataformas online: [onlinegdb.com/online_c++_compiler](https://www.onlinegdb.com/online_c++_compiler), [onlinecompiler.io/pt/compilador-cpp-online](https://onlinecompiler.io/pt/compilador-cpp-online) ou [Godbolt](https://godbolt.org) (mais recomendada!).
 Neste caso, o aluno pode escolher o compilador de C ou da linguagem C++ (considerando padrões C23 e C++23).
 
 Para configurar IDE, leia o tutorial ["Breve Introdução ao C/C++ com IDE de Desenvolvimento"](https://zenodo.org/records/20077167).
